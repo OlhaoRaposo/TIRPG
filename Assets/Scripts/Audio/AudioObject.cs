@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -6,21 +5,24 @@ public class AudioObject : MonoBehaviour
 {
    [SerializeField]
    private SphereCollider audioCollObject;
-
-   private void Update()
+   [SerializeField] 
+   private AudioInfo thisInfo;
+   void Start()
    {
-      if (Input.GetKeyDown(KeyCode.G))
-      {
-         PlayAudio("Bell",30);
-      }
+      //Inicia o audio assim q o objeto for criado
+      PlayAudio(thisInfo.name,thisInfo.maxRange);
    }
-
    void PlayAudio(string name, float maxRadius)
    {
+      //Toca o audio
       AudioBoard.instance.PlayAudio(name);
+      
+      //So cria a propagação do audio se houver um objeto para progpagar
       if (transform.childCount != 0)
          return;
+      //Cria o objeto de propagação
       InstantiateChildObject();
+      //Inicia a propagação do som
       StartCoroutine(SoundPropagation(maxRadius));
    }
    void InstantiateChildObject()
@@ -30,12 +32,13 @@ public class AudioObject : MonoBehaviour
       childObject.tag = "AudioWarning";
       childObject.transform.position = this.transform.position;
       childObject.transform.parent = this.transform;
+      childObject.gameObject.layer = thisInfo.audioLayer;
       childObject.AddComponent<SphereCollider>();
       childObject.GetComponent<SphereCollider>().isTrigger = true;
       childObject.GetComponent<SphereCollider>().radius = .3f;
       audioCollObject = childObject.GetComponent<SphereCollider>();
    }
-    private IEnumerator SoundPropagation(float maxRadius)
+   IEnumerator SoundPropagation(float maxRadius)
     {
        yield return new WaitForSeconds(.015f);
        if (audioCollObject.radius <= maxRadius){
@@ -46,4 +49,14 @@ public class AudioObject : MonoBehaviour
        }
     }
 }
+[System.Serializable]
+ class AudioInfo
+ {
+    [SerializeField]
+    public string name;
+    [SerializeField]
+    public float maxRange;
+    [SerializeField]
+    public LayerMask audioLayer;
+ }
 
