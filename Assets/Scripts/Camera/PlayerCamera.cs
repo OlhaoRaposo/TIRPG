@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
 public class PlayerCamera : MonoBehaviour
 {
@@ -115,5 +112,10 @@ public class PlayerCamera : MonoBehaviour
         currentSense = sense;
         myCinemachineCamera.m_XAxis.m_MaxSpeed = currentSense * 600;
         myCinemachineCamera.m_YAxis.m_MaxSpeed = currentSense * 4;
+    }
+
+    public void ShakeCamera(float strength, float duration)
+    {
+        
     }
 }
