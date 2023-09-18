@@ -41,7 +41,7 @@ public class PlayerCamera : MonoBehaviour
         myCinemachineCamera.LookAt = playerObject.transform;
 
         SetCameraOrbit(false);
-        //Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void SetValues(float cameraSense, float aimSense, float zoomStrength, bool isInverted)
