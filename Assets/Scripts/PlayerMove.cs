@@ -91,14 +91,29 @@ public class PlayerMove : MonoBehaviour
         //Movimentação normal do jogador.
         if (inGround && !stealthMode && !isRunning)
         {
-            dir = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+            dir = Vector3.zero;
             //Normaliza a direção do movimento do jogador.
+            if (Input.GetAxis("Vertical") > 0)
+            {
+                dir += PlayerCamera.instance.GetCameraForward();
+            }
+            if (Input.GetAxis("Vertical") < 0)
+            {
+                dir -= PlayerCamera.instance.GetCameraForward();
+            }
+            if (Input.GetAxis("Horizontal") > 0)
+            {
+                dir += PlayerCamera.instance.GetCameraRight();
+            }
+            if (Input.GetAxis("Horizontal") < 0)
+            {
+                dir -= PlayerCamera.instance.GetCameraRight();
+            }
             controller.Move(dir.normalized * Time.deltaTime * speed);
-
             //Controla a direção da rotação do jogador ao estar ou para de se movimentar.
             if (dir.magnitude > 0.2f)
             {
-                transform.rotation = Quaternion.LookRotation(dir.normalized, Vector3.up);
+                PlayerCamera.instance.AlignRotation(PlayerCamera.instance.cameraBody.gameObject);
             }
         }
 
@@ -133,7 +148,7 @@ public class PlayerMove : MonoBehaviour
             //Somente para visualização do modo, será o colisor que retornará ao normal ao desativar o modo.
             transform.localScale = standingHeight;
             controller.height = 2f;
-            controller.center = Vector3.zero;
+            //controller.center = Vector3.zero;
         }
 
         //Movimento de correr ao manter a tecla pressionada.

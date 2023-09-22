@@ -75,7 +75,7 @@ public class PlayerCamera : MonoBehaviour
 
         if (isAiming == true)
         {
-            AlignRotation();
+            AlignRotation(cameraBody.gameObject);
         }
 
         if (Input.GetMouseButtonUp(1) == true)
@@ -100,11 +100,21 @@ public class PlayerCamera : MonoBehaviour
         this.isAiming = isAiming;
     }
 
-    public void AlignRotation()
+    public void AlignRotation(GameObject target)
     {
-        playerBody.transform.rotation = Quaternion.Euler(0, cameraBody.gameObject.transform.eulerAngles.y, 0);
-        playerObject.transform.rotation = Quaternion.Euler(0, cameraBody.gameObject.transform.eulerAngles.y, 0);
-        aimObject.transform.rotation = Quaternion.Euler(cameraBody.gameObject.transform.eulerAngles.x, cameraBody.gameObject.transform.eulerAngles.y, 0);
+        //playerBody.transform.rotation = Quaternion.Euler(0, target.transform.eulerAngles.y, 0);
+        playerObject.transform.rotation = Quaternion.Euler(playerObject.transform.rotation.x, target.transform.eulerAngles.y, playerObject.transform.rotation.z);
+        aimObject.transform.rotation = Quaternion.Euler(target.transform.eulerAngles.x, target.transform.eulerAngles.y, 0);
+    }
+
+    public Vector3 GetCameraForward()
+    {
+        return new Vector3(cameraBody.transform.forward.x, 0, cameraBody.transform.forward.z).normalized;
+    }
+
+    public Vector3 GetCameraRight()
+    {
+        return new Vector3(cameraBody.transform.right.x, 0, cameraBody.transform.right.z).normalized;
     }
 
     private void SetCurrentSense(float sense)

@@ -43,7 +43,7 @@ public class PlayerGun : MonoBehaviour
             {
                 if (Input.GetMouseButton(1) == false)
                 {
-                    PlayerCamera.instance.AlignRotation();
+                    PlayerCamera.instance.AlignRotation(PlayerCamera.instance.cameraBody.gameObject);
                 }
 
                 switch (equipedWeapon.triggerType)

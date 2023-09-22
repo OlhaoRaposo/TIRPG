@@ -4591,7 +4591,6 @@ GameObject:
   - component: {fileID: 140095170}
   - component: {fileID: 140095175}
   - component: {fileID: 140095172}
-  - component: {fileID: 140095171}
   - component: {fileID: 140095174}
   - component: {fileID: 140095173}
   m_Layer: 2
@@ -4616,35 +4615,9 @@ Transform:
   m_Children:
   - {fileID: 910810848}
   - {fileID: 2033192678}
+  - {fileID: 704722766}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &140095171
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 140095169}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 0
 --- !u!136 &140095172
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4692,7 +4665,7 @@ MonoBehaviour:
   standingHeight: {x: 1, y: 1, z: 1}
   crouchedHeight: {x: 1, y: 0.5, z: 1}
   colliderTilt: {fileID: 0}
-  controllerCenterCollider: {x: 0, y: -0.5, z: 0}
+  controllerCenterCollider: {x: -0.75, y: 0, z: 0}
   controllerHeightCollider: 1
   jumpHeight: 1
   inGround: 0
@@ -4747,7 +4720,7 @@ CapsuleCollider:
   m_Radius: 0.5
   m_Height: 1.25
   m_Direction: 2
-  m_Center: {x: 0, y: 0.25, z: 0.5}
+  m_Center: {x: -0.75, y: 0.25, z: 0.5}
 --- !u!1001 &141598721
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18730,6 +18703,37 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec7fddcc38b83b342987f8eebd2cccd1, type: 3}
+--- !u!1 &704722765
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 704722766}
+  m_Layer: 2
+  m_Name: CameraTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &704722766
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 704722765}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 140095170}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &706116570
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -42019,7 +42023,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1691302201}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.17121495, y: -0, z: -0, w: 0.9852337}
+  m_LocalRotation: {x: 0.17121497, y: -0, z: -0, w: 0.9852337}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -47003,7 +47007,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0.25, z: 0}
-  m_LocalScale: {x: 0.25, y: 1, z: 0.25}
+  m_LocalScale: {x: 0.25, y: 0.75, z: 0.25}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 910810848}
@@ -50021,7 +50025,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2024273701}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.17121494, y: -0, z: -0, w: 0.9852337}
+  m_LocalRotation: {x: 0.17121495, y: -1e-45, z: -0, w: 0.9852337}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -50769,7 +50773,7 @@ MonoBehaviour:
   - m_Script
   m_LockStageInInspector: 
   m_StreamingVersion: 20170927
-  m_Priority: 20
+  m_Priority: 10
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 140095170}
   m_Follow: {fileID: 140095170}
@@ -50852,7 +50856,7 @@ MonoBehaviour:
   - m_Height: 2
     m_Radius: 5
   - m_Height: -0.5
-    m_Radius: 3.5
+    m_Radius: 1.75
   m_LegacyHeadingBias: 3.4028235e+38
   m_Rigs:
   - {fileID: 2071130385}
