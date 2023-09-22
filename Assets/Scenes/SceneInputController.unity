@@ -225,7 +225,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 18070803}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -243,7 +243,7 @@ RectTransform:
   - {fileID: 1663183964}
   - {fileID: 1094767848}
   - {fileID: 1949136665}
-  m_Father: {fileID: 64546707}
+  m_Father: {fileID: 441840583}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -276,13 +276,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 26636642}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1226233372}
-  m_Father: {fileID: 64546707}
+  m_Father: {fileID: 441840583}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -333,7 +333,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 64546708}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SwitchButton, Assembly-CSharp
         m_MethodName: ResetKeys
         m_Mode: 1
@@ -395,7 +395,6 @@ GameObject:
   - component: {fileID: 64546706}
   - component: {fileID: 64546705}
   - component: {fileID: 64546704}
-  - component: {fileID: 64546708}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -478,10 +477,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1873402278}
-  - {fileID: 26636643}
-  - {fileID: 18070804}
-  - {fileID: 905367593}
+  - {fileID: 441840583}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -489,45 +485,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &64546708
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 64546703}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fabf12b13039ad2499c794c27640f1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  action: 0
-  descJump: {fileID: 1496094772}
-  buttonJump: {fileID: 1899027901}
-  descDash: {fileID: 13832438}
-  buttonDash: {fileID: 172298406}
-  descRun: {fileID: 401181667}
-  buttonRun: {fileID: 825269537}
-  descStealthMode: {fileID: 708540000}
-  buttonStealthMode: {fileID: 1245307947}
-  descInventory: {fileID: 1893023348}
-  buttonInventory: {fileID: 752548487}
-  descMap: {fileID: 1838109790}
-  buttonMap: {fileID: 1071678938}
-  descThrowables: {fileID: 1049653233}
-  buttonThrowables: {fileID: 1470466789}
-  descConsumables: {fileID: 1277350598}
-  buttonConsumables: {fileID: 1689274043}
-  descInteraction: {fileID: 193124545}
-  buttonInteraction: {fileID: 556155362}
-  descPrimaryWeapon: {fileID: 344516739}
-  buttonPrimaryWeapon: {fileID: 1009418489}
-  descSecondaryWeapon: {fileID: 1663183965}
-  buttonSecondaryWeapon: {fileID: 169289276}
-  descReloadGun: {fileID: 1094767849}
-  buttonReloadGun: {fileID: 1418868783}
-  descSkillTree: {fileID: 1949136666}
-  buttonSkillTree: {fileID: 1122762567}
 --- !u!1 &169289274
 GameObject:
   m_ObjectHideFlags: 0
@@ -922,6 +879,125 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 401181665}
+  m_CullTransparentMesh: 1
+--- !u!1 &441840582
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 441840583}
+  - component: {fileID: 441840586}
+  - component: {fileID: 441840585}
+  - component: {fileID: 441840584}
+  m_Layer: 5
+  m_Name: PlayerConfigMenu
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &441840583
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 441840582}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1873402278}
+  - {fileID: 26636643}
+  - {fileID: 18070804}
+  - {fileID: 905367593}
+  m_Father: {fileID: 64546707}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &441840584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 441840582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fabf12b13039ad2499c794c27640f1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  action: 0
+  descJump: {fileID: 1496094772}
+  buttonJump: {fileID: 1899027901}
+  descDash: {fileID: 13832438}
+  buttonDash: {fileID: 172298406}
+  descRun: {fileID: 401181667}
+  buttonRun: {fileID: 825269537}
+  descStealthMode: {fileID: 708540000}
+  buttonStealthMode: {fileID: 1245307947}
+  descInventory: {fileID: 1893023348}
+  buttonInventory: {fileID: 752548487}
+  descMap: {fileID: 1838109790}
+  buttonMap: {fileID: 1071678938}
+  descThrowables: {fileID: 1049653233}
+  buttonThrowables: {fileID: 1470466789}
+  descConsumables: {fileID: 1277350598}
+  buttonConsumables: {fileID: 1689274043}
+  descInteraction: {fileID: 193124545}
+  buttonInteraction: {fileID: 556155362}
+  descPrimaryWeapon: {fileID: 344516739}
+  buttonPrimaryWeapon: {fileID: 1009418489}
+  descSecondaryWeapon: {fileID: 1663183965}
+  buttonSecondaryWeapon: {fileID: 169289276}
+  descReloadGun: {fileID: 1094767849}
+  buttonReloadGun: {fileID: 1418868783}
+  descSkillTree: {fileID: 1949136666}
+  buttonSkillTree: {fileID: 1122762567}
+--- !u!114 &441840585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 441840582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.7686275, g: 0.7686275, b: 0.7686275, a: 0}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &441840586
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 441840582}
   m_CullTransparentMesh: 1
 --- !u!1 &556155360
 GameObject:
@@ -1577,7 +1653,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 905367592}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1595,7 +1671,7 @@ RectTransform:
   - {fileID: 169289275}
   - {fileID: 1418868782}
   - {fileID: 1122762566}
-  m_Father: {fileID: 64546707}
+  m_Father: {fileID: 441840583}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2973,13 +3049,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1873402277}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1673269653}
-  m_Father: {fileID: 64546707}
+  m_Father: {fileID: 441840583}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -3030,7 +3106,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 64546708}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SwitchButton, Assembly-CSharp
         m_MethodName: ChangeButtonAction
         m_Mode: 1
