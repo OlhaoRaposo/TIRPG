@@ -13,19 +13,18 @@ public class PlayerCamera : MonoBehaviour
 
     [Header("Variables")]
     [SerializeField] private float currentSense;
-    [SerializeField] private float[] cameraHeightNormal = new float[3];
-    [SerializeField] private float[] cameraRadiusNormal = new float[3];
-    [SerializeField] private float[] cameraHeightAim = new float[3];
-    [SerializeField] private float[] cameraRadiusAim = new float[3];
+    [SerializeField] private float regularFov;
+    [SerializeField] private float aimFov;
 
     private bool isAiming;
 
     [Header("References")]
     [SerializeField] private GameObject playerObject;
     [SerializeField] private GameObject playerBody;
+    [SerializeField] private GameObject aimObject;
 
     private CinemachineFreeLook myCinemachineCamera;
-    private Camera cameraBody;
+    [HideInInspector] public Camera cameraBody;
 
     private void Awake()
     {
@@ -52,7 +51,7 @@ public class PlayerCamera : MonoBehaviour
         this.isInverted = isInverted;
 
         SetCurrentSense(cameraSense);
-        if(isInverted == true)
+        if (isInverted == true)
         {
             myCinemachineCamera.m_YAxis.m_InvertInput = true;
         }
@@ -74,10 +73,9 @@ public class PlayerCamera : MonoBehaviour
             SetCameraOrbit(true);
         }
 
-        if(isAiming == true)
+        if (isAiming == true)
         {
-            playerBody.transform.rotation = Quaternion.Euler(0, cameraBody.gameObject.transform.eulerAngles.y, 0);
-            playerObject.transform.rotation = Quaternion.Euler(0, cameraBody.gameObject.transform.eulerAngles.y, 0);
+            AlignRotation();
         }
 
         if (Input.GetMouseButtonUp(1) == true)
@@ -89,22 +87,24 @@ public class PlayerCamera : MonoBehaviour
 
     private void SetCameraOrbit(bool isAiming)
     {
-        for (int i = 0; i < 3; i++)
+        if (isAiming == false)
         {
-            if(isAiming == false)
-            {
-                SetCurrentSense(cameraSense);
-                myCinemachineCamera.m_Orbits[i].m_Height = cameraHeightNormal[i];
-                myCinemachineCamera.m_Orbits[i].m_Radius = cameraRadiusNormal[i];
-            }
-            else
-            {
-                SetCurrentSense(aimSense);
-                myCinemachineCamera.m_Orbits[i].m_Height = cameraHeightAim[i];
-                myCinemachineCamera.m_Orbits[i].m_Radius = cameraRadiusAim[i];
-            }
+            SetCurrentSense(cameraSense);
+            myCinemachineCamera.m_Lens.FieldOfView = regularFov;
+        }
+        else
+        {
+            SetCurrentSense(aimSense);
+            myCinemachineCamera.m_Lens.FieldOfView = aimFov;
         }
         this.isAiming = isAiming;
+    }
+
+    public void AlignRotation()
+    {
+        playerBody.transform.rotation = Quaternion.Euler(0, cameraBody.gameObject.transform.eulerAngles.y, 0);
+        playerObject.transform.rotation = Quaternion.Euler(0, cameraBody.gameObject.transform.eulerAngles.y, 0);
+        aimObject.transform.rotation = Quaternion.Euler(cameraBody.gameObject.transform.eulerAngles.x, cameraBody.gameObject.transform.eulerAngles.y, 0);
     }
 
     private void SetCurrentSense(float sense)
@@ -116,6 +116,6 @@ public class PlayerCamera : MonoBehaviour
 
     public void ShakeCamera(float strength, float duration)
     {
-        
+
     }
 }

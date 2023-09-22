@@ -34,10 +34,4 @@ public class PlayerProjectile : MonoBehaviour
             }
         }
     }
-
-    public void OverrideData(float damage, float fallOffRange)
-    {
-        this.damage = damage;
-        this.fallOffRange = fallOffRange;
-    }
 }
