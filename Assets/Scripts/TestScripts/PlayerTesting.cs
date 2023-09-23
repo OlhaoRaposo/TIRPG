@@ -2,15 +2,21 @@ using UnityEngine;
 
 public class PlayerTesting : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public GameObject ranged, aim, melee;
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            ranged.SetActive(true);
+            aim.SetActive(true);
+            melee.SetActive(false);
+        }
+        if(Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            ranged.SetActive(false);
+            aim.SetActive(false);
+            melee.SetActive(true);
+        }
     }
 }
