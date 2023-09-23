@@ -102,8 +102,8 @@ public class PlayerCamera : MonoBehaviour
 
     public void AlignRotation(GameObject target)
     {
-        //playerBody.transform.rotation = Quaternion.Euler(0, target.transform.eulerAngles.y, 0);
-        playerObject.transform.rotation = Quaternion.Euler(playerObject.transform.rotation.x, target.transform.eulerAngles.y, playerObject.transform.rotation.z);
+        playerBody.transform.rotation = Quaternion.Euler(0, target.transform.eulerAngles.y, 0);
+        playerObject.transform.rotation = Quaternion.Euler(0, target.transform.eulerAngles.y, 0);
         aimObject.transform.rotation = Quaternion.Euler(target.transform.eulerAngles.x, target.transform.eulerAngles.y, 0);
     }
 
