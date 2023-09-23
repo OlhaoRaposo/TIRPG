@@ -21,7 +21,6 @@ public class PlayerCamera : MonoBehaviour
     [Header("References")]
     [SerializeField] private GameObject playerObject;
     [SerializeField] private GameObject playerBody;
-    [SerializeField] private GameObject aimObject;
 
     private CinemachineFreeLook myCinemachineCamera;
     [HideInInspector] public Camera cameraBody;
@@ -104,7 +103,6 @@ public class PlayerCamera : MonoBehaviour
     {
         playerBody.transform.rotation = Quaternion.Euler(0, target.transform.eulerAngles.y, 0);
         playerObject.transform.rotation = Quaternion.Euler(0, target.transform.eulerAngles.y, 0);
-        aimObject.transform.rotation = Quaternion.Euler(target.transform.eulerAngles.x, target.transform.eulerAngles.y, 0);
     }
 
     public Vector3 GetCameraForward()

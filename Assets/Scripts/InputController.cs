@@ -7,7 +7,7 @@ public class InputController : MonoBehaviour
     //Variável de acesso global para o controlador de comandos.
     public static InputController instance;
 
-    [Header ("Action Keys")]
+    [Header("Action Keys")]
     //Variável que guarda a tecla de ação de pular.
     public KeyCode jump = KeyCode.Space;
     //Variável que guarda a tecla de ação de esquivar.
@@ -35,24 +35,24 @@ public class InputController : MonoBehaviour
     //Variável que guarda a tecla de ação de abrir o painel de habilidades.
     public KeyCode skillTree = KeyCode.C;
 
-    [Header ("Key Change Variables")]
+    [Header("Key Change Variables")]
     //Variável de controle que verifica se está em alteração de tecla.
-    [SerializeField]bool keyCustomization = false;
+    [SerializeField] bool keyCustomization = false;
     //Variável que guarda a nova tecla, tecla que será atribuída a ação.
-    [SerializeField]KeyCode newKey;
+    [SerializeField] KeyCode newKey;
     //Variável que guarda a última tecla, tecla que era responsável pela ação para casos de a nova tecla já estar definida para outra ação.
-    [SerializeField]KeyCode oldKey;
+    [SerializeField] KeyCode oldKey;
     //Variável que guarda a tecla que deve ser alterada passada pelo botão no menu de controles.
-    [SerializeField]string selectedKey;
+    [SerializeField] string selectedKey;
     //Lista que guarda todas as teclas de acordo com a declaração acima para auxiliar na hora de alterar e/ou substituir teclas já definidas.
-	[SerializeField]List<KeyCode> commandKeys;
+    [SerializeField] List<KeyCode> commandKeys;
     //Guarda as teclas padrões para cada ação.
-    [SerializeField]List<KeyCode> standardCommandKeys;
+    [SerializeField] List<KeyCode> standardCommandKeys;
 
     void Awake()
     {
         //Garante que exista apenas um controlador na cena.
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
@@ -61,7 +61,7 @@ public class InputController : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        
+
         //Inicializa as lista com as teclas padrões.
         commandKeys = new List<KeyCode>(){jump,dash,run,stealth,inventory,map,throwables,consumables,
                                                         interaction,primaryWeapon,secondaryWeapon,reloadGun,skillTree};
@@ -73,13 +73,13 @@ public class InputController : MonoBehaviour
     void Update()
     {
         //Verifica se a customização de comandos está ativa.
-        if(keyCustomization == true)
+        if (keyCustomization == true)
         {
             //Fica em loop pela lista de teclas disponíveis da unity quando está em customização para saber qual será a nova tecla.
-            foreach(KeyCode key in System.Enum.GetValues(typeof(KeyCode)))
+            foreach (KeyCode key in System.Enum.GetValues(typeof(KeyCode)))
             {
                 //Verifica qual foi a primeira tecla pressionada depois de iniciar a customização, sendo mouse, teclado ou joystick, não sendo possível as teclas de movimentação por AWSD.
-                if(Input.GetKeyDown(key) && key != KeyCode.A && key != KeyCode.W && key != KeyCode.S && key != KeyCode.D)
+                if (Input.GetKeyDown(key) && key != KeyCode.A && key != KeyCode.W && key != KeyCode.S && key != KeyCode.D)
                 {
                     //Atribui para a variável a tecla pressionada.
                     newKey = key;
@@ -91,11 +91,11 @@ public class InputController : MonoBehaviour
                     UpdateKey();
                     //Em caso de a nova tecla já está definida em outra ação inverte as teclas.
                     ReplaceKey();
-                }  
+                }
             }
         }
     }
-    
+
     //Método que inicializa a customização.
     public void ChangeKey(string keyName)
     {
@@ -106,16 +106,16 @@ public class InputController : MonoBehaviour
     }
 
     //Método que verifica se já há ação atribuída com a nova tecla, e a remove da antiga ação em caso positivo.
-	void CheckKey()
-	{
+    void CheckKey()
+    {
         //Percorre a lista auxiliar para verificar se a nova tecla já está definida para outra ação.
-		for(int index = 0; index < commandKeys.Count; index++)
-		{
+        for (int index = 0; index < commandKeys.Count; index++)
+        {
             //Verifica se a nova tecla já estava na lista e em caso positivo o index informará qual é a ação que ela estava atribuída.
-			if(commandKeys[index] == newKey)
-			{
+            if (commandKeys[index] == newKey)
+            {
                 //Remove a atual tecla da antiga ação que ela era responsável.
-                switch(index)
+                switch (index)
                 {
                     case 0:
                         jump = KeyCode.None;
@@ -157,15 +157,15 @@ public class InputController : MonoBehaviour
                         skillTree = KeyCode.None;
                         break;
                 }
-			}
-		}
-	}
+            }
+        }
+    }
 
     //Método que atribui na variável "oldKey" qual era a antiga tecla da ação e chama a função que altera para a nova tecla.
     void UpdateKey()
     {
         //Para cada verificação guarda a antiga tecla e altera para a nova.
-        if(jump.ToString() == selectedKey)
+        if (jump.ToString() == selectedKey)
         {
             oldKey = jump;
             NewKey(ref jump, newKey);
@@ -179,7 +179,7 @@ public class InputController : MonoBehaviour
         {
             oldKey = run;
             NewKey(ref run, newKey);
-        } 
+        }
         else if (stealth.ToString() == selectedKey)
         {
             oldKey = stealth;
@@ -189,42 +189,42 @@ public class InputController : MonoBehaviour
         {
             oldKey = inventory;
             NewKey(ref inventory, newKey);
-        } 
+        }
         else if (map.ToString() == selectedKey)
         {
             oldKey = map;
             NewKey(ref map, newKey);
-        }  
+        }
         else if (throwables.ToString() == selectedKey)
         {
             oldKey = throwables;
             NewKey(ref throwables, newKey);
-        }  
+        }
         else if (consumables.ToString() == selectedKey)
         {
             oldKey = consumables;
             NewKey(ref consumables, newKey);
-        }   
+        }
         else if (interaction.ToString() == selectedKey)
         {
             oldKey = interaction;
             NewKey(ref interaction, newKey);
-        }   
+        }
         else if (primaryWeapon.ToString() == selectedKey)
         {
             oldKey = primaryWeapon;
             NewKey(ref primaryWeapon, newKey);
-        }  
+        }
         else if (secondaryWeapon.ToString() == selectedKey)
         {
             oldKey = secondaryWeapon;
             NewKey(ref secondaryWeapon, newKey);
-        }   
+        }
         else if (reloadGun.ToString() == selectedKey)
         {
             oldKey = reloadGun;
             NewKey(ref reloadGun, newKey);
-        }  
+        }
         else if (skillTree.ToString() == selectedKey)
         {
             oldKey = skillTree;
@@ -247,13 +247,13 @@ public class InputController : MonoBehaviour
     void ReplaceKey()
     {
         //Percorre a lista auxiliar para verificar se houve ação que teve a tecla removida na atribuição da nova tecla.
-        for(int index = 0; index < commandKeys.Count; index++)
-		{
+        for (int index = 0; index < commandKeys.Count; index++)
+        {
             //Verifica a cada loop se a atual variável há tecla definida.
-			if(commandKeys[index] == KeyCode.None)
-			{
+            if (commandKeys[index] == KeyCode.None)
+            {
                 //Para cada verificação atribui para a ação a antiga tecla, isso ocorre quando há a inversão de comandos.
-                switch(index)
+                switch (index)
                 {
                     case 0:
                         jump = oldKey;
@@ -301,8 +301,8 @@ public class InputController : MonoBehaviour
                 //Atualiza a lista auxiliar com a atual configuração de teclas.
                 commandKeys = new List<KeyCode>(){jump,dash,run,stealth,inventory,map,throwables,consumables,
                                                         interaction,primaryWeapon,secondaryWeapon,reloadGun,skillTree};
-			}
-		}
+            }
+        }
     }
 
     //Método que redefine todas as teclas ao padrão.

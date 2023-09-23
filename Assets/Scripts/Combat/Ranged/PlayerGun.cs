@@ -95,7 +95,7 @@ public class PlayerGun : MonoBehaviour
 
     private void Reload()
     {
-        if (Input.GetKeyDown(KeyCode.R) == true /*E não está em diálogo ou pausado*/)
+        if (Input.GetKeyDown(InputController.instance.reloadGun) == true /*E não está em diálogo ou pausado*/)
         {
             StartCoroutine(ReloadAction());
         }
@@ -103,14 +103,26 @@ public class PlayerGun : MonoBehaviour
 
     private void SummonBullets()
     {
-        
+        Vector2 screenCenter = new Vector2(Screen.width / 2, Screen.height / 2);
+        Vector3 target = Vector3.zero;
+        Ray cameraRay = PlayerCamera.instance.cameraBody.ScreenPointToRay(screenCenter);
+        if (Physics.Raycast(cameraRay, out RaycastHit hitPos, 999, aimCollisionLayer) == true)
+        {
+            target = hitPos.point;
+        }
+        else
+        {
+            return;
+        }
+
         for (int i = 0; i < equipedWeapon.projectileAmmount; i++)
         {
             float aux = Random.Range(-equipedWeapon.missfireRadius * 1.00f, (equipedWeapon.missfireRadius * 1.00f) + 0.01f);
-            Vector3 startinPos = new Vector3(transform.position.x + aux, transform.position.y + aux, transform.position.z);
+            Vector3 startingPos = new Vector3(transform.position.x + aux, transform.position.y + aux, transform.position.z);
+            Vector3 targetAim = (target - transform.position).normalized;
 
+            Instantiate(equipedWeapon.projectile, startingPos, Quaternion.LookRotation(targetAim, Vector3.up));
             ammo--;
-            //Instantiate(equipedWeapon.projectile, startinPos, PlayerCamera.instance.aimObject.transform.rotation);
         }
 
 
