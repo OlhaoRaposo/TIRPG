@@ -16,7 +16,7 @@ public class QuestType : ScriptableObject
     
     public MissionRating classification;
     
-    public enum MissionType{Exploration, ItenCollection, KillEnemies, Sabotage}
+    public enum MissionType{Exploration, ItenCollection, KillEnemies, Sabotage, Dialogue}
 
     public List<MissionType> stageMission = new List<MissionType>();
 
@@ -56,7 +56,7 @@ public class QuestType : ScriptableObject
     public List<bool> unlockItems = new List<bool>();
 
     [Header ("HUD Changes")]
-    public List<string> dialogue = new List<string>();
+    public List<DialogueTemp> dialogue = new List<DialogueTemp>();
     
     public List<Image> images = new List<Image>();
     

@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DialogueTemp : MonoBehaviour
+[CreateAssetMenu(fileName = "DialogueOnQuest", menuName = "Quests/New Dialogue On Quest")]
+public class DialogueTemp : ScriptableObject
 {
     public string charname;
     public int dialogueIndex;

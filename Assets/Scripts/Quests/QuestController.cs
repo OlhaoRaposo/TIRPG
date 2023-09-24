@@ -32,10 +32,15 @@ public class QuestController : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    
+
+   void Start()
+   {
+        ChangeDialog(activeMissions[0]);
+   }
+
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.X))
+        /*if(Input.GetKeyDown(KeyCode.X))
         {
             EnemyEliminated(QuestType.EnemyTypes.MilitaryRobots);
         }
@@ -48,7 +53,7 @@ public class QuestController : MonoBehaviour
         if(Input.GetMouseButtonDown(1))
         {
             ChangeStage(activeMissions[0]);
-        }
+        }*/
     }
     
     void FixedUpdate()
@@ -299,9 +304,12 @@ public class QuestController : MonoBehaviour
         }
     }
     
-    void ChangeDialog()
+    void ChangeDialog(QuestType quest)
     {
-        
+        if(!DialogueManager.instance.isPlayingDialogue)
+        {
+            quest.dialogue[0].Play();
+        }
     }
     
     void SwitchCharacter()
