@@ -9,11 +9,22 @@ public class PlayerInteractions : MonoBehaviour
     [SerializeField] float interactDistance = 3f;
     [SerializeField] LayerMask interactLayer;
 
+    IInteractable interactable;
+    
+    void Update()
+    {
+        if (interactable == null) return;
+        
+        if (Input.GetKeyDown(InputController.instance.interaction))
+        {
+            interactable.Interact(this);
+        }
+        
+    }
     void FixedUpdate()
     {
         SphereCheck();
     }
-
     void RaycastCheck()
     {
         Ray ray = new Ray(transform.position, Camera.main.transform.forward);
@@ -29,7 +40,13 @@ public class PlayerInteractions : MonoBehaviour
         
         if (col.Length > 0)
         {
-            InteractTooltip.instance.ToggleTooltip(col[0].transform);
+            interactable = col[0].GetComponent<IInteractable>();
+            if(!InteractTooltip.instance.GetIsOn())
+            {
+                InteractTooltip.instance.ToggleTooltip(col[0].transform);
+            }
+        }else {
+            interactable = null;
         }
     }
 
@@ -37,11 +54,11 @@ public class PlayerInteractions : MonoBehaviour
     {
         Debug.Log("Peguei um " + item.name);
 
-        //Adicionar item ao inventário
+        //Adicionar item ao inventÃ¡rio
     }
 
-    public void TakeQuest(/* referência da quest */)
+    public void TakeQuest(/* referÃªncia da quest */)
     {
-        //Adicionar quest à lista de quests
+        //Adicionar quest Ã  lista de quests
     }
 }

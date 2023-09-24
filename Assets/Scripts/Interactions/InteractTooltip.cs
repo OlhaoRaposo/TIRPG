@@ -28,9 +28,16 @@ public class InteractTooltip : MonoBehaviour
         isOn = !isOn;
         target.gameObject.SetActive(!target.gameObject.activeSelf);
     }
+
+    public bool GetIsOn()
+    {
+        return isOn;
+    }
+
     public Vector3 WorldToScreenPosition(Vector3 position)
     {
-        Vector3 screenPos = Camera.main.WorldToScreenPoint(position);
+        Camera test = Camera.main;
+        Vector3 screenPos = test.WorldToScreenPoint(position);
         screenPos.x = Mathf.Clamp(screenPos.x, Screen.width * .1f, Screen.width * .9f);
         screenPos.y = Mathf.Clamp(screenPos.y, Screen.height * .1f, Screen.height * .9f);
 

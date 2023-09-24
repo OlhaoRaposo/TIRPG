@@ -57,6 +57,12 @@ public class QuestType : ScriptableObject
 
     [Header ("HUD Changes")]
     public List<DialogueTemp> dialogue = new List<DialogueTemp>();
+
+    public List<int> dialoguesInStage = new List<int>();
+
+    public int dialogueStage = 0;
+
+    public int indexDialogue = -1;
     
     public List<Image> images = new List<Image>();
     

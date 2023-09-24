@@ -7,17 +7,17 @@ public class QuestController : MonoBehaviour
 {
     public static QuestController instance;
     
-    [SerializeField]List<QuestType> primaryMissions = new List<QuestType>();
+    public List<QuestType> primaryMissions = new List<QuestType>();
 
-    [SerializeField]List<QuestType> secondaryMissions = new List<QuestType>();
+    public List<QuestType> secondaryMissions = new List<QuestType>();
 
-    [SerializeField]List<QuestType> temporaryMissions = new List<QuestType>();
+    public List<QuestType> temporaryMissions = new List<QuestType>();
 
-    [SerializeField]List<QuestType> activeMissions = new List<QuestType>(3);
+    public List<QuestType> activeMissions = new List<QuestType>(3);
 
-    [SerializeField]List<QuestType> completedMissions = new List<QuestType>();
+    public List<QuestType> completedMissions = new List<QuestType>();
 
-    [SerializeField]List<Text> missionTexts = new List<Text>(3);
+    public List<Text> missionTexts = new List<Text>(3);
 
     void Awake()
     {
@@ -35,12 +35,12 @@ public class QuestController : MonoBehaviour
 
    void Start()
    {
-        ChangeDialog(activeMissions[0]);
+        ChangeDialog(activeMissions[0], activeMissions[0].indexDialogue);
    }
 
     void Update()
     {
-        /*if(Input.GetKeyDown(KeyCode.X))
+        if(Input.GetKeyDown(KeyCode.X))
         {
             EnemyEliminated(QuestType.EnemyTypes.MilitaryRobots);
         }
@@ -53,7 +53,7 @@ public class QuestController : MonoBehaviour
         if(Input.GetMouseButtonDown(1))
         {
             ChangeStage(activeMissions[0]);
-        }*/
+        }
     }
     
     void FixedUpdate()
@@ -78,7 +78,7 @@ public class QuestController : MonoBehaviour
         }
     }
     
-    void CheckZones(GameObject zone)
+    public void CheckZones(GameObject zone)
     {
         foreach(QuestType quest in activeMissions)
         {
@@ -138,7 +138,7 @@ public class QuestController : MonoBehaviour
         }
     }
     
-    void CollectedItems(QuestType.TypesOfCollectibles collectiblesName)
+    public void CollectedItems(QuestType.TypesOfCollectibles collectiblesName)
     {
         
         QuestType quest = null;
@@ -193,7 +193,7 @@ public class QuestController : MonoBehaviour
         }
     }
     
-    void EnemyEliminated(QuestType.EnemyTypes enenmyName)
+    public void EnemyEliminated(QuestType.EnemyTypes enenmyName)
     {
         
         QuestType quest = null;
@@ -254,6 +254,9 @@ public class QuestController : MonoBehaviour
         {
             quest.questStages++;
             quest.type = quest.stageMission[quest.questStages];
+            
+            ChangeDialog(quest, quest.indexDialogue);
+
             ToggleDescription();
         }
         else
@@ -272,7 +275,7 @@ public class QuestController : MonoBehaviour
                 missionTexts[2].text = "";
                 break;
             case 1:
-                if(activeMissions[0].questDescription.Count > 0)
+                if(activeMissions[0].questDescription.Count > 0 && activeMissions[0].questDescription[activeMissions[0].questStages] != null)
                 {
                     missionTexts[0].text = activeMissions[0].questDescription[activeMissions[0].questStages];
                 }
@@ -282,7 +285,7 @@ public class QuestController : MonoBehaviour
                 }
                 break;
             case 2:
-                if(activeMissions[1].questDescription.Count > 0)
+                if(activeMissions[1].questDescription.Count > 0 && activeMissions[1].questDescription[activeMissions[1].questStages] != null)
                 {
                     missionTexts[1].text = activeMissions[1].questDescription[activeMissions[1].questStages];
                 }
@@ -292,7 +295,7 @@ public class QuestController : MonoBehaviour
                 }
                 break;
             case 3:
-                if(activeMissions[2].questDescription.Count > 0)
+                if(activeMissions[2].questDescription.Count > 0 && activeMissions[2].questDescription[activeMissions[2].questStages] != null)
                 {
                     missionTexts[2].text = activeMissions[2].questDescription[activeMissions[2].questStages];
                 }
@@ -304,13 +307,33 @@ public class QuestController : MonoBehaviour
         }
     }
     
-    void ChangeDialog(QuestType quest)
+    public void ChangeDialog(QuestType quest, int indexText)
+{
+    if(quest.type == QuestType.MissionType.Dialogue)
     {
-        if(!DialogueManager.instance.isPlayingDialogue)
+        if(indexText > quest.dialoguesInStage[quest.dialogueStage])
         {
-            quest.dialogue[0].Play();
+            for(int index = quest.dialogueStage; index > 0; index--)
+            {
+                indexText -= (quest.dialoguesInStage[quest.dialogueStage -1] + 1);
+            }
+        }
+
+        quest.indexDialogue++;
+        if(indexText < quest.dialoguesInStage[quest.dialogueStage])
+        {
+            if(!DialogueManager.instance.isPlayingDialogue)
+            {
+                quest.dialogue[quest.indexDialogue].Play();
+            }
+        }
+        else
+        {
+            quest.dialogueStage++;
+            ChangeStage(quest); 
         }
     }
+}
     
     void SwitchCharacter()
     {
@@ -461,7 +484,7 @@ public class QuestController : MonoBehaviour
         }
     }
     
-    void ActivateSecondaryMission(QuestType quest)
+    public void ActivateSecondaryMission(QuestType quest)
     {
         bool auxiliaryCheck = false;
 
@@ -482,7 +505,7 @@ public class QuestController : MonoBehaviour
         ToggleDescription();
     }
     
-    void ActivateTemporaryMission(QuestType quest)
+    public void ActivateTemporaryMission(QuestType quest)
     {
         bool auxiliaryCheck = false;
 

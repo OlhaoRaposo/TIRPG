@@ -15,11 +15,12 @@ MonoBehaviour:
   questName: Teste
   inProgress: 1
   classification: 0
-  stageMission: 04000000010000000300000002000000
+  stageMission: 0400000001000000030000000200000004000000
   questDescription:
   - Caminhe ate a Floresta
   - Colete 10 frutas.
   - Troque as frutas dos soldados.
+  - Elimine 3 Robos Militares
   - Elimine 3 Robos Militares
   type: 4
   questStages: 0
@@ -37,6 +38,12 @@ MonoBehaviour:
   unlockItems: 
   dialogue:
   - {fileID: 11400000, guid: 85806843614bfe0eaba5135300412b2e, type: 2}
+  - {fileID: 11400000, guid: bca03cf1f7c040b62acb9ba8ee58376c, type: 2}
+  - {fileID: 11400000, guid: 05b6d0a86f4e22b2fa844542ec050155, type: 2}
+  - {fileID: 11400000, guid: b65f763d62ea302358791ba8775612b4, type: 2}
+  dialoguesInStage: 0100000001000000
+  dialogueStage: 0
+  indexDialogue: -1
   images: []
   sprites: []
   characters: []
@@ -46,7 +53,7 @@ MonoBehaviour:
   missionObjectives: []
   missionCollectibles: 0000000001000000
   collectedItems: 0000000000000000
-  collectedItemsGoal: 0a00000000000000
+  collectedItemsGoal: 0100000000000000
   enemies: 0000000001000000
   enemiesKilled: 0000000000000000
   deadEnemiesObjective: 0300000000000000
