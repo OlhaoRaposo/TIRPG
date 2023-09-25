@@ -16,8 +16,6 @@ public class EnemyBehaviour : MonoBehaviour
   [Space]
   public GameObject target;
   public bool isAttacking;
-  [SerializeField]
-  public GameObject point1;
   [Space]
   [SerializeField]
   private Collider[] targetsDettectes;

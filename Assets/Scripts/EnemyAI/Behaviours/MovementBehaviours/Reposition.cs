@@ -22,7 +22,6 @@ public class Reposition : IState
                repositionTransform.y += .5f;
                enemyVision = enemy.target.transform.position - repositionTransform;
                enemy.enemyAgent.SetDestination(repositionTransform);
-               enemy.point1.transform.position = repositionTransform;
             }else {
                enemy.SetState(new Reposition(enemy));
             }

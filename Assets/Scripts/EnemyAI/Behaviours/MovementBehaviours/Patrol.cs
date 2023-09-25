@@ -23,7 +23,6 @@ public class Patrol : IState
                         enemy.patrolDestination = hit.position;
                         enemy.patrolDestination.y += .5f;
                         enemy.enemyAgent.SetDestination(enemy.patrolDestination);
-                        enemy.point1.transform.position = enemy.patrolDestination;
                     }
                 }
             }
