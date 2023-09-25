@@ -29,6 +29,7 @@ public class EnemyBehaviour : MonoBehaviour
     enemyAgent = this.GetComponent<NavMeshAgent>();
     isPatroling = true;
     myWeapon.gun.GetComponent<RobotRangedWeapon>().enemy = this;
+    BackPatrol();
   } 
   public virtual void FixedUpdate()
   {
