@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -52,6 +53,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] float stamina = 100f;
     //Temporizador para recarga da estamina.
     [SerializeField] float cooldownStamina;
+    [SerializeField] Image staminaBar;
 
     void Start()
     {
@@ -294,5 +296,8 @@ public class PlayerMove : MonoBehaviour
         //Controla a queda do pulo do jogador com a gravidade.
         playerDirection.y += gravity * Time.deltaTime;
         controller.Move(playerDirection * Time.deltaTime);
+
+        //Contrla a barra de stamina
+        staminaBar.fillAmount = stamina / 100;
     }
 }
