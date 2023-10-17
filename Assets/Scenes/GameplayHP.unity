@@ -4966,7 +4966,6 @@ MonoBehaviour:
   dashForce: 20
   stamina: 100
   cooldownStamina: 0
-  staminaBar: {fileID: 1584242591}
 --- !u!143 &140095174
 CharacterController:
   m_ObjectHideFlags: 0
@@ -23680,8 +23679,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hpMax: 100
+  staminaMax: 100
   currentHP: 0
+  currentStamina: 0
   hpImage: {fileID: 879561852}
+  staminaImage: {fileID: 1584242591}
 --- !u!1001 &839551832
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -39468,14 +39470,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1476456863}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 713356f41972079e983c0c17abbdcb79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   primaryMissions:
   - {fileID: 11400000, guid: 1fd64547bbde193438d675af044a049f, type: 2}
-  - {fileID: 11400000, guid: a9027759bbe1d51a3a191794111fc8b3, type: 2}
   secondaryMissions: []
   temporaryMissions: []
   activeMissions:
@@ -42468,7 +42469,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1570172627}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.062373675, y: -9.862791e-10, z: 6.163788e-11, w: 0.9980529}
+  m_LocalRotation: {x: 0.06237367, y: 0.000000006514916, z: -4.07152e-10, w: 0.9980529}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -46253,7 +46254,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1691302201}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.09093335, y: 0.00000003427019, z: -0.000000003129268, w: 0.995857}
+  m_LocalRotation: {x: 0.09093335, y: -0.00000003427019, z: 0.000000003129268, w: 0.995857}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -54874,7 +54875,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2024273701}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.09093335, y: 0.000000017135097, z: -0.0000000015646342, w: 0.995857}
+  m_LocalRotation: {x: 0.09093335, y: -0.000000017135093, z: 0.0000000015646339, w: 0.995857}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -54940,7 +54941,7 @@ MonoBehaviour:
   aimCollisionLayer:
     serializedVersion: 2
     m_Bits: 1
-  equipedWeapon: {fileID: 11400000, guid: e58a1c9064fa80f46a8728fedf74ea36, type: 2}
+  equipedWeapon: {fileID: 11400000, guid: 6121deddc3b6256458ed3b1a1e1bedf5, type: 2}
   ammoText: {fileID: 1633004422}
   reloadImage: {fileID: 0}
 --- !u!4 &2033192678

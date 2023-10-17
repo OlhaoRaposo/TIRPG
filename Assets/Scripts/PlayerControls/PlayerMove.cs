@@ -53,7 +53,6 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] float stamina = 100f;
     //Temporizador para recarga da estamina.
     [SerializeField] float cooldownStamina;
-    [SerializeField] Image staminaBar;
 
     void Start()
     {
@@ -83,10 +82,12 @@ public class PlayerMove : MonoBehaviour
             stamina = 0;
         }
         //Verifica se está utilizando e recarrega a estamina.
-        if (cooldownStamina > 0.25f && stamina < 100 && !isRunning && inGround)
+        if (cooldownStamina > 0.25f && stamina < PlayerHPController.instance.GetMaxStamina() && !isRunning && inGround)
         {
+            Debug.Log("Está no chão");
             //Acrescenta mais estamina ao jogador.
-            stamina += 1f;
+            PlayerHPController.instance.ChangeStamina(1f, false);
+            stamina++;
             cooldownStamina = 0;
         }
 
@@ -184,6 +185,7 @@ public class PlayerMove : MonoBehaviour
             isRunning = true;
 
             //Retira estamina do jogador ao correr.
+            PlayerHPController.instance.ChangeStamina(0.5f, true);
             stamina -= 0.5f;
 
             dir = Vector3.zero;
@@ -266,6 +268,7 @@ public class PlayerMove : MonoBehaviour
         if (Input.GetKeyDown(InputController.instance.jump) && inGround && !stealthMode && stamina >= 15f)
         {
             //Remove estamina ao pular.
+            PlayerHPController.instance.ChangeStamina(15f, true);
             stamina -= 15f;
 
             //Fixa a direção do pulo para a mesma do momento exato do comando.
@@ -279,8 +282,8 @@ public class PlayerMove : MonoBehaviour
         if (Input.GetKeyDown(InputController.instance.dash) && inGround && stamina >= 15f)
         {
             //Remove estamina ao esquivar.
+            PlayerHPController.instance.ChangeStamina(15f, true);
             stamina -= 15f;
-
             //Fixa a direção do dash no momento exato do comando.
             playerDirection.x += Mathf.Sqrt(-3.0f * gravity) * dir.x * dashForce;
             playerDirection.z += Mathf.Sqrt(-3.0f * gravity) * dir.z * dashForce;
@@ -296,8 +299,5 @@ public class PlayerMove : MonoBehaviour
         //Controla a queda do pulo do jogador com a gravidade.
         playerDirection.y += gravity * Time.deltaTime;
         controller.Move(playerDirection * Time.deltaTime);
-
-        //Contrla a barra de stamina
-        staminaBar.fillAmount = stamina / 100;
     }
 }
