@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: Quest 1
   m_EditorClassIdentifier: 
   questName: "Resgate de civ\xEDs"
-  inProgress: 0
+  inProgress: 1
   classification: 0
-  stageMission: 04000000
+  stageMission: 040000000200000004000000
   questDescription:
+  - "V\xE1 para a zona de transi\xE7\xE3o"
   - "Elimine o rob\xF4 militar"
   type: 4
   questStages: 0
@@ -34,9 +35,10 @@ MonoBehaviour:
   unlockItems: 
   dialogue:
   - {fileID: 11400000, guid: 85806843614bfe0eaba5135300412b2e, type: 2}
-  dialoguesInStage: 01000000
-  dialogueStage: 1
-  indexDialogue: 2
+  - {fileID: 11400000, guid: e3af7bed488b92e42ab85364eaeff200, type: 2}
+  dialoguesInStage: 0100000001000000
+  dialogueStage: 0
+  indexDialogue: -1
   images: []
   sprites: []
   characters: []
@@ -44,10 +46,10 @@ MonoBehaviour:
   explorationZones: []
   sabotageZones: []
   missionObjectives: []
-  missionCollectibles: 0000000001000000
-  collectedItems: 0000000000000000
-  collectedItemsGoal: 0100000000000000
-  enemies: 0000000001000000
-  enemiesKilled: 0000000000000000
-  deadEnemiesObjective: 0300000000000000
+  missionCollectibles: 
+  collectedItems: 
+  collectedItemsGoal: 
+  enemies: 00000000
+  enemiesKilled: 00000000
+  deadEnemiesObjective: 01000000
   boss: {fileID: 0}

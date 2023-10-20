@@ -4,18 +4,22 @@ using UnityEngine;
 
 public class Interactable_Npc : MonoBehaviour, IInteractable
 {
+    [Header("Variables")]
+    [SerializeField] private string dialogueCharacter;
+    [SerializeField] private int dialogueIndex;
     [SerializeField] bool givesQuest = false;
 
     /// Atributos a adicionar:
     /// 
-    /// Referência da quest
+    [Header("References")]
+    [SerializeField] private QuestType givenQuest;
     /// 
 
     public void Interact(PlayerInteractions player)
     {
-        //Iniciar diálogo
-        Debug.Log("Iniciando diálogo de " + player.name + " com " + name);
-        
-        
+        if (givesQuest == true)
+        {
+            QuestController.instance.ActivateNextQuest(givenQuest);
+        }
     }
 }

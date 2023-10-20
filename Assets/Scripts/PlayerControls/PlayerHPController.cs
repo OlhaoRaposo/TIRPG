@@ -29,7 +29,7 @@ public class PlayerHPController : MonoBehaviour
         if(isDecrease == true)
         {
             currentHP -= changeAmmount;
-            hpImage.fillAmount = (currentHP - changeAmmount) / hpMax;
+            hpImage.fillAmount = currentHP / hpMax;
 
             if(currentHP <= 0)
             {
@@ -42,7 +42,7 @@ public class PlayerHPController : MonoBehaviour
 
             if(currentHP < hpMax)
             {
-                hpImage.fillAmount = (hpMax + changeAmmount) / hpMax;
+                hpImage.fillAmount = hpMax / hpMax;
             }
             else
             {
@@ -57,16 +57,15 @@ public class PlayerHPController : MonoBehaviour
         if(isDecrease == true)
         {
             currentStamina -= changeAmmount;
-            staminaImage.fillAmount = (currentStamina - changeAmmount) / staminaMax;
+            staminaImage.fillAmount = currentStamina / staminaMax;
         }
         else
         {
             currentStamina += changeAmmount;
-            Debug.Log("Ganhou stamina");
 
             if(currentStamina < staminaMax)
             {
-                staminaImage.fillAmount = (currentStamina + changeAmmount) / staminaMax;
+                staminaImage.fillAmount = currentStamina / staminaMax;
             }
             else
             {

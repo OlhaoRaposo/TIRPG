@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,28 +34,10 @@ public class QuestController : MonoBehaviour
         }
     }
 
-    void Start()
-    {
-        ChangeDialog(activeMissions[0], activeMissions[0].indexDialogue);
-    }
-
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            EnemyEliminated(QuestType.EnemyTypes.MilitaryRobots);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            CollectedItems(QuestType.TypesOfCollectibles.Fruits);
-        }
-
-        if (Input.GetMouseButtonDown(1))
-        {
-            ChangeStage(activeMissions[0]);
-        }
-    }
+void Start()
+{
+    ChangeDialog(activeMissions[0], activeMissions[0].indexDialogue);
+}
 
     void FixedUpdate()
     {
@@ -453,7 +436,7 @@ public class QuestController : MonoBehaviour
         }
     }
 
-    void ActivateNextQuest(QuestType quest)
+    public void ActivateNextQuest(QuestType quest)
     {
         if (activeMissions.Count > 0)
         {

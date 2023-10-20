@@ -82,13 +82,12 @@ public class PlayerMove : MonoBehaviour
             stamina = 0;
         }
         //Verifica se está utilizando e recarrega a estamina.
-        if (cooldownStamina > 0.25f && stamina < PlayerHPController.instance.GetMaxStamina() && !isRunning && inGround)
+        if (stamina < PlayerHPController.instance.GetMaxStamina() && !isRunning && inGround)
         {
             Debug.Log("Está no chão");
             //Acrescenta mais estamina ao jogador.
-            PlayerHPController.instance.ChangeStamina(1f, false);
-            stamina++;
-            cooldownStamina = 0;
+            PlayerHPController.instance.ChangeStamina(15f * Time.deltaTime, false);
+            stamina += 15f * Time.deltaTime;
         }
 
         //Movimentação normal do jogador.
@@ -219,6 +218,7 @@ public class PlayerMove : MonoBehaviour
             isRunning = false;
         }
 
+        #region :D
         /*Corrida e dash em mesma tecla de comando, inicia a corrida com dash e depois mantém a velocidade, 
         dash somente se estiver estamina suficiente.*/
         /*if (Input.GetKey(InputController.instance.run) && inGround && stamina >= 0.5f)
@@ -264,6 +264,7 @@ public class PlayerMove : MonoBehaviour
             isRunning = false;
         }*/
 
+        #endregion
         //Pulo negando a possibilidade de pular no modo furtivo.
         if (Input.GetKeyDown(InputController.instance.jump) && inGround && !stealthMode && stamina >= 15f)
         {
