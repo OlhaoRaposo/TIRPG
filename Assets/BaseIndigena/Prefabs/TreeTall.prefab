@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6367503129635307411}
   - component: {fileID: 3434246171426377458}
   - component: {fileID: 9128361786145233944}
+  - component: {fileID: 3031177426191899804}
   m_Layer: 0
   m_Name: TreeTall
   m_TagString: Untagged
@@ -62,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: afbc9ae9755345c47a30c7d00e4e125e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -107,3 +108,19 @@ CapsuleCollider:
   m_Height: 59.44778
   m_Direction: 1
   m_Center: {x: 1.0790269, y: 29.61086, z: -0.11071738}
+--- !u!114 &3031177426191899804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7653752273009211042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35e95dc5ff2b64380880dd7ac5922847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Size: {x: 36.024143, y: 28.25, z: 33.366013}
+  m_Center: {x: 0.44302177, y: 47.04, z: -1.0126209}
+  m_Area: 1
+  m_AffectedAgents: ffffffff

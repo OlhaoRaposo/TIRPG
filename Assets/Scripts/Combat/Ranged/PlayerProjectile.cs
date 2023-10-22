@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerProjectile : MonoBehaviour
@@ -32,6 +33,20 @@ public class PlayerProjectile : MonoBehaviour
             {
                 Destroy(gameObject);
             }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.CompareTag("Enemy"))
+        {
+            other.gameObject.SendMessage("TakeDamage", damage);
+        }
+        Destroy(gameObject);
+        
+        if (other!= null)
+        {
+            Destroy(this.gameObject);
         }
     }
 }

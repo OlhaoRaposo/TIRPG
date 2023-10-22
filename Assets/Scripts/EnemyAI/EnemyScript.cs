@@ -64,7 +64,7 @@ public class EnemyScript : MonoBehaviour
     {
         NavMeshHit hit;
         if (isPatrolling) {
-            patrolDestination = (Random.insideUnitSphere * (rangeDetection * 4) + new Vector3(0,300,0));
+            patrolDestination = transform.position + (Random.insideUnitSphere * (rangeDetection * 2) + new Vector3(0,300,0));
             if (Physics.Raycast(patrolDestination, Vector3.down, out RaycastHit hitInfo)) {
                 if (NavMesh.SamplePosition(hitInfo.point, out hit, .5f, NavMesh.AllAreas)) {
                     patrolDestination = hit.position;
