@@ -33,6 +33,7 @@ public class PlayerHPController : MonoBehaviour
 
             if(currentHP <= 0)
             {
+                Cursor.lockState = CursorLockMode.None;
                 SceneManager.LoadScene("GameOver");
             } 
         }

@@ -8,8 +8,6 @@ using UnityEngine.AI;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-[CustomEditor(typeof(EnemyScript))]
-
 public class EnemyScript : MonoBehaviour
 {
     public enum EnemyBehaviour { ranged, melee, rangedAndMelee }
