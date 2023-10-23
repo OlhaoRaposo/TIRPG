@@ -33,7 +33,7 @@ public class PlayerHPController : MonoBehaviour
 
             if(currentHP <= 0)
             {
-                //Game Over
+                SceneManager.LoadScene("GameOver");
             } 
         }
         else
