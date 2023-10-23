@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 [CustomEditor(typeof(EnemyScript))]
@@ -22,6 +23,9 @@ public class EnemyScript : MonoBehaviour
     [Header("CanvasReference")]
     [SerializeField]
     public Canvas alert;
+    public Canvas lifeCanvas;
+    public GameObject damageCanvas;
+    public Image lifeBar;
     [Header("WeaponReferences")]
     public Weapon myWeapon;
     private bool waitingForSpecial;
@@ -101,6 +105,7 @@ public class EnemyScript : MonoBehaviour
     
     void DettectPlayerOrAudioNearby()
     {
+        lifeCanvas.gameObject.SetActive(isAttacking);
         targetsDettectes = Physics.OverlapSphere(transform.position, rangeDetection).ToList();
         foreach (var detections in targetsDettectes) {
             if (detections.gameObject.CompareTag("Player"))
@@ -115,7 +120,7 @@ public class EnemyScript : MonoBehaviour
                 }
                 if (enemyAgent.remainingDistance < 1)
                 {
-                    Quaternion targetRotation = Quaternion.LookRotation(enemyTarget.transform.position - transform.position);
+                    Quaternion targetRotation = Quaternion.LookRotation(enemyTarget.transform.GetChild(0).transform.position - transform.position);
                     transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 8 * Time.deltaTime);
                     transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
                 }
@@ -125,7 +130,7 @@ public class EnemyScript : MonoBehaviour
         if(enemyTarget!= null)
             distanceFromPlayer = transform.position - enemyTarget.transform.position;
         
-        if (distanceFromPlayer.magnitude >= rangeDetection * 2) {
+        if (distanceFromPlayer.magnitude >= rangeDetection * 5) {
             enemyTarget = null;
             isAttacking = false;
             if (!isPatrolling)
@@ -242,12 +247,22 @@ public class EnemyScript : MonoBehaviour
     {
         enemyAgent = GetComponent<NavMeshAgent>();
         enemyAnimator = GetComponent<Animator>();
-       // energy = Convert.ToInt32(Random.Range(0, myWeapon.attacks[1].minEnergy));
     }
 
-    private void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
-        life -= damage;
+        float actualDamage;
+        actualDamage = Random.Range(.5f, 1);
+        life -= Mathf.Round((actualDamage * damage));
+        lifeBar.fillAmount = life / 100;
+        GameObject damageObj = Instantiate(damageCanvas, transform.position + new Vector3(-2, 2.8f,0) , transform.rotation, transform);
+        damageObj.transform.GetChild(0).GetComponent<Text>().text = Mathf.Round((actualDamage * damage)).ToString();
+
+        if (!isAttacking) {
+            enemyTarget = GameObject.FindWithTag("Player");
+            Attack();
+        }
+        
         if (life <= 0)
             Destroy(gameObject);
     }

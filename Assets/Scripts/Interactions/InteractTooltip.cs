@@ -12,6 +12,8 @@ public class InteractTooltip : MonoBehaviour
 
     [SerializeField] bool isOn = false;
 
+    float tooltipScale = 1f;
+
     void Awake()
     {
         instance = this;
@@ -21,6 +23,7 @@ public class InteractTooltip : MonoBehaviour
         if (!isOn) return;
 
         target.rectTransform.position = WorldToScreenPosition(interactableObject.position);
+        target.rectTransform.localScale = Vector3.one * tooltipScale;
     }
     public void ToggleTooltip(Transform obj)
     {
@@ -28,7 +31,17 @@ public class InteractTooltip : MonoBehaviour
         isOn = !isOn;
         target.gameObject.SetActive(!target.gameObject.activeSelf);
     }
-
+    public void SetScale(float scale)
+    {
+        tooltipScale = Mathf.Clamp(scale, .1f, 1f);
+        SetAlpha();
+    }
+    void SetAlpha()
+    {
+        Color tooltipColor = target.color;
+        tooltipColor.a = tooltipScale;
+        target.color = tooltipColor;
+    }
     public bool GetIsOn()
     {
         return isOn;

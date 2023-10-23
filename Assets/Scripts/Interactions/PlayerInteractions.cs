@@ -44,9 +44,12 @@ public class PlayerInteractions : MonoBehaviour
             if(!InteractTooltip.instance.GetIsOn())
             {
                 InteractTooltip.instance.ToggleTooltip(col[0].transform);
+                float tooltipScale = 1 - (transform.position - col[0].transform.position).magnitude/interactDistance;
+                InteractTooltip.instance.SetScale(tooltipScale);
             }
         }else {
             interactable = null;
+            InteractTooltip.instance.ToggleTooltip(null);
         }
     }
 

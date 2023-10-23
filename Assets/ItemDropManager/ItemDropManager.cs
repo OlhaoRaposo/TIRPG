@@ -11,14 +11,15 @@ public class ItemDropManager : MonoBehaviour
     {
         instance = this;
     }
-
     public void DropItem(ItemDropInfo[] dropInfo, Vector3 instantiatePosition)
     {
+        if (dropInfo == null) return;
+
         foreach(ItemDropInfo item in dropInfo)
         {
             if (Random.Range(0f, 1f) < item.dropRate)
             {
-                Instantiate(item.itemPrefab, instantiatePosition, Quaternion.identity, droppedItemsParent);
+                Instantiate(item.data.prefab, instantiatePosition, Quaternion.identity, droppedItemsParent);
             }
         }
     }
@@ -27,6 +28,7 @@ public class ItemDropManager : MonoBehaviour
 [System.Serializable]
 public struct ItemDropInfo
 {
-    public GameObject itemPrefab;
+    public ItemData data;
     public float dropRate;
+    //public int amount;
 }
