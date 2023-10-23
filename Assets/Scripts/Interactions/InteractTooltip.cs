@@ -22,8 +22,19 @@ public class InteractTooltip : MonoBehaviour
     {
         if (!isOn) return;
 
-        target.rectTransform.position = WorldToScreenPosition(interactableObject.position);
-        target.rectTransform.localScale = Vector3.one * tooltipScale;
+        if (interactableObject != null)
+        {
+            target.rectTransform.position = WorldToScreenPosition(interactableObject.position);
+            target.rectTransform.localScale = Vector3.one * tooltipScale;
+        }
+            
+    }
+    
+    public void DisableTooltip()
+    {
+        interactableObject = null;
+        isOn = false;
+        target.gameObject.SetActive(false);
     }
     public void ToggleTooltip(Transform obj)
     {

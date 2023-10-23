@@ -21,8 +21,7 @@ public class EnemyScript : MonoBehaviour
     [SerializeField] private Vector3 patrolDestination;
     [Space]
     [Header("CanvasReference")]
-    [SerializeField]
-    public Canvas alert;
+    [SerializeField] public Canvas alert;
     public Canvas lifeCanvas;
     public GameObject damageCanvas;
     public Image lifeBar;
@@ -30,6 +29,8 @@ public class EnemyScript : MonoBehaviour
     public Weapon myWeapon;
     private bool waitingForSpecial;
     [Header("EnemyReferences")] 
+    public QuestType.EnemyTypes questType;
+    public ItemDropInfo[] dropInfo;
     public GameObject enemyTarget;
     public float life;
     public float energy;
@@ -37,8 +38,7 @@ public class EnemyScript : MonoBehaviour
     public Vector3 distanceFromPlayer;
     public NavMeshAgent enemyAgent;
     public Animator enemyAnimator;
-    [SerializeField] 
-    private List<Collider> targetsDettectes = new List<Collider>();
+    [SerializeField] private List<Collider> targetsDettectes = new List<Collider>();
     
     private void Start()
     {
@@ -265,5 +265,11 @@ public class EnemyScript : MonoBehaviour
         
         if (life <= 0)
             Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        ItemDropManager.instance.DropItem(dropInfo, transform.position);
+        QuestController.instance.EnemyEliminated(questType);
     }
 }

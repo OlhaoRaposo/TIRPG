@@ -49,9 +49,10 @@ public class PlayerInteractions : MonoBehaviour
             }
         }else {
             interactable = null;
-            InteractTooltip.instance.ToggleTooltip(null);
+            InteractTooltip.instance.DisableTooltip();
         }
     }
+    
 
     public void TakeItem(GameObject item)
     {
