@@ -84,7 +84,6 @@ public class PlayerMove : MonoBehaviour
         //Verifica se está utilizando e recarrega a estamina.
         if (stamina < PlayerHPController.instance.GetMaxStamina() && !isRunning && inGround)
         {
-            Debug.Log("Está no chão");
             //Acrescenta mais estamina ao jogador.
             PlayerHPController.instance.ChangeStamina(15f * Time.deltaTime, false);
             stamina += 15f * Time.deltaTime;

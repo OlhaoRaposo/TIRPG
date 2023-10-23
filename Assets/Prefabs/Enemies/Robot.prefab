@@ -12,13 +12,14 @@ GameObject:
   - component: {fileID: 4652496882504275830}
   - component: {fileID: 3682428866601903454}
   - component: {fileID: 9173548726206998862}
+  - component: {fileID: 4752596861457778081}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1444798175201446954
 RectTransform:
   m_ObjectHideFlags: 0
@@ -102,6 +103,22 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!111 &4752596861457778081
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 714829604270617986}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 87a7822450d5c3449a701c80ff5b3997, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 87a7822450d5c3449a701c80ff5b3997, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &6410989351499856108
 GameObject:
   m_ObjectHideFlags: 0
@@ -319,7 +336,7 @@ MonoBehaviour:
   enemyTarget: {fileID: 0}
   life: 100
   energy: 0
-  rangeDetection: 6
+  rangeDetection: 7
   distanceFromPlayer: {x: 0, y: 0, z: 0}
   enemyAgent: {fileID: 0}
   enemyAnimator: {fileID: 2214908245316829807}
