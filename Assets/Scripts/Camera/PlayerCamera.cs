@@ -21,8 +21,10 @@ public class PlayerCamera : MonoBehaviour
     [Header("References")]
     [SerializeField] private GameObject playerObject;
     [SerializeField] private GameObject playerBody;
+    [SerializeField] private GameObject playerAim;
 
     private CinemachineFreeLook myCinemachineCamera;
+    private Vector3 startingPos;
     [HideInInspector] public Camera cameraBody;
 
     private void Awake()
@@ -36,7 +38,8 @@ public class PlayerCamera : MonoBehaviour
     private void Start()
     {
         myCinemachineCamera.Follow = playerObject.transform;
-        myCinemachineCamera.LookAt = playerObject.transform;
+        myCinemachineCamera.LookAt = playerAim.transform;
+        startingPos = transform.position;
 
         SetCameraOrbit(false);
         Cursor.lockState = CursorLockMode.Locked;
@@ -80,6 +83,11 @@ public class PlayerCamera : MonoBehaviour
         if (Input.GetMouseButtonUp(1) == true)
         {
             SetCameraOrbit(false);
+        }
+
+        if (Input.GetMouseButtonDown(2) == true)
+        {
+            transform.position = startingPos;
         }
 
     }
