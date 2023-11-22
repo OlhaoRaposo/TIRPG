@@ -36,19 +36,30 @@ public class EnemyScript : MonoBehaviour
     public Vector3 distanceFromPlayer;
     public NavMeshAgent enemyAgent;
     public Animator enemyAnimator;
-    [SerializeField] private List<Collider> targetsDettectes = new List<Collider>();
+    [Header("Bestiary")] 
+    [SerializeField]
+    public string bestiaryCode;
+    public GameObject spawner;
+    private List<Collider> targetsDettectes = new List<Collider>();
     
     private void Start()
     {
         GetEnemyReferences();
         StartCoroutine(Patrol());
-        
+        CreateSpawner();
     }
     private void Update()
     {
         DettectPlayerOrAudioNearby();
         DettectPatrolDistance();
         RotationController();
+    }
+
+    private void CreateSpawner()
+    {
+        GameObject spawn = Instantiate(spawner, transform.position, Quaternion.identity);
+        spawn.GetComponent<Spawner>().prefabCode = bestiaryCode;
+        spawner = spawn;
     }
     private void RotationController()
     {
@@ -260,7 +271,6 @@ public class EnemyScript : MonoBehaviour
             enemyTarget = GameObject.FindWithTag("Player");
             Attack();
         }
-        
         if (life <= 0)
             Destroy(gameObject);
     }
@@ -269,5 +279,8 @@ public class EnemyScript : MonoBehaviour
     {
         ItemDropManager.instance.DropItem(dropInfo, transform.position);
         QuestController.instance.EnemyEliminated(questType);
+        if (spawner.TryGetComponent(out Spawner spawn)) {
+            spawn.GetComponent<Spawner>().StartRespawnProcess();
+        }
     }
 }
