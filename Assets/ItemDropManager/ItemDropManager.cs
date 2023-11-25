@@ -23,6 +23,10 @@ public class ItemDropManager : MonoBehaviour
             }
         }
     }
+    public void SetItemParent(Transform item)
+    {
+        item.SetParent(droppedItemsParent);
+    }
 }
 
 [System.Serializable]

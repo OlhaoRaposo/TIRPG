@@ -44,9 +44,9 @@ public class PlayerInteractions : MonoBehaviour
             if(!InteractTooltip.instance.GetIsOn())
             {
                 InteractTooltip.instance.ToggleTooltip(col[0].transform);
-                float tooltipScale = 1 - (transform.position - col[0].transform.position).magnitude/interactDistance;
-                InteractTooltip.instance.SetScale(tooltipScale);
             }
+            float tooltipScale = 1 - (transform.position - col[0].transform.position).magnitude/interactDistance;
+            InteractTooltip.instance.SetScale(tooltipScale);
         }else {
             interactable = null;
             InteractTooltip.instance.DisableTooltip();
@@ -54,11 +54,13 @@ public class PlayerInteractions : MonoBehaviour
     }
     
 
-    public void TakeItem(GameObject item)
+    public bool TakeItem(ItemData item)
     {
         Debug.Log("Peguei um " + item.name);
 
         //Adicionar item ao inventário
+        bool canTake = GetComponent<PlayerInventory>().AddItemToInventory(item);
+        return canTake;
     }
 
     public void TakeQuest(/* referência da quest */)
