@@ -11,28 +11,17 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField] WeaponSlot rangedWeaponSlot;
     List<ItemData> items = new List<ItemData>();
 
-    [SerializeField] GameObject inventoryPanel;
-
     void Awake()
     {
         instance = this;
     }
-    void Start()
-    {
-        //As próximas linhas servem somente para inicializar os slots (vou tirar isso dps)
-        ToggleInventoryPanel();
-        Invoke("ToggleInventoryPanel", .1f);
-    }
+    
     void Update()
     {
         if (Input.GetKeyDown(InputController.instance.inventory))
         {
-            ToggleInventoryPanel();
+            UIManager.instance?.ToggleInventoryPanel();
         }
-    }
-    public void ToggleInventoryPanel()
-    {
-        inventoryPanel.SetActive(!inventoryPanel.activeSelf);
     }
     public bool AddItemToInventory(ItemData itemData)
     {
