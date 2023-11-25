@@ -21,16 +21,8 @@ public class QuestType : ScriptableObject
     public List<MissionType> stageMission = new List<MissionType>();
 
     public List<string> questDescription = new List<string>();
-
-    public MissionType type;
-
-    public int questStages;
-
-    public float questProgress;
     
     public bool hasTimeout;
-
-    public float questTime;
 
     public float questTimeLimit;
     
@@ -59,18 +51,6 @@ public class QuestType : ScriptableObject
     public List<DialogueTemp> dialogue = new List<DialogueTemp>();
 
     public List<int> dialoguesInStage = new List<int>();
-
-    public int dialogueStage = 0;
-
-    public int indexDialogue = -1;
-    
-    public List<Image> images = new List<Image>();
-    
-    public List<Sprite> sprites = new List<Sprite>();
-    
-    public List<GameObject> characters = new List<GameObject>();
-    
-    public List<Animator> animations = new List<Animator>();
     
     [Header ("Specific Objectives")]
     public List<GameObject> explorationZones = new List<GameObject>();
@@ -83,15 +63,11 @@ public class QuestType : ScriptableObject
     
     public List<TypesOfCollectibles> missionCollectibles = new List<TypesOfCollectibles>();
     
-    public List<int> collectedItems = new List<int>();
-    
     public List<int> collectedItemsGoal = new List<int>();
 
     public enum EnemyTypes{MilitaryRobots, LegendaryAnimals}
     
     public List<EnemyTypes> enemies = new List<EnemyTypes>();
-    
-    public List<int> enemiesKilled = new List<int>();
 
     public List<int> deadEnemiesObjective = new List<int>();
     
