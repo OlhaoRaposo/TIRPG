@@ -15,7 +15,7 @@ public class Spawner : MonoBehaviour
   {
    foreach(GameObject enemy in ((EnemyDataBase)bestiary).enemys)
    {
-    if(enemy.GetComponent<EnemyScript>().bestiaryCode == code)
+    if(enemy.GetComponent<EnemyBehaviour>().mySpawner.bestiaryCode == code)
     {
      return enemy;
     }
