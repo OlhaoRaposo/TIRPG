@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[Serializable]
 public class QuestController : MonoBehaviour
 {
     public static QuestController instance;
@@ -20,6 +21,11 @@ public class QuestController : MonoBehaviour
 
     public List<Text> missionTexts = new List<Text>(3);
 
+    public QuestProgress primary;
+    public QuestProgress secondary;
+    public QuestProgress temporary;
+    public List<QuestProgress> controllers = new List<QuestProgress>(3);
+
     void Awake()
     {
         //Garante que exista apenas um controlador na cena.
@@ -32,11 +38,25 @@ public class QuestController : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        controllers.Add(primary);
+        controllers.Add(secondary);
+        controllers.Add(temporary);
+
+        for (int index = 0; index < activeMissions[0].collectedItemsGoal.Count; index++)
+        {
+            controllers[0].collectedItems.Add(0);
+        }
+        for (int index = 0; index < activeMissions[0].deadEnemiesObjective.Count; index++)
+        {
+            controllers[0].enemiesKilled.Add(0);
+        }
     }
 
 void Start()
 {
-    ChangeDialog(activeMissions[0], activeMissions[0].indexDialogue);
+    ChangeDialog(activeMissions[0]);
+    ToggleDescription();
 }
 
     void FixedUpdate()
@@ -46,13 +66,29 @@ void Start()
         for (int index = 0; index < activeMissions.Count; index++)
         {
             quest = activeMissions[index];
+            
+            int aux = 0;
+            switch(quest.classification)
+            {
+                case QuestType.MissionRating.Primary:
+                    aux = 0;
+                    break;
+                case QuestType.MissionRating.Secondary:
+                    aux = 1;
+                    break;
+                case QuestType.MissionRating.Temporary:
+                    aux = 2;
+                    break;
+            }
 
             if (quest.hasTimeout)
             {
-                quest.questTime += Time.fixedDeltaTime;
+                //quest.questTime += Time.fixedDeltaTime;
+                controllers[aux].questTime += Time.fixedDeltaTime;
 
-                if (quest.questTime > quest.questTimeLimit)
+                if (/*quest*/controllers[aux].questTime > quest.questTimeLimit)
                 {
+                    controllers[aux].ResetQuest();
                     activeMissions.Remove(quest);
                     quest.inProgress = false;
                     ToggleDescription();
@@ -65,7 +101,21 @@ void Start()
     {
         foreach (QuestType quest in activeMissions)
         {
-            switch (quest.type)
+            int aux = 0;
+            switch(quest.classification)
+            {
+                case QuestType.MissionRating.Primary:
+                    aux = 0;
+                    break;
+                case QuestType.MissionRating.Secondary:
+                    aux = 1;
+                    break;
+                case QuestType.MissionRating.Temporary:
+                    aux = 2;
+                    break;
+            }
+
+            switch (/*quest*/controllers[aux].type)
             {
                 case QuestType.MissionType.Exploration:
                     foreach (GameObject zones in quest.explorationZones)
@@ -123,22 +173,35 @@ void Start()
 
     public void CollectedItems(QuestType.TypesOfCollectibles collectiblesName)
     {
-
         QuestType quest = null;
 
         for (int id = 0; id < activeMissions.Count; id++)
         {
             quest = activeMissions[id];
 
-            if (quest.type == QuestType.MissionType.ItenCollection)
+            int aux = 0;
+            switch(quest.classification)
+            {
+                case QuestType.MissionRating.Primary:
+                    aux = 0;
+                    break;
+                case QuestType.MissionRating.Secondary:
+                    aux = 1;
+                    break;
+                case QuestType.MissionRating.Temporary:
+                    aux = 2;
+                    break;
+            }
+
+            if (/*quest*/controllers[aux].type == QuestType.MissionType.ItenCollection)
             {
                 for (int index = 0; index < quest.missionCollectibles.Count; index++)
                 {
                     if (collectiblesName == quest.missionCollectibles[index])
                     {
-                        if (quest.collectedItems[index] < quest.collectedItemsGoal[index])
+                        if (/*quest*/controllers[aux].collectedItems[index] < quest.collectedItemsGoal[index])
                         {
-                            quest.collectedItems[index]++;
+                            /*quest*/controllers[aux].collectedItems[index]++;
                         }
                     }
                 }
@@ -152,7 +215,7 @@ void Start()
 
                 for (int index = 0; index < quest.collectedItemsGoal.Count; index++)
                 {
-                    if (quest.collectedItems[index] == quest.collectedItemsGoal[index])
+                    if (/*quest*/controllers[aux].collectedItems[index] == quest.collectedItemsGoal[index])
                     {
                         auxiliaryCheck[index] = true;
                     }
@@ -178,22 +241,35 @@ void Start()
 
     public void EnemyEliminated(QuestType.EnemyTypes enenmyName)
     {
-
         QuestType quest = null;
 
         for (int id = 0; id < activeMissions.Count; id++)
         {
             quest = activeMissions[id];
 
-            if (quest.type == QuestType.MissionType.KillEnemies)
+            int aux = 0;
+            switch(quest.classification)
+            {
+                case QuestType.MissionRating.Primary:
+                    aux = 0;
+                    break;
+                case QuestType.MissionRating.Secondary:
+                    aux = 1;
+                    break;
+                case QuestType.MissionRating.Temporary:
+                    aux = 2;
+                    break;
+            }
+
+            if (/*quest*/controllers[aux].type == QuestType.MissionType.KillEnemies)
             {
                 for (int index = 0; index < quest.enemies.Count; index++)
                 {
                     if (enenmyName == quest.enemies[index])
                     {
-                        if (quest.enemiesKilled[index] < quest.deadEnemiesObjective[index])
+                        if (/*quest*/controllers[aux].enemiesKilled[index] < quest.deadEnemiesObjective[index])
                         {
-                            quest.enemiesKilled[index]++;
+                            /*quest*/controllers[aux].enemiesKilled[index]++;
                         }
                     }
                 }
@@ -207,7 +283,7 @@ void Start()
 
                 for (int index = 0; index < quest.deadEnemiesObjective.Count; index++)
                 {
-                    if (quest.enemiesKilled[index] == quest.deadEnemiesObjective[index])
+                    if (/*quest*/controllers[aux].enemiesKilled[index] == quest.deadEnemiesObjective[index])
                     {
                         auxiliaryCheck[index] = true;
                     }
@@ -233,12 +309,27 @@ void Start()
 
     void ChangeStage(QuestType quest)
     {
-        if (quest.questStages < quest.stageMission.Count - 1 && quest.inProgress)
-        {
-            quest.questStages++;
-            quest.type = quest.stageMission[quest.questStages];
+        int aux = 0;
 
-            ChangeDialog(quest, quest.indexDialogue);
+        switch(quest.classification)
+        {
+            case QuestType.MissionRating.Primary:
+                aux = 0;
+                break;
+            case QuestType.MissionRating.Secondary:
+                aux = 1;
+                break;
+            case QuestType.MissionRating.Temporary:
+                aux = 2;
+                break;
+        }
+
+        if (/*quest*/controllers[aux].questStages < quest.stageMission.Count - 1 && quest.inProgress)
+        {
+            /*quest*/controllers[aux].questStages++;
+            /*quest*/controllers[aux].type = quest.stageMission[/*quest*/controllers[aux].questStages];
+
+            ChangeDialog(quest);
 
             ToggleDescription();
         }
@@ -250,6 +341,7 @@ void Start()
 
     void ToggleDescription()
     {
+        int aux = -1;
         switch (activeMissions.Count)
         {
             case 0:
@@ -258,29 +350,72 @@ void Start()
                 missionTexts[2].text = "";
                 break;
             case 1:
-                if (activeMissions[0].questDescription.Count > 0 && activeMissions[0].questDescription[activeMissions[0].questStages] != null)
+                
+                switch(activeMissions[0].classification)
                 {
-                    missionTexts[0].text = activeMissions[0].questDescription[activeMissions[0].questStages];
+                    case QuestType.MissionRating.Primary:
+                        aux = 0;
+                        break;
+                    case QuestType.MissionRating.Secondary:
+                        aux = 1;
+                        break;
+                    case QuestType.MissionRating.Temporary:
+                        aux = 2;
+                        break;
+                }
+
+                if (activeMissions[0].questDescription.Count > 0 && activeMissions[0].questDescription[controllers[aux].questStages] != null)
+                {
+                    missionTexts[0].text = activeMissions[0].questDescription[controllers[aux].questStages];
                 }
                 else
                 {
                     missionTexts[0].text = "";
+                    missionTexts[1].text = "";
+                    missionTexts[2].text = "";
                 }
                 break;
             case 2:
-                if (activeMissions[1].questDescription.Count > 0 && activeMissions[1].questDescription[activeMissions[1].questStages] != null)
+                switch(activeMissions[1].classification)
                 {
-                    missionTexts[1].text = activeMissions[1].questDescription[activeMissions[1].questStages];
+                    case QuestType.MissionRating.Primary:
+                        aux = 0;
+                        break;
+                    case QuestType.MissionRating.Secondary:
+                        aux = 1;
+                        break;
+                    case QuestType.MissionRating.Temporary:
+                        aux = 2;
+                        break;
+                }
+
+                if (activeMissions[1].questDescription.Count > 0 && activeMissions[1].questDescription[controllers[aux].questStages] != null)
+                {
+                    missionTexts[1].text = activeMissions[1].questDescription[controllers[aux].questStages];
                 }
                 else
                 {
                     missionTexts[1].text = "";
+                    missionTexts[2].text = "";
                 }
                 break;
             case 3:
-                if (activeMissions[2].questDescription.Count > 0 && activeMissions[2].questDescription[activeMissions[2].questStages] != null)
+                switch(activeMissions[2].classification)
                 {
-                    missionTexts[2].text = activeMissions[2].questDescription[activeMissions[2].questStages];
+                    case QuestType.MissionRating.Primary:
+                        aux = 0;
+                        break;
+                    case QuestType.MissionRating.Secondary:
+                        aux = 1;
+                        break;
+                    case QuestType.MissionRating.Temporary:
+                        aux = 2;
+                        break;
+                }
+
+                if (activeMissions[2].questDescription.Count > 0 && activeMissions[2].questDescription[controllers[aux].questStages] != null)
+                {
+                    missionTexts[2].text = activeMissions[2].questDescription[controllers[aux].questStages];
                 }
                 else
                 {
@@ -290,52 +425,76 @@ void Start()
         }
     }
 
-    public void ChangeDialog(QuestType quest, int indexText)
+    public void ChangeDialog(QuestType quest)
     {
-        if (quest.type == QuestType.MissionType.Dialogue)
+        int aux = 0;
+
+        switch(quest.classification)
         {
-            if (indexText > quest.dialoguesInStage[quest.dialogueStage])
+            case QuestType.MissionRating.Primary:
+                aux = 0;
+                break;
+            case QuestType.MissionRating.Secondary:
+                aux = 1;
+                break;
+            case QuestType.MissionRating.Temporary:
+                aux = 2;
+                break;
+        }
+
+        //Verifica o tipo de missão.
+        if (/*quest*/controllers[aux].type == QuestType.MissionType.Dialogue)
+        {
+            int auxiliaryCheck = 0;
+
+            //Verifica se o estágio atual de dialogo é maior que a a introdução da missão.
+            if (/*quest*/controllers[aux].dialogueStage > 0)
             {
-                for (int index = quest.dialogueStage; index > 0; index--)
+                for (int index = /*quest*/controllers[aux].dialogueStage; index > 0; index--)
                 {
-                    indexText -= (quest.dialoguesInStage[quest.dialogueStage - 1] + 1);
+                    auxiliaryCheck += (quest.dialoguesInStage[/*quest*/controllers[aux].dialogueStage - 1]);
                 }
             }
 
-            quest.indexDialogue++;
-            if (indexText < quest.dialoguesInStage[quest.dialogueStage])
+            if (/*quest*/controllers[aux].indexDialogue - auxiliaryCheck != 0)
             {
-                if (!DialogueManager.instance.isPlayingDialogue)
+                //Aumenta e indica o texto a ser lido.
+                /*quest*/controllers[aux].indexDialogue++;
+                
+                //Verifica se já há um dialogo reproduzindo
+                if(!DialogueManager.instance.isPlayingDialogue)
                 {
-                    quest.dialogue[quest.indexDialogue].Play();
+                    //Reproduz o dialogo
+                    quest.dialogue[/*quest*/controllers[aux].indexDialogue].Play();
                 }
             }
             else
             {
-                quest.dialogueStage++;
+                //Aumenta o estágio da missão.
+                /*quest*/controllers[aux].dialogueStage++;
+                //Muda o estágio da missão.
                 ChangeStage(quest);
             }
         }
     }
 
-    void SwitchCharacter()
-    {
-
-    }
-
-    void ToggleAnimation()
-    {
-
-    }
-
-    void ChangeImage()
-    {
-
-    }
-
     void AddReward(QuestType quest)
     {
-        /*foreach(QuestType.RewardType type in quest.questReward)
+        /*int aux = 0;
+            switch(quest.classification)
+            {
+                case QuestType.MissionRating.Primary:
+                    aux = 0;
+                    break;
+                case QuestType.MissionRating.Secondary:
+                    aux = 1;
+                    break;
+                case QuestType.MissionRating.Temporary:
+                    aux = 2;
+                    break;
+            }
+
+        foreach(QuestType.RewardType type in quest.questReward)
         {
             if(type == QuestType.RewardType.Guns || type == QuestType.RewardType.Accessories)
             {
@@ -462,6 +621,14 @@ void Start()
 
         if (!auxiliaryCheck)
         {
+            for (int index = 0; index < quest.nextMission.collectedItemsGoal.Count; index++)
+            {
+                controllers[0].collectedItems.Add(0);
+            }
+            for (int index = 0; index < quest.nextMission.deadEnemiesObjective.Count; index++)
+            {
+                controllers[0].enemiesKilled.Add(0);
+            }
             activeMissions.Add(quest.nextMission);
             quest.nextMission.inProgress = true;
         }
@@ -481,6 +648,14 @@ void Start()
 
         if (!auxiliaryCheck)
         {
+            for (int index = 0; index < quest.collectedItemsGoal.Count; index++)
+            {
+                controllers[1].collectedItems.Add(0);
+            }
+            for (int index = 0; index < quest.deadEnemiesObjective.Count; index++)
+            {
+                controllers[1].enemiesKilled.Add(0);
+            }
             activeMissions.Add(quest);
             quest.inProgress = true;
         }
@@ -502,6 +677,14 @@ void Start()
 
         if (!auxiliaryCheck)
         {
+            for (int index = 0; index < quest.collectedItemsGoal.Count; index++)
+            {
+                controllers[2].collectedItems.Add(0);
+            }
+            for (int index = 0; index < quest.deadEnemiesObjective.Count; index++)
+            {
+                controllers[2].enemiesKilled.Add(0);
+            }
             activeMissions.Add(quest);
             quest.inProgress = true;
         }
@@ -511,6 +694,22 @@ void Start()
 
     void CompleteMission(QuestType quest)
     {
+        int aux = 0;
+        switch(quest.classification)
+        {
+            case QuestType.MissionRating.Primary:
+                aux = 0;
+                break;
+            case QuestType.MissionRating.Secondary:
+                aux = 1;
+                break;
+            case QuestType.MissionRating.Temporary:
+                aux = 2;
+                break;
+        }
+
+        controllers[aux].ResetQuest();
+
         AddInfluence(quest);
 
         AddReward(quest);

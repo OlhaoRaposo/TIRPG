@@ -108,7 +108,7 @@ public class DialogueManager : MonoBehaviour
         isBuildingDialogueText = false;
         dialogueWindow.SetActive(false);
         activeCharacter = null;
-        QuestController.instance.ChangeDialog(QuestController.instance.activeMissions[0], QuestController.instance.activeMissions[0].indexDialogue);
+        QuestController.instance.ChangeDialog(QuestController.instance.activeMissions[0]);
 
     }
 

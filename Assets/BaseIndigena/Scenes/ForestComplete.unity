@@ -3672,7 +3672,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: 
 --- !u!222 &212533786
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4911,6 +4911,9 @@ GameObject:
   m_Component:
   - component: {fileID: 289112423}
   - component: {fileID: 289112424}
+  - component: {fileID: 289112427}
+  - component: {fileID: 289112426}
+  - component: {fileID: 289112425}
   m_Layer: 0
   m_Name: QuestController
   m_TagString: Untagged
@@ -4956,6 +4959,70 @@ MonoBehaviour:
   - {fileID: 710100051}
   - {fileID: 1241386262}
   - {fileID: 212533785}
+  primary: {fileID: 289112427}
+  secondary: {fileID: 289112426}
+  temporary: {fileID: 289112425}
+  controllers: []
+--- !u!114 &289112425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 289112422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4da2a2812bea8e7538aee2a3837241f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 4
+  questStages: 0
+  questProgress: 0
+  questTime: 0
+  dialogueStage: 0
+  indexDialogue: -1
+  collectedItems: 
+  enemiesKilled: 
+--- !u!114 &289112426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 289112422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4da2a2812bea8e7538aee2a3837241f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 4
+  questStages: 0
+  questProgress: 0
+  questTime: 0
+  dialogueStage: 0
+  indexDialogue: -1
+  collectedItems: 
+  enemiesKilled: 
+--- !u!114 &289112427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 289112422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4da2a2812bea8e7538aee2a3837241f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 4
+  questStages: 0
+  questProgress: 0
+  questTime: 0
+  dialogueStage: 0
+  indexDialogue: -1
+  collectedItems: 
+  enemiesKilled: 
 --- !u!1 &291836405
 GameObject:
   m_ObjectHideFlags: 0
@@ -12793,7 +12860,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: 
 --- !u!222 &710100052
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -22524,7 +22591,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: 
 --- !u!222 &1241386263
 CanvasRenderer:
   m_ObjectHideFlags: 0
