@@ -12,6 +12,8 @@ public class InteractTooltip : MonoBehaviour
 
     [SerializeField] bool isOn = false;
 
+    [SerializeField] float minimumSize = .1f;
+    [SerializeField] float maximumSize = 1f;
     float tooltipScale = 1f;
 
     void Awake()
@@ -27,9 +29,9 @@ public class InteractTooltip : MonoBehaviour
             target.rectTransform.position = WorldToScreenPosition(interactableObject.position);
             target.rectTransform.localScale = Vector3.one * tooltipScale;
         }
-            
+
     }
-    
+
     public void DisableTooltip()
     {
         interactableObject = null;
@@ -44,7 +46,7 @@ public class InteractTooltip : MonoBehaviour
     }
     public void SetScale(float scale)
     {
-        tooltipScale = Mathf.Clamp(scale, .1f, 1f);
+        tooltipScale = Mathf.Clamp(scale, minimumSize, maximumSize);
         SetAlpha();
     }
     void SetAlpha()

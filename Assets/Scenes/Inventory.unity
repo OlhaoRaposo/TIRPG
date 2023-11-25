@@ -410,6 +410,8 @@ MonoBehaviour:
   interactableObject: {fileID: 0}
   target: {fileID: 1043619787}
   isOn: 0
+  minimumSize: 0.1
+  maximumSize: 1
 --- !u!4 &114833699
 Transform:
   m_ObjectHideFlags: 0
@@ -880,13 +882,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51e0a0b4c509d0649b9bd566b94f7794, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slots:
-  - {fileID: 1613006014}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  slots: []
   meleeWeaponSlot: {fileID: 583343516}
   rangedWeaponSlot: {fileID: 1579862455}
 --- !u!114 &1579862455 stripped
@@ -899,18 +895,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c8a2cc781ed4ccc4cb98ddf9d7bbc943, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1613006014 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3513754424316148974, guid: 27cab77940d3fe34b8aba7dfba718ae8,
-    type: 3}
-  m_PrefabInstance: {fileID: 5804914283814684354}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09d8658a2343a764b9ccc135572dd567, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1799511409
@@ -1384,6 +1368,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: InGame Menus
+      objectReference: {fileID: 0}
+    - target: {fileID: 2853303691452300790, guid: 27cab77940d3fe34b8aba7dfba718ae8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3234533339287959079, guid: 27cab77940d3fe34b8aba7dfba718ae8,
         type: 3}
