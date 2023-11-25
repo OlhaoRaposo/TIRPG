@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class Interactable_Item : MonoBehaviour, IInteractable
 {
-    /// Atributos a adicionar:
-    /// 
-    /// Informaï¿½ï¿½es do item
-    /// 
+    [SerializeField] ItemData itemData;
     [SerializeField] QuestType.TypesOfCollectibles typesOf;
 
     public void Interact(PlayerInteractions player)
     {
-        player.TakeItem(gameObject);
-        QuestController.instance.CollectedItems(typesOf);
-        InteractTooltip.instance.ToggleTooltip(null);
+        //Entra no if somente se houver espaço disponível no inventário
+        if (player.TakeItem(itemData))
+        {
+            QuestController.instance?.CollectedItems(typesOf);
+            InteractTooltip.instance?.ToggleTooltip(null);
 
-        Destroy(gameObject);
+            Destroy(gameObject);
+        }
     }
 }

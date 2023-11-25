@@ -54,11 +54,13 @@ public class PlayerInteractions : MonoBehaviour
     }
     
 
-    public void TakeItem(GameObject item)
+    public bool TakeItem(ItemData item)
     {
         Debug.Log("Peguei um " + item.name);
 
         //Adicionar item ao inventário
+        bool canTake = GetComponent<PlayerInventory>().AddItemToInventory(item);
+        return canTake;
     }
 
     public void TakeQuest(/* referência da quest */)
