@@ -9,7 +9,9 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] CharacterAttributeData startAttributeData;
 
     [Header("Levelup formula variables (levelUpXp = ax² + bx + c)")]
-    [SerializeField] float a, b, c;
+    [SerializeField] float a;
+    [SerializeField] float b;
+    [SerializeField] float c;
 
     int level = 0;
 
@@ -52,11 +54,13 @@ public class PlayerStats : MonoBehaviour
             UIManager.instance?.UpdateXpStats(currentXp, levelupXp);
         }
     }
+    [ContextMenu("Level up")]
     public void LevelUp()
     {
         currentXp = 0;
         level++;
         availablePoints += pointsAddedWhenLevelUp;
+        UIManager.instance.UpdateAvailablePoints(availablePoints);
         SetLevelUpXp(level);
     }
     public void SetLevelUpXp(int nextLevel)
@@ -67,29 +71,32 @@ public class PlayerStats : MonoBehaviour
         //Update UI
         UIManager.instance?.UpdateXpStats(currentXp, levelupXp);
     }
-    public void AddStrength()
+    public void IncreaseStrength()
     {
         if (availablePoints <= 0) return;
 
         availablePoints--;
         strength++;
         UIManager.instance.UpdateAvailablePoints(availablePoints);
+        UIManager.instance.UpdateStrength(strength);
     }
-    public void AddDexterity()
+    public void IncreaseDexterity()
     {
         if (availablePoints <= 0) return;
 
         availablePoints--;
         dexterity++;
         UIManager.instance.UpdateAvailablePoints(availablePoints);
+        UIManager.instance.UpdateDexterity(dexterity);
     }
-    public void AddEndurance()
+    public void IncreaseEndurance()
     {
         if (availablePoints <= 0) return;
 
         availablePoints--;
         endurance++;
         UIManager.instance.UpdateAvailablePoints(availablePoints);
+        UIManager.instance.UpdateEndurance(endurance);
     }
     public int GetStrength()
     {

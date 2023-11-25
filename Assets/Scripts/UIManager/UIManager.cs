@@ -53,15 +53,15 @@ public class UIManager : MonoBehaviour
     }
     public void UpdateStrength(int strength)
     {
-        strengthText.text = strength.ToString();
+        strengthText.text = "Strength: " + strength.ToString();
     }
     public void UpdateDexterity(int dexterity)
     {
-        dexterityText.text = dexterity.ToString();
+        dexterityText.text = "Dexterity: " + dexterity.ToString();
     }
     public void UpdateEndurance(int endurance)
     {
-        enduranceText.text = endurance.ToString();
+        enduranceText.text = "Endurance: " + endurance.ToString();
     }
     public void UpdateAvailablePoints(int points)
     {
@@ -106,5 +106,17 @@ public class UIManager : MonoBehaviour
         staminaBar.SetActive(!staminaBar.activeSelf);
 
         equipedWeapons.SetActive(!equipedWeapons.activeSelf);
+    }
+    public void CallIncreaseStrength()
+    {
+        PlayerStats.instance.IncreaseStrength();
+    }
+    public void CallIncreaseDexterity()
+    {
+        PlayerStats.instance.IncreaseDexterity();
+    }
+    public void CallIncreaseEndurance()
+    {
+        PlayerStats.instance.IncreaseEndurance();
     }
 }
