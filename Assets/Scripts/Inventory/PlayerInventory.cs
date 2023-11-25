@@ -20,7 +20,7 @@ public class PlayerInventory : MonoBehaviour
     {
         if (Input.GetKeyDown(InputController.instance.inventory))
         {
-            UIManager.instance?.ToggleInventoryPanel();
+            UIManager.instance?.ToggleInGameMenus();
         }
     }
     public bool AddItemToInventory(ItemData itemData)

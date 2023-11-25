@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
 
+    [SerializeField] GameObject inGameMenusParent;
     [SerializeField] GameObject inventoryPanel;
     [SerializeField] GameObject statsPanel;
     [SerializeField] GameObject questsPanel;
@@ -34,8 +35,8 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         //As próximas linhas servem somente para inicializar os slots do inventário (vou tirar isso dps)
-        ToggleInventoryPanel();
-        Invoke("ToggleInventoryPanel", .1f);
+        ToggleInGameMenus();
+        Invoke("ToggleInGameMenus", .1f);
     }
 
     public void UpdateXpStats(int xp, int maxXp)
@@ -65,6 +66,12 @@ public class UIManager : MonoBehaviour
     public void UpdateAvailablePoints(int points)
     {
         availablePointsText.text = points.ToString();
+    }
+    public void ToggleInGameMenus()
+    {
+        inGameMenusParent.SetActive(!inGameMenusParent.activeSelf);
+        DisableAllPanels();
+        ToggleInventoryPanel();
     }
     public void ToggleInventoryPanel()
     {
