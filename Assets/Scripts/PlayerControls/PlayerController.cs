@@ -55,18 +55,18 @@ public class PlayerController : MonoBehaviour
         if (x != 0 || y != 0)
         {
             //Run
-            if(Input.GetKey(InputController.instance.run) && (x != 0 || y != 0) && stamina >= 0.5f)
+            if (Input.GetKey(InputController.instance.run) && (x != 0 || y != 0) && stamina >= 0.5f)
             {
                 PlayerHPController.instance.ChangeStamina(0.5f, true);
                 stamina -= 0.5f;
-                
+
                 isRunning = true;
                 animator.speed = runSpeedMultiplier;
             }
             else
             {
                 isRunning = false;
-                animator.speed = 1;
+                animator.speed = 1.25f;
             }
 
             PlayerCamera.instance.AlignRotation(PlayerCamera.instance.cameraBody.gameObject);
@@ -139,10 +139,11 @@ public class PlayerController : MonoBehaviour
     {
         isDashing = true;
         startRelativePoint = transform.position;
-        while (RelativeDistance() < dashLength)
+        //PlayerCamera.instance.ToggleMovement(false);
+        while (RelativeDistance() < dashLength && isDashing == true)
         {
-            controller.Move((dashLength - RelativeDistance() + 1) * 5 * transform.forward * Time.deltaTime);
-            yield return new WaitForSeconds(Time.deltaTime); 
+            controller.Move((dashLength - RelativeDistance() + 1) * 5 * ((transform.forward * Input.GetAxis("Vertical")) + (transform.right * Input.GetAxis("Horizontal"))) * Time.deltaTime);
+            yield return new WaitForSeconds(Time.deltaTime);
         }
         StopDash();
         yield return null;
@@ -152,6 +153,7 @@ public class PlayerController : MonoBehaviour
     {
         CancelInvoke("StopDash");
         isDashing = false;
+        //PlayerCamera.instance.ToggleMovement(true);
     }
     private float RelativeDistance()
     {
