@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6989707843688052456}
   - component: {fileID: -7817990895593924054}
   - component: {fileID: 5305964339993000653}
+  - component: {fileID: 6545025011383580720}
   m_Layer: 0
   m_Name: WoodBox
   m_TagString: Untagged
@@ -122,3 +123,22 @@ MonoBehaviour:
   m_Center: {x: 0.0032016635, y: 0.50050807, z: 0.0032016635}
   m_Area: 1
   m_AffectedAgents: ffffffff
+--- !u!205 &6545025011383580720
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3321233913975637363}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.34980333
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 6989707843688052456}
+  m_Enabled: 1

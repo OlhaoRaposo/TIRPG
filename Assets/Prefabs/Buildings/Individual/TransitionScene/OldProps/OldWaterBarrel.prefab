@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7116786389496835543}
   - component: {fileID: 3483657968693705849}
   - component: {fileID: 3504670171529944525}
+  - component: {fileID: 2637908611851950682}
   m_Layer: 0
   m_Name: OldWaterBarrel
   m_TagString: Untagged
@@ -124,3 +125,22 @@ MonoBehaviour:
   m_Center: {x: -0.003455162, y: 0.47483683, z: 0.003455162}
   m_Area: 1
   m_AffectedAgents: ffffffff
+--- !u!205 &2637908611851950682
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5322487371056575648}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 1
+  m_AnimateCrossFading: 1
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.021956842
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 7116786389496835543}
+  m_Enabled: 1

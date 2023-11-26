@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7374405089645969679}
   - component: {fileID: 175841081980406609}
   - component: {fileID: 1433931935358669877}
+  - component: {fileID: 6097181865084543414}
   m_Layer: 0
   m_Name: RockVar2
   m_TagString: Untagged
@@ -83,3 +84,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!205 &6097181865084543414
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2229641827166609288}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 1
+  m_AnimateCrossFading: 1
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.021956842
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 1433931935358669877}
+  m_Enabled: 1

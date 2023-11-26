@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 207819886323882801}
   - component: {fileID: 1392589919666431316}
   - component: {fileID: 7300063455296575181}
+  - component: {fileID: 8537039740521668694}
   m_Layer: 0
   m_Name: OldContainerDoors02
   m_TagString: Untagged
@@ -105,3 +106,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.0961031, y: 2.715049, z: 0.13477826}
   m_Center: {x: -0.54805154, y: 0, z: 0.012587428}
+--- !u!205 &8537039740521668694
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3681732131571265021}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 1
+  m_AnimateCrossFading: 1
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.006293066
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 1392589919666431316}
+  m_Enabled: 1

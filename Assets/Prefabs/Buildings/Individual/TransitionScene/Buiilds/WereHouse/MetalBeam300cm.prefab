@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1125435970563041381}
   - component: {fileID: 8215356969970824058}
   - component: {fileID: -2480958303725011577}
+  - component: {fileID: 7711194981809742376}
   m_Layer: 0
   m_Name: MetalBeam300cm
   m_TagString: Untagged
@@ -105,3 +106,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.25, y: 3, z: 0.14999999}
   m_Center: {x: 0, y: 1.5, z: 0}
+--- !u!205 &7711194981809742376
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1891069661709882248}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 1
+  m_AnimateCrossFading: 1
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.020396842
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 8215356969970824058}
+  m_Enabled: 1

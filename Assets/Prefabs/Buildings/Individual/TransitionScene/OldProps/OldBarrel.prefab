@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6203368506547812772}
   - component: {fileID: 7478092407550541822}
   - component: {fileID: 8891145990043618533}
+  - component: {fileID: -8166865431584387989}
   m_Layer: 0
   m_Name: OldBarrel
   m_TagString: Untagged
@@ -124,3 +125,22 @@ MonoBehaviour:
   m_Center: {x: -0.0041639805, y: 0.7335127, z: -0.004163921}
   m_Area: 1
   m_AffectedAgents: ffffffff
+--- !u!205 &-8166865431584387989
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2805673582603446268}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 1
+  m_AnimateCrossFading: 1
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.02723881
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 6203368506547812772}
+  m_Enabled: 1
