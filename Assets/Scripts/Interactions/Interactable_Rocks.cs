@@ -9,7 +9,6 @@ public class Interactable_Rocks : MonoBehaviour, IInteractable
     Transform item;
    public void Interact(PlayerInteractions player)
     {
-        item = player.getItem();
         item.SetParent(galonPosition);
         item.localPosition = Vector3.zero;
 
