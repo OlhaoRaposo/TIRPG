@@ -37,10 +37,12 @@ public class PlayerGun : MonoBehaviour
 
     private void Shoot()
     {
-        if (Input.GetMouseButton(0) == true && isReloading == false /*E não está em diálogo ou pausado*/)
+        if (Input.GetMouseButton(0) == true && isReloading == false && DialogueManager.instance.isPlayingDialogue == false)
         {
             if (ammo > 0)
             {
+                PlayerCamera.instance.playerAnimator.SetLayerWeight(1, 1);
+                PlayerCamera.instance.playerAnimator.SetFloat("AimVertical", -PlayerCamera.instance.cameraBody.transform.eulerAngles.x / 60);
                 if (Input.GetMouseButton(1) == false)
                 {
                     PlayerCamera.instance.AlignRotation(PlayerCamera.instance.cameraBody.gameObject);
@@ -71,6 +73,17 @@ public class PlayerGun : MonoBehaviour
                     case PlayerGunBase.TriggerType.Hold:
                         {
                             float aux = 0;
+                            if (Input.GetMouseButton(0) == true)
+                            {
+                                if (equipedWeapon.fireRate >= aux + Time.time)
+                                {
+                                    SummonBullets();
+                                }
+                                else
+                                {
+                                    SummonBullets();
+                                }
+                            }
                             if (Input.GetMouseButtonUp(0) == true)
                             {
                                 if (equipedWeapon.fireRate >= aux + Time.time)
@@ -91,11 +104,16 @@ public class PlayerGun : MonoBehaviour
                 StartCoroutine(ReloadAction());
             }
         }
+        else if (PlayerCamera.instance.isAiming == false)
+        {
+            PlayerCamera.instance.playerAnimator.SetLayerWeight(1, 0);
+            PlayerCamera.instance.playerAnimator.SetFloat("AimVertical", 0);
+        }
     }
 
     private void Reload()
     {
-        if (Input.GetKeyDown(InputController.instance.reloadGun) == true /*E não está em diálogo ou pausado*/)
+        if (Input.GetKeyDown(InputController.instance.reloadGun) == true && DialogueManager.instance.isPlayingDialogue == false)
         {
             StartCoroutine(ReloadAction());
         }
@@ -122,11 +140,11 @@ public class PlayerGun : MonoBehaviour
             Vector3 targetAim = (target - transform.position).normalized;
 
             Instantiate(equipedWeapon.projectile, startingPos, Quaternion.LookRotation(targetAim, Vector3.up));
+            //PlayerCamera.instance.ShakeCamera(equipedWeapon.recoil);
             ammo--;
         }
 
 
-        //Sacudir camera com recoil
         shootCD = equipedWeapon.fireRate + Time.time;
         ammoText.text = $"{ammo}/{equipedWeapon.ammo}";
     }
