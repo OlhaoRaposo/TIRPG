@@ -41,6 +41,7 @@ public class EnemyBehaviour : MonoBehaviour
     public GameObject myWeapon;
     
     private void GetAllMyReferences() {
+        lifeMax = life;
         myNavMeshAgent.enemyAgent = TryGetComponent(out NavMeshAgent agent) ? agent : null;
         myNavMeshAgent.enemyAnimator = TryGetComponent(out Animator animator) ? animator : null;
         myNavMeshAgent.enemyAnimator.applyRootMotion = true;
