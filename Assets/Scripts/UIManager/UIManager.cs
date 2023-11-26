@@ -18,6 +18,8 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] GameObject equipedWeapons;
 
+    [SerializeField] GameObject crosshair;
+
     [SerializeField] Text xpText;
 
     [SerializeField] Text strengthText;
@@ -66,6 +68,10 @@ public class UIManager : MonoBehaviour
     public void UpdateAvailablePoints(int points)
     {
         availablePointsText.text = points.ToString();
+    }
+    public void ToggleCrosshair()
+    {
+        crosshair.SetActive(!crosshair.activeSelf);
     }
     public void ToggleInGameMenus()
     {
@@ -118,5 +124,13 @@ public class UIManager : MonoBehaviour
     public void CallIncreaseEndurance()
     {
         PlayerStats.instance.IncreaseEndurance();
+    }
+    public void CallMainMenu()
+    {
+        SceneController.instance.LoadSceneByIndex(0);
+    }
+    public void CallQuitGame()
+    {
+        SceneController.instance.QuitGame();
     }
 }

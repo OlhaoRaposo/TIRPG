@@ -9,7 +9,15 @@ public class SceneController : MonoBehaviour
 
     void Awake()
     {
-        instance = this;
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
     public void LoadSceneByIndex(int sceneIndex)
     {
@@ -21,14 +29,18 @@ public class SceneController : MonoBehaviour
         Time.timeScale = 1;
         SceneManager.LoadScene(sceneIndex, LoadSceneMode.Additive);
     }
-    public void LoadSceneByName(int sceneName)
+    public void LoadSceneByName(string sceneName)
     {
         Time.timeScale = 1;
         SceneManager.LoadScene(sceneName);
     }
-    public void LoadAdditiveSceneByName(int sceneName)
+    public void LoadAdditiveSceneByName(string sceneName)
     {
         Time.timeScale = 1;
         SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
+    }
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }
