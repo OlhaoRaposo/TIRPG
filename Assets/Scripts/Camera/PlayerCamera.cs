@@ -153,4 +153,16 @@ public class PlayerCamera : MonoBehaviour
     {
         playerAim.transform.localPosition = startingAimPos;
     }
+
+    public void ToggleMovement(bool toggle)
+    {
+        if (toggle == true)
+        {
+            myCinemachineCamera.LookAt = playerAim.transform;
+        }
+        else
+        {
+            myCinemachineCamera.LookAt = null;
+        }
+    }
 }
