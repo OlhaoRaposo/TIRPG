@@ -34,5 +34,6 @@ public class Interactable_Generator : MonoBehaviour, IInteractable
         audioGenerator?.Play();
         audioHelice?.Play();
         SceneStatesController.instance.SetGeneratorState(true);
+        QuestController.instance.CompleteMission(QuestController.instance.activeMissions[0]);
     }
 }
