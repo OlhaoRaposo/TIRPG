@@ -8,7 +8,7 @@ public class TransitionCollision : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            //SceneController.instance.LoadSceneByName(sceneToLoad);
+            SceneController.instance.LoadSceneByName(sceneToLoad);
         }
     }
 }

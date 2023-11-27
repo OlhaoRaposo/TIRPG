@@ -351,6 +351,8 @@ void Start()
                 if (activeMissions[0].questDescription.Count > 0 && activeMissions[0].questDescription[controllers[aux].questStages] != null)
                 {
                     missionTexts[0].text = activeMissions[0].questDescription[controllers[aux].questStages];
+                    missionTexts[1].text = "";
+                    missionTexts[2].text = "";
                 }
                 else
                 {
@@ -376,6 +378,7 @@ void Start()
                 if (activeMissions[1].questDescription.Count > 0 && activeMissions[1].questDescription[controllers[aux].questStages] != null)
                 {
                     missionTexts[1].text = activeMissions[1].questDescription[controllers[aux].questStages];
+                    missionTexts[2].text = "";
                 }
                 else
                 {
