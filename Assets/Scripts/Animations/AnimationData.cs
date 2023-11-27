@@ -1,4 +1,3 @@
-using UnityEditor.Animations;
 using UnityEngine;
 [CreateAssetMenu(fileName = "AnimationData", menuName = "Character/AnimationData")]
 

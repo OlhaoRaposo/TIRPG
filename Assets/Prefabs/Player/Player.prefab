@@ -3018,6 +3018,7 @@ MonoBehaviour:
   equipedWeapon: {fileID: 11400000, guid: 6121deddc3b6256458ed3b1a1e1bedf5, type: 2}
   ammoText: {fileID: 0}
   reloadImage: {fileID: 0}
+  effect: {fileID: 0}
 --- !u!1 &6378330081758954372
 GameObject:
   m_ObjectHideFlags: 0
@@ -3065,9 +3066,10 @@ GameObject:
   - component: {fileID: 8269695014948017177}
   - component: {fileID: 5418653730977242991}
   - component: {fileID: 3692116246425993576}
+  - component: {fileID: 8616715599561582877}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3219,6 +3221,29 @@ MonoBehaviour:
   interactLayer:
     serializedVersion: 2
     m_Bits: 128
+--- !u!136 &8616715599561582877
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6759132695369782341}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.30229405
+  m_Height: 1.7513994
+  m_Direction: 1
+  m_Center: {x: -0.0023702085, y: 0.8677791, z: 0}
 --- !u!1 &6807224261310105584
 GameObject:
   m_ObjectHideFlags: 0

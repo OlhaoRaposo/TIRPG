@@ -31,8 +31,8 @@ public class SceneController : MonoBehaviour
     }
     public void LoadSceneByName(string sceneName)
     {
-        Time.timeScale = 1;
         SceneManager.LoadScene(sceneName);
+        Time.timeScale = 1;
     }
     public void LoadAdditiveSceneByName(string sceneName)
     {
