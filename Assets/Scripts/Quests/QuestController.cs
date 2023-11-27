@@ -28,17 +28,6 @@ public class QuestController : MonoBehaviour
 
     void Awake()
     {
-        //Garante que exista apenas um controlador na cena.
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-
         controllers.Add(primary);
         controllers.Add(secondary);
         controllers.Add(temporary);
@@ -55,7 +44,7 @@ public class QuestController : MonoBehaviour
 
 void Start()
 {
-    ChangeDialog(activeMissions[0]);
+    //ChangeDialog(activeMissions[0]);
     ToggleDescription();
 }
 
@@ -115,55 +104,50 @@ void Start()
                     break;
             }
 
-            switch (/*quest*/controllers[aux].type)
+            switch (controllers[aux].type)
             {
                 case QuestType.MissionType.Exploration:
-                    foreach (GameObject zones in quest.explorationZones)
+                    if (zone == quest.explorationZones[controllers[aux].zoneStage]) 
                     {
-                        if (zone == zones)
-                        {
-                            ChangeStage(quest);
-                        }
+                        controllers[aux].zoneStage++;
+                        ChangeStage(quest);
                     }
                     break;
                 case QuestType.MissionType.Sabotage:
-                    foreach (GameObject zones in quest.sabotageZones)
+                    if (zone == quest.sabotageZones[controllers[aux].sabotageZonesStage])
                     {
-                        if (zone == zones)
+                        List<bool> sabotagedTargets = new List<bool>();
+
+                        for (int index = 0; index < quest.objectivesInStage[controllers[aux].sabotageZonesStage]; index++)
                         {
-                            List<bool> sabotagedTargets = new List<bool>();
+                            sabotagedTargets.Add(false);
+                        }
 
-                            for (int index = 0; index < quest.missionObjectives.Count; index++)
+                        GameObject target;
+
+                        for (int index = 0; index < quest.missionObjectives.Count; index++)
+                        {
+                            target = quest.missionObjectives[index];
+
+                            if (!target.activeSelf && target == quest.missionObjectives[controllers[aux].sabotageZonesStage])
                             {
-                                sabotagedTargets.Add(false);
+                                sabotagedTargets[index] = true;
                             }
+                        }
 
-                            GameObject target;
+                        bool auxiliaryCheck = true;
 
-                            for (int index = 0; index < quest.missionObjectives.Count; index++)
+                        foreach (bool check in sabotagedTargets)
+                        {
+                            if (!check)
                             {
-                                target = quest.missionObjectives[index];
-
-                                if (!target.activeSelf)
-                                {
-                                    sabotagedTargets[index] = true;
-                                }
+                                auxiliaryCheck = false;
                             }
+                        }
 
-                            bool auxiliaryCheck = true;
-
-                            foreach (bool check in sabotagedTargets)
-                            {
-                                if (!check)
-                                {
-                                    auxiliaryCheck = false;
-                                }
-                            }
-
-                            if (auxiliaryCheck)
-                            {
-                                ChangeStage(quest);
-                            }
+                        if (auxiliaryCheck)
+                        {
+                            ChangeStage(quest);
                         }
                     }
                     break;
@@ -193,15 +177,15 @@ void Start()
                     break;
             }
 
-            if (/*quest*/controllers[aux].type == QuestType.MissionType.ItenCollection)
+            if (controllers[aux].type == QuestType.MissionType.ItenCollection)
             {
                 for (int index = 0; index < quest.missionCollectibles.Count; index++)
                 {
                     if (collectiblesName == quest.missionCollectibles[index])
                     {
-                        if (/*quest*/controllers[aux].collectedItems[index] < quest.collectedItemsGoal[index])
+                        if (controllers[aux].collectedItems[index] < quest.collectedItemsGoal[index])
                         {
-                            /*quest*/controllers[aux].collectedItems[index]++;
+                            controllers[aux].collectedItems[index]++;
                         }
                     }
                 }
@@ -215,7 +199,7 @@ void Start()
 
                 for (int index = 0; index < quest.collectedItemsGoal.Count; index++)
                 {
-                    if (/*quest*/controllers[aux].collectedItems[index] == quest.collectedItemsGoal[index])
+                    if (controllers[aux].collectedItems[index] == quest.collectedItemsGoal[index])
                     {
                         auxiliaryCheck[index] = true;
                     }
@@ -443,35 +427,35 @@ void Start()
         }
 
         //Verifica o tipo de missão.
-        if (/*quest*/controllers[aux].type == QuestType.MissionType.Dialogue)
+        if (controllers[aux].type == QuestType.MissionType.Dialogue)
         {
             int auxiliaryCheck = 0;
 
             //Verifica se o estágio atual de dialogo é maior que a a introdução da missão.
-            if (/*quest*/controllers[aux].dialogueStage > 0)
+            if (controllers[aux].dialogueStage > 0)
             {
-                for (int index = /*quest*/controllers[aux].dialogueStage; index > 0; index--)
+                for (int index = controllers[aux].dialogueStage; index > 0; index--)
                 {
-                    auxiliaryCheck += (quest.dialoguesInStage[/*quest*/controllers[aux].dialogueStage - 1]);
+                    auxiliaryCheck += (quest.dialoguesInStage[controllers[aux].dialogueStage - 1]);
                 }
             }
 
-            if (/*quest*/controllers[aux].indexDialogue - auxiliaryCheck != 0)
+            if (controllers[aux].indexDialogue - auxiliaryCheck != 0)
             {
                 //Aumenta e indica o texto a ser lido.
-                /*quest*/controllers[aux].indexDialogue++;
+                controllers[aux].indexDialogue++;
                 
                 //Verifica se já há um dialogo reproduzindo
                 if(!DialogueManager.instance.isPlayingDialogue)
                 {
                     //Reproduz o dialogo
-                    quest.dialogue[/*quest*/controllers[aux].indexDialogue].Play();
+                    quest.dialogue[controllers[aux].indexDialogue].Play();
                 }
             }
             else
             {
                 //Aumenta o estágio da missão.
-                /*quest*/controllers[aux].dialogueStage++;
+                controllers[aux].dialogueStage++;
                 //Muda o estágio da missão.
                 ChangeStage(quest);
             }
@@ -630,6 +614,8 @@ void Start()
                 controllers[0].enemiesKilled.Add(0);
             }
             activeMissions.Add(quest.nextMission);
+            ChangeDialog(quest);
+            ToggleDescription();
             quest.nextMission.inProgress = true;
         }
     }
@@ -660,6 +646,7 @@ void Start()
             quest.inProgress = true;
         }
 
+        ChangeDialog(quest);
         ToggleDescription();
     }
 
@@ -689,6 +676,7 @@ void Start()
             quest.inProgress = true;
         }
 
+        ChangeDialog(quest);
         ToggleDescription();
     }
 

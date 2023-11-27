@@ -56,10 +56,12 @@ public class QuestType : ScriptableObject
     public List<GameObject> explorationZones = new List<GameObject>();
     
     public List<GameObject> sabotageZones = new List<GameObject>();
+    public List<int> sabotageZonesInStage = new List<int>();
     
     public List<GameObject> missionObjectives = new List<GameObject>();
+    public List<int> objectivesInStage = new List<int>();
     
-    public enum TypesOfCollectibles{Fruits, MechanicalParts}
+    public enum TypesOfCollectibles{GalaoGasolina}
     
     public List<TypesOfCollectibles> missionCollectibles = new List<TypesOfCollectibles>();
     

@@ -10,6 +10,9 @@ public class QuestProgress : MonoBehaviour
     public float questTime = 0;
     public int dialogueStage = 0;
     public int indexDialogue = -1;
+    public int zoneStage = 0;
+    public int sabotageZonesStage = 0;
+    public int objectivesStage = 0;
     public List<int> collectedItems = new List<int>();
     public List<int> enemiesKilled = new List<int>();
 
