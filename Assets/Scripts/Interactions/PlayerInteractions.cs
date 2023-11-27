@@ -10,12 +10,13 @@ public class PlayerInteractions : MonoBehaviour
     [SerializeField] LayerMask interactLayer;
 
     IInteractable interactable;
-    
+    bool canInteract = false;
+
     void Update()
     {
         if (interactable == null) return;
         
-        if (Input.GetKeyDown(InputController.instance.interaction))
+        if (Input.GetKeyDown(InputController.instance.interaction) && canInteract)
         {
             interactable.Interact(this);
         }
@@ -24,6 +25,7 @@ public class PlayerInteractions : MonoBehaviour
     void FixedUpdate()
     {
         SphereCheck();
+        RaycastCheck();
     }
     void RaycastCheck()
     {
@@ -31,7 +33,11 @@ public class PlayerInteractions : MonoBehaviour
 
         if (Physics.SphereCast(ray, interactRadius, out RaycastHit hit, interactDistance, interactLayer))
         {
-            InteractTooltip.instance.ToggleTooltip(hit.transform);
+            canInteract = true;
+        }
+        else
+        {
+            canInteract = false;
         }
     }
     void SphereCheck()

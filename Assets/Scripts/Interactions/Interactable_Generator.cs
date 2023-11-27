@@ -31,7 +31,8 @@ public class Interactable_Generator : MonoBehaviour, IInteractable
     public void Interact(PlayerInteractions player)
     {
         isRotating = true;
-        //audioGenerator.Play();
-        //audioHelice.Play();
+        audioGenerator?.Play();
+        audioHelice?.Play();
+        SceneStatesController.instance.SetGeneratorState(true);
     }
 }

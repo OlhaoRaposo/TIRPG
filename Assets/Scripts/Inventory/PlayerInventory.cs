@@ -48,13 +48,26 @@ public class PlayerInventory : MonoBehaviour
         SortInventory();
         return true;
     }
-    public void DropItem(ItemData itemData)
+    public GameObject DropItem(ItemData itemData)
     {
         if (RemoveItemFromInventory(itemData))
         {
             GameObject droppedItem = Instantiate(itemData.prefab, transform.position + Vector3.up, Quaternion.identity);
             ItemDropManager.instance.SetItemParent(droppedItem.transform);
+            return droppedItem;
         }
+        return null;
+    }
+    public bool LookForItem(ItemData itemData)
+    {
+        foreach(ItemData item in items)
+        {
+            if (item == itemData)
+            {
+                return true;
+            }
+        }
+        return false;
     }
     public void DropMeleeWeapon(ItemData itemData)
     {
