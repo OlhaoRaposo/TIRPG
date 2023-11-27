@@ -26,8 +26,14 @@ public class QuestController : MonoBehaviour
     public QuestProgress temporary;
     public List<QuestProgress> controllers = new List<QuestProgress>(3);
 
+    public GameObject[] introducao;
+    public GameObject[] introducaoSab;
+    public GameObject[] introducaoObj;
+
     void Awake()
     {
+        instance = this;
+
         controllers.Add(primary);
         controllers.Add(secondary);
         controllers.Add(temporary);
@@ -50,6 +56,31 @@ void Start()
 
     void FixedUpdate()
     {
+        /*introducao =  GameObject.FindGameObjectsWithTag("Introducao");
+        foreach(GameObject obj in introducao)
+        {
+            if(!activeMissions[0].explorationZones.Contains(obj))
+            {
+                activeMissions[0].explorationZones.Add(obj);
+            }
+        }
+        introducaoSab =  GameObject.FindGameObjectsWithTag("IntroducaoSab");
+        foreach(GameObject obj in introducaoSab)
+        {
+            if(!activeMissions[0].sabotageZones.Contains(obj))
+            {
+                activeMissions[0].sabotageZones.Add(obj);
+            }
+        }
+        introducaoObj =  GameObject.FindGameObjectsWithTag("IntroducaoObjectives");
+        foreach(GameObject obj in introducaoObj)
+        {
+            if(!activeMissions[0].missionObjectives.Contains(obj))
+            {
+                activeMissions[0].missionObjectives.Add(obj);
+            }
+        }*/
+
         QuestType quest;
 
         for (int index = 0; index < activeMissions.Count; index++)
@@ -683,7 +714,7 @@ void Start()
         ToggleDescription();
     }
 
-    void CompleteMission(QuestType quest)
+    public void CompleteMission(QuestType quest)
     {
         int aux = 0;
         switch(quest.classification)
