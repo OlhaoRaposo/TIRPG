@@ -17,6 +17,7 @@ public class PlayerGun : MonoBehaviour
     [SerializeField] private PlayerGunBase equipedWeapon;
     [SerializeField] private Text ammoText;
     [SerializeField] private Image reloadImage;
+    [SerializeField] private GameObject effect;
 
     private void Awake()
     {
@@ -140,6 +141,7 @@ public class PlayerGun : MonoBehaviour
             Vector3 targetAim = (target - transform.position).normalized;
 
             Instantiate(equipedWeapon.projectile, startingPos, Quaternion.LookRotation(targetAim, Vector3.up), transform);
+            Instantiate(effect, startingPos, Quaternion.LookRotation(targetAim, Vector3.up), transform);
             //PlayerCamera.instance.ShakeCamera(equipedWeapon.recoil);
             ammo--;
         }
