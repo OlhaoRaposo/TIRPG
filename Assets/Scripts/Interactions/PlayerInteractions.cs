@@ -10,12 +10,13 @@ public class PlayerInteractions : MonoBehaviour
     [SerializeField] LayerMask interactLayer;
 
     IInteractable interactable;
-    
+    bool canInteract = false;
+
     void Update()
     {
         if (interactable == null) return;
         
-        if (Input.GetKeyDown(InputController.instance.interaction))
+        if (Input.GetKeyDown(InputController.instance.interaction) && canInteract)
         {
             interactable.Interact(this);
         }
@@ -24,6 +25,7 @@ public class PlayerInteractions : MonoBehaviour
     void FixedUpdate()
     {
         SphereCheck();
+        RaycastCheck();
     }
     void RaycastCheck()
     {
@@ -31,7 +33,11 @@ public class PlayerInteractions : MonoBehaviour
 
         if (Physics.SphereCast(ray, interactRadius, out RaycastHit hit, interactDistance, interactLayer))
         {
-            InteractTooltip.instance.ToggleTooltip(hit.transform);
+            canInteract = true;
+        }
+        else
+        {
+            canInteract = false;
         }
     }
     void SphereCheck()
@@ -44,9 +50,9 @@ public class PlayerInteractions : MonoBehaviour
             if(!InteractTooltip.instance.GetIsOn())
             {
                 InteractTooltip.instance.ToggleTooltip(col[0].transform);
-                float tooltipScale = 1 - (transform.position - col[0].transform.position).magnitude/interactDistance;
-                InteractTooltip.instance.SetScale(tooltipScale);
             }
+            float tooltipScale = 1 - (transform.position - col[0].transform.position).magnitude/interactDistance;
+            InteractTooltip.instance.SetScale(tooltipScale);
         }else {
             interactable = null;
             InteractTooltip.instance.DisableTooltip();
@@ -54,11 +60,13 @@ public class PlayerInteractions : MonoBehaviour
     }
     
 
-    public void TakeItem(GameObject item)
+    public bool TakeItem(ItemData item)
     {
         Debug.Log("Peguei um " + item.name);
 
         //Adicionar item ao inventário
+        bool canTake = GetComponent<PlayerInventory>().AddItemToInventory(item);
+        return canTake;
     }
 
     public void TakeQuest(/* referência da quest */)

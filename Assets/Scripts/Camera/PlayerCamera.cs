@@ -1,3 +1,4 @@
+using System.Collections;
 using Cinemachine;
 using UnityEngine;
 
@@ -16,16 +17,16 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] private float regularFov;
     [SerializeField] private float aimFov;
 
-    private bool isAiming;
+    public bool isAiming;
 
     [Header("References")]
     [SerializeField] private GameObject playerObject;
-    [SerializeField] private GameObject playerBody;
     [SerializeField] private GameObject playerAim;
 
     private CinemachineFreeLook myCinemachineCamera;
-    private Vector3 startingPos;
+    private Vector3 startingPos, startingAimPos;
     [HideInInspector] public Camera cameraBody;
+    [HideInInspector] public Animator playerAnimator;
 
     private void Awake()
     {
@@ -40,6 +41,8 @@ public class PlayerCamera : MonoBehaviour
         myCinemachineCamera.Follow = playerObject.transform;
         myCinemachineCamera.LookAt = playerAim.transform;
         startingPos = transform.position;
+        startingAimPos = playerAim.transform.localPosition;
+        playerAnimator = playerObject.GetComponent<Animator>();
 
         SetCameraOrbit(false);
         Cursor.lockState = CursorLockMode.Locked;
@@ -66,12 +69,16 @@ public class PlayerCamera : MonoBehaviour
     private void Update()
     {
         Aim();
+        //LockAimToCenter();
     }
 
     private void Aim()
     {
         if (Input.GetMouseButtonDown(1) == true)
         {
+            playerAnimator.SetLayerWeight(1, 1);
+            playerAnimator.SetFloat("AimVertical", -cameraBody.transform.eulerAngles.x / 60);
+
             SetCameraOrbit(true);
         }
 
@@ -82,6 +89,9 @@ public class PlayerCamera : MonoBehaviour
 
         if (Input.GetMouseButtonUp(1) == true)
         {
+            playerAnimator.SetLayerWeight(1, 0);
+            playerAnimator.SetFloat("AimVertical", 0);
+
             SetCameraOrbit(false);
         }
 
@@ -109,7 +119,6 @@ public class PlayerCamera : MonoBehaviour
 
     public void AlignRotation(GameObject target)
     {
-        playerBody.transform.rotation = Quaternion.Euler(0, target.transform.eulerAngles.y, 0);
         playerObject.transform.rotation = Quaternion.Euler(0, target.transform.eulerAngles.y, 0);
     }
 
@@ -130,8 +139,30 @@ public class PlayerCamera : MonoBehaviour
         myCinemachineCamera.m_YAxis.m_MaxSpeed = currentSense * 4;
     }
 
-    public void ShakeCamera(float strength, float duration)
+    public void ShakeCamera(float strength)
     {
+        CancelInvoke("LockAimToCenter");
+        startingAimPos = playerAim.transform.localPosition;
+        float zPos = playerAim.transform.position.z;
+        Vector3 newPos = Random.insideUnitSphere * strength;
+        playerAim.transform.localPosition += new Vector3(newPos.x, newPos.y, zPos);
+        Invoke("LockAimToCenter", 0.1f);
+    }
 
+    private void LockAimToCenter()
+    {
+        playerAim.transform.localPosition = startingAimPos;
+    }
+
+    public void ToggleMovement(bool toggle)
+    {
+        if (toggle == true)
+        {
+            myCinemachineCamera.LookAt = playerAim.transform;
+        }
+        else
+        {
+            myCinemachineCamera.LookAt = null;
+        }
     }
 }
