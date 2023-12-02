@@ -1,22 +1,23 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using System.IO;
 using TMPro;
 using UnityEngine.UI;
-public class MyTexts
+public class NPCGuideDatabase
 {
-    public string npcCode;
-    public string[] text;
+    public List<NpcTexts> npcs = new List<NpcTexts>();
 }
 [CustomEditor(typeof(NPC))]
 public class NPC : MonoBehaviour
 {
     public bool interactable;
-    public enum NPCtYPE { Static, Patroling, }
+    public enum NPCtYPE { Static, CanPatrol, }
     public NPCtYPE npcType;
     public string npcCode;
+    public int textLineGuide;
     //SerializeText
     private string jsonPath;
     
@@ -26,11 +27,13 @@ public class NPC : MonoBehaviour
     private bool isPatroling, isIddle;
     private Vector3 patrolDestination;
     private bool hasArrived;
+    
+    private void Awake() {
+        jsonPath = Application.dataPath + "/NPCJsonDatabase.json";
+    }
 
     void Start()
     {
-        if(interactable)
-            ReadJson();
         if (npcType == NPCtYPE.Static) {
             return;
         }else {
@@ -39,38 +42,39 @@ public class NPC : MonoBehaviour
             StartCoroutine(CheckIfIsStoped());
         }
     }
-    MyTexts ReadJson()
+    public void Interact()
     {
-        MyTexts myTexts = new MyTexts();
-        if (File.Exists(jsonPath))
-        {
+        if(interactText.text != "") {
+            interactText.text = "";
+            textLineGuide++;
+        }
+        NPCGuideDatabase data = new NPCGuideDatabase();
+        if (File.Exists(jsonPath)) {
             string s = File.ReadAllText(jsonPath);
-           myTexts = JsonUtility.FromJson<MyTexts>(s);
-        }
-        return myTexts;
-    }
-    void Interact()
-    {
-        if (npcType == NPCtYPE.Static) {
-            
-        }else {
-            
-        }
-        
-        if (interactable) {
-            string[] text = ReadJson().text;
-            
-            
+            data = JsonUtility.FromJson<NPCGuideDatabase>(s);
+            foreach (var obj in data.npcs) {
+                if (obj.npcCode == npcCode)
+                {
+                    if(textLineGuide == obj.text.Length) {
+                        textLineGuide = 0;
+                        return;
+                    }
+                    StartCoroutine(WriteOnCanvas(obj.text[textLineGuide].text, 0));
+                    Debug.Log(obj.text[textLineGuide].text);
+                }
+            }
         }
     }
-
-    IEnumerator WriteOnCanvas(string text,int aux)
+    IEnumerator WriteOnCanvas(string text,int stringAux)
     {
-        float timer = .2f;
-        interactText.text += text[aux];
+        float timer = .05f;
+        interactText.text += text[stringAux];
+        Debug.Log(stringAux + "Lenght: "+ text.Length);
         yield return new WaitForSeconds(timer);
-        if(aux <= text.Length)
-            StartCoroutine(WriteOnCanvas(text, aux++));
+        if (stringAux < text.Length -1) {
+            int newint = stringAux + 1;
+            StartCoroutine(WriteOnCanvas(text, newint));
+        }
     }
     private void Update() {
         DettectPatrolDistance();
@@ -84,8 +88,7 @@ public class NPC : MonoBehaviour
             patrolDestination = transform.position + (Random.insideUnitSphere * 20) + new Vector3(0,5,0);
             if (Physics.Raycast(patrolDestination, Vector3.down, out RaycastHit hitInfo)) {
                 enemyAgent.SetDestination(hitInfo.point);
-                if (NavMesh.SamplePosition(hitInfo.point, out hit, .5f, NavMesh.AllAreas))
-                {
+                if (NavMesh.SamplePosition(hitInfo.point, out hit, .5f, NavMesh.AllAreas)) {
                     patrolDestination = hit.position + new Vector3( 0,0,0);
                     enemyAgent.SetDestination(patrolDestination);
                     hasArrived = false;
@@ -143,11 +146,12 @@ public class NPCEditor : Editor
             case NPC.NPCtYPE.Static:
                myTarget.interactText = (TextMeshProUGUI)EditorGUILayout.ObjectField("Interact Text", myTarget.interactText, typeof(TextMeshProUGUI), true);
                 break;
-            case NPC.NPCtYPE.Patroling:
+            case NPC.NPCtYPE.CanPatrol:
                 myTarget.interactText = (TextMeshProUGUI)EditorGUILayout.ObjectField("Interact Text", myTarget.interactText, typeof(TextMeshProUGUI), true);
                 myTarget.enemyAgent = (NavMeshAgent)EditorGUILayout.ObjectField("Enemy Agent", myTarget.enemyAgent, typeof(NavMeshAgent), true);
                 break;
         }
+        myTarget.textLineGuide = EditorGUILayout.IntField("Text Line Guide", myTarget.textLineGuide);
         if (GUI.changed)
         {
             EditorUtility.SetDirty(target);

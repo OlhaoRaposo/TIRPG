@@ -36,9 +36,8 @@ public class NPCSerializable : MonoBehaviour
             string s = File.ReadAllText(jsonPath);
             data = JsonUtility.FromJson<JsonDatabase>(s);
             foreach (var obj in data.npcs) {
-                Debug.Log(obj.npcCode);
                 if(obj.npcCode == npcToSearch) {
-                    foreach (var fala in obj.text) {
+                    foreach (var fala in obj.text[0].text) {
                         Debug.Log(fala);
                     }
                 }
