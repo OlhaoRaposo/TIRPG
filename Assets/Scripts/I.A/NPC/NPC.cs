@@ -48,14 +48,14 @@ public class NPC : MonoBehaviour
         NPCGuideDatabase data = new NPCGuideDatabase();
         if (isTalking) {
             Debug.Log("Reset");
-            timer = 0.001f;
+            timer = 0.0001f;
             isTalking = false;
         }else if (!isTalking){
             Debug.Log("Not Talking");
             if(TryGetComponent(out Animator animator))
                 animator.SetTrigger("Interact");
             interactText.text = "";
-            timer = 0.02f;
+            timer = 0.025f;
             if (File.Exists(jsonPath)) {
                 string s = File.ReadAllText(jsonPath);
                 data = JsonUtility.FromJson<NPCGuideDatabase>(s);

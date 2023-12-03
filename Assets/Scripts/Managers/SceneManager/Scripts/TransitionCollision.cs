@@ -11,8 +11,8 @@ public class TransitionCollision : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            EssentialObjects.instance.player.transform.position = playerPosition;
             SceneManager.LoadScene(sceneToLoad);
+            EssentialObjects.instance.player.transform.position = playerPosition;
         }
     }
 }
