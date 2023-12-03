@@ -11,12 +11,11 @@ public class JsonDatabase
 public class NPCSerializable : MonoBehaviour
 {
     private string jsonPath;
-    public NpcTexts textToSerialize;
+    public NpcTexts[] textToSerialize;
     public string npcToSearch;
     private void Awake() {
         jsonPath = Application.dataPath + "/NPCJsonDatabase.json";
     }
-
     void Start() {
         Read();
     }
@@ -27,7 +26,6 @@ public class NPCSerializable : MonoBehaviour
            SearchOnDatabase();
         }
     }
-
     void SearchOnDatabase()
     {
         JsonDatabase data = new JsonDatabase();
@@ -54,19 +52,26 @@ public class NPCSerializable : MonoBehaviour
             data = JsonUtility.FromJson<JsonDatabase>(s);
 
             foreach (var obj in data.npcs) {
-                if(obj.npcCode == textToSerialize.npcCode) {
-                    contain = true;
-                }
-                else {
-                    contain = false;
+                foreach (var variable in textToSerialize)
+                {
+                    if(obj.npcCode == variable.npcCode) {
+                        contain = true;
+                    }
+                    else {
+                        contain = false;
+                    }
                 }
             }
             if(contain == false) {
-                data.npcs.Add(textToSerialize);
+                foreach (var variable in textToSerialize) {
+                    data.npcs.Add(variable);
+                }
                 InsertOnDatabase(data);
             }
         }else {
-            data.npcs.Add(textToSerialize);
+            foreach (var variable in textToSerialize) {
+                data.npcs.Add(variable);
+            }
             InsertOnDatabase(data);
         }
     }

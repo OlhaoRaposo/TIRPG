@@ -6,7 +6,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-[CustomEditor(typeof(InteractiveObject))]
 public class InteractiveObject : MonoBehaviour
 {
     public enum ObjectPossibilities {

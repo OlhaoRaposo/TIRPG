@@ -1,7 +1,3 @@
-using System;
-using Unity.Mathematics;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;

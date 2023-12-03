@@ -4,13 +4,13 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using System.IO;
+using System.Runtime.InteropServices;
 using TMPro;
 using UnityEngine.UI;
 public class NPCGuideDatabase
 {
     public List<NpcTexts> npcs = new List<NpcTexts>();
 }
-[CustomEditor(typeof(NPC))]
 public class NPC : MonoBehaviour
 {
     public bool interactable;
@@ -20,10 +20,11 @@ public class NPC : MonoBehaviour
     public int textLineGuide;
     //SerializeText
     private string jsonPath;
-    
+    [SerializeField]
+    public bool isTalking = false;
     public TextMeshProUGUI interactText;
     public NavMeshAgent enemyAgent;
-    
+    float timer = .02f;
     private bool isPatroling, isIddle;
     private Vector3 patrolDestination;
     private bool hasArrived;
@@ -44,36 +45,49 @@ public class NPC : MonoBehaviour
     }
     public void Interact()
     {
-        if(interactText.text != "") {
-            interactText.text = "";
-            textLineGuide++;
-        }
         NPCGuideDatabase data = new NPCGuideDatabase();
-        if (File.Exists(jsonPath)) {
-            string s = File.ReadAllText(jsonPath);
-            data = JsonUtility.FromJson<NPCGuideDatabase>(s);
-            foreach (var obj in data.npcs) {
-                if (obj.npcCode == npcCode)
-                {
-                    if(textLineGuide == obj.text.Length) {
-                        textLineGuide = 0;
-                        return;
-                    }
-                    StartCoroutine(WriteOnCanvas(obj.text[textLineGuide].text, 0));
-                    Debug.Log(obj.text[textLineGuide].text);
-                }
+        if (isTalking) {
+            Debug.Log("Reset");
+            timer = 0.001f;
+            isTalking = false;
+        }else if (!isTalking){
+            Debug.Log("Not Talking");
+            if(TryGetComponent(out Animator animator))
+                animator.SetTrigger("Interact");
+            interactText.text = "";
+            timer = 0.02f;
+            if (File.Exists(jsonPath)) {
+                string s = File.ReadAllText(jsonPath);
+                data = JsonUtility.FromJson<NPCGuideDatabase>(s);
+                SearchAndWrite(data);
             }
         }
     }
+    private void SearchAndWrite(NPCGuideDatabase data)
+    {
+        foreach (var obj in data.npcs) {
+            if (obj.npcCode == npcCode) {
+                if (textLineGuide == obj.text.Length) {
+                    textLineGuide = 0;
+                    return;
+                }
+                StartCoroutine(WriteOnCanvas(obj.text[textLineGuide].text, 0));
+                Debug.Log(obj.text[textLineGuide].text);
+            }
+        }
+    }
+
     IEnumerator WriteOnCanvas(string text,int stringAux)
     {
-        float timer = .05f;
+        isTalking = true;
         interactText.text += text[stringAux];
-        Debug.Log(stringAux + "Lenght: "+ text.Length);
         yield return new WaitForSeconds(timer);
-        if (stringAux < text.Length -1) {
+        if (stringAux < text.Length - 1) {
             int newint = stringAux + 1;
             StartCoroutine(WriteOnCanvas(text, newint));
+        }else {
+            textLineGuide++;
+            isTalking = false;
         }
     }
     private void Update() {
@@ -132,7 +146,6 @@ public class NPC : MonoBehaviour
 [CustomEditor(typeof(NPC))]
 public class NPCEditor : Editor
 {
-    
     public override void OnInspectorGUI()
     {
         NPC myTarget = (NPC)target;
@@ -140,6 +153,7 @@ public class NPCEditor : Editor
         myTarget.npcType = (NPC.NPCtYPE)EditorGUILayout.EnumPopup("NPC Type", myTarget.npcType);
         EditorGUILayout.Space();
         myTarget.npcCode = EditorGUILayout.TextField("NPC Code", myTarget.npcCode);
+        myTarget.isTalking = EditorGUILayout.Toggle("Is Talking", myTarget.isTalking);
         EditorGUILayout.Space();
         switch (myTarget.npcType)
         {
