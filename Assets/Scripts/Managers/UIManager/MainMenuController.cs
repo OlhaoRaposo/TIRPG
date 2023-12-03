@@ -6,6 +6,7 @@ public class MainMenuController : MonoBehaviour
 {
     [SerializeField] GameObject optionsPanel;
     [SerializeField] GameObject creditsPanel;
+    [SerializeField] GameObject charactersPanel;
 
     private void Update()
     {
@@ -24,9 +25,21 @@ public class MainMenuController : MonoBehaviour
         DisablePanels();
         creditsPanel.SetActive(!creditsPanel.activeSelf);
     }
+    public void ToggleCharacters()
+    {
+        DisablePanels();
+        charactersPanel.SetActive(!charactersPanel.activeSelf);
+    }
+
+    public void ClosePanel()
+    {
+        DisablePanels();
+    }
+
     void DisablePanels()
     {
         optionsPanel.SetActive(false);
         creditsPanel.SetActive(false);
+        charactersPanel.SetActive(false);
     }
 }
