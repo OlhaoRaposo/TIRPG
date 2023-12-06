@@ -5,8 +5,9 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [Header("Variables")]
-    [SerializeField] float runSpeedMultiplier = 1.5f;
-    [SerializeField] float stealthSpeedMultiplier = 0.5f;
+    [SerializeField] float speed;
+    [SerializeField] float runSpeed;
+    [SerializeField] float stealthSpeed = 0.5f;
     [SerializeField] float dashLength = 5f;
     [SerializeField] float jumpHeight = 1f;
     [SerializeField] float gravity = -9f;
@@ -23,7 +24,7 @@ public class PlayerController : MonoBehaviour
     [Header("References")]
     [SerializeField] CharacterController controller;
     [SerializeField] Animator animator;
-    private Vector3 startRelativePoint, echoPos;
+    private Vector3 startRelativePoint;
 
     void Update()
     {
@@ -61,17 +62,25 @@ public class PlayerController : MonoBehaviour
                 stamina -= 0.5f;
 
                 isRunning = true;
-                animator.speed = runSpeedMultiplier;
+                animator.speed = runSpeed;
             }
             else
             {
                 isRunning = false;
-                animator.speed = 1.25f;
+                animator.speed = speed;
             }
 
             PlayerCamera.instance.AlignRotation(PlayerCamera.instance.cameraBody.gameObject);
+
+            if (y <= 0)
+            {
+                animator.speed *= 0.8f;
+            }
+
             animator.SetFloat("WalkHorizontal", x);
             animator.SetFloat("WalkVertical", y);
+            x = 0;
+            y = 0;
         }
 
         //Jump && fall
@@ -104,6 +113,12 @@ public class PlayerController : MonoBehaviour
                 startedFall = false;
             }
             float speedModifier = (RelativeDistance() / 2) + 0.1f;
+
+            if (RelativeDistance() >= 2)
+            {
+                speedModifier = 1;
+            }
+
             controller.Move(Vector3.up * speedModifier * gravity * Time.deltaTime);
         }
         else
@@ -139,10 +154,18 @@ public class PlayerController : MonoBehaviour
     {
         isDashing = true;
         startRelativePoint = transform.position;
-        //PlayerCamera.instance.ToggleMovement(false);
+        PlayerCamera.instance.ToggleMovement(false);
         while (RelativeDistance() < dashLength && isDashing == true)
         {
-            controller.Move((dashLength - RelativeDistance() + 1) * 5 * ((transform.forward * Input.GetAxis("Vertical")) + (transform.right * Input.GetAxis("Horizontal"))) * Time.deltaTime);
+
+            if (Input.GetAxis("Vertical") == 0 && Input.GetAxis("Horizontal") == 0)
+            {
+                controller.Move((dashLength - RelativeDistance() + 1) * 5 * transform.forward * Time.deltaTime);
+            }
+            else
+            {
+                controller.Move((dashLength - RelativeDistance() + 1) * 5 * ((transform.forward * Input.GetAxis("Vertical")) + (transform.right * Input.GetAxis("Horizontal"))) * Time.deltaTime);
+            }
             yield return new WaitForSeconds(Time.deltaTime);
         }
         StopDash();
@@ -153,7 +176,7 @@ public class PlayerController : MonoBehaviour
     {
         CancelInvoke("StopDash");
         isDashing = false;
-        //PlayerCamera.instance.ToggleMovement(true);
+        PlayerCamera.instance.ToggleMovement(true);
     }
     private float RelativeDistance()
     {
