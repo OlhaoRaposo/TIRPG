@@ -5,20 +5,30 @@ using UnityEngine;
 
 public class PlayerInteractions : MonoBehaviour
 {
-    [SerializeField] float interactRadius = 1f;
-    [SerializeField] float interactDistance = 3f;
+    [SerializeField] float interactRadius = .05f;
+    [SerializeField] float interactDistance = 2f;
     [SerializeField] LayerMask interactLayer;
 
     IInteractable interactable;
     bool canInteract = false;
 
+    bool canHighlightInteraction = false;
+
     void Update()
     {
         if (interactable == null) return;
         
-        if (Input.GetKeyDown(InputController.instance.interaction) && canInteract)
+        if (canInteract)
         {
-            interactable.Interact(this);
+            InteractTooltip.instance.SetHighlightInteraction(true);
+            if (Input.GetKeyDown(InputController.instance.interaction))
+            {
+                interactable.Interact(this);
+            }
+        }
+        else
+        {
+            InteractTooltip.instance.SetHighlightInteraction(false);
         }
         
     }
@@ -29,9 +39,9 @@ public class PlayerInteractions : MonoBehaviour
     }
     void RaycastCheck()
     {
-        Ray ray = new Ray(transform.position, Camera.main.transform.forward);
+        Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
 
-        if (Physics.SphereCast(ray, interactRadius, out RaycastHit hit, interactDistance, interactLayer))
+        if (Physics.SphereCast(ray, interactRadius, out RaycastHit hit, 10f, interactLayer))
         {
             canInteract = true;
         }
