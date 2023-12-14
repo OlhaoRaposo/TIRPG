@@ -79,7 +79,7 @@ public class InputController : MonoBehaviour
             foreach (KeyCode key in System.Enum.GetValues(typeof(KeyCode)))
             {
                 //Verifica qual foi a primeira tecla pressionada depois de iniciar a customização, sendo mouse, teclado ou joystick, não sendo possível as teclas de movimentação por AWSD.
-                if (Input.GetKeyDown(key) && key != KeyCode.A && key != KeyCode.W && key != KeyCode.S && key != KeyCode.D)
+                if (Input.GetKeyDown(key) && key != KeyCode.A && key != KeyCode.W && key != KeyCode.S && key != KeyCode.D && key != KeyCode.Escape && key != KeyCode.Mouse0 && key != KeyCode.Mouse1)
                 {
                     //Atribui para a variável a tecla pressionada.
                     newKey = key;
