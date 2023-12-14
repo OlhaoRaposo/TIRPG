@@ -12,11 +12,9 @@ public class PlayerInteractions : MonoBehaviour
     IInteractable interactable;
     bool canInteract = false;
 
-    bool canHighlightInteraction = false;
-
     void Update()
     {
-        if (interactable == null) return;
+        if (interactable == null || UIManager.instance.GetIsInMenus()) return;
         
         if (canInteract)
         {

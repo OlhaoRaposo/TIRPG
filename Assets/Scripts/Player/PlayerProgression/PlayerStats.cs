@@ -18,11 +18,16 @@ public class PlayerStats : MonoBehaviour
     int currentXp = 0;
     int levelupXp = 0;
 
+    float xpMultiplier = 1f;
+
     int strength;
     int dexterity;
     int endurance;
+    int intelligence;
 
-    [SerializeField] int pointsAddedWhenLevelUp = 5;
+    float meleeDamageMultiplier = 1f;
+
+    int pointsAddedWhenLevelUp = 5;
     int availablePoints = 0;
 
     void Awake()
@@ -31,8 +36,8 @@ public class PlayerStats : MonoBehaviour
     }
     void Start()
     {
-        LevelUp();
         SetStartAttributes();
+        LevelUp();
     }
     void SetStartAttributes()
     {
@@ -40,10 +45,11 @@ public class PlayerStats : MonoBehaviour
         strength = startData.strength;
         dexterity = startData.dexterity;
         endurance = startData.endurance;
+        intelligence = startData.intelligence;
     }
     public void GainXp(int xp)
     {
-        currentXp += xp;
+        currentXp += (int)(xp * xpMultiplier);
 
         if (currentXp >= levelupXp)
         {
@@ -59,6 +65,7 @@ public class PlayerStats : MonoBehaviour
     {
         currentXp = 0;
         level++;
+        pointsAddedWhenLevelUp = Mathf.FloorToInt(intelligence / 2f);
         availablePoints += pointsAddedWhenLevelUp;
         UIManager.instance.UpdateAvailablePoints(availablePoints);
         SetLevelUpXp(level);
@@ -73,30 +80,71 @@ public class PlayerStats : MonoBehaviour
     }
     public void IncreaseStrength()
     {
-        if (availablePoints <= 0) return;
+        if (!DecreasePoints()) return;
 
-        availablePoints--;
+        //Aumenta o dano causado
+        IncreaseMeleeDamageMultipier();
+
         strength++;
         UIManager.instance.UpdateAvailablePoints(availablePoints);
         UIManager.instance.UpdateStrength(strength);
     }
     public void IncreaseDexterity()
     {
-        if (availablePoints <= 0) return;
+        if (!DecreasePoints()) return;
 
-        availablePoints--;
+        //Melhora a precisao dos tiros
+        DecreaseBulletSpread();
+
         dexterity++;
         UIManager.instance.UpdateAvailablePoints(availablePoints);
         UIManager.instance.UpdateDexterity(dexterity);
     }
     public void IncreaseEndurance()
     {
-        if (availablePoints <= 0) return;
+        if (!DecreasePoints()) return;
 
-        availablePoints--;
+        //Aumentar hp maximo
+        //Aumentar stamina
+
         endurance++;
         UIManager.instance.UpdateAvailablePoints(availablePoints);
         UIManager.instance.UpdateEndurance(endurance);
+    }
+    public void IncreaseIntelligence()
+    {
+        if (!DecreasePoints()) return;
+
+        //Aumenta o multiplicador de xp
+        IncreaseXpMultiplier();
+
+        intelligence++;
+        UIManager.instance.UpdateAvailablePoints(availablePoints);
+        UIManager.instance.UpdateIntelligence(intelligence);
+    }
+    bool DecreasePoints()
+    {
+        if (availablePoints <= 0) return false;
+
+        availablePoints--;
+        return true;
+    }
+    void IncreaseXpMultiplier()
+    {
+        xpMultiplier += .1f;
+    }
+    void IncreaseMeleeDamageMultipier()
+    {
+        meleeDamageMultiplier += .1f;
+    }
+    void DecreaseBulletSpread()
+    {
+        //Diminuir distancia de espalhamento
+        //Diminuir chance de espalhamento
+    }
+    public float GetMeleeDamageMultiplier()
+    {
+        return meleeDamageMultiplier;
     }
     public int GetStrength()
     {
@@ -109,5 +157,9 @@ public class PlayerStats : MonoBehaviour
     public int GetEndurance()
     {
         return endurance;
+    }
+    public int GetIntelligence()
+    {
+        return intelligence;
     }
 }

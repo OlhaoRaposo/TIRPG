@@ -6,7 +6,7 @@ public class PlayerInventory : MonoBehaviour
 {
     public static PlayerInventory instance;
 
-    [SerializeField] List<InventorySlot> slots;
+    [SerializeField] InventorySlot[] slots;
     [SerializeField] WeaponSlot meleeWeaponSlot;
     [SerializeField] WeaponSlot rangedWeaponSlot;
     List<ItemData> items = new List<ItemData>();
@@ -21,19 +21,19 @@ public class PlayerInventory : MonoBehaviour
         if (Input.GetKeyDown(InputController.instance.inventory))
         {
             UIManager.instance?.ToggleInGameMenus();
+            SortInventory();
         }
     }
     public bool AddItemToInventory(ItemData itemData)
     {
         //Checar se existem slots disponiveis
-        if (items.Count == slots.Count)
+        if (items.Count == slots.Length)
         {
             Debug.Log("Cant add item to inventory: The inventory is full");
             return false;
         } 
 
         items.Add(itemData);
-        SortInventory();
         return true;
     }
     public bool RemoveItemFromInventory(ItemData itemData)
@@ -45,13 +45,13 @@ public class PlayerInventory : MonoBehaviour
         }
 
         items.Remove(itemData);
-        SortInventory();
         return true;
     }
     public GameObject DropItem(ItemData itemData)
     {
         if (RemoveItemFromInventory(itemData))
         {
+            SortInventory();
             GameObject droppedItem = Instantiate(itemData.prefab, transform.position + Vector3.up, Quaternion.identity);
             ItemDropManager.instance.SetItemParent(droppedItem.transform);
             return droppedItem;
@@ -102,6 +102,16 @@ public class PlayerInventory : MonoBehaviour
         {
             slot.SetItem(null);
         }
+    }
+    public List<ItemData> GetInventory()
+    {
+        List<ItemData> ret = new List<ItemData>();
+        if (meleeWeaponSlot.GetItem() != null) ret.Add(meleeWeaponSlot.GetItem());
+        if (rangedWeaponSlot.GetItem() != null) ret.Add(rangedWeaponSlot.GetItem());
+
+        ret.AddRange(items);
+
+        return ret;
     }
     public void EquipMeleeWeapon(ItemData weaponData)
     {

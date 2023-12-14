@@ -8,7 +8,8 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
 {
     protected Image itemImage;
     protected ItemData itemData;
-    void Awake()
+
+    void OnEnable()
     {
         itemImage = transform.GetChild(0).GetComponent<Image>();
     }
@@ -29,9 +30,13 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
             itemImage.sprite = null;
         }
     }
-    public virtual void EquipItem()
+    public ItemData GetItem()
     {
-        if (itemData != null && itemData.isWeapon)
+        return itemData;
+    }
+    public virtual void LeftClick()
+    {
+        if (itemData != null && itemData.itemType == ItemType.WEAPON)
         {
             switch(itemData.weaponType)
             {
@@ -40,7 +45,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
             }
         }
     }
-    public virtual void DropItem()
+    public virtual void RightClick()
     {
         if (itemData != null)
         {
@@ -54,10 +59,10 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
         switch (eventData.button)
         {
             case PointerEventData.InputButton.Left:
-                EquipItem();
+                LeftClick();
                 break;
             case PointerEventData.InputButton.Right:
-                DropItem();
+                RightClick();
                 break;
         }
     }

@@ -10,8 +10,14 @@ public class ItemData : ScriptableObject
     public float weight;
     public Sprite sprite;
 
-    public bool isWeapon = false;
+    public ItemType itemType;
     public WeaponType weaponType;
+}
+public enum ItemType
+{
+    WEAPON,
+    CONSUMABLE,
+    THROWABLE
 }
 public enum WeaponType
 {
