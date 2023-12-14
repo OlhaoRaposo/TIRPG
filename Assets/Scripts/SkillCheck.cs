@@ -70,7 +70,7 @@ public class SkillCheck : MonoBehaviour
     {
         skilCheckPointer.rectTransform.transform.Rotate(new Vector3(0,0,1) * Time.deltaTime * (rotationSpeed ));
         atualHit = skilCheckPointer.rectTransform.eulerAngles.z;
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetMouseButtonDown(1))
         {
             if(atualHit > minNumber && atualHit < maxNumber)
             {
