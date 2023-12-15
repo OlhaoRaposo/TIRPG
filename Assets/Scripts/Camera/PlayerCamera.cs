@@ -18,6 +18,7 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] private float aimFov;
 
     public bool isAiming;
+    private float camSpeedX, camSpeedY;
 
     [Header("References")]
     [SerializeField] private GameObject playerObject;
@@ -34,6 +35,7 @@ public class PlayerCamera : MonoBehaviour
 
         myCinemachineCamera = gameObject.GetComponent<CinemachineFreeLook>();
         cameraBody = gameObject.GetComponentInChildren<Camera>();
+        playerAnimator = playerObject.GetComponent<Animator>();
     }
 
     private void Start()
@@ -42,7 +44,9 @@ public class PlayerCamera : MonoBehaviour
         myCinemachineCamera.LookAt = playerAim.transform;
         startingPos = transform.position;
         startingAimPos = playerAim.transform.localPosition;
-        playerAnimator = playerObject.GetComponent<Animator>();
+
+        camSpeedX = myCinemachineCamera.m_XAxis.m_MaxSpeed;
+        camSpeedY = myCinemachineCamera.m_YAxis.m_MaxSpeed;
 
         SetCameraOrbit(false);
         Cursor.lockState = CursorLockMode.Locked;
@@ -69,7 +73,7 @@ public class PlayerCamera : MonoBehaviour
     private void Update()
     {
         Aim();
-        //LockAimToCenter();
+        CursorLockControl();
     }
 
     private void Aim()
@@ -141,27 +145,52 @@ public class PlayerCamera : MonoBehaviour
 
     public void ShakeCamera(float strength)
     {
-        CancelInvoke("LockAimToCenter");
-        startingAimPos = playerAim.transform.localPosition;
-        float zPos = playerAim.transform.position.z;
-        Vector3 newPos = Random.insideUnitSphere * strength;
-        playerAim.transform.localPosition += new Vector3(newPos.x, newPos.y, zPos);
-        Invoke("LockAimToCenter", 0.1f);
+
     }
 
-    private void LockAimToCenter()
+    private void CursorLockControl()
     {
-        playerAim.transform.localPosition = startingAimPos;
+        if (Input.GetKeyDown(KeyCode.LeftAlt) == true)
+        {
+            if (Cursor.lockState == CursorLockMode.None)
+            {
+                ToggleAimLock(true);
+            }
+            else
+            {
+                ToggleAimLock(false);
+            }
+        }
+    }
+
+    public void ToggleAimLock(bool toggle)
+    {
+        if (toggle == true)
+        {
+            myCinemachineCamera.m_XAxis.m_MaxSpeed = camSpeedX;
+            myCinemachineCamera.m_YAxis.m_MaxSpeed = camSpeedY;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        else
+        {
+            myCinemachineCamera.m_XAxis.m_MaxSpeed = 0;
+            myCinemachineCamera.m_YAxis.m_MaxSpeed = 0;
+            Cursor.lockState = CursorLockMode.None;
+        }
     }
 
     public void ToggleMovement(bool toggle)
     {
         if (toggle == true)
         {
+            myCinemachineCamera.m_XAxis.m_MaxSpeed = camSpeedX;
+            myCinemachineCamera.m_YAxis.m_MaxSpeed = camSpeedY;
             myCinemachineCamera.LookAt = playerAim.transform;
         }
         else
         {
+            myCinemachineCamera.m_XAxis.m_MaxSpeed = 0;
+            myCinemachineCamera.m_YAxis.m_MaxSpeed = 0;
             myCinemachineCamera.LookAt = null;
         }
     }
