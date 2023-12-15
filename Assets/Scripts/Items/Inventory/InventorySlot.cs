@@ -36,14 +36,25 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
     }
     public virtual void LeftClick()
     {
-        if (itemData != null && itemData.itemType == ItemType.WEAPON)
+        if (itemData == null) return;
+        
+        switch (itemData.itemType)
         {
-            switch(itemData.weaponType)
-            {
-                case WeaponType.MELEE: PlayerInventory.instance.EquipMeleeWeapon(itemData); break;
-                case WeaponType.RANGED: PlayerInventory.instance.EquipRangedWeapon(itemData); break;
-            }
+            case ItemType.WEAPON:
+                switch(itemData.weaponType)
+                {   
+                    case WeaponType.MELEE: PlayerInventory.instance.EquipMeleeWeapon(itemData); break;
+                    case WeaponType.RANGED: PlayerInventory.instance.EquipRangedWeapon(itemData); break;
+                }   
+                break;
+            case ItemType.CONSUMABLE:
+                PlayerInventory.instance.EquipConsumable(itemData);
+                break;
+            case ItemType.THROWABLE:
+                PlayerInventory.instance.EquipThrowable(itemData);
+                break;
         }
+        
     }
     public virtual void RightClick()
     {

@@ -26,6 +26,7 @@ public class PlayerStats : MonoBehaviour
     int intelligence;
 
     float meleeDamageMultiplier = 1f;
+    float meleeAttackSpeedMultiplier = 1f;
 
     int pointsAddedWhenLevelUp = 5;
     int availablePoints = 0;
@@ -95,6 +96,8 @@ public class PlayerStats : MonoBehaviour
 
         //Melhora a precisao dos tiros
         DecreaseBulletSpread();
+        //Aumenta a velocidade de ataques melee
+        IncreaseMeleeAttackSpeedMultiplier();
 
         dexterity++;
         UIManager.instance.UpdateAvailablePoints(availablePoints);
@@ -136,6 +139,10 @@ public class PlayerStats : MonoBehaviour
     void IncreaseMeleeDamageMultipier()
     {
         meleeDamageMultiplier += .1f;
+    }
+    void IncreaseMeleeAttackSpeedMultiplier()
+    {
+        meleeAttackSpeedMultiplier += .1f;
     }
     void DecreaseBulletSpread()
     {

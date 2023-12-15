@@ -159,7 +159,8 @@ public class UIManager : MonoBehaviour
     }
     void DisableAllPanels()
     {
-        ToggleCursorLockMode();
+        //ToggleCursorLockMode();
+        //Habilitar cursor
 
         inventoryPanel?.SetActive(false);
         statsPanel?.SetActive(false);

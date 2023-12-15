@@ -9,7 +9,10 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField] InventorySlot[] slots;
     [SerializeField] WeaponSlot meleeWeaponSlot;
     [SerializeField] WeaponSlot rangedWeaponSlot;
-    List<ItemData> items = new List<ItemData>();
+    [SerializeField] ConsumableSlot consumableSlot;
+    [SerializeField] ConsumableSlot throwableSlot;
+
+    [SerializeField] List<ItemData> items = new List<ItemData>();
 
     void Awake()
     {
@@ -103,16 +106,6 @@ public class PlayerInventory : MonoBehaviour
             slot.SetItem(null);
         }
     }
-    public List<ItemData> GetInventory()
-    {
-        List<ItemData> ret = new List<ItemData>();
-        if (meleeWeaponSlot.GetItem() != null) ret.Add(meleeWeaponSlot.GetItem());
-        if (rangedWeaponSlot.GetItem() != null) ret.Add(rangedWeaponSlot.GetItem());
-
-        ret.AddRange(items);
-
-        return ret;
-    }
     public void EquipMeleeWeapon(ItemData weaponData)
     {
         RemoveItemFromInventory(weaponData);
@@ -122,5 +115,35 @@ public class PlayerInventory : MonoBehaviour
     {
         RemoveItemFromInventory(weaponData);
         rangedWeaponSlot.SetItem(weaponData);
+    }
+    public void EquipConsumable(ItemData consumableData)
+    {
+        RemoveItemFromInventory(consumableData);
+        consumableSlot.SetItem(consumableData);
+    }
+    public void EquipThrowable(ItemData throwableData)
+    {
+        RemoveItemFromInventory(throwableData);
+        throwableSlot.SetItem(throwableData);
+    }
+    public ItemData GetThrowable()
+    {
+        return throwableSlot.GetItem();
+    }
+    public ItemData GetConsumable()
+    {
+        return consumableSlot.GetItem();
+    }
+    public List<ItemData> GetInventory()
+    {
+        List<ItemData> ret = new List<ItemData>();
+        if (meleeWeaponSlot.GetItem() != null) ret.Add(meleeWeaponSlot.GetItem());
+        if (rangedWeaponSlot.GetItem() != null) ret.Add(rangedWeaponSlot.GetItem());
+        if (consumableSlot.GetItem() != null) ret.Add(consumableSlot.GetItem());
+        if (throwableSlot.GetItem() != null) ret.Add(throwableSlot.GetItem());
+
+        ret.AddRange(items);
+
+        return ret;
     }
 }
