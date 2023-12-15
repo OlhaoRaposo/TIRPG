@@ -73,6 +73,7 @@ public class PlayerCamera : MonoBehaviour
     private void Update()
     {
         Aim();
+        SetCameraZoom();
         CursorLockControl();
     }
 
@@ -148,6 +149,27 @@ public class PlayerCamera : MonoBehaviour
 
     }
 
+    private void SetCameraZoom()
+    {
+        if (Input.GetAxis("Mouse ScrollWheel") != 0)
+        {
+            if (Input.GetAxis("Mouse ScrollWheel") > 0)
+            {
+                if(myCinemachineCamera.m_Lens.FieldOfView > aimFov)
+                {
+                    myCinemachineCamera.m_Lens.FieldOfView -= zoomStrength;
+                }
+            }
+            else
+            {
+                if(myCinemachineCamera.m_Lens.FieldOfView < regularFov)
+                {
+                    myCinemachineCamera.m_Lens.FieldOfView += zoomStrength;
+                }
+            }
+        }
+    }
+
     private void CursorLockControl()
     {
         if (Input.GetKeyDown(KeyCode.LeftAlt) == true)
@@ -185,13 +207,11 @@ public class PlayerCamera : MonoBehaviour
         {
             myCinemachineCamera.m_XAxis.m_MaxSpeed = camSpeedX;
             myCinemachineCamera.m_YAxis.m_MaxSpeed = camSpeedY;
-            myCinemachineCamera.LookAt = playerAim.transform;
         }
         else
         {
             myCinemachineCamera.m_XAxis.m_MaxSpeed = 0;
             myCinemachineCamera.m_YAxis.m_MaxSpeed = 0;
-            myCinemachineCamera.LookAt = null;
         }
     }
 }

@@ -18,19 +18,22 @@ public class PlayerController : MonoBehaviour
     [SerializeField] bool isDashing = true;
     [SerializeField] bool stealthMode = false;
     private float speedModifier;
-    private bool startedFall = true;
+    private bool startedFall = true, isRanged = true;
 
 
     [Header("References")]
     [SerializeField] CharacterController controller;
+    [SerializeField] GameObject rangedWeapon, meleeWeapon;
     [SerializeField] Animator animator;
     private Vector3 startRelativePoint;
 
     void Update()
     {
         StaminaRegen();
-        Move();
         GroundCheck();
+
+        Move();
+        ToggleFightStyle();
     }
 
     private void StaminaRegen()
@@ -44,6 +47,18 @@ public class PlayerController : MonoBehaviour
         if (stamina <= 0)
         {
             stamina = 0;
+        }
+    }
+
+    private void GroundCheck()
+    {
+        if (Physics.Raycast(transform.position, Vector3.down, 0.1f) == true)
+        {
+            isGrounded = true;
+        }
+        else
+        {
+            isGrounded = false;
         }
     }
 
@@ -70,7 +85,10 @@ public class PlayerController : MonoBehaviour
                 animator.speed = speed;
             }
 
-            PlayerCamera.instance.AlignRotation(PlayerCamera.instance.cameraBody.gameObject);
+            if (isDashing == false)
+            {
+                PlayerCamera.instance.AlignRotation(PlayerCamera.instance.cameraBody.gameObject);
+            }
 
             if (y <= 0)
             {
@@ -128,46 +146,57 @@ public class PlayerController : MonoBehaviour
 
 
         //Dash
-        if (Input.GetKeyDown(InputController.instance.dash) && isGrounded && stamina >= 15f)
+        if (Input.GetKeyDown(InputController.instance.dash) && isGrounded && stamina >= 25f)
         {
-            PlayerHPController.instance.ChangeStamina(15f, true);
-            stamina -= 15f;
+            PlayerHPController.instance.ChangeStamina(25f, true);
+            stamina -= 25f;
 
             StartCoroutine(DashAction());
             Invoke("StopDash", 2);
         }
     }
 
-    private void GroundCheck()
+    private void ToggleFightStyle()
     {
-        if (Physics.Raycast(transform.position, Vector3.down, 0.1f) == true)
+        if(isRanged == false && Input.GetKeyDown(KeyCode.Alpha1))
         {
-            isGrounded = true;
+            rangedWeapon.SetActive(true);
+            meleeWeapon.SetActive(false);
+
+            isRanged = true;
         }
-        else
+        
+        if(isRanged == true && Input.GetKeyDown(KeyCode.Alpha2))
         {
-            isGrounded = false;
+            rangedWeapon.SetActive(false);
+            meleeWeapon.SetActive(true);
+
+            isRanged = false;
         }
     }
-
     private IEnumerator DashAction()
     {
+        Vector3 movingDir = Vector3.zero;
+
         isDashing = true;
         startRelativePoint = transform.position;
         PlayerCamera.instance.ToggleMovement(false);
+
+        if (Input.GetAxis("Vertical") == 0 && Input.GetAxis("Horizontal") == 0)
+        {
+            movingDir = transform.forward;
+        }
+        else
+        {
+            movingDir = (transform.forward * Input.GetAxis("Vertical")) + (transform.right * Input.GetAxis("Horizontal"));
+        }
+
         while (RelativeDistance() < dashLength && isDashing == true)
         {
-
-            if (Input.GetAxis("Vertical") == 0 && Input.GetAxis("Horizontal") == 0)
-            {
-                controller.Move((dashLength - RelativeDistance() + 1) * 5 * transform.forward * Time.deltaTime);
-            }
-            else
-            {
-                controller.Move((dashLength - RelativeDistance() + 1) * 5 * ((transform.forward * Input.GetAxis("Vertical")) + (transform.right * Input.GetAxis("Horizontal"))) * Time.deltaTime);
-            }
+            controller.Move((dashLength - RelativeDistance() + 1) * 7.5f * movingDir.normalized * Time.deltaTime);
             yield return new WaitForSeconds(Time.deltaTime);
         }
+
         StopDash();
         yield return null;
     }
@@ -178,6 +207,7 @@ public class PlayerController : MonoBehaviour
         isDashing = false;
         PlayerCamera.instance.ToggleMovement(true);
     }
+
     private float RelativeDistance()
     {
         return Vector3.Distance(transform.position, startRelativePoint);
