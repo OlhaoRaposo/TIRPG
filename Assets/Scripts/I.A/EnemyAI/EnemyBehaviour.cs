@@ -212,7 +212,7 @@ public class EnemyBehaviour : MonoBehaviour
     {
         ItemDropManager.instance.DropItem(dropInfo, transform.position);
         QuestController.instance.EnemyEliminated(questType);
-        if (mySpawner.spawner.TryGetComponent(out Spawner spawn)) {
+      if (mySpawner.spawner.TryGetComponent(out Spawner spawn)) {
             spawn.GetComponent<Spawner>().StartRespawnProcess();
         }
     }
