@@ -8,7 +8,7 @@ public class WeaponSlot : InventorySlot
     {
         base.SetItem(item);
     }
-    public override void DropItem()
+    public override void RightClick()
     {
         if (itemData != null)
         {
@@ -19,5 +19,5 @@ public class WeaponSlot : InventorySlot
             }
         }
     }
-    public override void EquipItem(){}
+    public override void LeftClick(){}
 }

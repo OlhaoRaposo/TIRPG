@@ -8,4 +8,5 @@ public class CharacterAttributeData : ScriptableObject
     public int strength;
     public int dexterity;
     public int endurance;
+    public int intelligence;
 }

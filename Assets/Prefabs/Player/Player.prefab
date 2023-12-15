@@ -3241,11 +3241,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea0b193f9e906724a88a0a61ac37a099, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startAttributeData: {fileID: 0}
+  startAttributeData: {fileID: 11400000, guid: c93be221785411c4ba2403a853c374bc, type: 2}
   a: 1
   b: 0
   c: 500
-  pointsAddedWhenLevelUp: 2
 --- !u!114 &5418653730977242991
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3261,6 +3260,11 @@ MonoBehaviour:
   slots: []
   meleeWeaponSlot: {fileID: 0}
   rangedWeaponSlot: {fileID: 0}
+  consumableSlot: {fileID: 0}
+  throwableSlot: {fileID: 0}
+  items:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &3692116246425993576
 MonoBehaviour:
   m_ObjectHideFlags: 0

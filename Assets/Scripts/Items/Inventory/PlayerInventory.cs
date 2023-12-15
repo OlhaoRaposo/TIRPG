@@ -6,10 +6,13 @@ public class PlayerInventory : MonoBehaviour
 {
     public static PlayerInventory instance;
 
-    [SerializeField] List<InventorySlot> slots;
+    [SerializeField] InventorySlot[] slots;
     [SerializeField] WeaponSlot meleeWeaponSlot;
     [SerializeField] WeaponSlot rangedWeaponSlot;
-    List<ItemData> items = new List<ItemData>();
+    [SerializeField] ConsumableSlot consumableSlot;
+    [SerializeField] ConsumableSlot throwableSlot;
+
+    [SerializeField] List<ItemData> items = new List<ItemData>();
 
     void Awake()
     {
@@ -21,19 +24,19 @@ public class PlayerInventory : MonoBehaviour
         if (Input.GetKeyDown(InputController.instance.inventory))
         {
             UIManager.instance?.ToggleInGameMenus();
+            SortInventory();
         }
     }
     public bool AddItemToInventory(ItemData itemData)
     {
         //Checar se existem slots disponiveis
-        if (items.Count == slots.Count)
+        if (items.Count == slots.Length)
         {
             Debug.Log("Cant add item to inventory: The inventory is full");
             return false;
         } 
 
         items.Add(itemData);
-        SortInventory();
         return true;
     }
     public bool RemoveItemFromInventory(ItemData itemData)
@@ -45,13 +48,13 @@ public class PlayerInventory : MonoBehaviour
         }
 
         items.Remove(itemData);
-        SortInventory();
         return true;
     }
     public GameObject DropItem(ItemData itemData)
     {
         if (RemoveItemFromInventory(itemData))
         {
+            SortInventory();
             GameObject droppedItem = Instantiate(itemData.prefab, transform.position + Vector3.up, Quaternion.identity);
             ItemDropManager.instance.SetItemParent(droppedItem.transform);
             return droppedItem;
@@ -112,5 +115,35 @@ public class PlayerInventory : MonoBehaviour
     {
         RemoveItemFromInventory(weaponData);
         rangedWeaponSlot.SetItem(weaponData);
+    }
+    public void EquipConsumable(ItemData consumableData)
+    {
+        RemoveItemFromInventory(consumableData);
+        consumableSlot.SetItem(consumableData);
+    }
+    public void EquipThrowable(ItemData throwableData)
+    {
+        RemoveItemFromInventory(throwableData);
+        throwableSlot.SetItem(throwableData);
+    }
+    public ItemData GetThrowable()
+    {
+        return throwableSlot.GetItem();
+    }
+    public ItemData GetConsumable()
+    {
+        return consumableSlot.GetItem();
+    }
+    public List<ItemData> GetInventory()
+    {
+        List<ItemData> ret = new List<ItemData>();
+        if (meleeWeaponSlot.GetItem() != null) ret.Add(meleeWeaponSlot.GetItem());
+        if (rangedWeaponSlot.GetItem() != null) ret.Add(rangedWeaponSlot.GetItem());
+        if (consumableSlot.GetItem() != null) ret.Add(consumableSlot.GetItem());
+        if (throwableSlot.GetItem() != null) ret.Add(throwableSlot.GetItem());
+
+        ret.AddRange(items);
+
+        return ret;
     }
 }
