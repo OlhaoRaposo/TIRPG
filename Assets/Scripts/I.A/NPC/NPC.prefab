@@ -148,8 +148,14 @@ MonoBehaviour:
   interactable: 0
   npcType: 0
   npcCode: QNPC01
+  textLineGuide: 0
+  isTalking: 0
   interactText: {fileID: 4940403342889627868}
   enemyAgent: {fileID: 0}
+  hasQuest: 0
+  questCount: 0
+  questToGive: []
+  questToGiveCount: 0
 --- !u!54 &6223421792019503459
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -159,7 +165,7 @@ Rigidbody:
   m_GameObject: {fileID: 1553243800034890314}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: 0
+  m_Drag: 3
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}

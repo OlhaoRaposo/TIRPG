@@ -56,7 +56,7 @@ public class BarCheck : MonoBehaviour
             point2 = minLeft.x;
         }
         MoveBarPointer();
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetMouseButtonDown(1))
         {
            if(barPointer.transform.localPosition.x <= minLeft.x && barPointer.transform.localPosition.x >= maxRight.x)
            {

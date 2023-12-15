@@ -16,32 +16,7 @@ public class NPCSerializable : MonoBehaviour
     private void Awake() {
         jsonPath = Application.dataPath + "/NPCJsonDatabase.json";
     }
-    void Start() {
-        Read();
-    }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-           SearchOnDatabase();
-        }
-    }
-    void SearchOnDatabase()
-    {
-        JsonDatabase data = new JsonDatabase();
-        if (File.Exists(jsonPath))
-        {
-            string s = File.ReadAllText(jsonPath);
-            data = JsonUtility.FromJson<JsonDatabase>(s);
-            foreach (var obj in data.npcs) {
-                if(obj.npcCode == npcToSearch) {
-                    foreach (var fala in obj.text[0].text) {
-                        Debug.Log(fala);
-                    }
-                }
-            }
-        }
-    }
+    void Start() { Read(); }
     void Read()
     {
         JsonDatabase data = new JsonDatabase();
