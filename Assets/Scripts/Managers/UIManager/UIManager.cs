@@ -12,6 +12,11 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject statsPanel;
     [SerializeField] GameObject questsPanel;
     [SerializeField] GameObject optionsPanel;
+    [SerializeField] GameObject shopPanel;
+
+    [SerializeField] ShopSlot[] shopSlots_buy;
+    [SerializeField] ShopSlot[] shopSlots_sell;
+    MerchantInventory currentMerchant;
 
     [SerializeField] GameObject healthBar;
     [SerializeField] GameObject staminaBar;
@@ -25,22 +30,43 @@ public class UIManager : MonoBehaviour
     [SerializeField] Text strengthText;
     [SerializeField] Text dexterityText;
     [SerializeField] Text enduranceText;
+    [SerializeField] Text intelligenceText;
 
     [SerializeField] Text healthPointsText;
     [SerializeField] Text staminaPointsText;
 
     [SerializeField] Text availablePointsText;
+
+    bool isInMenus = false;
     void Awake()
     {
         instance = this;
+        //Cursor.lockState = CursorLockMode.None;
     }
-    void Start()
+    /*void Start()
     {
         //As próximas linhas servem somente para inicializar os slots do inventário (vou tirar isso dps)
         ToggleInGameMenus();
         Invoke("ToggleInGameMenus", .1f);
+    }*/
+    void Update()
+    {
+        if (currentMerchant != null)
+        {
+            if (Input.GetKey(KeyCode.Escape))
+            {
+                ToggleShopPanel();
+            }
+        }
     }
-
+    public ShopSlot[] GetShopSlotsBuy()
+    {
+        return shopSlots_buy;
+    }
+    public ShopSlot[] GetShopSlotsSell()
+    {
+        return shopSlots_sell;
+    }
     public void UpdateXpStats(int xp, int maxXp)
     {
         xpText.text = $"XP: {xp}/{maxXp}";
@@ -65,19 +91,32 @@ public class UIManager : MonoBehaviour
     {
         enduranceText.text = "Endurance: " + endurance.ToString();
     }
+    public void UpdateIntelligence(int intelligence)
+    {
+        intelligenceText.text = "Intelligence: " + intelligence.ToString();
+    }
     public void UpdateAvailablePoints(int points)
     {
         availablePointsText.text = points.ToString();
     }
     public void ToggleCrosshair()
     {
-        crosshair.SetActive(!crosshair.activeSelf);
+        crosshair?.SetActive(!crosshair.activeSelf);
     }
     public void ToggleInGameMenus()
     {
-        inGameMenusParent.SetActive(!inGameMenusParent.activeSelf);
-        DisableAllPanels();
-        ToggleInventoryPanel();
+        if (currentMerchant == null)
+        {
+            isInMenus = !isInMenus;
+            inGameMenusParent.SetActive(!inGameMenusParent.activeSelf);
+            DisableAllPanels();
+            ToggleCrosshair();
+            ToggleInventoryPanel();
+        }
+        else
+        {
+            DisableAllPanels();
+        }
     }
     public void ToggleInventoryPanel()
     {
@@ -99,12 +138,37 @@ public class UIManager : MonoBehaviour
         DisableAllPanels();
         optionsPanel.SetActive(!inventoryPanel.activeSelf);
     }
+    public void ToggleShopPanel(MerchantInventory merchantInventory)
+    {
+        DisableAllPanels();
+        ToggleCrosshair();
+        currentMerchant = merchantInventory;
+        shopPanel.SetActive(!shopPanel.activeSelf);
+        merchantInventory.SetShopUI();
+    }
+    void ToggleShopPanel()
+    {
+        DisableAllPanels();
+        ToggleCrosshair();
+        currentMerchant = null;
+        shopPanel.SetActive(!shopPanel.activeSelf);
+    }
+    void ToggleCursorLockMode()
+    {
+        Cursor.lockState = (CursorLockMode)((int)(Cursor.lockState + 1) % 3) + 1;
+    }
     void DisableAllPanels()
     {
+        //ToggleCursorLockMode();
+        //Habilitar cursor
+
         inventoryPanel?.SetActive(false);
         statsPanel?.SetActive(false);
         questsPanel?.SetActive(false);
         optionsPanel?.SetActive(false);
+        shopPanel?.SetActive(false);
+
+        currentMerchant = null;
     }
     public void ToggleHUD()
     {
@@ -112,6 +176,14 @@ public class UIManager : MonoBehaviour
         staminaBar.SetActive(!staminaBar.activeSelf);
 
         equipedWeapons.SetActive(!equipedWeapons.activeSelf);
+    }
+    public bool GetIsInMenus()
+    {
+        return isInMenus;
+    }
+    public MerchantInventory GetCurrentMerchant()
+    {
+        return currentMerchant;
     }
     public void CallIncreaseStrength()
     {
@@ -124,6 +196,10 @@ public class UIManager : MonoBehaviour
     public void CallIncreaseEndurance()
     {
         PlayerStats.instance.IncreaseEndurance();
+    }
+    public void CallIncreaseIntelligence()
+    {
+        PlayerStats.instance.IncreaseIntelligence();
     }
     public void CallMainMenu()
     {

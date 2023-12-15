@@ -5,13 +5,23 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Item Data", menuName = "Item Data")]
 public class ItemData : ScriptableObject
 {
+    [Header("Item types")]
+    public ItemType itemType;
+    public WeaponType weaponType;
+    [Space]
     public GameObject prefab;
     public int value;
     public float weight;
     public Sprite sprite;
 
-    public bool isWeapon = false;
-    public WeaponType weaponType;
+    public float healingAmount;
+}
+public enum ItemType
+{
+    NONE,
+    WEAPON,
+    CONSUMABLE,
+    THROWABLE
 }
 public enum WeaponType
 {

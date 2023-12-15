@@ -8,7 +8,8 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
 {
     protected Image itemImage;
     protected ItemData itemData;
-    void Awake()
+
+    void OnEnable()
     {
         itemImage = transform.GetChild(0).GetComponent<Image>();
     }
@@ -29,18 +30,33 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
             itemImage.sprite = null;
         }
     }
-    public virtual void EquipItem()
+    public ItemData GetItem()
     {
-        if (itemData != null && itemData.isWeapon)
-        {
-            switch(itemData.weaponType)
-            {
-                case WeaponType.MELEE: PlayerInventory.instance.EquipMeleeWeapon(itemData); break;
-                case WeaponType.RANGED: PlayerInventory.instance.EquipRangedWeapon(itemData); break;
-            }
-        }
+        return itemData;
     }
-    public virtual void DropItem()
+    public virtual void LeftClick()
+    {
+        if (itemData == null) return;
+        
+        switch (itemData.itemType)
+        {
+            case ItemType.WEAPON:
+                switch(itemData.weaponType)
+                {   
+                    case WeaponType.MELEE: PlayerInventory.instance.EquipMeleeWeapon(itemData); break;
+                    case WeaponType.RANGED: PlayerInventory.instance.EquipRangedWeapon(itemData); break;
+                }   
+                break;
+            case ItemType.CONSUMABLE:
+                PlayerInventory.instance.EquipConsumable(itemData);
+                break;
+            case ItemType.THROWABLE:
+                PlayerInventory.instance.EquipThrowable(itemData);
+                break;
+        }
+        
+    }
+    public virtual void RightClick()
     {
         if (itemData != null)
         {
@@ -54,10 +70,10 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
         switch (eventData.button)
         {
             case PointerEventData.InputButton.Left:
-                EquipItem();
+                LeftClick();
                 break;
             case PointerEventData.InputButton.Right:
-                DropItem();
+                RightClick();
                 break;
         }
     }

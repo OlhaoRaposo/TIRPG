@@ -88,6 +88,18 @@ public class LoyaltySystem : MonoBehaviour
     {
         pointsInfluenceCity += points;
         totalInfluencePoints += points;
+
+        float aux = pointsInfluenceNature - points;
+
+        if(aux <= 0)
+        {
+            totalInfluencePoints -= pointsInfluenceNature;
+            pointsInfluenceNature = 0;
+        }
+        else
+        {
+            pointsInfluenceNature -= points;
+        }
     }
     
     //Método para adição dos pontos de lealdade da equipe da natureza.
@@ -95,5 +107,31 @@ public class LoyaltySystem : MonoBehaviour
     {
         pointsInfluenceNature += points;
         totalInfluencePoints += points;
+        
+        float aux = pointsInfluenceCity - points;
+
+        if(aux <= 0)
+        {
+            totalInfluencePoints -= pointsInfluenceCity;
+            pointsInfluenceCity = 0;
+        }
+        else
+        {
+            pointsInfluenceCity -= points;
+        }
+    }
+
+    //Método para remoção dos pontos de lealdade da equipe da cidade.
+    public void RemovePointsInfluenceCity(float points)
+    {
+        pointsInfluenceCity -= points;
+        totalInfluencePoints -= points;
+    }
+    
+    //Método para remoção dos pontos de lealdade da equipe da natureza.
+    public void RemovePointsInfluenceNature(float points)
+    {
+        pointsInfluenceNature -= points;
+        totalInfluencePoints -= points;
     }
 }

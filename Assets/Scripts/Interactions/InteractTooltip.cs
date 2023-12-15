@@ -12,9 +12,11 @@ public class InteractTooltip : MonoBehaviour
 
     [SerializeField] bool isOn = false;
 
-    [SerializeField] float minimumSize = .1f;
+    [SerializeField] float minimumSize = .2f;
     [SerializeField] float maximumSize = 1f;
     float tooltipScale = 1f;
+
+    bool canHightlightInteraction = false;
 
     void Awake()
     {
@@ -27,9 +29,16 @@ public class InteractTooltip : MonoBehaviour
         if (interactableObject != null)
         {
             target.rectTransform.position = WorldToScreenPosition(interactableObject.position);
-            target.rectTransform.localScale = Vector3.one * tooltipScale;
+            if (!canHightlightInteraction)
+            {
+                target.rectTransform.localScale = Vector3.one * tooltipScale;
+            }
+            else
+            {
+                target.rectTransform.localScale = Vector3.one;
+                SetAlpha(1f);
+            }
         }
-
     }
 
     public void DisableTooltip()
@@ -46,6 +55,7 @@ public class InteractTooltip : MonoBehaviour
     }
     public void SetScale(float scale)
     {
+        tooltipScale += minimumSize;
         tooltipScale = Mathf.Clamp(scale, minimumSize, maximumSize);
         SetAlpha();
     }
@@ -55,11 +65,20 @@ public class InteractTooltip : MonoBehaviour
         tooltipColor.a = tooltipScale;
         target.color = tooltipColor;
     }
+    void SetAlpha(float alpha)
+    {
+        Color tooltipColor = target.color;
+        tooltipColor.a = alpha;
+        target.color = tooltipColor;
+    }
     public bool GetIsOn()
     {
         return isOn;
     }
-
+    public void SetHighlightInteraction(bool can)
+    {
+        canHightlightInteraction = can;
+    }
     public Vector3 WorldToScreenPosition(Vector3 position)
     {
         Camera test = Camera.main;
