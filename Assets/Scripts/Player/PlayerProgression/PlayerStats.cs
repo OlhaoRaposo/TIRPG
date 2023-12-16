@@ -69,6 +69,7 @@ public class PlayerStats : MonoBehaviour
         pointsAddedWhenLevelUp = Mathf.FloorToInt(intelligence / 2f);
         availablePoints += pointsAddedWhenLevelUp;
         UIManager.instance.UpdateAvailablePoints(availablePoints);
+        UIManager.instance.UpdateHUDLevel(level);
         SetLevelUpXp(level);
     }
     public void SetLevelUpXp(int nextLevel)

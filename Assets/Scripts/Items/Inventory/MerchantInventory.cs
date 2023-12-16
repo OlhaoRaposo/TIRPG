@@ -43,20 +43,20 @@ public class MerchantInventory : MonoBehaviour
                 LoyaltySystem.instance.RemovePointsInfluenceCity(value);
                 break;
         }
-                
+        UIManager.instance.UpdateShopInfluenceInfo();      
     }
     bool CheckEnoughLoyaltyPoints(int value)
     {
         switch (inventoryData.influentialSide)
         {
             case LoyaltySystem.InfluentialSide.Nature:
-                if (LoyaltySystem.instance.GetInfluencePointsNature() > value){
+                if (LoyaltySystem.instance.GetInfluencePointsNature() >= value){
                     return true;
                 }else{
                     return false;
                 }
             case LoyaltySystem.InfluentialSide.City:
-                if (LoyaltySystem.instance.GetInfluencePointsCity() > value){
+                if (LoyaltySystem.instance.GetInfluencePointsCity() >= value){
                     return true;
                 }else{
                     return false;
@@ -259,5 +259,8 @@ public class MerchantInventory : MonoBehaviour
 
         SortInventory();
     }
-
+    public MerchantInventoryData GetInventoryData()
+    {
+        return inventoryData;
+    }
 }

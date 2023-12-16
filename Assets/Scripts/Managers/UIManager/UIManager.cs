@@ -14,12 +14,15 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject optionsPanel;
     [SerializeField] GameObject shopPanel;
 
+    [SerializeField] Text merchantInventoryLabel;
+    [SerializeField] Text shopInfluenceInfo;
     [SerializeField] ShopSlot[] shopSlots_buy;
     [SerializeField] ShopSlot[] shopSlots_sell;
     MerchantInventory currentMerchant;
 
     [SerializeField] GameObject healthBar;
     [SerializeField] GameObject staminaBar;
+    [SerializeField] Text lvlText_hud;
 
     [SerializeField] GameObject equipedWeapons;
 
@@ -28,6 +31,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] Text feedbackText;
 
     [SerializeField] Text xpText;
+    [SerializeField] Text lvlText_menu;
 
     [SerializeField] Text strengthText;
     [SerializeField] Text dexterityText;
@@ -44,7 +48,6 @@ public class UIManager : MonoBehaviour
     void Awake()
     {
         instance = this;
-        //Cursor.lockState = CursorLockMode.None;
     }
     /*void Start()
     {
@@ -69,6 +72,15 @@ public class UIManager : MonoBehaviour
     public ShopSlot[] GetShopSlotsSell()
     {
         return shopSlots_sell;
+    }
+    public void UpdateHUDLevel(int lvl)
+    {
+        lvlText_hud.text = "Lv. " + lvl.ToString();
+        UpdateMenuLevel(lvl);
+    }
+    public void UpdateMenuLevel(int lvl)
+    {
+        lvlText_menu.text = "Level " + lvl.ToString();
     }
     public void UpdateXpStats(int xp, int maxXp)
     {
@@ -164,6 +176,8 @@ public class UIManager : MonoBehaviour
         currentMerchant = merchantInventory;
         shopPanel.SetActive(!shopPanel.activeSelf);
         merchantInventory.SetShopUI();
+        UpdateShopInfluenceInfo();
+        UpdateMerchantNameText();
     }
     void ToggleShopPanel()
     {
@@ -174,6 +188,22 @@ public class UIManager : MonoBehaviour
         ToggleCrosshair();
         currentMerchant = null;
         shopPanel.SetActive(!shopPanel.activeSelf);
+    }
+    void UpdateMerchantNameText()
+    {
+        merchantInventoryLabel.text = currentMerchant.GetInventoryData().merchantName + "'s Inventory";
+    }
+    public void UpdateShopInfluenceInfo()
+    {
+        switch (currentMerchant.GetInventoryData().influentialSide)
+        {
+            case LoyaltySystem.InfluentialSide.Nature:
+                shopInfluenceInfo.text = $"Nature Influence:\n{LoyaltySystem.instance.GetInfluencePointsNature()}";
+                break;
+            case LoyaltySystem.InfluentialSide.City:
+                shopInfluenceInfo.text = $"City Influence:\n{LoyaltySystem.instance.GetInfluencePointsCity()}";
+                break;
+        }
     }
     void ToggleCursorLockMode()
     {

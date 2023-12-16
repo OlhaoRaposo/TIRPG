@@ -24,14 +24,6 @@ public class PlayerHPController : MonoBehaviour
         currentStamina = staminaMax;
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(InputController.instance.consumables) && PlayerInventory.instance.GetConsumable() != null)
-        {
-            ChangeHP(PlayerInventory.instance.GetConsumable().healingAmount, false);
-        }
-    }
-
     public void ChangeHP(float changeAmmount, bool isDecrease)
     {
         if(isDecrease == true)

@@ -20,8 +20,8 @@ public class PlayerInventory : MonoBehaviour
     }
     private void Start()
     {
-        EquipRangedWeapon(items[0]);
-        EquipMeleeWeapon(items[1]);
+        //EquipRangedWeapon(items[0]);
+        //EquipMeleeWeapon(items[1]);
     }
     void Update()
     {
