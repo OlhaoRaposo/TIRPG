@@ -64,7 +64,7 @@ public class NPC : MonoBehaviour
         }
         if (isTalking) {
             Debug.Log("is Talking");
-            timer = 0.0001f;
+            timer = 0.00001f;
             isTalking = false;
         }else if (!isTalking){
             Debug.Log("Not Talking");
@@ -80,7 +80,7 @@ public class NPC : MonoBehaviour
         if(isInteractingWith == null)
             return;
         Vector3 distance = transform.position - isInteractingWith.transform.position;
-        if (distance.magnitude >= 5)
+        if (distance.magnitude >= 6)
         {
             textLineGuide = 0;
             interactText.enabled = false;
@@ -112,8 +112,11 @@ public class NPC : MonoBehaviour
             if (QuestManager.instance.CheckIfALreadyHaveQuest(npcCode + questToGive[0])) {
                 if (QuestManager.instance.CheckIfIsComplete(npcCode + questToGive[0])) {
                     textLineGuide = -1;
-                    StartCoroutine(WriteOnCanvas(" ", 0));
-                    StartCoroutine(WriteOnCanvas(data.npcs[0].questRewards, 0));
+                    foreach (var obj in data.npcs) {
+                        if (obj.npcCode == npcCode + questToGive[questToGiveCount]) {
+                            StartCoroutine(WriteOnCanvas(obj.questRewards, 0));
+                        }
+                    }
                     QuestManager.instance.CompleteQuest(npcCode + questToGive[0]);
                     hasQuest = false;
                     return;
@@ -133,8 +136,12 @@ public class NPC : MonoBehaviour
                         if (textLineGuide == obj.text.Length) {
                             QuestManager.instance.AddQuest(npcCode + questToGive[questToGiveCount]);
                         }
-                        if(textLineGuide <= obj.text.Length)
+
+                        if (textLineGuide <= obj.text.Length)
+                        {
                             StartCoroutine(WriteOnCanvas(obj.text[textLineGuide].text, 0));
+                            Debug.Log("Should Talk");
+                        }
                     }
                 }
             }
