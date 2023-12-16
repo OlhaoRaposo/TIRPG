@@ -22,11 +22,15 @@ public class ThrowItem : MonoBehaviour
             else
             {
                 //Mostrar aviso na tela: "O item está em cooldown"
+                UIManager.instance.ShowTextFeedback("The item is on cooldown");
             }
         }
     }
     void UseThrowable()
     {
+        if (PlayerInventory.instance.GetThrowable() == null) return;
+        else UIManager.instance.ShowTextFeedback("No throwable item equipped");
+
         //Comecar cooldown
         nextThrow = Time.time + throwCooldown;
 

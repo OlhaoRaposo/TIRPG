@@ -12,6 +12,7 @@ public class Interactable_Item : MonoBehaviour, IInteractable
         //Entra no if somente se houver espaço disponível no inventário
         if (player.TakeItem(itemData))
         {
+            UIManager.instance.ShowTextFeedback($"Picked up: {itemData.name}");
             QuestController.instance?.CollectedItems(typesOf);
             InteractTooltip.instance?.ToggleTooltip(null);
 

@@ -25,6 +25,8 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] GameObject crosshair;
 
+    [SerializeField] Text feedbackText;
+
     [SerializeField] Text xpText;
 
     [SerializeField] Text strengthText;
@@ -38,6 +40,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] Text availablePointsText;
 
     bool isInMenus = false;
+    bool cursorState = true;
     void Awake()
     {
         instance = this;
@@ -99,15 +102,28 @@ public class UIManager : MonoBehaviour
     {
         availablePointsText.text = points.ToString();
     }
+    public void ShowTextFeedback(string s)
+    {
+        feedbackText.gameObject.SetActive(true);
+        feedbackText.text = s;
+
+        Invoke("HideTextFeedback", 3f);
+    }
+    public void HideTextFeedback()
+    {
+        feedbackText.gameObject.SetActive(false);
+    }
     public void ToggleCrosshair()
     {
         crosshair?.SetActive(!crosshair.activeSelf);
     }
     public void ToggleInGameMenus()
     {
+        ToggleCursorLockMode();
+        isInMenus = !isInMenus;
+
         if (currentMerchant == null)
         {
-            isInMenus = !isInMenus;
             inGameMenusParent.SetActive(!inGameMenusParent.activeSelf);
             DisableAllPanels();
             ToggleCrosshair();
@@ -140,7 +156,10 @@ public class UIManager : MonoBehaviour
     }
     public void ToggleShopPanel(MerchantInventory merchantInventory)
     {
+        isInMenus = !isInMenus;
+
         DisableAllPanels();
+        ToggleCursorLockMode();
         ToggleCrosshair();
         currentMerchant = merchantInventory;
         shopPanel.SetActive(!shopPanel.activeSelf);
@@ -148,20 +167,21 @@ public class UIManager : MonoBehaviour
     }
     void ToggleShopPanel()
     {
+        isInMenus = !isInMenus;
+
         DisableAllPanels();
+        ToggleCursorLockMode();
         ToggleCrosshair();
         currentMerchant = null;
         shopPanel.SetActive(!shopPanel.activeSelf);
     }
     void ToggleCursorLockMode()
     {
-        Cursor.lockState = (CursorLockMode)((int)(Cursor.lockState + 1) % 3) + 1;
+        cursorState = !cursorState;
+        PlayerCamera.instance.ToggleAimLock(cursorState);
     }
     void DisableAllPanels()
     {
-        //ToggleCursorLockMode();
-        //Habilitar cursor
-
         inventoryPanel?.SetActive(false);
         statsPanel?.SetActive(false);
         questsPanel?.SetActive(false);

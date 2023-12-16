@@ -9,7 +9,7 @@ public class Throwable : MonoBehaviour
 
     [SerializeField] float detonationTime = 2f;
     [SerializeField] float explosionRadius = 2f;
-    [SerializeField] LayerMask detectionLayer;
+    [SerializeField] LayerMask detectionMask;
 
     void OnEnable()
     {
@@ -19,7 +19,7 @@ public class Throwable : MonoBehaviour
     void Explode()
     {
         //Explodir
-        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius, detectionLayer);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius, detectionMask);
 
         if (colliders.Length > 0)
         {

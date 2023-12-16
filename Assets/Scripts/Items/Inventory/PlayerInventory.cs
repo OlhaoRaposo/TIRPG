@@ -18,7 +18,11 @@ public class PlayerInventory : MonoBehaviour
     {
         instance = this;
     }
-    
+    private void Start()
+    {
+        EquipRangedWeapon(items[0]);
+        EquipMeleeWeapon(items[1]);
+    }
     void Update()
     {
         if (Input.GetKeyDown(InputController.instance.inventory))
