@@ -123,8 +123,8 @@ public class NPC : MonoBehaviour
     private void RewardTalk() {
         foreach (var npc in data.npcs) {
             if(npc.npcCode == npcCode + questToGive[0]) {
-                QuestManager.instance.CompleteQuest(npcCode + questToGive[0]);
                 StartCoroutine(DefaultTalk(npc.questRewards, 0));
+                QuestManager.instance.CompleteQuest(npcCode + questToGive[0]);
             }
         }
     }
