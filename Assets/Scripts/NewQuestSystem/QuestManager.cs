@@ -136,6 +136,23 @@ public class QuestManager : MonoBehaviour
         }
         return false;
     }
+    public bool FindInCompletedQuests(string questName) {
+        foreach (var var in completedQuests) {
+            if (var.questName == questName) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public bool FindInActiveQuests(string questName) {
+        foreach (var var in activeQuests) {
+            if (var.questName == questName) {
+                return true;
+            }
+        }
+        return false;
+    }
     
     public void AddQuest(string questName) {
         activeQuests.Add(Read(questName));

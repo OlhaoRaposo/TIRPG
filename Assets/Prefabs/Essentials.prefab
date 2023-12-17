@@ -1128,6 +1128,114 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &2413656950043673057
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1106206584526530205}
+  - component: {fileID: 4351626683559205150}
+  m_Layer: 0
+  m_Name: QuestInventory
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1106206584526530205
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2413656950043673057}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -26.789925, y: 15.403133, z: 13.037901}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1327542248778476055}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4351626683559205150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2413656950043673057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5796b92a7ce8eb149a3fd5bc44dfb208, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  questsHierarchy: {fileID: 3890719708982071817}
+  questPrefab: {fileID: 3568956310485617834, guid: 09f876c64bde19d479c744bdf7585ae7,
+    type: 3}
+  activeQuests: []
+  completedQuests: []
+  database:
+    allQuestsInDatabase: []
+  questToAdd:
+  - questName: TONHAO001
+    questDescription: "!Procure e entregue os tr\xEAs caixotes misteriosos a Krek."
+    atualPhase:
+      name: 
+      isComplete: 0
+    phases:
+    - name: Phase001
+      isComplete: 0
+    - name: Phase002
+      isComplete: 0
+    - name: Phase003
+      isComplete: 0
+    rewards:
+      loyaltyType: 0
+      loyalty: 3
+      itens:
+      - {fileID: 11400000, guid: 86f5acd92cc93a440b5900e7df321733, type: 2}
+      xp: 20
+      gold: 2
+      questReward: 
+    npcToComplete: 
+  - questName: KREK001
+    questDescription: "!V\xE1 at\xE9 o Lago da Abund\xE2ncia e pesque 6 \u201CCogumelos\u201D
+      e entregue-os \xE0 Krek."
+    atualPhase:
+      name: 
+      isComplete: 0
+    phases:
+    - name: Phase001
+      isComplete: 0
+    rewards:
+      loyaltyType: 0
+      loyalty: 3
+      itens:
+      - {fileID: 11400000, guid: 86f5acd92cc93a440b5900e7df321733, type: 2}
+      xp: 20
+      gold: 2
+      questReward: 
+    npcToComplete: KREK
+  - questName: TONHAO002
+    questDescription: Ligue o Gerador No topo da montanha
+    atualPhase:
+      name: 
+      isComplete: 0
+    phases:
+    - name: Phase001
+      isComplete: 0
+    rewards:
+      loyaltyType: 0
+      loyalty: 3
+      itens:
+      - {fileID: 11400000, guid: 86f5acd92cc93a440b5900e7df321733, type: 2}
+      xp: 20
+      gold: 2
+      questReward: 
+    npcToComplete: 
 --- !u!1 &2472983730220143685
 GameObject:
   m_ObjectHideFlags: 0
@@ -1167,6 +1275,8 @@ Transform:
   - {fileID: 7330772944687938160}
   - {fileID: 3040389169891731439}
   - {fileID: 1376030954484409249}
+  - {fileID: 1106206584526530205}
+  - {fileID: 7514869930303203721}
   m_Father: {fileID: 4860295994119822108}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2525498340952563043
@@ -1764,6 +1874,10 @@ MonoBehaviour:
   a: 1
   b: 0
   c: 500
+  strength: 0
+  dexterity: 0
+  endurance: 0
+  intelligence: 0
 --- !u!114 &355467531696004669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2815,6 +2929,131 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &7319837032913557905
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7514869930303203721}
+  - component: {fileID: 7243124540889005479}
+  m_Layer: 0
+  m_Name: JsonSerialize
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7514869930303203721
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7319837032913557905}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 14.423447, y: -0.3243683, z: -10.246267}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1327542248778476055}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7243124540889005479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7319837032913557905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b030050d892f8654c844f8428321abee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textToSerialize:
+  - npcCode: KREK001
+    text:
+    - text: "O Tonh\xE3o tinha dito mesmo que algum recruta tava chegando por esses
+        tempos, n\xE3o esperava que fosse ser tu."
+      audioCode: 
+    - text: "Mas tu chegaste em boa hora: Recentemente, ta todo mundo bem ocupado
+        aqui no campo pra fazer coisas mais \u201Cb\xE1sicas\u201D, eu at\xE9 entendo,
+        mas tu acreditas que esses animais t\xE3o deixando at\xE9 de se preocupar
+        com provis\xF5es?"
+      audioCode: 
+    - text: "Eu t\xF4 falando s\xE9rio! T\xE1 todo mundo t\xE3o vidrado nos contratos
+        e em evitar uma poss\xEDvel guerra civil que se esqueceram que precisamos
+        comer!"
+      audioCode: 
+    - text: "Mas, Krek est\xE1 aqui pra salvar o dia... Na verdade \xE9 tu quem vai
+        n\xE9, mas ningu\xE9m precisa saber hehehehehe! "
+      audioCode: 
+    - text: "Faz o seguinte: Aqui perto tem um lag\xE3o chamado \"Lago da Abund\xE2ncia\u201D,
+        l\xE1 cresce uma esp\xE9cie rar\xEDssima que eu chamo de Cogumelo Pulguento"
+      audioCode: 
+    - text: "Por que tu ta rindo? O nome n\xE3o \xE9 legal? AHHH, n\xE3o importa!
+        Eles s\xE3o bem grand\xE3o, ent\xE3o uns nove j\xE1 devem suprir nossas necessidades
+        pela pr\xF3xima semana. "
+      audioCode: 
+    - text: "Agora vai l\xE1, e lembra de n\xE3o fazer barulho, vai fazer os peixes
+        te morderem! "
+      audioCode: 
+    questAlreadyGiven: 
+    questRewards: "Meu deus, n\xE3o \xE9 que tu conseguiste mesmo? E olha s\xF3,
+      n\xE3o foi mordido(a) nenhuma vez!! Voc\xEA impressionou Krek, grandalh\xE3o(ona)! "
+  - npcCode: TONHAO001
+    text:
+    - text: "Ah, ent\xE3o \xE9 tu que \xE9 o(a) recrutinha que me falaram sobre...
+        Ta com sede de sangue, n\xE9 meu fi? Doido atr\xE1s de catar algum trabuco
+        vei e sentar o dedo na primeira coisa que se mexer na tua frente."
+      audioCode: 
+    - text: " Sei como \xE9, j\xE1 tive meus tempo de cabra novo tamb\xE9m. "
+      audioCode: 
+    - text: "N\xE3o querendo, mas j\xE1 te decepcionando, sinto em dizer que n\xE3o
+        \xE9 assim que a banda toca aqui na comunidade. "
+      audioCode: 
+    - text: "Aqui, antes de tu sair mund\xE3o afora cumprindo os contrato, tu tem
+        que se mostrar \xFAtil de alguma forma pro pessoal, aqui dentro mesmo, visse? "
+      audioCode: 
+    - text: "Ent\xE3o, sua primeira e empolgante miss\xE3o ser\xE1: Carregar uns
+        caixote que chegaram pra Krek, e entregar pra coitada!"
+      audioCode: 
+    - text: "T\xE1 vendo aquela rapariga verde do chapel\xE3o ali \xF3? Ela encomendou
+        um tanto de trem do norte j\xE1 tem um tempo. "
+      audioCode: 
+    - text: "Chegou esses dia ai pra tr\xE1s umas 3 caixona endere\xE7ada a ela,
+        mas a pestinha da Tain\xE1 inventou de sacanear a coitada e escondeu as tr\xEAs
+        caixona no acampamento."
+      audioCode: 
+    - text: " S\xF3 que a\xED que mora o problema: a coitada ta super ocupada com
+        uns servi\xE7o importante e num ta com tempo de sair ca\xE7ando as caixa
+        que a pilantrinha escondeu."
+      audioCode: 
+    - text: "Faz o seguinte: Vai atras desses tr\xEAs caixote e entrega pra Krek,
+        ove o que ela tem pra falar, e da\xED eu te libero um contratinho camarada
+        pra compensar o esfor\xE7o, que tal? "
+      audioCode: 
+    - text: "Ah, e mais uma dica: Se eu fosse tu, n\xE3o olharia o que tem dentro
+        desses caixotes... "
+      audioCode: 
+    questAlreadyGiven: 
+    questRewards: 
+  - npcCode: TONHAO002
+    text:
+    - text: Caba preciso de um favor...
+      audioCode: 
+    - text: "A luz da base acabou, e no alto da montanha tem um Gerador l\xE1"
+      audioCode: 
+    - text: "Preciso que voc\xEA ligue aquele trem de novo"
+      audioCode: 
+    - text: 
+      audioCode: 
+    questAlreadyGiven: 
+    questRewards: 
+  npcToSearch: NPCG1
 --- !u!1 &7597565517848140485
 GameObject:
   m_ObjectHideFlags: 0
