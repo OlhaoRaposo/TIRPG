@@ -41,6 +41,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] Text healthPointsText;
     [SerializeField] Text staminaPointsText;
 
+    [SerializeField] Text ammoText;
+
     [SerializeField] Text availablePointsText;
 
     bool isInMenus = false;
@@ -75,8 +77,14 @@ public class UIManager : MonoBehaviour
     }
     public void UpdateHUDLevel(int lvl)
     {
+        if (lvlText_hud == null) return;
+
         lvlText_hud.text = "Lv. " + lvl.ToString();
         UpdateMenuLevel(lvl);
+    }
+    public void UpdateAmmo(string s)
+    {
+        ammoText.text = s;
     }
     public void UpdateMenuLevel(int lvl)
     {
@@ -116,13 +124,17 @@ public class UIManager : MonoBehaviour
     }
     public void ShowTextFeedback(string s)
     {
-        feedbackText.gameObject.SetActive(true);
+        if (feedbackText == null) return;
+
+        feedbackText?.gameObject.SetActive(true);
         feedbackText.text = s;
 
         Invoke("HideTextFeedback", 3f);
     }
     public void HideTextFeedback()
     {
+        if (feedbackText == null) return;
+
         feedbackText.gameObject.SetActive(false);
     }
     public void ToggleCrosshair()

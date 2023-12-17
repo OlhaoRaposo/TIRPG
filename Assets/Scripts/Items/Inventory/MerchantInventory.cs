@@ -86,6 +86,7 @@ public class MerchantInventory : MonoBehaviour
         //Adicionar item no inventario do mercador
         AddItem(item);
         SortInventory();
+        UIManager.instance.UpdateShopInfluenceInfo();
     }
     void AddItem(ItemData item)
     {
