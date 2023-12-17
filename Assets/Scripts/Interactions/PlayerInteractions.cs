@@ -73,7 +73,7 @@ public class PlayerInteractions : MonoBehaviour
         Debug.Log("Peguei um " + item.name);
 
         //Adicionar item ao inventário
-        bool canTake = GetComponent<PlayerInventory>().AddItemToInventory(item);
+        bool canTake = PlayerInventory.instance.AddItemToInventory(item);
         return canTake;
     }
 

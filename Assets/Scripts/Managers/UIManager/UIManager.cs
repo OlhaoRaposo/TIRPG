@@ -14,18 +14,24 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject optionsPanel;
     [SerializeField] GameObject shopPanel;
 
+    [SerializeField] Text merchantInventoryLabel;
+    [SerializeField] Text shopInfluenceInfo;
     [SerializeField] ShopSlot[] shopSlots_buy;
     [SerializeField] ShopSlot[] shopSlots_sell;
     MerchantInventory currentMerchant;
 
     [SerializeField] GameObject healthBar;
     [SerializeField] GameObject staminaBar;
+    [SerializeField] Text lvlText_hud;
 
     [SerializeField] GameObject equipedWeapons;
 
     [SerializeField] GameObject crosshair;
 
+    [SerializeField] Text feedbackText;
+
     [SerializeField] Text xpText;
+    [SerializeField] Text lvlText_menu;
 
     [SerializeField] Text strengthText;
     [SerializeField] Text dexterityText;
@@ -35,13 +41,15 @@ public class UIManager : MonoBehaviour
     [SerializeField] Text healthPointsText;
     [SerializeField] Text staminaPointsText;
 
+    [SerializeField] Text ammoText;
+
     [SerializeField] Text availablePointsText;
 
     bool isInMenus = false;
+    bool cursorState = true;
     void Awake()
     {
         instance = this;
-        //Cursor.lockState = CursorLockMode.None;
     }
     /*void Start()
     {
@@ -66,6 +74,21 @@ public class UIManager : MonoBehaviour
     public ShopSlot[] GetShopSlotsSell()
     {
         return shopSlots_sell;
+    }
+    public void UpdateHUDLevel(int lvl)
+    {
+        if (lvlText_hud == null) return;
+
+        lvlText_hud.text = "Lv. " + lvl.ToString();
+        UpdateMenuLevel(lvl);
+    }
+    public void UpdateAmmo(string s)
+    {
+        ammoText.text = s;
+    }
+    public void UpdateMenuLevel(int lvl)
+    {
+        lvlText_menu.text = "Level " + lvl.ToString();
     }
     public void UpdateXpStats(int xp, int maxXp)
     {
@@ -99,15 +122,32 @@ public class UIManager : MonoBehaviour
     {
         availablePointsText.text = points.ToString();
     }
+    public void ShowTextFeedback(string s)
+    {
+        if (feedbackText == null) return;
+
+        feedbackText?.gameObject.SetActive(true);
+        feedbackText.text = s;
+
+        Invoke("HideTextFeedback", 3f);
+    }
+    public void HideTextFeedback()
+    {
+        if (feedbackText == null) return;
+
+        feedbackText.gameObject.SetActive(false);
+    }
     public void ToggleCrosshair()
     {
         crosshair?.SetActive(!crosshair.activeSelf);
     }
     public void ToggleInGameMenus()
     {
+        ToggleCursorLockMode();
+        isInMenus = !isInMenus;
+
         if (currentMerchant == null)
         {
-            isInMenus = !isInMenus;
             inGameMenusParent.SetActive(!inGameMenusParent.activeSelf);
             DisableAllPanels();
             ToggleCrosshair();
@@ -140,28 +180,50 @@ public class UIManager : MonoBehaviour
     }
     public void ToggleShopPanel(MerchantInventory merchantInventory)
     {
+        isInMenus = !isInMenus;
+
         DisableAllPanels();
+        ToggleCursorLockMode();
         ToggleCrosshair();
         currentMerchant = merchantInventory;
         shopPanel.SetActive(!shopPanel.activeSelf);
         merchantInventory.SetShopUI();
+        UpdateShopInfluenceInfo();
+        UpdateMerchantNameText();
     }
     void ToggleShopPanel()
     {
+        isInMenus = !isInMenus;
+
         DisableAllPanels();
+        ToggleCursorLockMode();
         ToggleCrosshair();
         currentMerchant = null;
         shopPanel.SetActive(!shopPanel.activeSelf);
     }
+    void UpdateMerchantNameText()
+    {
+        merchantInventoryLabel.text = currentMerchant.GetInventoryData().merchantName + "'s Inventory";
+    }
+    public void UpdateShopInfluenceInfo()
+    {
+        switch (currentMerchant.GetInventoryData().influentialSide)
+        {
+            case LoyaltySystem.InfluentialSide.Nature:
+                shopInfluenceInfo.text = $"Nature Influence:\n{LoyaltySystem.instance.GetInfluencePointsNature()}";
+                break;
+            case LoyaltySystem.InfluentialSide.City:
+                shopInfluenceInfo.text = $"City Influence:\n{LoyaltySystem.instance.GetInfluencePointsCity()}";
+                break;
+        }
+    }
     void ToggleCursorLockMode()
     {
-        Cursor.lockState = (CursorLockMode)((int)(Cursor.lockState + 1) % 3) + 1;
+        cursorState = !cursorState;
+        PlayerCamera.instance.ToggleAimLock(cursorState);
     }
     void DisableAllPanels()
     {
-        //ToggleCursorLockMode();
-        //Habilitar cursor
-
         inventoryPanel?.SetActive(false);
         statsPanel?.SetActive(false);
         questsPanel?.SetActive(false);

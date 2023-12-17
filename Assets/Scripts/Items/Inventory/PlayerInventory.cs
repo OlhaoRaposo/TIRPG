@@ -18,7 +18,13 @@ public class PlayerInventory : MonoBehaviour
     {
         instance = this;
     }
-    
+    private void Start()
+    {
+        EquipRangedWeapon(items[0]);
+        EquipMeleeWeapon(items[0]);
+        EquipThrowable(items[0]);
+        EquipConsumable(items[0]);
+    }
     void Update()
     {
         if (Input.GetKeyDown(InputController.instance.inventory))
@@ -137,10 +143,10 @@ public class PlayerInventory : MonoBehaviour
     public List<ItemData> GetInventory()
     {
         List<ItemData> ret = new List<ItemData>();
-        if (meleeWeaponSlot.GetItem() != null) ret.Add(meleeWeaponSlot.GetItem());
+        /*if (meleeWeaponSlot.GetItem() != null) ret.Add(meleeWeaponSlot.GetItem());
         if (rangedWeaponSlot.GetItem() != null) ret.Add(rangedWeaponSlot.GetItem());
         if (consumableSlot.GetItem() != null) ret.Add(consumableSlot.GetItem());
-        if (throwableSlot.GetItem() != null) ret.Add(throwableSlot.GetItem());
+        if (throwableSlot.GetItem() != null) ret.Add(throwableSlot.GetItem());*/
 
         ret.AddRange(items);
 

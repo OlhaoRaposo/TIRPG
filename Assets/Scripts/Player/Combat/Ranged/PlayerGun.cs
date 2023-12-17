@@ -15,7 +15,6 @@ public class PlayerGun : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private PlayerGunBase equipedWeapon;
-    [SerializeField] private Text ammoText;
     [SerializeField] private Image reloadImage;
     [SerializeField] private GameObject effect;
 
@@ -27,7 +26,7 @@ public class PlayerGun : MonoBehaviour
     private void Start()
     {
         ammo = equipedWeapon.ammo;
-        ammoText.text = $"{ammo}/{equipedWeapon.ammo}";
+        UIManager.instance.UpdateAmmo($"{ammo}/{equipedWeapon.ammo}");
     }
 
     private void Update()
@@ -148,7 +147,7 @@ public class PlayerGun : MonoBehaviour
 
 
         shootCD = equipedWeapon.fireRate + Time.time;
-        ammoText.text = $"{ammo}/{equipedWeapon.ammo}";
+        UIManager.instance.UpdateAmmo($"{ammo}/{equipedWeapon.ammo}");
     }
 
     private IEnumerator ReloadAction()
@@ -159,6 +158,6 @@ public class PlayerGun : MonoBehaviour
 
         isReloading = false;
         ammo = equipedWeapon.ammo;
-        ammoText.text = $"{ammo}/{equipedWeapon.ammo}";
+        UIManager.instance.UpdateAmmo($"{ammo}/{equipedWeapon.ammo}");
     }
 }

@@ -7,7 +7,7 @@ public class EssentialObjects : MonoBehaviour
 {
     public static EssentialObjects instance;
   
-    public GameObject player;
+    //public GameObject player;
     void Awake()
     {
         if (instance == null)
@@ -20,12 +20,12 @@ public class EssentialObjects : MonoBehaviour
             Destroy(gameObject);
         }
     }
-   void OnLevelWasLoaded(int level)
+   /*void OnLevelWasLoaded(int level)
     {
         if (SceneManager.GetActiveScene().name == "MountainScene" || SceneManager.GetActiveScene().name == "Forest" )
         {
             player.transform.position = GameObject.Find("PlayerPoint").transform.position;
         }
-    }
+    }*/
     
 }

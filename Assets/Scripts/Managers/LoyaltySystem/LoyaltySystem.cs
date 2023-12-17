@@ -134,4 +134,12 @@ public class LoyaltySystem : MonoBehaviour
         pointsInfluenceNature -= points;
         totalInfluencePoints -= points;
     }
+    public float GetInfluencePointsNature()
+    {
+        return pointsInfluenceNature;
+    }
+    public float GetInfluencePointsCity()
+    {
+        return pointsInfluenceCity;
+    }
 }

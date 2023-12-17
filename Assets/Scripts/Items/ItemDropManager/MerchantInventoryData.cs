@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Merchant Inventory Data", menuName = "Merchant Inventory Data")]
 public class MerchantInventoryData : ScriptableObject
 {
+    public string merchantName;
     public LoyaltySystem.InfluentialSide influentialSide;
 
     public ItemData[] weapons;

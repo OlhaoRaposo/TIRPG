@@ -41,6 +41,7 @@ public class PlayerProjectile : MonoBehaviour
         if(other.gameObject.CompareTag("Enemy"))
         {
             other.gameObject.SendMessage("TakeDamage", damage);
+            Hitmark.instance.ToggleHitmark();
         }
         Destroy(gameObject);
         
