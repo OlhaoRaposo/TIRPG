@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof (Rigidbody), typeof (BoxCollider))]
+[RequireComponent(typeof (Rigidbody))]
 public class Throwable : MonoBehaviour
 {
     [SerializeField] GameObject explosionPrefab;
 
+    [SerializeField] float damage = 50f;
     [SerializeField] float detonationTime = 2f;
     [SerializeField] float explosionRadius = 2f;
     [SerializeField] LayerMask detectionMask;
@@ -25,7 +26,11 @@ public class Throwable : MonoBehaviour
         {
             foreach(Collider c in colliders)
             {
-                //Dar dano nos inimigos
+                if (c.CompareTag("Enemy"))
+                {
+                    //Dar dano nos inimigos
+                    c.gameObject.SendMessage("TakeDamage", damage);
+                }
             }
         }
 
