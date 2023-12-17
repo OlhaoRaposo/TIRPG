@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 8256016164448818912}
   - component: {fileID: 3606922065057196160}
   - component: {fileID: 7830851654974075060}
+  - component: {fileID: 1327885971187166885}
+  - component: {fileID: 4437741240293864294}
   m_Layer: 0
   m_Name: ConcretBlockHalf
   m_TagString: Untagged
@@ -83,3 +85,40 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &1327885971187166885
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8406667110200033993}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.25, y: 0.25, z: 0.25000006}
+  m_Center: {x: 0, y: 0.125, z: -0.12500003}
+--- !u!114 &4437741240293864294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8406667110200033993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35e95dc5ff2b64380880dd7ac5922847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Size: {x: 0.28503516, y: 0.26207748, z: 0.26207766}
+  m_Center: {x: 0.000000074505806, y: 0.1262667, z: -0.12298705}
+  m_Area: 1
+  m_AffectedAgents: ffffffff

@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 389382706145990012}
   - component: {fileID: 1346441854325517606}
   - component: {fileID: 3062088552781672854}
+  - component: {fileID: 5821256644737352996}
+  - component: {fileID: 6876804892938357618}
   m_Layer: 0
   m_Name: BrickHalf
   m_TagString: Untagged
@@ -83,3 +85,40 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &5821256644737352996
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2757799753409628352}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.1580677, y: 0.15806775, z: 0.2047764}
+  m_Center: {x: 0, y: 0.079033874, z: -0.000000059604645}
+--- !u!114 &6876804892938357618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2757799753409628352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35e95dc5ff2b64380880dd7ac5922847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Size: {x: 0.1605846, y: 0.1639967, z: 0.20835638}
+  m_Center: {x: 0.003412202, y: 0.07677582, z: -0.0034121573}
+  m_Area: 1
+  m_AffectedAgents: ffffffff
