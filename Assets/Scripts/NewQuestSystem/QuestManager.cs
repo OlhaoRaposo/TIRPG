@@ -107,10 +107,11 @@ public class QuestManager : MonoBehaviour
         foreach (var var in activeQuests) {
             if (var.questName == questName) {
                 foreach (var phase in var.phases) {
-                    if (phase.isComplete) {
-                        return true;
+                    if (phase.isComplete == false) {
+                        return false;
                     }
                 }
+                return true;
             }
         }
         return false;

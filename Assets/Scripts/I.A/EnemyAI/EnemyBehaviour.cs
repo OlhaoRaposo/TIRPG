@@ -63,7 +63,7 @@ public class EnemyBehaviour : MonoBehaviour
     public void TakeDamage(float damage)
     {
         float actualDamage;
-        actualDamage = Random.Range(.5f, 1);
+        actualDamage = PlayerStats.instance.strength * Random.Range(.9f, 1);
         Image lifeBar = EnemyCanvas.transform.Find("LifeBar").transform.Find("LifeBarFill").GetComponent<Image>();
         life -= Mathf.Round((actualDamage * damage));
         lifeBar.fillAmount = life / lifeMax;

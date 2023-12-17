@@ -81,11 +81,11 @@ public class InteractiveObject : MonoBehaviour
     void StartSkilCheck()
     {
         
-        if(skillCheck != null)
-            return;
+        if(skillCheckCount == 0)
+            skillCheckCount = Random.Range(1, 5);
         
         if(skillCheckCount == 0)
-            skillCheckCount = Random.Range(1, 3);
+            skillCheckCount = Random.Range(1, 5);
 
         if (skillType == SkillType.CircleSkillCheck) {
              skillCheck = Instantiate(circleSkillCheckObject, transform.position, Quaternion.identity);
@@ -113,8 +113,7 @@ public class InteractiveObject : MonoBehaviour
             }
             skillCheckCount = Random.Range(1, 5);
         }else if (validations.Count < skillCheckCount) {
-            if(!validations.Contains(false))
-                StartSkilCheck();
+            StartSkilCheck();
         }else {
             validations.Clear();
             skillCheckCount = Random.Range(1, 5);

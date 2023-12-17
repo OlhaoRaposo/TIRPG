@@ -11,6 +11,7 @@ public class Quest
     public Validation atualPhase;
     public List<Validation> phases = new List<Validation>();
     public Reward rewards;
+    public string npcToComplete;
 }
 [Serializable]
 public class Validation {

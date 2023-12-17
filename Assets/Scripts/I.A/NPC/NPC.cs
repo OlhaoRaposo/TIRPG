@@ -19,6 +19,8 @@ public class NPC : MonoBehaviour
     public enum NPCtYPE { Static, CanPatrol, }
     public NPCtYPE npcType;
     public string npcCode;
+    public GameObject hasQuestIcon;
+    public GameObject talkPanel;
     public int textLineGuide;
     //SerializeText
     private string jsonPath;
@@ -59,102 +61,128 @@ public class NPC : MonoBehaviour
     public void Interact(GameObject interactor)
     {
         isInteractingWith = interactor; 
-        if (npcType == NPCtYPE.CanPatrol) {
-            enemyAgent.SetDestination(transform.position);
-        }
+        if (npcType == NPCtYPE.CanPatrol) { StopTheNpc(); }
+        
         if (isTalking) {
-            Debug.Log("is Talking");
-            timer = 0.00001f;
+            timer = 0.0000001f;
             isTalking = false;
         }else if (!isTalking){
-            Debug.Log("Not Talking");
-            if(TryGetComponent(out Animator animator))
-                animator.SetTrigger("Interact");
-            interactText.text = "";
-            timer = 0.025f;
-            SearchAndWrite(data);
+            HandleTalk();
+        }
+    } 
+    private void HandleTalk() {
+        interactText.text = "";
+        timer = 0.015f;
+
+        foreach (var quest in QuestManager.instance.activeQuests) {
+            if (QuestManager.instance.CheckIfIsComplete(quest.questName)) {
+                if (quest.npcToComplete == npcCode) {
+                    RewardTalk();
+                }
+            }
+        }
+        
+        if (hasQuest) {
+            if(!isTalking)
+                if(QuestManager.instance.CheckIfALreadyHaveQuest(npcCode + questToGive[0])){
+                    if (QuestManager.instance.CheckIfIsComplete(npcCode + questToGive[0]))
+                        HandleQuests();
+                    else
+                        QuestGivenTalk();
+                }else
+                 QuestTalk();
+        }else
+            NormalTalk();
+    }
+    private void QuestTalk() {
+        foreach (var npc in data.npcs) {
+            if(npc.npcCode == npcCode + questToGive[0]) {
+                if (textLineGuide < npc.text.Length)
+                    StartCoroutine(WriteOnCanvas(npc.text[textLineGuide].text, 0));
+                else if(textLineGuide >= npc.text.Length) {
+                    textLineGuide = 0;
+                    HandleQuests();
+                    return;
+                }
+            }
+        }
+    }
+    private void NormalTalk() {
+       
+        foreach (var texts in data.npcs) {
+            if (texts.npcCode == npcCode) {
+                if (textLineGuide >= texts.text.Length) {
+                    textLineGuide = 0;
+                    return;
+                }
+                if (textLineGuide < texts.text.Length)
+                    StartCoroutine(WriteOnCanvas(texts.text[textLineGuide].text, 0));
+            }
+        }
+    }
+    private void RewardTalk() {
+        foreach (var npc in data.npcs) {
+            if(npc.npcCode == npcCode + questToGive[0]) {
+                QuestManager.instance.CompleteQuest(npcCode + questToGive[0]);
+                StartCoroutine(DefaultTalk(npc.questRewards, 0));
+            }
+        }
+    }
+    private void QuestGivenTalk() {
+        foreach (var npc in data.npcs) {
+            if(npc.npcCode == npcCode + questToGive[0]) {
+                StartCoroutine(DefaultTalk(npc.questAlreadyGiven, 0));
+            }
+        }
+    }
+    private void HandleQuests()
+    {
+        if (hasQuest) {
+            if (QuestManager.instance.CheckIfALreadyHaveQuest(npcCode + questToGive[0])) {
+                Debug.Log("Quest Was already Given by: " + npcCode );
+                if (QuestManager.instance.CheckIfIsComplete(npcCode + questToGive[0])) {
+                    Debug.Log("Quest Was Completed");
+                    RewardTalk();
+                    return;
+                }
+            }else {
+                Debug.Log("Quest Was not Given ");
+                QuestManager.instance.AddQuest(npcCode + questToGive[0]);
+            }
         }
     }
     private void HandleInteractorDistance()
     {
-        if(isInteractingWith == null)
-            return;
+        if (isInteractingWith == null) {
+            talkPanel.SetActive(false);
+            return; }
+        
         Vector3 distance = transform.position - isInteractingWith.transform.position;
-        if (distance.magnitude >= 6)
-        {
+        if (distance.magnitude >= 6) {
+            talkPanel.SetActive(false);
             textLineGuide = 0;
             interactText.enabled = false;
             timer = 0.000f;
             isTalking = false;
             interactText.text = "";
             isInteractingWith = null;
-        }else
-            interactText.enabled = true;
-    }
-    private void SearchAndWrite(NPCGuideDatabase data)
-    {
-        foreach (var obj in data.npcs) {
-            if (obj.npcCode == npcCode + questToGive[questToGiveCount]) {
-                if (textLineGuide == obj.text.Length) {
-                    textLineGuide = 0;
-                    interactText.text = "";
-                    if (hasQuest) {
-                        if (!QuestManager.instance.CheckIfALreadyHaveQuest(questToGive[0])) {
-                            Debug.Log("AddQuest");
-                            QuestManager.instance.AddQuest(npcCode + questToGive[0]);
-                        }
-                    }
-                    return;
-                }
-            }
-        }
-        if (hasQuest) {
-            if (QuestManager.instance.CheckIfALreadyHaveQuest(npcCode + questToGive[0])) {
-                if (QuestManager.instance.CheckIfIsComplete(npcCode + questToGive[0])) {
-                    textLineGuide = -1;
-                    foreach (var obj in data.npcs) {
-                        if (obj.npcCode == npcCode + questToGive[questToGiveCount]) {
-                            StartCoroutine(WriteOnCanvas(obj.questRewards, 0));
-                        }
-                    }
-                    QuestManager.instance.CompleteQuest(npcCode + questToGive[0]);
-                    hasQuest = false;
-                    return;
-                }
-                foreach (var obj in data.npcs) {
-                    if (obj.npcCode == npcCode + questToGive[questToGiveCount]) {
-                        textLineGuide = -1;
-                        StartCoroutine(WriteOnCanvas(obj.questAlreadyGiven, 0));
-                        return;
-                    }
-                }
-                Debug.Log("Contains");
-            }else {
-                Debug.Log("NotContains");
-                foreach (var obj in data.npcs) {
-                    if (obj.npcCode == npcCode + questToGive[questToGiveCount] ) {
-                        if (textLineGuide == obj.text.Length) {
-                            QuestManager.instance.AddQuest(npcCode + questToGive[questToGiveCount]);
-                        }
-
-                        if (textLineGuide <= obj.text.Length)
-                        {
-                            StartCoroutine(WriteOnCanvas(obj.text[textLineGuide].text, 0));
-                            Debug.Log("Should Talk");
-                        }
-                    }
-                }
-            }
         }else {
-            foreach (var obj in data.npcs) {
-                if (obj.npcCode == npcCode) {
-                    if(textLineGuide <= obj.text.Length)
-                        StartCoroutine(WriteOnCanvas(obj.text[textLineGuide].text, 0));
-                }
-            }
+            talkPanel.SetActive(true);
         }
     }
-    
+    IEnumerator DefaultTalk(string text,int stringAux)
+    {
+        isTalking = true;
+        interactText.text += text[stringAux];
+        yield return new WaitForSeconds(timer);
+        if (stringAux < text.Length - 1) {
+            int newint = stringAux + 1;
+            StartCoroutine(WriteOnCanvas(text, newint));
+        }else {
+            isTalking = false;
+        }
+    }
+   
     IEnumerator WriteOnCanvas(string text,int stringAux)
     {
         isTalking = true;
@@ -170,9 +198,32 @@ public class NPC : MonoBehaviour
     }
     private void Update() {
         DettectPatrolDistance();
+        if(!interactable)
+            return;
         HandleInteractorDistance();
+        if(hasQuest)
+            CheckIfQuestIsActive();
     }
 
+    void CheckIfQuestIsActive() {
+       if(!QuestManager.instance.CheckIfALreadyHaveQuest(npcCode + questToGive[0])) {
+           foreach (var quest in QuestManager.instance.database.allQuestsInDatabase) {
+               if (quest.questName == npcCode + questToGive[0]) {
+                   hasQuestIcon.SetActive(true);
+               }else {
+                   return;
+               }
+           }
+       }else if (QuestManager.instance.CheckIfIsComplete(npcCode + questToGive[0]) && QuestManager.instance.Read(npcCode + questToGive[0]).npcToComplete == npcCode) {
+           hasQuestIcon.SetActive(true);
+       }else {
+           hasQuestIcon.SetActive(false);
+       }
+    }
+    private void StopTheNpc()
+    {
+        enemyAgent.SetDestination(transform.position);
+    }
     #region PatrolRegion
     IEnumerator StartPatrolling()
     {
@@ -242,8 +293,8 @@ public class NPCEditor : Editor
         if(!myTarget.interactable)
             return;
         myTarget.npcType = (NPC.NPCtYPE)EditorGUILayout.EnumPopup("NPC Type", myTarget.npcType);
-        switch (myTarget.npcType)
-        {
+        myTarget.talkPanel = (GameObject)EditorGUILayout.ObjectField("Talk Panel", myTarget.talkPanel, typeof(GameObject), true);
+        switch (myTarget.npcType) {
             case NPC.NPCtYPE.Static:
                 myTarget.interactText = (TextMeshProUGUI)EditorGUILayout.ObjectField("Interact Text", myTarget.interactText, typeof(TextMeshProUGUI), true);
                 break;
@@ -255,6 +306,7 @@ public class NPCEditor : Editor
         myTarget.npcCode = EditorGUILayout.TextField("NPC Code", myTarget.npcCode);
         myTarget.hasQuest = EditorGUILayout.Toggle("Has Quest", myTarget.hasQuest);
         if (myTarget.hasQuest) { 
+            myTarget.hasQuestIcon = (GameObject)EditorGUILayout.ObjectField("Has Quest Icon", myTarget.hasQuestIcon, typeof(GameObject), true);
             myTarget.questCount = EditorGUILayout.IntField("Quest Count", myTarget.questCount);
             if (stringArray != null) {
                 if (GUILayout.Button("Adicionar Nova Quest")) {

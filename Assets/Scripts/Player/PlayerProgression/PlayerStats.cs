@@ -8,7 +8,7 @@ public class PlayerStats : MonoBehaviour
 
     [SerializeField] CharacterAttributeData startAttributeData;
 
-    [Header("Levelup formula variables (levelUpXp = ax² + bx + c)")]
+    [Header("Levelup formula variables (levelUpXp = axï¿½ + bx + c)")]
     [SerializeField] float a;
     [SerializeField] float b;
     [SerializeField] float c;
@@ -20,10 +20,10 @@ public class PlayerStats : MonoBehaviour
 
     float xpMultiplier = 1f;
 
-    int strength;
-    int dexterity;
-    int endurance;
-    int intelligence;
+   public int strength;
+   public int dexterity;
+   public int endurance;
+   public int intelligence;
 
     float meleeDamageMultiplier = 1f;
     float meleeAttackSpeedMultiplier = 1f;
