@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 8150805047281156399}
   - component: {fileID: 5497521397961929090}
   - component: {fileID: 934105656595630701}
+  - component: {fileID: 4009748770539622882}
+  - component: {fileID: 4754010165595968016}
   m_Layer: 0
   m_Name: StoneMedium
   m_TagString: Untagged
@@ -83,3 +85,40 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &4009748770539622882
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7258568858565363224}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.7701796, y: 0.26750013, z: 0.7368923}
+  m_Center: {x: -0.027842239, y: 0.13375007, z: -0.037297785}
+--- !u!114 &4754010165595968016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7258568858565363224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35e95dc5ff2b64380880dd7ac5922847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Size: {x: 0.8931209, y: 0.3827048, z: 0.8633437}
+  m_Center: {x: -0.024815261, y: 0.144488, z: -0.049630523}
+  m_Area: 1
+  m_AffectedAgents: ffffffff

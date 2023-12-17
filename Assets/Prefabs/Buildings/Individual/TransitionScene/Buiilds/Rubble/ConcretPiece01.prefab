@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 8289117438039030404}
   - component: {fileID: 2722719810593804228}
   - component: {fileID: 5224958385074282425}
+  - component: {fileID: 776185825143616188}
+  - component: {fileID: 4663095447768477397}
   m_Layer: 0
   m_Name: ConcretPiece01
   m_TagString: Untagged
@@ -83,3 +85,41 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &776185825143616188
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3634287201739076957}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -8200765618344549813, guid: d8324c2136a900c488259e0d5eef6faf, type: 3}
+--- !u!114 &4663095447768477397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3634287201739076957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35e95dc5ff2b64380880dd7ac5922847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Size: {x: 1.2962469, y: 0.11574805, z: 0.96857977}
+  m_Center: {x: -0.01795429, y: 0.033664435, z: -0.31644547}
+  m_Area: 1
+  m_AffectedAgents: ffffffff
