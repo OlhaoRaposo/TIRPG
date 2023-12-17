@@ -55,10 +55,12 @@ public class PlayerController : MonoBehaviour
         if (Physics.Raycast(transform.position, Vector3.down, 0.1f) == true)
         {
             isGrounded = true;
+            animator.SetBool("IsGrounded", true);
         }
         else
         {
             isGrounded = false;
+            animator.SetBool("IsGrounded", false);
         }
     }
 
@@ -109,6 +111,7 @@ public class PlayerController : MonoBehaviour
 
             startRelativePoint = transform.position;
             isJumping = true;
+            animator.SetBool("IsJumping", true);
         }
 
         if (isJumping == true)
@@ -121,6 +124,7 @@ public class PlayerController : MonoBehaviour
             else
             {
                 isJumping = false;
+                animator.SetBool("IsJumping", false);
             }
         }
         else if (isGrounded == false)
@@ -174,6 +178,7 @@ public class PlayerController : MonoBehaviour
             isRanged = false;
         }
     }
+    
     private IEnumerator DashAction()
     {
         Vector3 movingDir = Vector3.zero;
@@ -181,6 +186,7 @@ public class PlayerController : MonoBehaviour
         isDashing = true;
         startRelativePoint = transform.position;
         PlayerCamera.instance.ToggleMovement(false);
+        animator.SetBool("IsDashing", true);
 
         if (Input.GetAxis("Vertical") == 0 && Input.GetAxis("Horizontal") == 0)
         {
@@ -206,6 +212,7 @@ public class PlayerController : MonoBehaviour
         CancelInvoke("StopDash");
         isDashing = false;
         PlayerCamera.instance.ToggleMovement(true);
+        animator.SetBool("IsDashing", false);
     }
 
     private float RelativeDistance()
