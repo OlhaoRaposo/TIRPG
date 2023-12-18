@@ -3370,8 +3370,6 @@ GameObject:
   - component: {fileID: 781033918976680780}
   - component: {fileID: 5813722358040975170}
   - component: {fileID: 3549592608225399686}
-  - component: {fileID: 8269695014948017177}
-  - component: {fileID: 5418653730977242991}
   - component: {fileID: 3692116246425993576}
   m_Layer: 0
   m_Name: Player
@@ -3498,46 +3496,6 @@ MonoBehaviour:
   rangedWeapon: {fileID: 6241156400474366124}
   meleeWeapon: {fileID: 8814491649899622192}
   animator: {fileID: 5813722358040975170}
---- !u!114 &8269695014948017177
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6759132695369782341}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea0b193f9e906724a88a0a61ac37a099, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startAttributeData: {fileID: 11400000, guid: c93be221785411c4ba2403a853c374bc, type: 2}
-  a: 1
-  b: 0
-  c: 500
-  strength: 0
-  dexterity: 0
-  endurance: 0
-  intelligence: 0
---- !u!114 &5418653730977242991
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6759132695369782341}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51e0a0b4c509d0649b9bd566b94f7794, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slots: []
-  meleeWeaponSlot: {fileID: 0}
-  rangedWeaponSlot: {fileID: 0}
-  consumableSlot: {fileID: 0}
-  throwableSlot: {fileID: 0}
-  items:
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!114 &3692116246425993576
 MonoBehaviour:
   m_ObjectHideFlags: 0
