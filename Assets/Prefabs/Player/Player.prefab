@@ -3101,7 +3101,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   equipedWeapon: {fileID: 11400000, guid: 6121deddc3b6256458ed3b1a1e1bedf5, type: 2}
-  ammoText: {fileID: 0}
   reloadImage: {fileID: 0}
   effect: {fileID: 6311905094092980648, guid: 0629727cffee602439289c4c24bcdb0a, type: 3}
 --- !u!1 &6327791738155717092
@@ -3515,6 +3514,10 @@ MonoBehaviour:
   a: 1
   b: 0
   c: 500
+  strength: 0
+  dexterity: 0
+  endurance: 0
+  intelligence: 0
 --- !u!114 &5418653730977242991
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4815,6 +4818,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4022807065086187320}
+  - component: {fileID: 1578961676915089182}
   m_Layer: 0
   m_Name: Melee
   m_TagString: Untagged
@@ -4838,6 +4842,21 @@ Transform:
   - {fileID: 3638659166130190257}
   m_Father: {fileID: 307774727505572980}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1578961676915089182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8814491649899622192}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 301ef19b8d4a92147a7525f875b87ba0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 5813722358040975170}
+  comboExecutionWindow: 0.5
+  attackCollider: {fileID: 0}
 --- !u!1 &8979034094375809502
 GameObject:
   m_ObjectHideFlags: 0

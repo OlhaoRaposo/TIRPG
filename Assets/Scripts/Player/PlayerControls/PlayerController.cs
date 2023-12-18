@@ -52,10 +52,39 @@ public class PlayerController : MonoBehaviour
 
     private void GroundCheck()
     {
+        float radius = controller.radius;
+        Vector3 horizontalAxisPoint = new Vector3(controller.radius / 2, 0, 0);
+        Vector3 verticalAxisPoint = new Vector3(0, 0, controller.radius / 2);
+
         if (Physics.Raycast(transform.position, Vector3.down, 0.1f) == true)
         {
             isGrounded = true;
             animator.SetBool("IsGrounded", true);
+            return;
+        }
+        else if (Physics.Raycast(transform.position + horizontalAxisPoint, Vector3.down, 0.1f) == true)
+        {
+            isGrounded = true;
+            animator.SetBool("IsGrounded", true);
+            return;
+        }
+        else if (Physics.Raycast(transform.position - horizontalAxisPoint, Vector3.down, 0.1f) == true)
+        {
+            isGrounded = true;
+            animator.SetBool("IsGrounded", true);
+            return;
+        }
+        else if (Physics.Raycast(transform.position + verticalAxisPoint, Vector3.down, 0.1f) == true)
+        {
+            isGrounded = true;
+            animator.SetBool("IsGrounded", true);
+            return;
+        }
+        else if (Physics.Raycast(transform.position - verticalAxisPoint, Vector3.down, 0.1f) == true)
+        {
+            isGrounded = true;
+            animator.SetBool("IsGrounded", true);
+            return;
         }
         else
         {
@@ -80,11 +109,19 @@ public class PlayerController : MonoBehaviour
 
                 isRunning = true;
                 animator.speed = runSpeed;
+                if(isDashing == false && isJumping == false && isGrounded == true)
+                {
+                    animator.Play("Walk Tree");
+                }
             }
             else
             {
                 isRunning = false;
                 animator.speed = speed;
+                if(isDashing == false && isJumping == false && isGrounded == true)
+                {
+                    animator.Play("Walk Tree");
+                }
             }
 
             if (isDashing == false)
@@ -162,23 +199,25 @@ public class PlayerController : MonoBehaviour
 
     private void ToggleFightStyle()
     {
-        if(isRanged == false && Input.GetKeyDown(KeyCode.Alpha1))
+        if (isRanged == false && Input.GetKeyDown(KeyCode.Alpha1))
         {
             rangedWeapon.SetActive(true);
             meleeWeapon.SetActive(false);
+            animator.Play("RangedToMelee");
 
             isRanged = true;
         }
-        
-        if(isRanged == true && Input.GetKeyDown(KeyCode.Alpha2))
+
+        if (isRanged == true && Input.GetKeyDown(KeyCode.Alpha2))
         {
             rangedWeapon.SetActive(false);
             meleeWeapon.SetActive(true);
+            animator.Play("MeleeToRanged");
 
             isRanged = false;
         }
     }
-    
+
     private IEnumerator DashAction()
     {
         Vector3 movingDir = Vector3.zero;
