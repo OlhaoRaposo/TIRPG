@@ -187,7 +187,7 @@ public class PlayerController : MonoBehaviour
 
 
         //Dash
-        if (Input.GetKeyDown(InputController.instance.dash) && isGrounded && stamina >= 25f)
+        if (Input.GetKeyDown(InputController.instance.dash) && isGrounded && stamina >= 25f && isDashing == false)
         {
             PlayerHPController.instance.ChangeStamina(25f, true);
             stamina -= 25f;
