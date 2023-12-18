@@ -108,7 +108,10 @@ public class PlayerGun : MonoBehaviour
         }
         else if (PlayerCamera.instance.isAiming == false)
         {
-            PlayerCamera.instance.playerAnimator.SetLayerWeight(1, 0);
+            if(isReloading == false)
+            {
+                PlayerCamera.instance.playerAnimator.SetLayerWeight(1, 0);
+            }
             PlayerCamera.instance.playerAnimator.SetFloat("AimVertical", 0);
         }
     }
@@ -155,8 +158,10 @@ public class PlayerGun : MonoBehaviour
     private IEnumerator ReloadAction()
     {
         isReloading = true;
-
+        PlayerCamera.instance.playerAnimator.SetLayerWeight(1, 1);
+        PlayerCamera.instance.playerAnimator.Play("Reload");
         yield return new WaitForSeconds(equipedWeapon.reloadTime);
+        PlayerCamera.instance.playerAnimator.SetLayerWeight(1, 0);
 
         isReloading = false;
         ammo = equipedWeapon.ammo;

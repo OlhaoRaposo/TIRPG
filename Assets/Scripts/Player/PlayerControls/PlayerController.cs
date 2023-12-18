@@ -203,7 +203,10 @@ public class PlayerController : MonoBehaviour
         {
             rangedWeapon.SetActive(true);
             meleeWeapon.SetActive(false);
-            animator.Play("RangedToMelee");
+            if(isGrounded == true)
+            {
+                animator.Play("RangedToMelee");
+            }
 
             isRanged = true;
         }
@@ -212,7 +215,10 @@ public class PlayerController : MonoBehaviour
         {
             rangedWeapon.SetActive(false);
             meleeWeapon.SetActive(true);
-            animator.Play("MeleeToRanged");
+            if(isGrounded == true)
+            {
+                animator.Play("MeleeToRanged");
+            }
 
             isRanged = false;
         }
