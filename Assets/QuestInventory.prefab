@@ -1,0 +1,110 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1046085737484090635
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2351284028296927863}
+  - component: {fileID: 1413967774367000052}
+  m_Layer: 0
+  m_Name: QuestInventory
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2351284028296927863
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1046085737484090635}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -26.789925, y: 15.403133, z: 13.037901}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1413967774367000052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1046085737484090635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5796b92a7ce8eb149a3fd5bc44dfb208, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  questsHierarchy: {fileID: 0}
+  questPrefab: {fileID: 3568956310485617834, guid: 09f876c64bde19d479c744bdf7585ae7,
+    type: 3}
+  activeQuests: []
+  completedQuests: []
+  database:
+    allQuestsInDatabase: []
+  questToAdd:
+  - questName: TONHAO001
+    questDescription: "!Procure e entregue os tr\xEAs caixotes misteriosos a Krek."
+    atualPhase:
+      name: 
+      isComplete: 0
+    phases:
+    - name: Phase001
+      isComplete: 0
+    - name: Phase002
+      isComplete: 0
+    - name: Phase003
+      isComplete: 0
+    rewards:
+      loyaltyType: 0
+      loyalty: 3
+      itens:
+      - {fileID: 11400000, guid: 86f5acd92cc93a440b5900e7df321733, type: 2}
+      xp: 20
+      gold: 2
+      questReward: 
+    npcToComplete: 
+  - questName: KREK001
+    questDescription: "!V\xE1 at\xE9 o Lago da Abund\xE2ncia e pesque 6 \u201CCogumelos\u201D
+      e entregue-os \xE0 Krek."
+    atualPhase:
+      name: 
+      isComplete: 0
+    phases:
+    - name: Phase001
+      isComplete: 0
+    rewards:
+      loyaltyType: 0
+      loyalty: 3
+      itens:
+      - {fileID: 11400000, guid: 86f5acd92cc93a440b5900e7df321733, type: 2}
+      xp: 20
+      gold: 2
+      questReward: 
+    npcToComplete: KREK
+  - questName: TONHAO002
+    questDescription: Ligue o Gerador No topo da montanha
+    atualPhase:
+      name: 
+      isComplete: 0
+    phases:
+    - name: Phase001
+      isComplete: 0
+    rewards:
+      loyaltyType: 0
+      loyalty: 3
+      itens:
+      - {fileID: 11400000, guid: 86f5acd92cc93a440b5900e7df321733, type: 2}
+      xp: 20
+      gold: 2
+      questReward: 
+    npcToComplete: 
