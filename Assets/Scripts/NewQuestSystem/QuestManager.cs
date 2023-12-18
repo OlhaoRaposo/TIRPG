@@ -157,6 +157,7 @@ public class QuestManager : MonoBehaviour
     public void AddQuest(string questName) {
         activeQuests.Add(Read(questName));
        GameObject quest =  Instantiate(questPrefab, transform.position,quaternion.identity, questsHierarchy.transform);
+       quest.name = Read(questName).questDescription;
        quest.GetComponentInChildren<TextMeshProUGUI>().text = Read(questName).questDescription;
        AttQuestPhase();
     }
@@ -170,6 +171,7 @@ public class QuestManager : MonoBehaviour
             foreach (var var in activeQuests) {
                 if (var.questName == questName) {
                     activeQuests.Remove(var);
+                    Destroy(GameObject.Find(Read(questName).questDescription)); 
                     return;
                 } 
             }
