@@ -50,13 +50,15 @@ public class InteractiveObject : MonoBehaviour
     private void CheckIconTime()
     {
         foreach (var quest in QuestManager.instance.activeQuests) {
-            if (quest.atualPhase.name == phaseRelated) {
-                if(quest.atualPhase.isComplete == false)
-                    QuestCanvas.SetActive(true);
-                else
+            if (quest.questName == questRelataed) {
+                if (quest.atualPhase.name == phaseRelated) {
+                    if(quest.atualPhase.isComplete == false)
+                        QuestCanvas.SetActive(true);
+                    else
+                        QuestCanvas.SetActive(false);
+                }else {
                     QuestCanvas.SetActive(false);
-            }else {
-                QuestCanvas.SetActive(false);
+                }
             }
         }
     }
