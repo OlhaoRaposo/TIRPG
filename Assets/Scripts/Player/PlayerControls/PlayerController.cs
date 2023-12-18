@@ -102,10 +102,10 @@ public class PlayerController : MonoBehaviour
         if (x != 0 || y != 0)
         {
             //Run
-            if (Input.GetKey(InputController.instance.run) && (x != 0 || y != 0) && stamina >= 0.5f)
+            if (Input.GetKey(InputController.instance.run) && (x != 0 || y != 0) && stamina >= 0.125f)
             {
-                PlayerHPController.instance.ChangeStamina(0.5f, true);
-                stamina -= 0.5f;
+                PlayerHPController.instance.ChangeStamina(0.125f, true);
+                stamina -= 0.125f;
 
                 isRunning = true;
                 animator.speed = runSpeed;
