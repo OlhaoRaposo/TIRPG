@@ -30,8 +30,11 @@ public class ThrowItem : MonoBehaviour
     }
     void UseThrowable()
     {
-        if (PlayerInventory.instance.GetThrowable() == null) return;
-        else UIManager.instance.ShowTextFeedback("No throwable item equipped");
+        if (PlayerInventory.instance.GetThrowable() == null)
+        {
+            UIManager.instance.ShowTextFeedback("No throwable item equipped");
+            return;
+        }
 
         //Comecar cooldown
         nextThrow = Time.time + throwCooldown;

@@ -109,7 +109,9 @@ public class PlayerStats : MonoBehaviour
         if (!DecreasePoints()) return;
 
         //Aumentar hp maximo
+        PlayerHPController.instance.IncreaseMaxHP(20f);
         //Aumentar stamina
+        PlayerHPController.instance.IncreaseStamina(20f);
 
         endurance++;
         UIManager.instance.UpdateAvailablePoints(availablePoints);

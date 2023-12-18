@@ -118,6 +118,13 @@ public class UIManager : MonoBehaviour
     {
         intelligenceText.text = "Intelligence: " + intelligence.ToString();
     }
+    public void UpdateAllAttributes()
+    {
+        UpdateStrength(PlayerStats.instance.GetStrength());
+        UpdateDexterity(PlayerStats.instance.GetDexterity());
+        UpdateEndurance(PlayerStats.instance.GetEndurance());
+        UpdateIntelligence(PlayerStats.instance.GetIntelligence());
+    }
     public void UpdateAvailablePoints(int points)
     {
         availablePointsText.text = points.ToString();
@@ -167,6 +174,7 @@ public class UIManager : MonoBehaviour
     {
         DisableAllPanels();
         statsPanel.SetActive(!inventoryPanel.activeSelf);
+        UpdateAllAttributes();
     }
     public void ToggleQuestsPanel()
     {

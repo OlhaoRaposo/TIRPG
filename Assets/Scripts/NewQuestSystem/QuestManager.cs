@@ -29,8 +29,6 @@ public class QuestManager : MonoBehaviour
     private void Awake() {
         instance = this;
         jsonPath = Application.dataPath + "/QuestJsonDatabase.json";
-    }
-    private void Start() { 
         InsertOnDatabase();
     }
     #region JsonRegion

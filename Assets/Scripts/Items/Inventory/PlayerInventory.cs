@@ -61,7 +61,7 @@ public class PlayerInventory : MonoBehaviour
         if (RemoveItemFromInventory(itemData))
         {
             SortInventory();
-            GameObject droppedItem = Instantiate(itemData.prefab, transform.position + Vector3.up, Quaternion.identity);
+            GameObject droppedItem = Instantiate(itemData.prefab, PlayerInteractions.instance.transform.position + (Vector3.up + PlayerInteractions.instance.transform.forward), Quaternion.identity);
             ItemDropManager.instance.SetItemParent(droppedItem.transform);
             return droppedItem;
         }
@@ -81,13 +81,13 @@ public class PlayerInventory : MonoBehaviour
     public void DropMeleeWeapon(ItemData itemData)
     {
         meleeWeaponSlot.SetItem(null);
-        GameObject droppedItem = Instantiate(itemData.prefab, transform.position + Vector3.up, Quaternion.identity);
+        GameObject droppedItem = Instantiate(itemData.prefab, PlayerInteractions.instance.transform.position + (Vector3.up + PlayerInteractions.instance.transform.forward), Quaternion.identity);
         ItemDropManager.instance.SetItemParent(droppedItem.transform);
     }
     public void DropRangedWeapon(ItemData itemData)
     {
         rangedWeaponSlot.SetItem(null);
-        GameObject droppedItem = Instantiate(itemData.prefab, transform.position + Vector3.up, Quaternion.identity);
+        GameObject droppedItem = Instantiate(itemData.prefab, PlayerInteractions.instance.transform.position + (Vector3.up + PlayerInteractions.instance.transform.forward), Quaternion.identity);
         ItemDropManager.instance.SetItemParent(droppedItem.transform);
     }
     void SortInventory()
