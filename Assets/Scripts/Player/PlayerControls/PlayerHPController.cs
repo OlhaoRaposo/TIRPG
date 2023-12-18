@@ -107,8 +107,20 @@ public class PlayerHPController : MonoBehaviour
         staminaMax += stam;
         currentStamina = staminaMax;
     }
+    public float GetStamina()
+    {
+        return currentStamina;
+    }
     public float GetMaxStamina()
     {
         return staminaMax;
+    }
+    public float GetHp()
+    {
+        return currentHP;
+    }
+    public float GetMaxHp()
+    {
+        return hpMax;
     }
 }

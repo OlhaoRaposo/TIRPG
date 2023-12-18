@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MainMenuController : MonoBehaviour
 {
+    [SerializeField] GameObject canvasGO;
     [SerializeField] GameObject optionsPanel;
     [SerializeField] GameObject creditsPanel;
     [SerializeField] GameObject charactersPanel;
@@ -17,6 +18,7 @@ public class MainMenuController : MonoBehaviour
     }
     public void CallStartGame()
     {
+        canvasGO.SetActive(true);
         SceneController.instance?.LoadSceneByIndex(1);
     }
     public void ToggleOptions()
