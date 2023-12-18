@@ -6,17 +6,13 @@ using UnityEngine.SceneManagement;
 public class SceneController : MonoBehaviour
 {
     public static SceneController instance;
-    [SerializeField] private bool destroySelf = false;
+    //[SerializeField] private bool destroySelf = false;
 
     void Awake()
     {
         if (instance == null)
         {
             instance = this;
-            if(destroySelf == false)
-            {
-                DontDestroyOnLoad(gameObject);
-            }
         }
         else
         {
@@ -45,6 +41,7 @@ public class SceneController : MonoBehaviour
     }
     public void QuitGame()
     {
+        Debug.Log("Quit Game");
         Application.Quit();
     }
 }
