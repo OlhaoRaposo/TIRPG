@@ -29,8 +29,6 @@ public class QuestManager : MonoBehaviour
     private void Awake() {
         instance = this;
         jsonPath = Application.dataPath + "/QuestJsonDatabase.json";
-    }
-    private void Start() { 
         InsertOnDatabase();
     }
     #region JsonRegion
@@ -136,10 +134,28 @@ public class QuestManager : MonoBehaviour
         }
         return false;
     }
+    public bool FindInCompletedQuests(string questName) {
+        foreach (var var in completedQuests) {
+            if (var.questName == questName) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public bool FindInActiveQuests(string questName) {
+        foreach (var var in activeQuests) {
+            if (var.questName == questName) {
+                return true;
+            }
+        }
+        return false;
+    }
     
     public void AddQuest(string questName) {
         activeQuests.Add(Read(questName));
        GameObject quest =  Instantiate(questPrefab, transform.position,quaternion.identity, questsHierarchy.transform);
+       quest.name = Read(questName).questDescription;
        quest.GetComponentInChildren<TextMeshProUGUI>().text = Read(questName).questDescription;
        AttQuestPhase();
     }
@@ -153,6 +169,7 @@ public class QuestManager : MonoBehaviour
             foreach (var var in activeQuests) {
                 if (var.questName == questName) {
                     activeQuests.Remove(var);
+                    Destroy(GameObject.Find(Read(questName).questDescription)); 
                     return;
                 } 
             }

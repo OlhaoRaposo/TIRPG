@@ -124,7 +124,6 @@ public class NPC : MonoBehaviour
         foreach (var npc in data.npcs) {
             if(npc.npcCode == npcCode + questToGive[0]) {
                 StartCoroutine(DefaultTalk(npc.questRewards, 0));
-                QuestManager.instance.CompleteQuest(npcCode + questToGive[0]);
             }
         }
     }
@@ -143,6 +142,7 @@ public class NPC : MonoBehaviour
                 if (QuestManager.instance.CheckIfIsComplete(npcCode + questToGive[0])) {
                     Debug.Log("Quest Was Completed");
                     RewardTalk();
+                    QuestManager.instance.CompleteQuest(npcCode + questToGive[0]);
                     return;
                 }
             }else {
@@ -206,19 +206,15 @@ public class NPC : MonoBehaviour
     }
 
     void CheckIfQuestIsActive() {
-       if(!QuestManager.instance.CheckIfALreadyHaveQuest(npcCode + questToGive[0])) {
-           foreach (var quest in QuestManager.instance.database.allQuestsInDatabase) {
-               if (quest.questName == npcCode + questToGive[0]) {
-                   hasQuestIcon.SetActive(true);
-               }else {
-                   return;
-               }
-           }
-       }else if (QuestManager.instance.CheckIfIsComplete(npcCode + questToGive[0]) && QuestManager.instance.Read(npcCode + questToGive[0]).npcToComplete == npcCode) {
-           hasQuestIcon.SetActive(true);
-       }else {
-           hasQuestIcon.SetActive(false);
-       }
+      if(QuestManager.instance.FindInCompletedQuests(npcCode + questToGive[0])) {
+          hasQuestIcon.SetActive(false);
+      }else if (QuestManager.instance.CheckIfIsComplete(npcCode + questToGive[0])) {
+          hasQuestIcon.SetActive(true);
+      }else if (!QuestManager.instance.FindInActiveQuests(npcCode + questToGive[0])) {
+          hasQuestIcon.SetActive(true);
+      }else if(QuestManager.instance.FindInActiveQuests(npcCode + questToGive[0])) {
+          hasQuestIcon.SetActive(false);
+      }
     }
     private void StopTheNpc()
     {

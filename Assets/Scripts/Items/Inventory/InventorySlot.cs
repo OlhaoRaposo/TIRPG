@@ -15,8 +15,6 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
     }
     public virtual void SetItem(ItemData item)
     {
-        if (itemData != null) PlayerInventory.instance.AddItemToInventory(itemData);
-
         itemData = item;
 
         if (itemImage == null) return;
@@ -58,7 +56,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
                 PlayerInventory.instance.EquipThrowable(itemData);
                 break;
         }
-        
+        SetItem(null);
     }
     public virtual void RightClick()
     {

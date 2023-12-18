@@ -17,7 +17,7 @@ public class EssentialObjects : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject);
+            Destroy(this.gameObject);
         }
     }
    /*void OnLevelWasLoaded(int level)

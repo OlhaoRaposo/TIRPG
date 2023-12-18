@@ -11,6 +11,10 @@ public class ItemDropManager : MonoBehaviour
     {
         instance = this;
     }
+    void Start()
+    {
+        if (droppedItemsParent == null) droppedItemsParent = transform;
+    }
     public void DropItem(ItemDropInfo[] dropInfo, Vector3 instantiatePosition)
     {
         if (dropInfo == null) return;
@@ -19,7 +23,7 @@ public class ItemDropManager : MonoBehaviour
         {
             if (Random.Range(0f, 1f) < item.dropRate)
             {
-                Instantiate(item.data.prefab, instantiatePosition, Quaternion.identity, droppedItemsParent);
+                Instantiate(item.data.prefab, instantiatePosition + Vector3.up, Quaternion.identity, droppedItemsParent);
             }
         }
     }

@@ -15,6 +15,10 @@ public class MainMenuController : MonoBehaviour
             DisablePanels();
         }
     }
+    public void CallStartGame()
+    {
+        SceneController.instance?.LoadSceneByIndex(1);
+    }
     public void ToggleOptions()
     {
         DisablePanels();
@@ -30,13 +34,7 @@ public class MainMenuController : MonoBehaviour
         DisablePanels();
         charactersPanel.SetActive(!charactersPanel.activeSelf);
     }
-
-    public void ClosePanel()
-    {
-        DisablePanels();
-    }
-
-    void DisablePanels()
+    public void DisablePanels()
     {
         optionsPanel.SetActive(false);
         creditsPanel.SetActive(false);

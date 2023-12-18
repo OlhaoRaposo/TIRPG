@@ -63,7 +63,7 @@ public class EnemyBehaviour : MonoBehaviour
     public void TakeDamage(float damage)
     {
         float actualDamage;
-        actualDamage = PlayerStats.instance.strength * Random.Range(.9f, 1);
+        actualDamage = 1;
         Image lifeBar = EnemyCanvas.transform.Find("LifeBar").transform.Find("LifeBarFill").GetComponent<Image>();
         life -= Mathf.Round((actualDamage * damage));
         lifeBar.fillAmount = life / lifeMax;
@@ -208,18 +208,14 @@ public class EnemyBehaviour : MonoBehaviour
         spawn.GetComponent<Spawner>().prefabCode = mySpawner.bestiaryCode;
         mySpawner.spawner = spawn;
     }
-    private void OnDestroy()
-    {
-        ItemDropManager.instance.DropItem(dropInfo, transform.position);
-        QuestController.instance.EnemyEliminated(questType);
-      if (mySpawner.spawner.TryGetComponent(out Spawner spawn)) {
-            spawn.GetComponent<Spawner>().StartRespawnProcess();
-        }
-    }
-
     public void Die()
     {
         Destroy(this.gameObject);
+        ItemDropManager.instance.DropItem(dropInfo, transform.position);
+        PlayerStats.instance.GainXp(Random.Range(30,100));
+        if (mySpawner.spawner.TryGetComponent(out Spawner spawn)) {
+            spawn.GetComponent<Spawner>().StartRespawnProcess();
+        }
     }
     
 }

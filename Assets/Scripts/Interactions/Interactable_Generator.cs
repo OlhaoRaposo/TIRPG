@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Audio;
 
 public class Interactable_Generator : MonoBehaviour, IInteractable
 {
@@ -25,7 +22,7 @@ public class Interactable_Generator : MonoBehaviour, IInteractable
         if (isRotating){
             t += Time.fixedDeltaTime / duration;
             Mathf.Clamp01(t);
-            axis.Rotate(0, 0, t * speed);
+            axis.Rotate(t * speed, 0, 0);
         }
     }
     public void Interact(PlayerInteractions player)

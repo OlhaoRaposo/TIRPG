@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
         GroundCheck();
 
         Move();
-        ToggleFightStyle();
+        //ToggleFightStyle();
     }
 
     private void StaminaRegen()
