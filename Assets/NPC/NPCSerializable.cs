@@ -15,8 +15,8 @@ public class NPCSerializable : MonoBehaviour
     public string npcToSearch;
     private void Awake() {
         jsonPath = Application.dataPath + "/NPCJsonDatabase.json";
+        Read();
     }
-    void Start() { Read(); }
     void Read()
     {
         JsonDatabase data = new JsonDatabase();

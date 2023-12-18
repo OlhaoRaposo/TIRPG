@@ -6,6 +6,8 @@ public class WeaponSlot : InventorySlot
 {
     public override void SetItem(ItemData item)
     {
+        if (itemData != null && item != null) PlayerInventory.instance.AddItemToInventory(itemData);
+
         base.SetItem(item);
     }
     public override void RightClick()

@@ -31,6 +31,8 @@ public class PlayerGun : MonoBehaviour
 
     private void Update()
     {
+        if (UIManager.instance.GetIsInMenus()) return;
+
         Shoot();
         Reload();
     }
