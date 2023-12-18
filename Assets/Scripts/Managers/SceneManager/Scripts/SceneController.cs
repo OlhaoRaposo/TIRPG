@@ -6,13 +6,17 @@ using UnityEngine.SceneManagement;
 public class SceneController : MonoBehaviour
 {
     public static SceneController instance;
+    [SerializeField] private bool destroySelf = false;
 
     void Awake()
     {
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
+            if(destroySelf == false)
+            {
+                DontDestroyOnLoad(gameObject);
+            }
         }
         else
         {

@@ -52,37 +52,20 @@ public class PlayerController : MonoBehaviour
 
     private void GroundCheck()
     {
-        float radius = controller.radius;
-        Vector3 horizontalAxisPoint = new Vector3(controller.radius / 2, 0, 0);
-        Vector3 verticalAxisPoint = new Vector3(0, 0, controller.radius / 2);
+        Vector3 horizontalAxisPoint = new Vector3((controller.radius / 2) + 0.1f, 0, 0);
+        Vector3 verticalAxisPoint = new Vector3(0, 0, (controller.radius / 2) + 0.1f);
 
-        if (Physics.Raycast(transform.position, Vector3.down, 0.1f) == true)
+        if
+        (
+            Physics.Raycast(transform.position, Vector3.down, 0.1f) == true
+            || Physics.Raycast(transform.position + horizontalAxisPoint, Vector3.down, 0.1f) == true
+            || Physics.Raycast(transform.position - horizontalAxisPoint, Vector3.down, 0.1f) == true
+            || Physics.Raycast(transform.position + verticalAxisPoint, Vector3.down, 0.1f) == true
+            || Physics.Raycast(transform.position - verticalAxisPoint, Vector3.down, 0.1f) == true
+        )
         {
             isGrounded = true;
-            animator.SetBool("IsGrounded", true);
-            return;
-        }
-        else if (Physics.Raycast(transform.position + horizontalAxisPoint, Vector3.down, 0.1f) == true)
-        {
-            isGrounded = true;
-            animator.SetBool("IsGrounded", true);
-            return;
-        }
-        else if (Physics.Raycast(transform.position - horizontalAxisPoint, Vector3.down, 0.1f) == true)
-        {
-            isGrounded = true;
-            animator.SetBool("IsGrounded", true);
-            return;
-        }
-        else if (Physics.Raycast(transform.position + verticalAxisPoint, Vector3.down, 0.1f) == true)
-        {
-            isGrounded = true;
-            animator.SetBool("IsGrounded", true);
-            return;
-        }
-        else if (Physics.Raycast(transform.position - verticalAxisPoint, Vector3.down, 0.1f) == true)
-        {
-            isGrounded = true;
+            CancelInvoke("FallCheck");
             animator.SetBool("IsGrounded", true);
             return;
         }
@@ -109,7 +92,7 @@ public class PlayerController : MonoBehaviour
 
                 isRunning = true;
                 animator.speed = runSpeed;
-                if(isDashing == false && isJumping == false && isGrounded == true)
+                if (isDashing == false && isJumping == false && isGrounded == true)
                 {
                     animator.Play("Walk Tree");
                 }
@@ -118,7 +101,7 @@ public class PlayerController : MonoBehaviour
             {
                 isRunning = false;
                 animator.speed = speed;
-                if(isDashing == false && isJumping == false && isGrounded == true)
+                if (isDashing == false && isJumping == false && isGrounded == true)
                 {
                     animator.Play("Walk Tree");
                 }
@@ -136,6 +119,29 @@ public class PlayerController : MonoBehaviour
 
             animator.SetFloat("WalkHorizontal", x);
             animator.SetFloat("WalkVertical", y);
+
+            if (startedFall == false && isJumping == false && isGrounded == false)
+            {
+                Vector3 dir = Vector3.zero;
+                if (Input.GetAxis("Vertical") > 0)
+                {
+                    dir += PlayerCamera.instance.GetCameraForward();
+                }
+                if (Input.GetAxis("Vertical") < 0)
+                {
+                    dir -= PlayerCamera.instance.GetCameraForward();
+                }
+                if (Input.GetAxis("Horizontal") > 0)
+                {
+                    dir += PlayerCamera.instance.GetCameraRight();
+                }
+                if (Input.GetAxis("Horizontal") < 0)
+                {
+                    dir -= PlayerCamera.instance.GetCameraRight();
+                }
+
+                controller.Move(speed * dir * Time.fixedDeltaTime);
+            }
             x = 0;
             y = 0;
         }
@@ -203,7 +209,7 @@ public class PlayerController : MonoBehaviour
         {
             rangedWeapon.SetActive(true);
             meleeWeapon.SetActive(false);
-            if(isGrounded == true)
+            if (isGrounded == true)
             {
                 animator.Play("RangedToMelee");
             }
@@ -215,7 +221,7 @@ public class PlayerController : MonoBehaviour
         {
             rangedWeapon.SetActive(false);
             meleeWeapon.SetActive(true);
-            if(isGrounded == true)
+            if (isGrounded == true)
             {
                 animator.Play("MeleeToRanged");
             }

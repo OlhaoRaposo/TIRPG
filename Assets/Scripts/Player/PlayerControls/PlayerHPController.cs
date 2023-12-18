@@ -28,6 +28,11 @@ public class PlayerHPController : MonoBehaviour
         SetStamina(staminaMax);
     }
 
+    private void OnLevelWasLoaded()
+    {
+        Start();
+    }
+
     public void SetHP(float ammount)
     {
         if(ammount > hpMax)

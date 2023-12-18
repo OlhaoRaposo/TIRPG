@@ -142,7 +142,7 @@ public class PlayerGun : MonoBehaviour
             Vector3 startingPos = new Vector3(transform.position.x + aux, transform.position.y + aux, transform.position.z);
             Vector3 targetAim = (target - transform.position).normalized;
 
-            Instantiate(equipedWeapon.projectile, startingPos, Quaternion.LookRotation(targetAim, Vector3.up), transform);
+            Instantiate(equipedWeapon.projectile, startingPos, Quaternion.LookRotation(targetAim, Vector3.up), null);
             Instantiate(effect, startingPos, Quaternion.LookRotation(targetAim, Vector3.up), transform);
             //PlayerCamera.instance.ShakeCamera(equipedWeapon.recoil);
             ammo--;
