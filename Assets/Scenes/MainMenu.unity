@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2663,6 +2663,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3004360c9fd7b2f41ad76ead7312e2e2, type: 3}
+--- !u!1 &852252287 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4385603509228590703, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+    type: 3}
+  m_PrefabInstance: {fileID: 852252286}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &866793253
 GameObject:
   m_ObjectHideFlags: 0
@@ -2786,7 +2792,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -3823,6 +3829,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64236f259904df74d991f2cbafcb517d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasGO: {fileID: 852252287}
   optionsPanel: {fileID: 2026902117}
   creditsPanel: {fileID: 1702457383}
   charactersPanel: {fileID: 1628205447}
@@ -3964,7 +3971,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1142704236}
         m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
-        m_MethodName: ClosePanel
+        m_MethodName: DisablePanels
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3988,7 +3995,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 0.495283, b: 0.495283, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -4710,7 +4717,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -5640,7 +5647,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1142704236}
         m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
-        m_MethodName: ClosePanel
+        m_MethodName: DisablePanels
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5664,7 +5671,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 0.495283, b: 0.495283, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -7188,7 +7195,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1142704236}
         m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
-        m_MethodName: ClosePanel
+        m_MethodName: DisablePanels
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7212,7 +7219,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 0.495283, b: 0.495283, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

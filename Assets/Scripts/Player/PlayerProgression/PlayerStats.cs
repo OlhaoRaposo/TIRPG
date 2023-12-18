@@ -51,6 +51,7 @@ public class PlayerStats : MonoBehaviour
     public void GainXp(int xp)
     {
         currentXp += (int)(xp * xpMultiplier);
+        UIManager.instance.UpdateXpStats(currentXp, levelupXp);
 
         if (currentXp >= levelupXp)
         {
@@ -112,6 +113,9 @@ public class PlayerStats : MonoBehaviour
         PlayerHPController.instance.IncreaseMaxHP(20f);
         //Aumentar stamina
         PlayerHPController.instance.IncreaseStamina(20f);
+
+        UIManager.instance.UpdateHealthStats((int)PlayerHPController.instance.GetHp(), (int)PlayerHPController.instance.GetMaxHp());
+        UIManager.instance.UpdateStaminaStats((int)PlayerHPController.instance.GetStamina(), (int)PlayerHPController.instance.GetMaxStamina());
 
         endurance++;
         UIManager.instance.UpdateAvailablePoints(availablePoints);
