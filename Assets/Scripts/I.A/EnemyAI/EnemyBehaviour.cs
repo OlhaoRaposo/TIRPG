@@ -208,19 +208,15 @@ public class EnemyBehaviour : MonoBehaviour
         spawn.GetComponent<Spawner>().prefabCode = mySpawner.bestiaryCode;
         mySpawner.spawner = spawn;
     }
-    private void OnDestroy()
-    {
-        ItemDropManager.instance.DropItem(dropInfo, transform.position);
-        QuestController.instance.EnemyEliminated(questType);
-        PlayerStats.instance.GainXp(Random.Range(30,100));
-      if (mySpawner.spawner.TryGetComponent(out Spawner spawn)) {
-            spawn.GetComponent<Spawner>().StartRespawnProcess();
-        }
-    }
-
     public void Die()
     {
         Destroy(this.gameObject);
+        ItemDropManager.instance.DropItem(dropInfo, transform.position);
+        QuestController.instance.EnemyEliminated(questType);
+        PlayerStats.instance.GainXp(Random.Range(30,100));
+        if (mySpawner.spawner.TryGetComponent(out Spawner spawn)) {
+            spawn.GetComponent<Spawner>().StartRespawnProcess();
+        }
     }
     
 }
