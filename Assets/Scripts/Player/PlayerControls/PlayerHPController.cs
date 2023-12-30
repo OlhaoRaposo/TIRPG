@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Rendering;
+using System.Net.Http;
 
 public class PlayerHPController : MonoBehaviour
 {
@@ -22,6 +23,23 @@ public class PlayerHPController : MonoBehaviour
     {
         currentHP = hpMax;
         currentStamina = staminaMax;
+        
+        SetHP(hpMax);
+        SetStamina(staminaMax);
+    }
+
+    private void OnLevelWasLoaded()
+    {
+        Start();
+    }
+
+    public void SetHP(float ammount)
+    {
+        if(ammount > hpMax)
+        {
+            hpMax = ammount;
+        }
+        hpImage.fillAmount = ammount / hpMax;
     }
 
     public void ChangeHP(float changeAmmount, bool isDecrease)
@@ -53,6 +71,15 @@ public class PlayerHPController : MonoBehaviour
         }
     }
 
+    public void SetStamina(float ammount)
+    {
+        if(ammount > staminaMax)
+        {
+            staminaMax = ammount;
+        }
+        staminaImage.fillAmount = ammount / staminaMax;
+    }
+
     public void ChangeStamina(float changeAmmount, bool isDecrease)
     {
         if(isDecrease == true)
@@ -75,9 +102,30 @@ public class PlayerHPController : MonoBehaviour
             }
         }
     }
-
+    public void IncreaseMaxHP(float hp)
+    {
+        hpMax += hp;
+        currentHP = hpMax;
+    }
+    public void IncreaseStamina(float stam)
+    {
+        staminaMax += stam;
+        currentStamina = staminaMax;
+    }
+    public float GetStamina()
+    {
+        return currentStamina;
+    }
     public float GetMaxStamina()
     {
         return staminaMax;
+    }
+    public float GetHp()
+    {
+        return currentHP;
+    }
+    public float GetMaxHp()
+    {
+        return hpMax;
     }
 }

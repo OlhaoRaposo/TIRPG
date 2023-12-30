@@ -6,16 +6,18 @@ using UnityEngine.EventSystems;
 
 public class InventorySlot : MonoBehaviour, IPointerClickHandler
 {
-    protected Image itemImage;
+    [SerializeField] protected Image itemImage;
     protected ItemData itemData;
 
     void OnEnable()
     {
-        itemImage = transform.GetChild(0).GetComponent<Image>();
+        if (itemImage == null) itemImage = transform.GetChild(0).GetComponent<Image>();
     }
     public virtual void SetItem(ItemData item)
     {
         itemData = item;
+
+        if (itemImage == null) return;
 
         if (item != null){
             Color color = itemImage.color;
@@ -54,7 +56,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
                 PlayerInventory.instance.EquipThrowable(itemData);
                 break;
         }
-        
+        SetItem(null);
     }
     public virtual void RightClick()
     {

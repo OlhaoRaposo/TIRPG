@@ -9,10 +9,11 @@ public class Interactable_Item : MonoBehaviour, IInteractable
 
     public void Interact(PlayerInteractions player)
     {
-        //Entra no if somente se houver espaço disponível no inventário
+        //Entra no if somente se houver espaï¿½o disponï¿½vel no inventï¿½rio
         if (player.TakeItem(itemData))
         {
-            QuestController.instance?.CollectedItems(typesOf);
+            UIManager.instance.ShowTextFeedback($"Picked up: {itemData.name}");
+            //QuestController.instance?.CollectedItems(typesOf);
             InteractTooltip.instance?.ToggleTooltip(null);
 
             Destroy(gameObject);

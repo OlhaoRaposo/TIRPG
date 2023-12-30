@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 4801734947978171051}
   - component: {fileID: 652420383231198745}
   - component: {fileID: 1856537411632948073}
+  - component: {fileID: 2373856554400938840}
+  - component: {fileID: 8372350367296396490}
   m_Layer: 0
   m_Name: RubblBeam03
   m_TagString: Untagged
@@ -83,3 +85,40 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &2373856554400938840
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4014166246153196972}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.044049263, y: 0.04404908, z: 2.2319047}
+  m_Center: {x: 0, y: 0, z: -1.1159524}
+--- !u!114 &8372350367296396490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4014166246153196972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35e95dc5ff2b64380880dd7ac5922847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Size: {x: 0.18066254, y: 0.10102081, z: 2.2992206}
+  m_Center: {x: -0.011486009, y: 0.00440675, z: -1.1167092}
+  m_Area: 1
+  m_AffectedAgents: ffffffff

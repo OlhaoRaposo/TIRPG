@@ -13,10 +13,6 @@ public class PlayerMeleeCombat : MonoBehaviour
     int comboIndex = 0;
     float nextComboAttack;
 
-    void Start()
-    {
-        animator = GetComponent<Animator>();
-    }
     void Update()
     {
 

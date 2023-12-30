@@ -30,6 +30,7 @@ public class InteractiveObject : MonoBehaviour
     public List<bool> validations = new List<bool>();
     public enum SkillType { CircleSkillCheck, BarSkillCheck, } public SkillType skillType;
     public GameObject circleSkillCheckObject, barSkillCheckObject;
+    
 
     GameObject skillCheck;
 
@@ -49,13 +50,15 @@ public class InteractiveObject : MonoBehaviour
     private void CheckIconTime()
     {
         foreach (var quest in QuestManager.instance.activeQuests) {
-            if (quest.atualPhase.name == phaseRelated) {
-                if(quest.atualPhase.isComplete == false)
-                    QuestCanvas.SetActive(true);
-                else
+            if (quest.questName == questRelataed) {
+                if (quest.atualPhase.name == phaseRelated) {
+                    if(quest.atualPhase.isComplete == false)
+                        QuestCanvas.SetActive(true);
+                    else
+                        QuestCanvas.SetActive(false);
+                }else {
                     QuestCanvas.SetActive(false);
-            }else {
-                QuestCanvas.SetActive(false);
+                }
             }
         }
     }
@@ -71,6 +74,7 @@ public class InteractiveObject : MonoBehaviour
                     InstantiateNote();
                 break;
             case ObjectPossibilities.Door:
+                OpenDoor();
                 break;
             case ObjectPossibilities.OnlyInteract:
                 InteractWithQuest();
@@ -81,11 +85,11 @@ public class InteractiveObject : MonoBehaviour
     void StartSkilCheck()
     {
         
-        if(skillCheck != null)
-            return;
+        if(skillCheckCount == 0)
+            skillCheckCount = Random.Range(1, 5);
         
         if(skillCheckCount == 0)
-            skillCheckCount = Random.Range(1, 3);
+            skillCheckCount = Random.Range(1, 5);
 
         if (skillType == SkillType.CircleSkillCheck) {
              skillCheck = Instantiate(circleSkillCheckObject, transform.position, Quaternion.identity);
@@ -94,6 +98,10 @@ public class InteractiveObject : MonoBehaviour
              skillCheck = Instantiate(barSkillCheckObject, transform.position, Quaternion.identity);
             skillCheck.gameObject.GetComponent<BarCheck>().interactiveObject = this;
         }
+    }
+
+    public void OpenDoor() {
+        
     }
     public void InteractWithQuest() {
         QuestManager.instance.SendValidation(questRelataed, phaseRelated);
@@ -113,8 +121,7 @@ public class InteractiveObject : MonoBehaviour
             }
             skillCheckCount = Random.Range(1, 5);
         }else if (validations.Count < skillCheckCount) {
-            if(!validations.Contains(false))
-                StartSkilCheck();
+            StartSkilCheck();
         }else {
             validations.Clear();
             skillCheckCount = Random.Range(1, 5);

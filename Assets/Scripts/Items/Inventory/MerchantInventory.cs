@@ -20,16 +20,49 @@ public class MerchantInventory : MonoBehaviour
     public void BuyItem(ItemData item)
     {
         //Checar condicao de lealdade
-        //if(hasEnoughLoyalty)
-        //{
+        if (CheckEnoughLoyaltyPoints(item.value))            
+        {
             //Adicionar item ao inventario
             if (PlayerInventory.instance.AddItemToInventory(item))
             {
+                SpendLoyaltyPoints(item.value);
                 //Remover o item do inventario do mercador
                 RemoveItem(item);
                 SortInventory();
             }
-        //}
+        }
+    }
+    void SpendLoyaltyPoints(int value)
+    {
+        switch (inventoryData.influentialSide)
+        {
+            case LoyaltySystem.InfluentialSide.Nature:
+                LoyaltySystem.instance.RemovePointsInfluenceNature(value);
+                break;
+            case LoyaltySystem.InfluentialSide.City:
+                LoyaltySystem.instance.RemovePointsInfluenceCity(value);
+                break;
+        }
+        UIManager.instance.UpdateShopInfluenceInfo();      
+    }
+    bool CheckEnoughLoyaltyPoints(int value)
+    {
+        switch (inventoryData.influentialSide)
+        {
+            case LoyaltySystem.InfluentialSide.Nature:
+                if (LoyaltySystem.instance.GetInfluencePointsNature() >= value){
+                    return true;
+                }else{
+                    return false;
+                }
+            case LoyaltySystem.InfluentialSide.City:
+                if (LoyaltySystem.instance.GetInfluencePointsCity() >= value){
+                    return true;
+                }else{
+                    return false;
+                }
+        }
+        return true;
     }
     public void SellItem(ItemData item)
     {
@@ -37,6 +70,15 @@ public class MerchantInventory : MonoBehaviour
         if (UIManager.instance.GetShopSlotsBuy().Length == GetAllItems().Count) return;
 
         //Adicionar pontos de influencia
+        switch (inventoryData.influentialSide)
+        {
+            case LoyaltySystem.InfluentialSide.Nature:
+                LoyaltySystem.instance.AddPointsInfluenceNature(item.value);
+                break;
+            case LoyaltySystem.InfluentialSide.City:
+                LoyaltySystem.instance.AddPointsInfluenceCity(item.value);
+                break;
+        }
 
         //Remover item do inventario do player
         PlayerInventory.instance.RemoveItemFromInventory(item);
@@ -44,6 +86,7 @@ public class MerchantInventory : MonoBehaviour
         //Adicionar item no inventario do mercador
         AddItem(item);
         SortInventory();
+        UIManager.instance.UpdateShopInfluenceInfo();
     }
     void AddItem(ItemData item)
     {
@@ -217,5 +260,8 @@ public class MerchantInventory : MonoBehaviour
 
         SortInventory();
     }
-
+    public MerchantInventoryData GetInventoryData()
+    {
+        return inventoryData;
+    }
 }

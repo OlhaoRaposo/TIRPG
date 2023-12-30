@@ -15,7 +15,6 @@ public class PlayerGun : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private PlayerGunBase equipedWeapon;
-    [SerializeField] private Text ammoText;
     [SerializeField] private Image reloadImage;
     [SerializeField] private GameObject effect;
 
@@ -27,11 +26,13 @@ public class PlayerGun : MonoBehaviour
     private void Start()
     {
         ammo = equipedWeapon.ammo;
-        ammoText.text = $"{ammo}/{equipedWeapon.ammo}";
+        UIManager.instance.UpdateAmmo($"{ammo}/{equipedWeapon.ammo}");
     }
 
     private void Update()
     {
+        if (UIManager.instance.GetIsInMenus()) return;
+
         Shoot();
         Reload();
     }
@@ -107,7 +108,10 @@ public class PlayerGun : MonoBehaviour
         }
         else if (PlayerCamera.instance.isAiming == false)
         {
-            PlayerCamera.instance.playerAnimator.SetLayerWeight(1, 0);
+            if(isReloading == false)
+            {
+                PlayerCamera.instance.playerAnimator.SetLayerWeight(1, 0);
+            }
             PlayerCamera.instance.playerAnimator.SetFloat("AimVertical", 0);
         }
     }
@@ -140,7 +144,7 @@ public class PlayerGun : MonoBehaviour
             Vector3 startingPos = new Vector3(transform.position.x + aux, transform.position.y + aux, transform.position.z);
             Vector3 targetAim = (target - transform.position).normalized;
 
-            Instantiate(equipedWeapon.projectile, startingPos, Quaternion.LookRotation(targetAim, Vector3.up), transform);
+            Instantiate(equipedWeapon.projectile, startingPos, Quaternion.LookRotation(targetAim, Vector3.up), null);
             Instantiate(effect, startingPos, Quaternion.LookRotation(targetAim, Vector3.up), transform);
             //PlayerCamera.instance.ShakeCamera(equipedWeapon.recoil);
             ammo--;
@@ -148,17 +152,19 @@ public class PlayerGun : MonoBehaviour
 
 
         shootCD = equipedWeapon.fireRate + Time.time;
-        ammoText.text = $"{ammo}/{equipedWeapon.ammo}";
+        UIManager.instance.UpdateAmmo($"{ammo}/{equipedWeapon.ammo}");
     }
 
     private IEnumerator ReloadAction()
     {
         isReloading = true;
-
+        PlayerCamera.instance.playerAnimator.SetLayerWeight(1, 1);
+        PlayerCamera.instance.playerAnimator.Play("Reload");
         yield return new WaitForSeconds(equipedWeapon.reloadTime);
+        PlayerCamera.instance.playerAnimator.SetLayerWeight(1, 0);
 
         isReloading = false;
         ammo = equipedWeapon.ammo;
-        ammoText.text = $"{ammo}/{equipedWeapon.ammo}";
+        UIManager.instance.UpdateAmmo($"{ammo}/{equipedWeapon.ammo}");
     }
 }

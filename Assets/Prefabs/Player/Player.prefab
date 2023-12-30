@@ -3101,7 +3101,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   equipedWeapon: {fileID: 11400000, guid: 6121deddc3b6256458ed3b1a1e1bedf5, type: 2}
-  ammoText: {fileID: 0}
   reloadImage: {fileID: 0}
   effect: {fileID: 6311905094092980648, guid: 0629727cffee602439289c4c24bcdb0a, type: 3}
 --- !u!1 &6327791738155717092
@@ -3371,9 +3370,9 @@ GameObject:
   - component: {fileID: 781033918976680780}
   - component: {fileID: 5813722358040975170}
   - component: {fileID: 3549592608225399686}
-  - component: {fileID: 8269695014948017177}
-  - component: {fileID: 5418653730977242991}
   - component: {fileID: 3692116246425993576}
+  - component: {fileID: 3634215588091456338}
+  - component: {fileID: 7311770328975493891}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -3484,7 +3483,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1.5
-  runSpeed: 2
+  runSpeed: 2.25
   stealthSpeed: 0.5
   dashLength: 5
   jumpHeight: 2
@@ -3499,42 +3498,6 @@ MonoBehaviour:
   rangedWeapon: {fileID: 6241156400474366124}
   meleeWeapon: {fileID: 8814491649899622192}
   animator: {fileID: 5813722358040975170}
---- !u!114 &8269695014948017177
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6759132695369782341}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea0b193f9e906724a88a0a61ac37a099, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startAttributeData: {fileID: 11400000, guid: c93be221785411c4ba2403a853c374bc, type: 2}
-  a: 1
-  b: 0
-  c: 500
---- !u!114 &5418653730977242991
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6759132695369782341}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51e0a0b4c509d0649b9bd566b94f7794, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slots: []
-  meleeWeaponSlot: {fileID: 0}
-  rangedWeaponSlot: {fileID: 0}
-  consumableSlot: {fileID: 0}
-  throwableSlot: {fileID: 0}
-  items:
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!114 &3692116246425993576
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3552,6 +3515,37 @@ MonoBehaviour:
   interactLayer:
     serializedVersion: 2
     m_Bits: 128
+--- !u!114 &3634215588091456338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6759132695369782341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a6fd430db462be428bf5d732baa2924, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  throwStrength: 10
+  throwCooldown: 3
+  throwPosition: {x: 0, y: 0, z: 0}
+  throwableLayer:
+    serializedVersion: 2
+    m_Bits: 256
+--- !u!114 &7311770328975493891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6759132695369782341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f2c616a0db2eb844a2da9b00a5e75f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  consumableCooldown: 5
 --- !u!1 &6840261526198546094
 GameObject:
   m_ObjectHideFlags: 0
@@ -4815,6 +4809,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4022807065086187320}
+  - component: {fileID: 1578961676915089182}
   m_Layer: 0
   m_Name: Melee
   m_TagString: Untagged
@@ -4838,6 +4833,21 @@ Transform:
   - {fileID: 3638659166130190257}
   m_Father: {fileID: 307774727505572980}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1578961676915089182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8814491649899622192}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 301ef19b8d4a92147a7525f875b87ba0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 5813722358040975170}
+  comboExecutionWindow: 0.5
+  attackCollider: {fileID: 0}
 --- !u!1 &8979034094375809502
 GameObject:
   m_ObjectHideFlags: 0

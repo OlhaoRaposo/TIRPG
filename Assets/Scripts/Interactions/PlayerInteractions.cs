@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlayerInteractions : MonoBehaviour
 {
+    public static PlayerInteractions instance;
+
     [SerializeField] float interactRadius = .05f;
     [SerializeField] float interactDistance = 2f;
     [SerializeField] LayerMask interactLayer;
@@ -12,6 +14,10 @@ public class PlayerInteractions : MonoBehaviour
     IInteractable interactable;
     bool canInteract = false;
 
+    private void Start()
+    {
+        instance = this;
+    }
     void Update()
     {
         if (interactable == null || UIManager.instance.GetIsInMenus()) return;
@@ -73,7 +79,7 @@ public class PlayerInteractions : MonoBehaviour
         Debug.Log("Peguei um " + item.name);
 
         //Adicionar item ao inventário
-        bool canTake = GetComponent<PlayerInventory>().AddItemToInventory(item);
+        bool canTake = PlayerInventory.instance.AddItemToInventory(item);
         return canTake;
     }
 

@@ -18,7 +18,13 @@ public class PlayerInventory : MonoBehaviour
     {
         instance = this;
     }
-    
+    private void Start()
+    {
+        EquipRangedWeapon(items[0]);
+        EquipMeleeWeapon(items[0]);
+        EquipThrowable(items[0]);
+        EquipConsumable(items[0]);
+    }
     void Update()
     {
         if (Input.GetKeyDown(InputController.instance.inventory))
@@ -55,7 +61,7 @@ public class PlayerInventory : MonoBehaviour
         if (RemoveItemFromInventory(itemData))
         {
             SortInventory();
-            GameObject droppedItem = Instantiate(itemData.prefab, transform.position + Vector3.up, Quaternion.identity);
+            GameObject droppedItem = Instantiate(itemData.prefab, PlayerInteractions.instance.transform.position + (Vector3.up + PlayerInteractions.instance.transform.forward), Quaternion.identity);
             ItemDropManager.instance.SetItemParent(droppedItem.transform);
             return droppedItem;
         }
@@ -75,13 +81,13 @@ public class PlayerInventory : MonoBehaviour
     public void DropMeleeWeapon(ItemData itemData)
     {
         meleeWeaponSlot.SetItem(null);
-        GameObject droppedItem = Instantiate(itemData.prefab, transform.position + Vector3.up, Quaternion.identity);
+        GameObject droppedItem = Instantiate(itemData.prefab, PlayerInteractions.instance.transform.position + (Vector3.up + PlayerInteractions.instance.transform.forward), Quaternion.identity);
         ItemDropManager.instance.SetItemParent(droppedItem.transform);
     }
     public void DropRangedWeapon(ItemData itemData)
     {
         rangedWeaponSlot.SetItem(null);
-        GameObject droppedItem = Instantiate(itemData.prefab, transform.position + Vector3.up, Quaternion.identity);
+        GameObject droppedItem = Instantiate(itemData.prefab, PlayerInteractions.instance.transform.position + (Vector3.up + PlayerInteractions.instance.transform.forward), Quaternion.identity);
         ItemDropManager.instance.SetItemParent(droppedItem.transform);
     }
     void SortInventory()
@@ -137,10 +143,10 @@ public class PlayerInventory : MonoBehaviour
     public List<ItemData> GetInventory()
     {
         List<ItemData> ret = new List<ItemData>();
-        if (meleeWeaponSlot.GetItem() != null) ret.Add(meleeWeaponSlot.GetItem());
+        /*if (meleeWeaponSlot.GetItem() != null) ret.Add(meleeWeaponSlot.GetItem());
         if (rangedWeaponSlot.GetItem() != null) ret.Add(rangedWeaponSlot.GetItem());
         if (consumableSlot.GetItem() != null) ret.Add(consumableSlot.GetItem());
-        if (throwableSlot.GetItem() != null) ret.Add(throwableSlot.GetItem());
+        if (throwableSlot.GetItem() != null) ret.Add(throwableSlot.GetItem());*/
 
         ret.AddRange(items);
 

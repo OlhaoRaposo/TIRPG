@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MainMenuController : MonoBehaviour
 {
+    [SerializeField] GameObject canvasGO;
     [SerializeField] GameObject optionsPanel;
     [SerializeField] GameObject creditsPanel;
     [SerializeField] GameObject charactersPanel;
@@ -14,6 +15,11 @@ public class MainMenuController : MonoBehaviour
         {
             DisablePanels();
         }
+    }
+    public void CallStartGame()
+    {
+        canvasGO.SetActive(true);
+        SceneController.instance?.LoadSceneByIndex(1);
     }
     public void ToggleOptions()
     {
@@ -30,13 +36,7 @@ public class MainMenuController : MonoBehaviour
         DisablePanels();
         charactersPanel.SetActive(!charactersPanel.activeSelf);
     }
-
-    public void ClosePanel()
-    {
-        DisablePanels();
-    }
-
-    void DisablePanels()
+    public void DisablePanels()
     {
         optionsPanel.SetActive(false);
         creditsPanel.SetActive(false);

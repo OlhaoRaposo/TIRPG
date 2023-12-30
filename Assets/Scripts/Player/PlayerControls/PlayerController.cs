@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
         GroundCheck();
 
         Move();
-        ToggleFightStyle();
+        //ToggleFightStyle();
     }
 
     private void StaminaRegen()
@@ -52,13 +52,27 @@ public class PlayerController : MonoBehaviour
 
     private void GroundCheck()
     {
-        if (Physics.Raycast(transform.position, Vector3.down, 0.1f) == true)
+        Vector3 horizontalAxisPoint = new Vector3((controller.radius / 2) + 0.1f, 0, 0);
+        Vector3 verticalAxisPoint = new Vector3(0, 0, (controller.radius / 2) + 0.1f);
+
+        if
+        (
+            Physics.Raycast(transform.position, Vector3.down, 0.1f) == true
+            || Physics.Raycast(transform.position + horizontalAxisPoint, Vector3.down, 0.1f) == true
+            || Physics.Raycast(transform.position - horizontalAxisPoint, Vector3.down, 0.1f) == true
+            || Physics.Raycast(transform.position + verticalAxisPoint, Vector3.down, 0.1f) == true
+            || Physics.Raycast(transform.position - verticalAxisPoint, Vector3.down, 0.1f) == true
+        )
         {
             isGrounded = true;
+            CancelInvoke("FallCheck");
+            animator.SetBool("IsGrounded", true);
+            return;
         }
         else
         {
             isGrounded = false;
+            animator.SetBool("IsGrounded", false);
         }
     }
 
@@ -71,18 +85,26 @@ public class PlayerController : MonoBehaviour
         if (x != 0 || y != 0)
         {
             //Run
-            if (Input.GetKey(InputController.instance.run) && (x != 0 || y != 0) && stamina >= 0.5f)
+            if (Input.GetKey(InputController.instance.run) && (x != 0 || y != 0) && stamina >= 0.125f)
             {
-                PlayerHPController.instance.ChangeStamina(0.5f, true);
-                stamina -= 0.5f;
+                PlayerHPController.instance.ChangeStamina(0.125f, true);
+                stamina -= 0.125f;
 
                 isRunning = true;
                 animator.speed = runSpeed;
+                if (isDashing == false && isJumping == false && isGrounded == true)
+                {
+                    animator.Play("Walk Tree");
+                }
             }
             else
             {
                 isRunning = false;
                 animator.speed = speed;
+                if (isDashing == false && isJumping == false && isGrounded == true)
+                {
+                    animator.Play("Walk Tree");
+                }
             }
 
             if (isDashing == false)
@@ -97,6 +119,29 @@ public class PlayerController : MonoBehaviour
 
             animator.SetFloat("WalkHorizontal", x);
             animator.SetFloat("WalkVertical", y);
+
+            if (startedFall == false && isJumping == false && isGrounded == false)
+            {
+                Vector3 dir = Vector3.zero;
+                if (Input.GetAxis("Vertical") > 0)
+                {
+                    dir += PlayerCamera.instance.GetCameraForward();
+                }
+                if (Input.GetAxis("Vertical") < 0)
+                {
+                    dir -= PlayerCamera.instance.GetCameraForward();
+                }
+                if (Input.GetAxis("Horizontal") > 0)
+                {
+                    dir += PlayerCamera.instance.GetCameraRight();
+                }
+                if (Input.GetAxis("Horizontal") < 0)
+                {
+                    dir -= PlayerCamera.instance.GetCameraRight();
+                }
+
+                controller.Move(speed * dir * Time.fixedDeltaTime);
+            }
             x = 0;
             y = 0;
         }
@@ -109,6 +154,7 @@ public class PlayerController : MonoBehaviour
 
             startRelativePoint = transform.position;
             isJumping = true;
+            animator.SetBool("IsJumping", true);
         }
 
         if (isJumping == true)
@@ -121,6 +167,7 @@ public class PlayerController : MonoBehaviour
             else
             {
                 isJumping = false;
+                animator.SetBool("IsJumping", false);
             }
         }
         else if (isGrounded == false)
@@ -146,7 +193,7 @@ public class PlayerController : MonoBehaviour
 
 
         //Dash
-        if (Input.GetKeyDown(InputController.instance.dash) && isGrounded && stamina >= 25f)
+        if (Input.GetKeyDown(InputController.instance.dash) && isGrounded && stamina >= 25f && isDashing == false)
         {
             PlayerHPController.instance.ChangeStamina(25f, true);
             stamina -= 25f;
@@ -158,22 +205,31 @@ public class PlayerController : MonoBehaviour
 
     private void ToggleFightStyle()
     {
-        if(isRanged == false && Input.GetKeyDown(KeyCode.Alpha1))
+        if (isRanged == false && Input.GetKeyDown(KeyCode.Alpha1))
         {
             rangedWeapon.SetActive(true);
             meleeWeapon.SetActive(false);
+            if (isGrounded == true)
+            {
+                animator.Play("RangedToMelee");
+            }
 
             isRanged = true;
         }
-        
-        if(isRanged == true && Input.GetKeyDown(KeyCode.Alpha2))
+
+        if (isRanged == true && Input.GetKeyDown(KeyCode.Alpha2))
         {
             rangedWeapon.SetActive(false);
             meleeWeapon.SetActive(true);
+            if (isGrounded == true)
+            {
+                animator.Play("MeleeToRanged");
+            }
 
             isRanged = false;
         }
     }
+
     private IEnumerator DashAction()
     {
         Vector3 movingDir = Vector3.zero;
@@ -181,6 +237,7 @@ public class PlayerController : MonoBehaviour
         isDashing = true;
         startRelativePoint = transform.position;
         PlayerCamera.instance.ToggleMovement(false);
+        animator.SetBool("IsDashing", true);
 
         if (Input.GetAxis("Vertical") == 0 && Input.GetAxis("Horizontal") == 0)
         {
@@ -206,6 +263,7 @@ public class PlayerController : MonoBehaviour
         CancelInvoke("StopDash");
         isDashing = false;
         PlayerCamera.instance.ToggleMovement(true);
+        animator.SetBool("IsDashing", false);
     }
 
     private float RelativeDistance()

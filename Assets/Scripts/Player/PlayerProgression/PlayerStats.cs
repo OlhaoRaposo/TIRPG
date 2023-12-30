@@ -8,7 +8,7 @@ public class PlayerStats : MonoBehaviour
 
     [SerializeField] CharacterAttributeData startAttributeData;
 
-    [Header("Levelup formula variables (levelUpXp = ax² + bx + c)")]
+    [Header("Levelup formula variables (levelUpXp = axï¿½ + bx + c)")]
     [SerializeField] float a;
     [SerializeField] float b;
     [SerializeField] float c;
@@ -20,10 +20,10 @@ public class PlayerStats : MonoBehaviour
 
     float xpMultiplier = 1f;
 
-    int strength;
-    int dexterity;
-    int endurance;
-    int intelligence;
+   public int strength;
+   public int dexterity;
+   public int endurance;
+   public int intelligence;
 
     float meleeDamageMultiplier = 1f;
     float meleeAttackSpeedMultiplier = 1f;
@@ -51,6 +51,7 @@ public class PlayerStats : MonoBehaviour
     public void GainXp(int xp)
     {
         currentXp += (int)(xp * xpMultiplier);
+        UIManager.instance.UpdateXpStats(currentXp, levelupXp);
 
         if (currentXp >= levelupXp)
         {
@@ -69,6 +70,7 @@ public class PlayerStats : MonoBehaviour
         pointsAddedWhenLevelUp = Mathf.FloorToInt(intelligence / 2f);
         availablePoints += pointsAddedWhenLevelUp;
         UIManager.instance.UpdateAvailablePoints(availablePoints);
+        UIManager.instance.UpdateHUDLevel(level);
         SetLevelUpXp(level);
     }
     public void SetLevelUpXp(int nextLevel)
@@ -108,7 +110,12 @@ public class PlayerStats : MonoBehaviour
         if (!DecreasePoints()) return;
 
         //Aumentar hp maximo
+        PlayerHPController.instance.IncreaseMaxHP(20f);
         //Aumentar stamina
+        PlayerHPController.instance.IncreaseStamina(20f);
+
+        UIManager.instance.UpdateHealthStats((int)PlayerHPController.instance.GetHp(), (int)PlayerHPController.instance.GetMaxHp());
+        UIManager.instance.UpdateStaminaStats((int)PlayerHPController.instance.GetStamina(), (int)PlayerHPController.instance.GetMaxStamina());
 
         endurance++;
         UIManager.instance.UpdateAvailablePoints(availablePoints);
