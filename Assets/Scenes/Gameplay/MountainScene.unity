@@ -27,7 +27,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.8018868, g: 0.35313112, b: 0, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: b141c8e4f6387ef45b13a68b10c88b7f, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: c051fe5a20f72814f9643eb10ebbd2fc, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -39,7 +39,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.33593798, g: 0.69874287, b: 0.8914544, a: 1}
+  m_IndirectSpecularColor: {r: 0.5490521, g: 0.795813, b: 0.97286266, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2308,12 +2308,12 @@ PrefabInstance:
     - target: {fileID: 1508783018654206334, guid: b3839721f89ffea40aa0163cedac67f6,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.9775565
+      value: 0.9775564
       objectReference: {fileID: 0}
     - target: {fileID: 1508783018654206334, guid: b3839721f89ffea40aa0163cedac67f6,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.12034271
+      value: -0.120342694
       objectReference: {fileID: 0}
     - target: {fileID: 4132184705103604313, guid: b3839721f89ffea40aa0163cedac67f6,
         type: 3}
@@ -21091,7 +21091,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 0.9941176, g: 1, b: 0.75, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -21102,9 +21102,9 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 0.05
-    m_NormalBias: 0.4
-    m_NearPlane: 0.2
+    m_Bias: 0
+    m_NormalBias: 1.67
+    m_NearPlane: 0.1
     m_CullingMatrixOverride:
       e00: 1
       e01: 0
@@ -21135,8 +21135,8 @@ Light:
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
-  m_ColorTemperature: 6570
-  m_UseColorTemperature: 0
+  m_ColorTemperature: 5250
+  m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
@@ -21179,7 +21179,7 @@ MonoBehaviour:
   m_ShadowRenderingLayers: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
-  m_SoftShadowQuality: 0
+  m_SoftShadowQuality: 3
 --- !u!1 &1115536245
 GameObject:
   m_ObjectHideFlags: 0
