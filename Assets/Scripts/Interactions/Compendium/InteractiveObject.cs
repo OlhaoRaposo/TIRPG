@@ -49,18 +49,7 @@ public class InteractiveObject : MonoBehaviour
 
     private void CheckIconTime()
     {
-        foreach (var quest in QuestManager.instance.activeQuests) {
-            if (quest.questName == questRelataed) {
-                if (quest.atualPhase.name == phaseRelated) {
-                    if(quest.atualPhase.isComplete == false)
-                        QuestCanvas.SetActive(true);
-                    else
-                        QuestCanvas.SetActive(false);
-                }else {
-                    QuestCanvas.SetActive(false);
-                }
-            }
-        }
+       
     }
 
     public void Interact()
@@ -104,7 +93,6 @@ public class InteractiveObject : MonoBehaviour
         
     }
     public void InteractWithQuest() {
-        QuestManager.instance.SendValidation(questRelataed, phaseRelated);
     }
     public void CheckValidations()
     {
@@ -114,7 +102,6 @@ public class InteractiveObject : MonoBehaviour
             }else {
                 switch (objectRelatedTo) {
                     case objectRelated.Quest:
-                        QuestManager.instance.SendValidation(questRelataed, phaseRelated);
                         break;
                 }
                 validations.Clear();

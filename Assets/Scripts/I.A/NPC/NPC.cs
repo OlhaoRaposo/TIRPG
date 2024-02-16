@@ -4,11 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEngine.UI;
 public class NPCGuideDatabase
 {
     public List<NpcTexts> npcs = new List<NpcTexts>();
@@ -74,25 +70,6 @@ public class NPC : MonoBehaviour
         interactText.text = "";
         timer = 0.015f;
 
-        foreach (var quest in QuestManager.instance.activeQuests) {
-            if (QuestManager.instance.CheckIfIsComplete(quest.questName)) {
-                if (quest.npcToComplete == npcCode) {
-                    RewardTalk();
-                }
-            }
-        }
-        
-        if (hasQuest) {
-            if(!isTalking)
-                if(QuestManager.instance.CheckIfALreadyHaveQuest(npcCode + questToGive[0])){
-                    if (QuestManager.instance.CheckIfIsComplete(npcCode + questToGive[0]))
-                        HandleQuests();
-                    else
-                        QuestGivenTalk();
-                }else
-                 QuestTalk();
-        }else
-            NormalTalk();
     }
     private void QuestTalk() {
         foreach (var npc in data.npcs) {
@@ -136,20 +113,7 @@ public class NPC : MonoBehaviour
     }
     private void HandleQuests()
     {
-        if (hasQuest) {
-            if (QuestManager.instance.CheckIfALreadyHaveQuest(npcCode + questToGive[0])) {
-                Debug.Log("Quest Was already Given by: " + npcCode );
-                if (QuestManager.instance.CheckIfIsComplete(npcCode + questToGive[0])) {
-                    Debug.Log("Quest Was Completed");
-                    RewardTalk();
-                    QuestManager.instance.CompleteQuest(npcCode + questToGive[0]);
-                    return;
-                }
-            }else {
-                Debug.Log("Quest Was not Given ");
-                QuestManager.instance.AddQuest(npcCode + questToGive[0]);
-            }
-        }
+      
     }
     private void HandleInteractorDistance()
     {
@@ -201,21 +165,9 @@ public class NPC : MonoBehaviour
         if(!interactable)
             return;
         HandleInteractorDistance();
-        if(hasQuest)
-            CheckIfQuestIsActive();
     }
 
-    void CheckIfQuestIsActive() {
-      if(QuestManager.instance.FindInCompletedQuests(npcCode + questToGive[0])) {
-          hasQuestIcon.SetActive(false);
-      }else if (QuestManager.instance.CheckIfIsComplete(npcCode + questToGive[0])) {
-          hasQuestIcon.SetActive(true);
-      }else if (!QuestManager.instance.FindInActiveQuests(npcCode + questToGive[0])) {
-          hasQuestIcon.SetActive(true);
-      }else if(QuestManager.instance.FindInActiveQuests(npcCode + questToGive[0])) {
-          hasQuestIcon.SetActive(false);
-      }
-    }
+   
     private void StopTheNpc()
     {
         enemyAgent.SetDestination(transform.position);

@@ -1,33 +1,26 @@
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-[Serializable]
-public class Quest 
+[CreateAssetMenu(fileName = "QuestSystem", menuName = "QuestSystem/New Quest", order = 1)]
+public class Quest : ScriptableObject
 {
-    public string questName;
-    public string questDescription;
-    public Validation atualPhase;
-    public List<Validation> phases = new List<Validation>();
-    public Reward rewards;
-    public string npcToComplete;
+    public string questCode;
+    public bool hasAReward;
+    public Rewards Reward;
+    public List<Validation> validations = new List<Validation>();
+
 }
 [Serializable]
-public class Validation {
-    public string name;
-    public bool isComplete;
-}
-[Serializable]
-public struct Reward {
-    public enum  LoyaltyType { City, Nature }
-    [Header("Loyalty")]
+public class Rewards {
+    public enum LoyaltyType{None,City, Nature}
+    [Header("Loyalty Type")]
     public LoyaltyType loyaltyType;
-    public float loyalty;
-    [Header("Items")]
-    public ItemData[] itens;
-    [Header("Inventory")]
-    public int xp;
-    public float gold;
-    public string questReward;
+    public float influence;
+    [Header("XP")]
+    public float xp;
+}
+[Serializable]
+public class QuestDialogue {
+    public List<String> dialogues = new List<String>();
 }
