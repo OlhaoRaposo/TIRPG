@@ -18,33 +18,23 @@ public class NPC : MonoBehaviour
     public GameObject hasQuestIcon;
     public GameObject talkPanel;
     public int textLineGuide;
-    //SerializeText
-    private string jsonPath;
+    
+    //TextArea
     public bool isTalking = false;
     public TextMeshProUGUI interactText;
     public NavMeshAgent enemyAgent;
     public bool hasQuest;
     public int questCount;
-    public string[] questToGive;
-    public int questToGiveCount;
-    
+    public List<Quest> questToGive;
+    public Quest activeQuest;
     float timer = .02f;
     private bool isPatroling, isIddle;
     private Vector3 patrolDestination;
     private bool hasArrived;
     private GameObject isInteractingWith;
-    NPCGuideDatabase data = new NPCGuideDatabase();
-    private void Awake() {
-        jsonPath = Application.dataPath + "/NPCJsonDatabase.json";
-    }
+   
     void Start()
     {
-        if (File.Exists(jsonPath))
-        {
-            string s = File.ReadAllText(jsonPath);
-            data = JsonUtility.FromJson<NPCGuideDatabase>(s);
-        }
-
         if (npcType == NPCtYPE.Static) {
             return;
         }else if(npcType == NPCtYPE.CanPatrol) {
@@ -53,7 +43,6 @@ public class NPC : MonoBehaviour
             StartCoroutine(CheckIfIsStoped());
         }
     }
-    
     public void Interact(GameObject interactor)
     {
         isInteractingWith = interactor; 
@@ -69,50 +58,31 @@ public class NPC : MonoBehaviour
     private void HandleTalk() {
         interactText.text = "";
         timer = 0.015f;
-
+        if (hasQuest) {
+            if(QuestManager.instance.IsQuestComplete((questToGive[0])))
+                RewardTalk();
+            if (QuestManager.instance.IsQuestActive((questToGive[0]))) {
+                QuestGivenTalk();
+            }else {
+                QuestTalk();
+            }
+        }else
+            NormalTalk();
+        
+        
     }
     private void QuestTalk() {
-        foreach (var npc in data.npcs) {
-            if(npc.npcCode == npcCode + questToGive[0]) {
-                if (textLineGuide < npc.text.Length)
-                    StartCoroutine(WriteOnCanvas(npc.text[textLineGuide].text, 0));
-                else if(textLineGuide >= npc.text.Length) {
-                    textLineGuide = 0;
-                    HandleQuests();
-                    return;
-                }
-            }
-        }
+        
     }
     private void NormalTalk() {
-       
-        foreach (var texts in data.npcs) {
-            if (texts.npcCode == npcCode) {
-                if (textLineGuide >= texts.text.Length) {
-                    textLineGuide = 0;
-                    return;
-                }
-                if (textLineGuide < texts.text.Length)
-                    StartCoroutine(WriteOnCanvas(texts.text[textLineGuide].text, 0));
-            }
-        }
     }
     private void RewardTalk() {
-        foreach (var npc in data.npcs) {
-            if(npc.npcCode == npcCode + questToGive[0]) {
-                StartCoroutine(DefaultTalk(npc.questRewards, 0));
-            }
-        }
     }
-    private void QuestGivenTalk() {
-        foreach (var npc in data.npcs) {
-            if(npc.npcCode == npcCode + questToGive[0]) {
-                StartCoroutine(DefaultTalk(npc.questAlreadyGiven, 0));
-            }
-        }
-    }
-    private void HandleQuests()
+    private void QuestGivenTalk()
     {
+        StartCoroutine(WriteOnCanvas(activeQuest.questAlreadyGiven.dialogues[0].dialogue,0));
+    }
+    private void HandleQuests() {
       
     }
     private void HandleInteractorDistance()
@@ -166,8 +136,6 @@ public class NPC : MonoBehaviour
             return;
         HandleInteractorDistance();
     }
-
-   
     private void StopTheNpc()
     {
         enemyAgent.SetDestination(transform.position);
@@ -227,15 +195,14 @@ public class NPC : MonoBehaviour
 [CustomEditor(typeof(NPC))]
 public class NPCEditor : Editor
 {
-    private SerializedProperty stringArray;
+    private SerializedProperty questArray;
     void OnEnable()
     {
-        stringArray = serializedObject.FindProperty("questToGive");
+        questArray = serializedObject.FindProperty("questToGive");
     }
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
-        
         NPC myTarget = (NPC)target;
         myTarget.interactable = EditorGUILayout.Toggle("Interactable", myTarget.interactable);
         if(!myTarget.interactable)
@@ -256,45 +223,10 @@ public class NPCEditor : Editor
         if (myTarget.hasQuest) { 
             myTarget.hasQuestIcon = (GameObject)EditorGUILayout.ObjectField("Has Quest Icon", myTarget.hasQuestIcon, typeof(GameObject), true);
             myTarget.questCount = EditorGUILayout.IntField("Quest Count", myTarget.questCount);
-            if (stringArray != null) {
-                if (GUILayout.Button("Adicionar Nova Quest")) {
-                    AddNewQuest();
-                }
-                if (stringArray.arraySize > 0 && GUILayout.Button("Remover Última Quest")) {
-                    RemoveLastQuest();
-                }
-                EditQuests();
-            }
-        }
-        void EditQuests()
-        {
-            EditorGUILayout.Space();
-
-            for (int i = 0; i < stringArray.arraySize; i++)
-            {
-                SerializedProperty quest = stringArray.GetArrayElementAtIndex(i);
-                EditorGUI.BeginChangeCheck();
-                string newQuest = EditorGUILayout.TextField("Quest " + i, quest.stringValue);
-                if (EditorGUI.EndChangeCheck())
-                {
-                    quest.stringValue = newQuest;
-                    serializedObject.ApplyModifiedProperties();
-                }
-            }
-        }
-        void AddNewQuest()
-        {
-            stringArray.arraySize++;
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("questToGive"), true);   
             serializedObject.ApplyModifiedProperties();
+                
         }
-        void RemoveLastQuest() {
-            stringArray.arraySize--;
-            serializedObject.ApplyModifiedProperties();
-        }
-        if (GUI.changed)
-        {
-            EditorUtility.SetDirty(target);
-        }
-    } 
-}
+    }
+} 
 #endif
