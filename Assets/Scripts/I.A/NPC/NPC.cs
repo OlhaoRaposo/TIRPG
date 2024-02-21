@@ -5,227 +5,104 @@ using UnityEngine;
 using UnityEngine.AI;
 using System.IO;
 using TMPro;
-public class NPCGuideDatabase
-{
-    public List<NpcTexts> npcs = new List<NpcTexts>();
-}
+using UnityEngine.UI;
+
 public class NPC : MonoBehaviour
 {
+    public enum CurrentState { Idle, Talking, Interacting, }
+    public CurrentState currentState;
     public bool interactable;
     public enum NPCtYPE { Static, CanPatrol, }
     public NPCtYPE npcType;
     public string npcCode;
-    public GameObject hasQuestIcon;
-    public GameObject talkPanel;
-    public int textLineGuide;
+    public NavMeshAgent npcAgent;
     
     //TextArea
-    public bool isTalking = false;
-    public TextMeshProUGUI interactText;
-    public NavMeshAgent enemyAgent;
+    [Header("Referencias do NPC")]
+    public NPCReferenceData npcReference;
     public bool hasQuest;
-    public int questCount;
-    public List<Quest> questToGive;
-    public Quest activeQuest;
-    float timer = .02f;
-    private bool isPatroling, isIddle;
-    private Vector3 patrolDestination;
-    private bool hasArrived;
-    private GameObject isInteractingWith;
-   
-    void Start()
-    {
+
+    void Start() {
         if (npcType == NPCtYPE.Static) {
             return;
         }else if(npcType == NPCtYPE.CanPatrol) {
-            enemyAgent = this.GetComponent<NavMeshAgent>();
-            StartCoroutine(StartPatrolling());
-            StartCoroutine(CheckIfIsStoped());
+            npcAgent = this.GetComponent<NavMeshAgent>();
         }
     }
-    public void Interact(GameObject interactor)
-    {
-        isInteractingWith = interactor; 
-        if (npcType == NPCtYPE.CanPatrol) { StopTheNpc(); }
-        
-        if (isTalking) {
-            timer = 0.0000001f;
-            isTalking = false;
-        }else if (!isTalking){
-            HandleTalk();
-        }
-    } 
-    private void HandleTalk() {
-        interactText.text = "";
-        timer = 0.015f;
+    public void Interact() {
+        if (npcType == NPCtYPE.CanPatrol) { StopNpc(); }
         if (hasQuest) {
-            if(QuestManager.instance.IsQuestComplete((questToGive[0])))
-                RewardTalk();
-            if (QuestManager.instance.IsQuestActive((questToGive[0]))) {
-                QuestGivenTalk();
-            }else {
-                QuestTalk();
-            }
-        }else
-            NormalTalk();
-        
-        
-    }
-    private void QuestTalk() {
-        
-    }
-    private void NormalTalk() {
-    }
-    private void RewardTalk() {
-    }
-    private void QuestGivenTalk()
-    {
-        StartCoroutine(WriteOnCanvas(activeQuest.questAlreadyGiven.dialogues[0].dialogue,0));
-    }
-    private void HandleQuests() {
-      
-    }
-    private void HandleInteractorDistance()
-    {
-        if (isInteractingWith == null) {
-            talkPanel.SetActive(false);
-            return; }
-        
-        Vector3 distance = transform.position - isInteractingWith.transform.position;
-        if (distance.magnitude >= 6) {
-            talkPanel.SetActive(false);
-            textLineGuide = 0;
-            interactText.enabled = false;
-            timer = 0.000f;
-            isTalking = false;
-            interactText.text = "";
-            isInteractingWith = null;
+            
         }else {
-            talkPanel.SetActive(true);
+            
         }
+        
     }
-    IEnumerator DefaultTalk(string text,int stringAux)
-    {
-        isTalking = true;
-        interactText.text += text[stringAux];
-        yield return new WaitForSeconds(timer);
-        if (stringAux < text.Length - 1) {
-            int newint = stringAux + 1;
-            StartCoroutine(WriteOnCanvas(text, newint));
-        }else {
-            isTalking = false;
-        }
+
+    private void Talk() {
+        
     }
-   
-    IEnumerator WriteOnCanvas(string text,int stringAux)
-    {
-        isTalking = true;
-        interactText.text += text[stringAux];
-        yield return new WaitForSeconds(timer);
-        if (stringAux < text.Length - 1) {
-            int newint = stringAux + 1;
-            StartCoroutine(WriteOnCanvas(text, newint));
-        }else {
-            isTalking = false;
-            textLineGuide++;
-        }
+    private void StopNpc() {
+        npcAgent.destination = this.transform.position;
+        npcAgent.isStopped = true;
     }
-    private void Update() {
-        DettectPatrolDistance();
-        if(!interactable)
-            return;
-        HandleInteractorDistance();
-    }
-    private void StopTheNpc()
-    {
-        enemyAgent.SetDestination(transform.position);
-    }
-    #region PatrolRegion
-    IEnumerator StartPatrolling()
-    {
-        isPatroling = true;
-        isIddle = false;
-        NavMeshHit hit;
-        if (isPatroling) {
-            patrolDestination = transform.position + (Random.insideUnitSphere * 20) + new Vector3(0,5,0);
-            if (Physics.Raycast(patrolDestination, Vector3.down, out RaycastHit hitInfo)) {
-                enemyAgent.SetDestination(hitInfo.point);
-                if (NavMesh.SamplePosition(hitInfo.point, out hit, .5f, NavMesh.AllAreas)) {
-                    patrolDestination = hit.position + new Vector3( 0,0,0);
-                    enemyAgent.SetDestination(patrolDestination);
-                    hasArrived = false;
-                }
-            }
-        }
-        yield return new WaitUntil(() => hasArrived);
-        int odds = Random.Range(0, 100);
-        if (odds <= 25) {
-            StartCoroutine(Iddle());
-        }else
-            StartCoroutine(StartPatrolling());
-    }
-    IEnumerator Iddle()
-    {
-        isIddle = true;
-        isPatroling = false;
-        enemyAgent.SetDestination(transform.position);
-        yield return new WaitForSeconds(Random.Range(3, 8));
-        StartCoroutine(StartPatrolling());
-    }
-    IEnumerator CheckIfIsStoped()
-    {
-        Vector3 pos0 = transform.position;
-        yield return new WaitForSeconds(8);
-        Vector3 pos1 = transform.position;
-        Vector3 distance = pos1 - pos0;
-        if (distance.magnitude <= 1) 
-            StartCoroutine(StartPatrolling());
-        StartCoroutine(CheckIfIsStoped());
-    }
-    private void DettectPatrolDistance()
-    {
-        Vector3 distance = transform.position - patrolDestination;
-        if (distance.magnitude <= 2) {
-            hasArrived = true;
-        }
-    }
-        #endregion
+}
+
+[System.Serializable]
+public class NPCReferenceData :  PropertyAttribute
+{
+    [Header("Características do NPC")]
+    public Sprite perfilSprite;
+    public Image perfilImage;
+    public string npcName;
+    public TextMeshProUGUI npcNameReference;
+    [Header("Referência do NPC em cena")]
+    public TextMeshProUGUI npcText;
+    public Button nextButton;
+    public Button acceptButton;
+    public Button refuseButton;
+    public Button finishButton;
+    [Header("Prefabs Utilizados")]
+    public GameObject HasQuestIcon;
 }
 #if UNITY_EDITOR
 [CustomEditor(typeof(NPC))]
 public class NPCEditor : Editor
 {
-    private SerializedProperty questArray;
+    public SerializedProperty questArray;
+    public SerializedProperty npcReference;
+    public SerializedProperty npcStates;
+    
     void OnEnable()
     {
         questArray = serializedObject.FindProperty("questToGive");
+        npcReference = serializedObject.FindProperty("npcReference");
+        npcStates = serializedObject.FindProperty("npcStates");
     }
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
+        SerializedProperty npcReferenceProp = serializedObject.FindProperty("npcReference");
         NPC myTarget = (NPC)target;
+        myTarget.currentState = (NPC.CurrentState)EditorGUILayout.EnumPopup("NPC State", myTarget.currentState);
         myTarget.interactable = EditorGUILayout.Toggle("Interactable", myTarget.interactable);
         if(!myTarget.interactable)
             return;
         myTarget.npcType = (NPC.NPCtYPE)EditorGUILayout.EnumPopup("NPC Type", myTarget.npcType);
-        myTarget.talkPanel = (GameObject)EditorGUILayout.ObjectField("Talk Panel", myTarget.talkPanel, typeof(GameObject), true);
         switch (myTarget.npcType) {
             case NPC.NPCtYPE.Static:
-                myTarget.interactText = (TextMeshProUGUI)EditorGUILayout.ObjectField("Interact Text", myTarget.interactText, typeof(TextMeshProUGUI), true);
                 break;
             case NPC.NPCtYPE.CanPatrol:
-                myTarget.interactText = (TextMeshProUGUI)EditorGUILayout.ObjectField("Interact Text", myTarget.interactText, typeof(TextMeshProUGUI), true);
-                myTarget.enemyAgent = (NavMeshAgent)EditorGUILayout.ObjectField("Enemy Agent", myTarget.enemyAgent, typeof(NavMeshAgent), true);
+                myTarget.npcAgent = (NavMeshAgent)EditorGUILayout.ObjectField("Enemy Agent", myTarget.npcAgent, typeof(NavMeshAgent), true);
                 break;
         }
         myTarget.npcCode = EditorGUILayout.TextField("NPC Code", myTarget.npcCode);
         myTarget.hasQuest = EditorGUILayout.Toggle("Has Quest", myTarget.hasQuest);
+        EditorGUILayout.PropertyField(npcReferenceProp, true);
+        serializedObject.ApplyModifiedProperties();
         if (myTarget.hasQuest) { 
-            myTarget.hasQuestIcon = (GameObject)EditorGUILayout.ObjectField("Has Quest Icon", myTarget.hasQuestIcon, typeof(GameObject), true);
-            myTarget.questCount = EditorGUILayout.IntField("Quest Count", myTarget.questCount);
             EditorGUILayout.PropertyField(serializedObject.FindProperty("questToGive"), true);   
             serializedObject.ApplyModifiedProperties();
-                
         }
     }
 } 

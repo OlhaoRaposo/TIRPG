@@ -89,10 +89,4 @@ public class Rewards {
 public class QuestDialogue {
     public List<Dialogue> dialogues = new List<Dialogue>();
 }
-[Serializable]
-public class Dialogue {
-    public bool alreadySaid;
-    public string dialogue;
-    public string key;
-    public AudioSource audio;
-}
+
