@@ -10,8 +10,7 @@ public class ProcedureTrigger : StepModule
     [SerializeField]
     private protected GameObject _colliderObject = null;
     [SerializeField]
-    private GameObject _triggerObject = null;
-    
+    private GameObject player = null;
     [Space]
     [SerializeField]
     private bool destroyOnTrigger = true;
@@ -26,22 +25,21 @@ public class ProcedureTrigger : StepModule
     {
         onTriggerEnter.AddListener(Enter);
         onTriggerExit.AddListener(Exit);
-        
-        
+        _colliderObject.AddComponent<TriggerCollisionDetector>().SetTrigger(player.GetComponent<Collider>(), !async && destroyOnTrigger, onTriggerEnter.Invoke, onTriggerExit.Invoke);
         this.async = async;
     }
-    
     public override void SetInactive()
     {
         onTriggerEnter.RemoveListener(Enter);
         onTriggerExit.RemoveListener(Exit);
         
+        if(_colliderObject.TryGetComponent(out TriggerCollisionDetector tcd)) tcd.DestroyTrigger();
     }
-
     private void Enter()
     {
         if (invoked) return;
         invoked = !async;
+        Debug.Log("EnteredProcedure");
     }
     
     private void Exit()

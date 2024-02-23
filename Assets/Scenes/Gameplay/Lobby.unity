@@ -11849,6 +11849,111 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 242464735}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &243292091
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 243292095}
+  - component: {fileID: 243292094}
+  - component: {fileID: 243292093}
+  - component: {fileID: 243292092}
+  m_Layer: 9
+  m_Name: Step1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &243292092
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 243292091}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &243292093
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 243292091}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &243292094
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 243292091}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &243292095
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 243292091}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.55, y: 0.55, z: 10.7}
+  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &248380021
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19698,12 +19803,12 @@ PrefabInstance:
     - target: {fileID: 1508783018654206334, guid: b3839721f89ffea40aa0163cedac67f6,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000029579034
+      value: 0.000000029579034
       objectReference: {fileID: 0}
     - target: {fileID: 1508783018654206334, guid: b3839721f89ffea40aa0163cedac67f6,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000000003641345
+      value: -0.000000003641345
       objectReference: {fileID: 0}
     - target: {fileID: 2812347602307586822, guid: b3839721f89ffea40aa0163cedac67f6,
         type: 3}
@@ -22043,6 +22148,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8939669382208283300, guid: d10fb2bc9a0850b4c9c92994b8e211ad,
     type: 3}
   m_PrefabInstance: {fileID: 968273292}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &969644183 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4614305784611415217, guid: b3839721f89ffea40aa0163cedac67f6,
+    type: 3}
+  m_PrefabInstance: {fileID: 663344648}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &977766936
 GameObject:
@@ -28642,7 +28753,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1731571654
 RectTransform:
   m_ObjectHideFlags: 0
@@ -29381,6 +29492,111 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1804303386}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1804913010
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1804913014}
+  - component: {fileID: 1804913013}
+  - component: {fileID: 1804913012}
+  - component: {fileID: 1804913011}
+  m_Layer: 0
+  m_Name: Step2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &1804913011
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804913010}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1804913012
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804913010}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1804913013
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804913010}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1804913014
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804913010}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 9.34, y: 0.55, z: 15}
+  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1805099318 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8939669382208283300, guid: d10fb2bc9a0850b4c9c92994b8e211ad,
@@ -29631,17 +29847,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allQuestsInDatabase:
-  - code: Andar
-    dialogue: {fileID: 0}
+  - code: IrAteKrek
+    isComplete: 0
+    dialogue:
+    - alreadySaid: 0
+      key: D01
+      dialogue: "Opaaa ent\xE3o voc\xEA que e o caba arretado que chegou ai"
+      audio: {fileID: 0}
+    questAlreadyGiven: []
+    validationCount: 
     step:
       _modules:
         editorOpen: 1
         _modules:
-        - rid: 3916064005504106496
+        - rid: 339509922848309249
+  activeQuests: []
   references:
     version: 2
     RefIds:
-    - rid: 3916064005504106496
+    - rid: 339509922848309249
       type: {class: ProcedureTrigger, ns: , asm: Assembly-CSharp}
       data:
         editorOpen: 1
@@ -29650,12 +29874,24 @@ MonoBehaviour:
           _modules:
             editorOpen: 1
             _modules: []
-        _colliderObject: {fileID: 0}
-        _triggerObject: {fileID: 0}
+        _colliderObject: {fileID: 243292091}
+        player: {fileID: 969644183}
         destroyOnTrigger: 1
         onTriggerEnter:
           m_PersistentCalls:
-            m_Calls: []
+            m_Calls:
+            - m_Target: {fileID: 1829701880}
+              m_TargetAssemblyTypeName: QuestManager, Assembly-CSharp
+              m_MethodName: AddValidation
+              m_Mode: 5
+              m_Arguments:
+                m_ObjectArgument: {fileID: 0}
+                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+                m_IntArgument: 0
+                m_FloatArgument: 0
+                m_StringArgument: IrAteKrek
+                m_BoolArgument: 0
+              m_CallState: 2
         onTriggerExit:
           m_PersistentCalls:
             m_Calls: []
@@ -33389,6 +33625,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentState: 0
   interactable: 0
+  talkBox: {fileID: 0}
   npcType: 1
   npcCode: QNPC01
   npcAgent: {fileID: 0}
@@ -33404,6 +33641,7 @@ MonoBehaviour:
     finishButton: {fileID: 0}
     HasQuestIcon: {fileID: 0}
   hasQuest: 0
+  questToGive: 
 --- !u!114 &2961901390777869378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33418,6 +33656,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentState: 0
   interactable: 0
+  talkBox: {fileID: 0}
   npcType: 1
   npcCode: QNPC01
   npcAgent: {fileID: 0}
@@ -33433,6 +33672,7 @@ MonoBehaviour:
     finishButton: {fileID: 0}
     HasQuestIcon: {fileID: 0}
   hasQuest: 0
+  questToGive: 
 --- !u!114 &2961901391745798131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33447,6 +33687,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentState: 0
   interactable: 1
+  talkBox: {fileID: 1731571653}
   npcType: 0
   npcCode: NPCC7
   npcAgent: {fileID: 0}
@@ -33461,7 +33702,8 @@ MonoBehaviour:
     refuseButton: {fileID: 770935112}
     finishButton: {fileID: 201511582}
     HasQuestIcon: {fileID: 0}
-  hasQuest: 0
+  hasQuest: 1
+  questToGive: IrAteKrek
 --- !u!33 &3074280573227396719
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -33491,7 +33733,7 @@ PrefabInstance:
     - target: {fileID: 903157297801597262, guid: 3e901ea5a9ecd1b40a3cdb3808bd8362,
         type: 3}
       propertyPath: questToGive.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 903157297801597262, guid: 3e901ea5a9ecd1b40a3cdb3808bd8362,
         type: 3}
@@ -34317,7 +34559,7 @@ PrefabInstance:
     - target: {fileID: 6721132735415180323, guid: bbbd799abdc22cd429840bc20a89cd54,
         type: 3}
       propertyPath: questToGive.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6721132735415180323, guid: bbbd799abdc22cd429840bc20a89cd54,
         type: 3}
@@ -35048,3 +35290,5 @@ SceneRoots:
   - {fileID: 1581209240}
   - {fileID: 1150835996626384061}
   - {fileID: 1829701881}
+  - {fileID: 243292095}
+  - {fileID: 1804913014}

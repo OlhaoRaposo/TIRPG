@@ -1,27 +1,29 @@
+using System.Collections.Generic;
 using UnityEngine;
 [System.Serializable]
 public class Quest
 {
     [Header("Info")]
-    [SerializeField] private string code;
+    public string code;
+    public bool isComplete;
     [Header("Accessibility")]
-    [SerializeField] private Dialogue dialogue;
-    [Header("List")]
+    public List<Dialogue> dialogue;
+    public List<Dialogue> questAlreadyGiven;
+    [Header("Steps")]
     [Space()]
-    [SerializeField] public QuestStepModule step;
-    
+    public List<bool> validationCount;
+    public QuestStepModule step;
     public string Name {set => code = value; get => code;}
     
-    
+
     public void SetActive()
     {
-        step.SetActive(false);
-   
+        step.SetActive(true);
     }
-    
     public void SetInactive()
     {
         step.SetInactive();
      
     }
+   
 }

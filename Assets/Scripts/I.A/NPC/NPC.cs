@@ -9,6 +9,7 @@ public class NPC : MonoBehaviour
     public enum CurrentState { Idle, Talking, Interacting, }
     public CurrentState currentState;
     public bool interactable;
+    public GameObject talkBox;
     public enum NPCtYPE { Static, CanPatrol, }
     public NPCtYPE npcType;
     public string npcCode;
@@ -18,6 +19,7 @@ public class NPC : MonoBehaviour
     [Header("Referencias do NPC")]
     public NPCReferenceData npcReference;
     public bool hasQuest;
+    public string questToGive;
 
     void Start() {
         if (npcType == NPCtYPE.Static) {
@@ -29,14 +31,14 @@ public class NPC : MonoBehaviour
     public void Interact() {
         if (npcType == NPCtYPE.CanPatrol) { StopNpc(); }
         if (hasQuest) {
-            
+           QuestManager.instance.AddQuest(questToGive);
         }else {
             
         }
         
     }
 
-    private void Talk() {
+    private void TalkQuest() {
         
     }
     private void StopNpc() {
@@ -84,6 +86,8 @@ public class NPCEditor : Editor
         myTarget.interactable = EditorGUILayout.Toggle("Interactable", myTarget.interactable);
         if(!myTarget.interactable)
             return;
+        myTarget.talkBox = (GameObject)EditorGUILayout.ObjectField("Talk Box", myTarget.talkBox, typeof(GameObject), true);
+        EditorGUILayout.Space();
         myTarget.npcType = (NPC.NPCtYPE)EditorGUILayout.EnumPopup("NPC Type", myTarget.npcType);
         switch (myTarget.npcType) {
             case NPC.NPCtYPE.Static:
@@ -94,12 +98,11 @@ public class NPCEditor : Editor
         }
         myTarget.npcCode = EditorGUILayout.TextField("NPC Code", myTarget.npcCode);
         myTarget.hasQuest = EditorGUILayout.Toggle("Has Quest", myTarget.hasQuest);
-        EditorGUILayout.PropertyField(npcReferenceProp, true);
-        serializedObject.ApplyModifiedProperties();
         if (myTarget.hasQuest) { 
             EditorGUILayout.PropertyField(serializedObject.FindProperty("questToGive"), true);   
-            serializedObject.ApplyModifiedProperties();
         }
+        EditorGUILayout.PropertyField(npcReferenceProp, true);
+        serializedObject.ApplyModifiedProperties();
     }
 } 
 #endif

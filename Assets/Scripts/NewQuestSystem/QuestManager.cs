@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,58 +7,62 @@ public class QuestManager : MonoBehaviour
     public static QuestManager instance;
     [Header("Adicionar todas quests do jogo aqui:")]
     public List<Quest> allQuestsInDatabase = new List<Quest>();
-    
-    /*[Header("Para fins de teste:")]
-    public List<Quest> allActiveQuests = new List<Quest>();
-    public List<Quest> completedQuests = new List<Quest>();
-    public Quest ReturnQuest(string questCode) {
+    public List<Quest> activeQuests = new List<Quest>();
+
+    private void Start() {
+        if(instance == null) {
+           instance = this; 
+        }else {
+           Destroy(this); }
+        
+        StartQuests();
+    }
+    private void StartQuests() {
+        //Inicia a contagems das validações de todas Quests
         foreach (var quest in allQuestsInDatabase) {
-            if (quest.questCode == questCode) {
-                return quest;
+            for (int i = 0; i < quest.step.GetProceduresCount; i++) {
+                quest.validationCount.Add(false);
             }
         }
-        return null;
     }
-    private void Start() {
-        if (instance == null) {
-            instance = this;
-        }else Destroy(this);
-    }
-
-    #region AuxiliarRegion
-    public bool IsQuestActive(Quest quest) {
-        bool aux = false;
-        foreach (var obj in allActiveQuests) {
-          if(obj.questCode == quest.questCode)
-              aux = true;
+    public Quest FindQuestOnDatabase(string questCode) {
+        Quest questToReturn = null;
+        foreach (var quest in allQuestsInDatabase) {
+            if(quest.code == questCode) {
+                questToReturn = quest;
+            }
         }
-        return aux;
+        return questToReturn;
     }
-    public bool IsQuestComplete(Quest quest) {
-        bool aux = false;
-        foreach (var obj in completedQuests) {
-            if(obj.questCode == quest.questCode)
-                aux = true;
+    public Quest FindActiveQuest(string questCode) {
+        Quest questToReturn = null;
+        foreach (var quest in activeQuests) {
+            if(quest.code == questCode) {
+                questToReturn = quest;
+            }
         }
-        return aux;
+        return questToReturn;
     }
-    #endregion
-
-    public void AddQuest(Quest quest) {
-        allActiveQuests.Add(quest);
-    }
-    public void RemoveQuest(Quest quest) {
-        allActiveQuests.Remove(quest);
-    }
-    public void CompleteQuest(Quest quest) {
-        completedQuests.Add(quest);
-        if (quest.hasAReward) {
-            AddReward(quest);
-        }
-        allActiveQuests.Remove(quest);
-    }
-    public void AddReward(Quest quest) {
-        //Add reward to player
-    }*/
     
+    public void AddValidation(string questCode) {
+        Debug.Log("Was called AddValidation() from QuestManager.cs");
+        Quest quest = FindActiveQuest(questCode);
+        for (int i = 0; i < quest.validationCount.Count; i++) {
+            if(quest.validationCount[i] == false) {
+                quest.validationCount[i] = true;
+                Debug.Log("Validação " + i + " da quest " + quest.code + " foi validada");
+                return;
+            }
+        }
+    }
+    public void AddQuest(string questCode) {
+        activeQuests.Add(FindQuestOnDatabase(questCode));
+        if (activeQuests.Contains(FindQuestOnDatabase(questCode))) {
+            foreach (var quest in activeQuests) {
+                if (quest == FindQuestOnDatabase(questCode)) {
+                    quest.SetActive();
+                }
+            }
+        }
+    }
 }
