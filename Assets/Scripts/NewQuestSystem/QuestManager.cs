@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +6,8 @@ public class QuestManager : MonoBehaviour
     public static QuestManager instance;
     [Header("Adicionar todas quests do jogo aqui:")]
     public List<Quest> allQuestsInDatabase = new List<Quest>();
-    [Header("Para fins de teste:")]
+    
+    /*[Header("Para fins de teste:")]
     public List<Quest> allActiveQuests = new List<Quest>();
     public List<Quest> completedQuests = new List<Quest>();
     public Quest ReturnQuest(string questCode) {
@@ -25,9 +25,7 @@ public class QuestManager : MonoBehaviour
     }
 
     #region AuxiliarRegion
-    
-    public bool IsQuestActive(Quest quest)
-    {
+    public bool IsQuestActive(Quest quest) {
         bool aux = false;
         foreach (var obj in allActiveQuests) {
           if(obj.questCode == quest.questCode)
@@ -35,8 +33,7 @@ public class QuestManager : MonoBehaviour
         }
         return aux;
     }
-    public bool IsQuestComplete(Quest quest)
-    {
+    public bool IsQuestComplete(Quest quest) {
         bool aux = false;
         foreach (var obj in completedQuests) {
             if(obj.questCode == quest.questCode)
@@ -61,6 +58,6 @@ public class QuestManager : MonoBehaviour
     }
     public void AddReward(Quest quest) {
         //Add reward to player
-    }
+    }*/
     
 }

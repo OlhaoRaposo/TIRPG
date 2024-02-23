@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
-using System.IO;
 using TMPro;
 using UnityEngine.UI;
 
@@ -47,7 +44,6 @@ public class NPC : MonoBehaviour
         npcAgent.isStopped = true;
     }
 }
-
 [System.Serializable]
 public class NPCReferenceData :  PropertyAttribute
 {

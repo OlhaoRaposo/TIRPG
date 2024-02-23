@@ -19693,17 +19693,17 @@ PrefabInstance:
     - target: {fileID: 1508783018654206334, guid: b3839721f89ffea40aa0163cedac67f6,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.12218327
+      value: 0.12218325
       objectReference: {fileID: 0}
     - target: {fileID: 1508783018654206334, guid: b3839721f89ffea40aa0163cedac67f6,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -5.297979e-17
+      value: -0.000000029579034
       objectReference: {fileID: 0}
     - target: {fileID: 1508783018654206334, guid: b3839721f89ffea40aa0163cedac67f6,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -1.4893547e-16
+      value: 0.000000003641345
       objectReference: {fileID: 0}
     - target: {fileID: 2812347602307586822, guid: b3839721f89ffea40aa0163cedac67f6,
         type: 3}
@@ -29601,6 +29601,79 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 603325063}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1829701879
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1829701881}
+  - component: {fileID: 1829701880}
+  m_Layer: 0
+  m_Name: QuestManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1829701880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1829701879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5796b92a7ce8eb149a3fd5bc44dfb208, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allQuestsInDatabase:
+  - code: Andar
+    dialogue: {fileID: 0}
+    step:
+      _modules:
+        editorOpen: 1
+        _modules:
+        - rid: 3916064005504106496
+  references:
+    version: 2
+    RefIds:
+    - rid: 3916064005504106496
+      type: {class: ProcedureTrigger, ns: , asm: Assembly-CSharp}
+      data:
+        editorOpen: 1
+        _enabled: 1
+        inspect:
+          _modules:
+            editorOpen: 1
+            _modules: []
+        _colliderObject: {fileID: 0}
+        _triggerObject: {fileID: 0}
+        destroyOnTrigger: 1
+        onTriggerEnter:
+          m_PersistentCalls:
+            m_Calls: []
+        onTriggerExit:
+          m_PersistentCalls:
+            m_Calls: []
+--- !u!4 &1829701881
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1829701879}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.47000003, y: 0, z: 8.16}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1832397358
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34974,3 +35047,4 @@ SceneRoots:
   - {fileID: 297350238}
   - {fileID: 1581209240}
   - {fileID: 1150835996626384061}
+  - {fileID: 1829701881}
