@@ -5784,7 +5784,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &106768771
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5848,7 +5848,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 106768773}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2961901391745798131}
+        m_TargetAssemblyTypeName: NPC, Assembly-CSharp
+        m_MethodName: TalkQuest
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &106768773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11444,7 +11456,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &201511581
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11462,7 +11474,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 733, y: -375}
+  m_AnchoredPosition: {x: 412.75, y: -375}
   m_SizeDelta: {x: 300, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &201511582
@@ -11508,7 +11520,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 201511583}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2961901391745798131}
+        m_TargetAssemblyTypeName: NPC, Assembly-CSharp
+        m_MethodName: DisableChatBox
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &201511583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17180,6 +17204,149 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8cdb34392ab4a1948b9286b63b963cc5, type: 3}
+--- !u!1 &322291089
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 322291091}
+  - component: {fileID: 322291090}
+  - component: {fileID: 322291092}
+  m_Layer: 0
+  m_Name: AudioBoard
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &322291090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 322291089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60369df9696afad44880c2b77314849d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audios:
+  - {fileID: 0}
+--- !u!4 &322291091
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 322291089}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1578.1936, y: 77.19806, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &322291092
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 322291089}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 664b8445e127af547880c3920999e247, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &323106086
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19553,6 +19720,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 753aef9c14fee264fbe1305b71ccc463, type: 3}
+--- !u!114 &616690552 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4581706647970050684, guid: b3839721f89ffea40aa0163cedac67f6,
+    type: 3}
+  m_PrefabInstance: {fileID: 663344648}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &616964692
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19830,6 +20009,11 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0.0000000011521811
       objectReference: {fileID: 0}
+    - target: {fileID: 5908008789760694223, guid: b3839721f89ffea40aa0163cedac67f6,
+        type: 3}
+      propertyPath: myCinemachineBrain
+      value: 
+      objectReference: {fileID: 616690552}
     - target: {fileID: 6434159294552469811, guid: b3839721f89ffea40aa0163cedac67f6,
         type: 3}
       propertyPath: m_LocalRotation.x
@@ -20529,7 +20713,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &770935111
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20547,7 +20731,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 733, y: -375}
+  m_AnchoredPosition: {x: 412.75, y: -375}
   m_SizeDelta: {x: 300, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &770935112
@@ -20593,7 +20777,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 770935113}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2961901391745798131}
+        m_TargetAssemblyTypeName: NPC, Assembly-CSharp
+        m_MethodName: DisableChatBox
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &770935113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25048,7 +25244,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1348795075
 Transform:
   m_ObjectHideFlags: 0
@@ -28236,7 +28432,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1686491082
 RectTransform:
   m_ObjectHideFlags: 0
@@ -28254,7 +28450,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 415, y: -375}
+  m_AnchoredPosition: {x: 733, y: -375}
   m_SizeDelta: {x: 300, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1686491083
@@ -28300,7 +28496,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1686491084}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2961901391745798131}
+        m_TargetAssemblyTypeName: NPC, Assembly-CSharp
+        m_MethodName: AcceptQuest
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1686491084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29849,23 +30057,44 @@ MonoBehaviour:
   allQuestsInDatabase:
   - code: IrAteKrek
     isComplete: 0
+    currentStep: 0
+    hasQuestReward: 0
+    questRewardCode: 
+    questReward:
+      royaltyType: 0
+      royaltyValue: 0
     dialogue:
     - alreadySaid: 0
-      key: D01
-      dialogue: "Opaaa ent\xE3o voc\xEA que e o caba arretado que chegou ai"
+      dialogue: BOM DIA GARAI
+      audio: {fileID: 0}
+    - alreadySaid: 0
+      dialogue: EU SO DECIVAR
+      audio: {fileID: 0}
+    - alreadySaid: 0
+      dialogue: CE TEM Q ATRAVESSAR ESSES 2 CUBO PRA COMPLETAR SAPORRA JAE?
       audio: {fileID: 0}
     questAlreadyGiven: []
-    validationCount: 
-    step:
-      _modules:
-        editorOpen: 1
+    steps:
+    - isComplete: 0
+      isActive: 0
+      validation:
         _modules:
-        - rid: 339509922848309249
+          editorOpen: 1
+          _modules:
+          - rid: 3916064074515611649
+    - isComplete: 0
+      isActive: 0
+      validation:
+        _modules:
+          editorOpen: 1
+          _modules:
+          - rid: 3916064074515611650
   activeQuests: []
+  completedQuests: []
   references:
     version: 2
     RefIds:
-    - rid: 339509922848309249
+    - rid: 3916064074515611649
       type: {class: ProcedureTrigger, ns: , asm: Assembly-CSharp}
       data:
         editorOpen: 1
@@ -29875,6 +30104,36 @@ MonoBehaviour:
             editorOpen: 1
             _modules: []
         _colliderObject: {fileID: 243292091}
+        player: {fileID: 969644183}
+        destroyOnTrigger: 1
+        onTriggerEnter:
+          m_PersistentCalls:
+            m_Calls:
+            - m_Target: {fileID: 1829701880}
+              m_TargetAssemblyTypeName: QuestManager, Assembly-CSharp
+              m_MethodName: AddValidation
+              m_Mode: 5
+              m_Arguments:
+                m_ObjectArgument: {fileID: 0}
+                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+                m_IntArgument: 0
+                m_FloatArgument: 0
+                m_StringArgument: IrAteKrek
+                m_BoolArgument: 0
+              m_CallState: 2
+        onTriggerExit:
+          m_PersistentCalls:
+            m_Calls: []
+    - rid: 3916064074515611650
+      type: {class: ProcedureTrigger, ns: , asm: Assembly-CSharp}
+      data:
+        editorOpen: 1
+        _enabled: 1
+        inspect:
+          _modules:
+            editorOpen: 1
+            _modules: []
+        _colliderObject: {fileID: 1804913010}
         player: {fileID: 969644183}
         destroyOnTrigger: 1
         onTriggerEnter:
@@ -32464,6 +32723,84 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2128214367}
   m_CullTransparentMesh: 1
+--- !u!1001 &2132587000
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4860295994119822108, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860295994119822108, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860295994119822108, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860295994119822108, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860295994119822108, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860295994119822108, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860295994119822108, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860295994119822108, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860295994119822108, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860295994119822108, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5120113030660007009, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+        type: 3}
+      propertyPath: m_Name
+      value: Essentials
+      objectReference: {fileID: 0}
+    - target: {fileID: 6956214870844219183, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9048415329991804880, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3004360c9fd7b2f41ad76ead7312e2e2, type: 3}
 --- !u!1 &2134690600
 GameObject:
   m_ObjectHideFlags: 0
@@ -33629,12 +33966,14 @@ MonoBehaviour:
   npcType: 1
   npcCode: QNPC01
   npcAgent: {fileID: 0}
+  currentDialogueIndex: 0
   npcReference:
     perfilSprite: {fileID: 0}
     perfilImage: {fileID: 0}
     npcName: 
     npcNameReference: {fileID: 0}
     npcText: {fileID: 0}
+    talkBox: {fileID: 0}
     nextButton: {fileID: 0}
     acceptButton: {fileID: 0}
     refuseButton: {fileID: 0}
@@ -33660,12 +33999,14 @@ MonoBehaviour:
   npcType: 1
   npcCode: QNPC01
   npcAgent: {fileID: 0}
+  currentDialogueIndex: 0
   npcReference:
     perfilSprite: {fileID: 0}
     perfilImage: {fileID: 0}
     npcName: 
     npcNameReference: {fileID: 0}
     npcText: {fileID: 0}
+    talkBox: {fileID: 0}
     nextButton: {fileID: 0}
     acceptButton: {fileID: 0}
     refuseButton: {fileID: 0}
@@ -33691,13 +34032,15 @@ MonoBehaviour:
   npcType: 0
   npcCode: NPCC7
   npcAgent: {fileID: 0}
+  currentDialogueIndex: 0
   npcReference:
     perfilSprite: {fileID: 21300000, guid: 9cf77986ef2141048a7621896c3a348e, type: 3}
     perfilImage: {fileID: 1231737510}
     npcName: Decivar Taguy
     npcNameReference: {fileID: 1193858029}
     npcText: {fileID: 1469894920}
-    nextButton: {fileID: 770935112}
+    talkBox: {fileID: 1731571653}
+    nextButton: {fileID: 106768772}
     acceptButton: {fileID: 1686491083}
     refuseButton: {fileID: 770935112}
     finishButton: {fileID: 201511582}
@@ -33748,7 +34091,7 @@ PrefabInstance:
     - target: {fileID: 4160833960454893446, guid: 3e901ea5a9ecd1b40a3cdb3808bd8362,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7044520809380894080, guid: 3e901ea5a9ecd1b40a3cdb3808bd8362,
         type: 3}
@@ -34519,7 +34862,7 @@ PrefabInstance:
     - target: {fileID: 6261187669216304108, guid: bbbd799abdc22cd429840bc20a89cd54,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6373010567933456981, guid: bbbd799abdc22cd429840bc20a89cd54,
         type: 3}
@@ -35292,3 +35635,5 @@ SceneRoots:
   - {fileID: 1829701881}
   - {fileID: 243292095}
   - {fileID: 1804913014}
+  - {fileID: 2132587000}
+  - {fileID: 322291091}

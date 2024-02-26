@@ -10,7 +10,7 @@ public class TriggerCollisionDetector : MonoBehaviour
     [SerializeField]
     private UnityEvent onTriggerExit = new UnityEvent();
     [SerializeField]
-    private bool destroyOnTrigger = false;
+    public bool destroyOnTrigger = false;
     private void OnTriggerEnter(Collider col)
     {
         Debug.Log("tRIGGERED" + col.name + " " + objectToDetect.name);
@@ -30,7 +30,6 @@ public class TriggerCollisionDetector : MonoBehaviour
             if (destroyOnTrigger) Destroy(this);
         }
     }
-    
     public void DestroyTrigger()
     {
         Destroy(this);

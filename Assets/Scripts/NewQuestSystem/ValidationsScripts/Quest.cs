@@ -1,29 +1,29 @@
 using System.Collections.Generic;
 using UnityEngine;
-[System.Serializable]
-public class Quest
-{
-    [Header("Info")]
-    public string code;
-    public bool isComplete;
-    [Header("Accessibility")]
-    public List<Dialogue> dialogue;
-    public List<Dialogue> questAlreadyGiven;
-    [Header("Steps")]
-    [Space()]
-    public List<bool> validationCount;
-    public QuestStepModule step;
-    public string Name {set => code = value; get => code;}
-    
 
-    public void SetActive()
-    {
-        step.SetActive(true);
-    }
-    public void SetInactive()
-    {
-        step.SetInactive();
-     
-    }
-   
+[System.Serializable]
+public class Quest 
+{
+  [Header("Info")]
+  public string code;
+  public bool isComplete = false;
+  public int currentStep = 0;
+  public bool hasQuestReward;
+  public string questRewardCode;
+  [Header("Accessibility")] 
+  public Reward questReward;
+  public List<Dialogue> dialogue;
+  public List<Dialogue> questAlreadyGiven;
+  public List<Step> steps = new List<Step>();
+  public string Name {set => code = value; get => code;}
+}
+
+[System.Serializable]
+public class Reward
+{
+  public enum RoyaltyType {
+    city,nature
+  }
+  public RoyaltyType royaltyType;
+  public float royaltyValue;
 }

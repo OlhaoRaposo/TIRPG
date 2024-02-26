@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,22 +7,13 @@ public class QuestManager : MonoBehaviour
     [Header("Adicionar todas quests do jogo aqui:")]
     public List<Quest> allQuestsInDatabase = new List<Quest>();
     public List<Quest> activeQuests = new List<Quest>();
+    public List<Quest> completedQuests = new List<Quest>();
 
     private void Start() {
         if(instance == null) {
            instance = this; 
         }else {
            Destroy(this); }
-        
-        StartQuests();
-    }
-    private void StartQuests() {
-        //Inicia a contagems das validações de todas Quests
-        foreach (var quest in allQuestsInDatabase) {
-            for (int i = 0; i < quest.step.GetProceduresCount; i++) {
-                quest.validationCount.Add(false);
-            }
-        }
     }
     public Quest FindQuestOnDatabase(string questCode) {
         Quest questToReturn = null;
@@ -45,14 +35,51 @@ public class QuestManager : MonoBehaviour
     }
     
     public void AddValidation(string questCode) {
-        Debug.Log("Was called AddValidation() from QuestManager.cs");
         Quest quest = FindActiveQuest(questCode);
-        for (int i = 0; i < quest.validationCount.Count; i++) {
-            if(quest.validationCount[i] == false) {
-                quest.validationCount[i] = true;
-                Debug.Log("Validação " + i + " da quest " + quest.code + " foi validada");
+        int index =0;
+        foreach (var step in quest.steps) {
+            if (!step.isComplete) {
+                step.isComplete = true;
+                CalculateValidations(quest);
+                quest.currentStep++;
+                if (index < quest.steps.Count) {
+                    if(!quest.isComplete)
+                        quest.steps[index+1].SetActive();
+                }
                 return;
             }
+            index++;
+        }
+    }
+    private void CalculateValidations(Quest quest) {
+        bool isCompleted = false;
+        foreach (var step in quest.steps) {
+            if (!step.isComplete) {
+                isCompleted = false;
+                return;
+            }else {
+                isCompleted = true;
+            }
+        }
+        if (isCompleted) {
+            quest.isComplete = true;
+            CompleteQuest(quest);
+        }
+    }
+    public void CompleteQuest(Quest quest){
+        completedQuests.Add(quest);
+        activeQuests.Remove(quest);
+        AddReward(quest);
+        AudioBoard.instance.PlayAudio("Bell");
+    }
+    private void AddReward(Quest quest) {
+        if(quest.questReward.royaltyType == Reward.RoyaltyType.city) {
+            LoyaltySystem.instance.AddPointsInfluenceCity(quest.questReward.royaltyValue);
+        }else if (quest.questReward.royaltyType == Reward.RoyaltyType.nature) {
+            LoyaltySystem.instance.AddPointsInfluenceNature(quest.questReward.royaltyValue);
+        }
+        if (quest.hasQuestReward) {
+            AddQuest(quest.questRewardCode);
         }
     }
     public void AddQuest(string questCode) {
@@ -60,9 +87,9 @@ public class QuestManager : MonoBehaviour
         if (activeQuests.Contains(FindQuestOnDatabase(questCode))) {
             foreach (var quest in activeQuests) {
                 if (quest == FindQuestOnDatabase(questCode)) {
-                    quest.SetActive();
+                   quest.steps[0].SetActive();
                 }
-            }
+            } 
         }
     }
 }
