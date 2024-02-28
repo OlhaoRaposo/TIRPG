@@ -4,6 +4,7 @@ public class Step
 {
     public bool isComplete;
     public bool isActive;
+    public string stepSubtitle;
     [Header("Steps")]
     public QuestStepModule validation;
     
