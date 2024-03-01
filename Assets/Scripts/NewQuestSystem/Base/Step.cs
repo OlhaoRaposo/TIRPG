@@ -9,16 +9,12 @@ public class Step
     public QuestStepModule validation;
     
 
-    public void SetActive()
-    {
-        Debug.Log("Active");
+    public void SetActive() {
         validation.SetActive(true);
         isActive = true;
     }
-    public void SetInactive()
-    {
+    public void SetInactive() {
         validation.SetInactive();
-     
     }
    
 }

@@ -2,7 +2,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 [System.Serializable]
-public class ProcedureInteract : StepModule
+public class ProcedureInteractNPC : StepModule
 {
     public GameObject npc;
     
@@ -22,7 +22,7 @@ public class ProcedureInteract : StepModule
         npc.AddComponent<InteractDetection>();
         npc.GetComponent<InteractDetection>().SetNpc(onTriggerEnter.Invoke);
         npc.GetComponent<InteractDetection>().destroyOnTrigger = destroyOnTrigger;
-        this.async = this.async;
+        this.async = async;
     }
     public override void SetInactive()
     {
