@@ -10,7 +10,7 @@ public class PlayerGun : MonoBehaviour
     [SerializeField] private float cameraOffset;
     [SerializeField] private int ammo;
     private float shootCD = 0;
-    private bool isReloading = false;
+    private bool isReloading = false, canShoot = true;
     [SerializeField] private LayerMask aimCollisionLayer = new LayerMask();
 
     [Header("References")]
@@ -39,7 +39,7 @@ public class PlayerGun : MonoBehaviour
 
     private void Shoot()
     {
-        if (Input.GetMouseButton(0) == true && isReloading == false && DialogueManager.instance.isPlayingDialogue == false)
+        if (Input.GetMouseButton(0) == true && isReloading == false && DialogueManager.instance.isPlayingDialogue == false && canShoot == true)
         {
             if (ammo > 0)
             {
@@ -166,5 +166,10 @@ public class PlayerGun : MonoBehaviour
         isReloading = false;
         ammo = equipedWeapon.ammo;
         UIManager.instance.UpdateAmmo($"{ammo}/{equipedWeapon.ammo}");
+    }
+
+    public void ShootToggle(bool toggle)
+    {
+        canShoot = toggle;
     }
 }
