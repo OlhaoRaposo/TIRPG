@@ -13,6 +13,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject questsPanel;
     [SerializeField] GameObject optionsPanel;
     [SerializeField] GameObject shopPanel;
+    [SerializeField] GameObject deathPanel;
 
     [SerializeField] Text merchantInventoryLabel;
     [SerializeField] Text shopInfluenceInfo;
@@ -53,7 +54,7 @@ public class UIManager : MonoBehaviour
     }
     /*void Start()
     {
-        //As próximas linhas servem somente para inicializar os slots do inventário (vou tirar isso dps)
+        //As prï¿½ximas linhas servem somente para inicializar os slots do inventï¿½rio (vou tirar isso dps)
         ToggleInGameMenus();
         Invoke("ToggleInGameMenus", .1f);
     }*/
@@ -230,13 +231,14 @@ public class UIManager : MonoBehaviour
         cursorState = !cursorState;
         PlayerCamera.instance.ToggleAimLock(cursorState);
     }
-    void DisableAllPanels()
+    public void DisableAllPanels()
     {
         inventoryPanel?.SetActive(false);
         statsPanel?.SetActive(false);
         questsPanel?.SetActive(false);
         optionsPanel?.SetActive(false);
         shopPanel?.SetActive(false);
+        deathPanel?.SetActive(false);
 
         currentMerchant = null;
     }
@@ -278,5 +280,26 @@ public class UIManager : MonoBehaviour
     public void CallQuitGame()
     {
         SceneController.instance.QuitGame();
+    }
+
+    public void EnableDeathPanel()
+    {
+        Debug.Log("Estou aqui");
+        ToggleCursorLockMode();
+        DisableAllPanels();
+        ToggleCrosshair();
+        ToggleDeathPanel();
+    }
+
+    public void ToggleDeathPanel()
+    {
+        DisableAllPanels();
+        deathPanel.SetActive(!deathPanel.activeSelf);
+    }
+
+    public void ReactivatesCursor()
+    {
+        ToggleCrosshair();
+        ToggleCursorLockMode();
     }
 }

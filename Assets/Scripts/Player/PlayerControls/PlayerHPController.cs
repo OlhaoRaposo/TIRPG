@@ -28,7 +28,7 @@ public class PlayerHPController : MonoBehaviour
         SetStamina(staminaMax);
     }
 
-    private void OnLevelWasLoaded()
+    public void OnLevelWasLoaded()
     {
         Start();
     }
@@ -52,7 +52,9 @@ public class PlayerHPController : MonoBehaviour
             if(currentHP <= 0)
             {
                 Cursor.lockState = CursorLockMode.None;
-                SceneManager.LoadScene("GameOver");
+                Debug.Log("Teste Para criar Respawn");
+                UIManager.instance.EnableDeathPanel();
+                //SceneManager.LoadScene("GameOver");
             } 
         }
         else

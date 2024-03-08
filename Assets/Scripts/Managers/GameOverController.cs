@@ -6,6 +6,7 @@ public class GameOverController : MonoBehaviour
 {
     public void CallQuitGame()
     {
-        SceneController.instance?.QuitGame();
+        PlayerController.instance.Respawn();
+        //SceneController.instance?.QuitGame();
     }
 }

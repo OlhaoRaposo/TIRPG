@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController instance;
+
     [Header("Variables")]
     [SerializeField] float speed;
     [SerializeField] float runSpeed;
@@ -26,6 +28,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject rangedWeapon, meleeWeapon;
     [SerializeField] Animator animator;
     private Vector3 startRelativePoint;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     void Update()
     {
@@ -271,4 +278,18 @@ public class PlayerController : MonoBehaviour
         return Vector3.Distance(transform.position, startRelativePoint);
     }
 
+    public void Respawn()
+    {
+        Debug.Log("Desabilitei");
+        UIManager.instance.DisableAllPanels();
+        UIManager.instance.ReactivatesCursor();
+        PlayerHPController.instance.OnLevelWasLoaded();
+        Teste();
+    }
+
+    public void Teste()
+    {
+        transform.position = new Vector3 (0,0,0);
+
+    }
 }
