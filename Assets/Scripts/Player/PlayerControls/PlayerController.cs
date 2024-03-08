@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
         GroundCheck();
 
         Move();
-        ToggleFightStyle();
+        SwapWeapon();
     }
 
     private void StaminaRegen()
@@ -168,8 +168,8 @@ public class PlayerController : MonoBehaviour
 
             if (isJumping == true)
             {
-                speedModifier = ((jumpHeight - RelativeDistance()) / 2) + 0.1f;
-                if (RelativeDistance() < jumpHeight)
+                speedModifier = ((jumpHeight - RelativeDistance(Vector3.up)) / 2) + 0.25f;
+                if (RelativeDistance(Vector3.up) < jumpHeight)
                 {
                     controller.Move(Vector3.up * speedModifier * -gravity * Time.deltaTime);
                 }
@@ -186,9 +186,9 @@ public class PlayerController : MonoBehaviour
                     startRelativePoint = transform.position;
                     startedFall = false;
                 }
-                float speedModifier = (RelativeDistance() / 2) + 0.1f;
+                float speedModifier = (RelativeDistance(Vector3.up) / 2) + 0.25f;
 
-                if (RelativeDistance() >= 2)
+                if (RelativeDistance(Vector3.up) >= 2)
                 {
                     speedModifier = 1;
                 }
@@ -213,7 +213,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void ToggleFightStyle()
+    public void ToggleMove(bool toggle)
+    {
+        canMove = toggle;
+        animator.SetFloat("WalkHorizontal", 0);
+        animator.SetFloat("WalkVertical", 0);
+    }
+
+    private void SwapWeapon() //TROCAR INPUTS
     {
         if (canSwapWeapon == true)
         {
@@ -245,11 +252,21 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void ToggleMove(bool toggle)
+    private IEnumerator SwapWeaponAction(float time)
     {
-        canMove = toggle;
-        animator.SetFloat("WalkHorizontal", 0);
-        animator.SetFloat("WalkVertical", 0);
+        animator.SetLayerWeight(1, 1);
+        canSwapWeapon = false;
+
+        PlayerMeleeCombat.instance.MeleeAttackToggle(false);
+        PlayerGun.instance.ShootToggle(false);
+
+        yield return new WaitForSeconds(time);
+
+        animator.SetLayerWeight(1, 0);
+        canSwapWeapon = true;
+
+        PlayerMeleeCombat.instance.MeleeAttackToggle(true);
+        PlayerGun.instance.ShootToggle(true);
     }
 
     public void ToggleWeaponSwap(bool toggle)
@@ -275,9 +292,9 @@ public class PlayerController : MonoBehaviour
             movingDir = (transform.forward * Input.GetAxis("Vertical")) + (transform.right * Input.GetAxis("Horizontal"));
         }
 
-        while (RelativeDistance() < dashLength && isDashing == true)
+        while (RelativeDistance(new Vector3(1, 0, 1)) < dashLength && isDashing == true)
         {
-            controller.Move((dashLength - RelativeDistance() + 1) * 7.5f * movingDir.normalized * Time.deltaTime);
+            controller.Move((dashLength - RelativeDistance(new Vector3(1, 0, 1)) + 1) * 7.5f * movingDir.normalized * Time.deltaTime);
             yield return new WaitForSeconds(Time.deltaTime);
         }
 
@@ -293,26 +310,12 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("IsDashing", false);
     }
 
-    private IEnumerator SwapWeaponAction(float time)
+    private float RelativeDistance(Vector3 axis)
     {
-        animator.SetLayerWeight(1, 1);
-        canSwapWeapon = false;
-
-        PlayerMeleeCombat.instance.MeleeAttackToggle(false);
-        PlayerGun.instance.ShootToggle(false);
-
-        yield return new WaitForSeconds(time);
-
-        animator.SetLayerWeight(1, 0);
-        canSwapWeapon = true;
-
-        PlayerMeleeCombat.instance.MeleeAttackToggle(true);
-        PlayerGun.instance.ShootToggle(true);
-    }
-
-    private float RelativeDistance()
-    {
-        return Vector3.Distance(transform.position, startRelativePoint);
+        Vector3 normalizedStart, normalizedEnd;
+        normalizedStart = new Vector3(axis.x * startRelativePoint.x, axis.y * startRelativePoint.y, axis.z * startRelativePoint.z);
+        normalizedEnd = new Vector3(axis.x * transform.position.x, axis.y * transform.position.y, axis.z * transform.position.z);
+        return Vector3.Distance(normalizedStart, normalizedEnd);
     }
 
 }

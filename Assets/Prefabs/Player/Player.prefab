@@ -3494,6 +3494,7 @@ MonoBehaviour:
   isGrounded: 1
   isDashing: 0
   stealthMode: 0
+  canSwapWeapon: 1
   controller: {fileID: 781033918976680780}
   rangedWeapon: {fileID: 6241156400474366124}
   meleeWeapon: {fileID: 8814491649899622192}
@@ -4868,11 +4869,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 301ef19b8d4a92147a7525f875b87ba0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  comboExecutionWindowPercentage: 0.7
-  comboWindowTime:
-  - 0
-  - 0.1
-  - 0.1
+  weapon: {fileID: 11400000, guid: ef512ff55e55f404dbaff0f2a1eb7f89, type: 2}
   player: {fileID: 3549592608225399686}
   animator: {fileID: 5813722358040975170}
   attackCollider: {fileID: 196894061420636690}

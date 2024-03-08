@@ -37,9 +37,22 @@ public class PlayerMeleeCombat : MonoBehaviour
         EndCombo();
     }
 
+    private void Start()
+    {
+        SetPlayerWeapon(weapon);
+    }
+
     private void Update()
     {
         MeleeAttack();
+    }
+
+    public void SetPlayerWeapon(PlayerMeleeBase newWeapon)
+    {
+        damage = newWeapon.damage;
+        comboExecutionWindowPercentage = newWeapon.comboExecutionWindowPercentage;
+        
+        //Setar animações override
     }
 
     private void MeleeAttack()
@@ -52,7 +65,7 @@ public class PlayerMeleeCombat : MonoBehaviour
                 StartCombo();
             }
 
-            if (Time.time >= nextAttackCooldown)
+            if (Time.time >= nextAttackCooldown && (animator.GetCurrentAnimatorStateInfo(0).length * (1 - comboExecutionWindowPercentage)) <= comboWindowTime[comboIndex])
             {
                 string nextAttack = "Melee_0" + comboIndex;
                 
@@ -94,15 +107,6 @@ public class PlayerMeleeCombat : MonoBehaviour
         comboIndex = 0;
         PlayerController.instance.ToggleMove(true);
         animator.Play("Walk Tree", 0);
-    }
-
-    public void SetPlayerWeapon(PlayerMeleeBase newWeapon)
-    {
-        damage = newWeapon.damage;
-        comboExecutionWindowPercentage = newWeapon.comboExecutionWindowPercentage;
-        comboWindowTime = newWeapon.comboWindowTime;
-        
-        //Setar animações override
     }
 
     public void MeleeAttackToggle(bool toggle)
