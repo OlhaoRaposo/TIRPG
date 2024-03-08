@@ -8,22 +8,25 @@ public class PlayerStats : MonoBehaviour
 
     [SerializeField] CharacterAttributeData startAttributeData;
 
-    [Header("Levelup formula variables (levelUpXp = ax� + bx + c)")]
-    [SerializeField] float a;
-    [SerializeField] float b;
-    [SerializeField] float c;
-
+    [SerializeField] int maxLevel = 10;
     int level = 0;
 
+    [SerializeField] LevelUpData levelupData;
+
+    [SerializeField] int maxXpRequirement = 10000;
+    int actualMaxXpRequirement;
+
+
+    bool canGetXp = true;
     int currentXp = 0;
     int levelupXp = 0;
 
     float xpMultiplier = 1f;
 
-   public int strength;
-   public int dexterity;
-   public int endurance;
-   public int intelligence;
+    public int strength;
+    public int dexterity;
+    public int endurance;
+    public int intelligence;
 
     float meleeDamageMultiplier = 1f;
     float meleeAttackSpeedMultiplier = 1f;
@@ -37,6 +40,7 @@ public class PlayerStats : MonoBehaviour
     }
     void Start()
     {
+        actualMaxXpRequirement = maxXpRequirement / 2;
         SetStartAttributes();
         LevelUp();
     }
@@ -50,16 +54,36 @@ public class PlayerStats : MonoBehaviour
     }
     public void GainXp(int xp)
     {
-        currentXp += (int)(xp * xpMultiplier);
-        UIManager.instance.UpdateXpStats(currentXp, levelupXp);
+        if (!canGetXp) return;
 
+        currentXp += (int)(xp * xpMultiplier);
         if (currentXp >= levelupXp)
         {
-            LevelUp();
+            if (level < maxLevel)
+            {
+                LevelUp();
+            }
+            else
+            {
+                currentXp = levelupXp;
+                UIManager.instance.UpdateXpStats(currentXp, levelupXp);
+                canGetXp = false;
+            }
         }
         else
         {
             UIManager.instance?.UpdateXpStats(currentXp, levelupXp);
+        }
+    }
+
+    [ContextMenu("Set levelup values")]
+    public void SetLevelUpValues()
+    {
+        levelupData.Clear();
+        for (int i = 0; i < maxLevel; i++)
+        {
+            LevelUp();
+            levelupData.AddLevelUpXp(levelupXp);
         }
     }
     [ContextMenu("Level up")]
@@ -71,12 +95,31 @@ public class PlayerStats : MonoBehaviour
         availablePoints += pointsAddedWhenLevelUp;
         UIManager.instance.UpdateAvailablePoints(availablePoints);
         UIManager.instance.UpdateHUDLevel(level);
-        SetLevelUpXp(level);
+        SetLevelUpXp();
     }
-    public void SetLevelUpXp(int nextLevel)
+
+    //Funcao que calcula xp necessario para upar de nivel
+    public void SetLevelUpXp()
     {
-        //Funcao que calcula xp necessario para upar de nivel
-        levelupXp = (int)Mathf.Floor(a * (nextLevel ^ 3) + b * nextLevel + c);
+        float cosAngle = level * (/*180*/Mathf.PI / maxLevel);
+
+        float cosMultiplier = 1f;
+        /*if (cosAngle > (Mathf.Deg2Rad * 45) && cosAngle < (Mathf.Deg2Rad * 135))
+        {
+            Debug.Log(level);
+            *//*Debug.Log(cosAngle);
+            Debug.Log(cosAngle - Mathf.Deg2Rad * 45);
+            Debug.Log(Mathf.Deg2Rad * 90);
+            Debug.Log((cosAngle - Mathf.Deg2Rad * 45) / (Mathf.Deg2Rad * 90));*//*
+
+            //cosMultiplier = 1 - Mathf.Lerp(-0.25f, 0.25f, (cosAngle - Mathf.Deg2Rad * 45) / (Mathf.Deg2Rad * 90));
+            //cosMultiplier = 1 - Mathf.PingPong((cosAngle - Mathf.Deg2Rad * 45) / (Mathf.Deg2Rad * 90), .25f);
+        }*/
+
+        cosMultiplier = 1 - Mathf.PingPong(cosAngle / Mathf.PI, .25f);
+        //Debug.Log(cosMultiplier);
+
+        levelupXp = (int)(((-Mathf.Cos(cosAngle) * actualMaxXpRequirement) + actualMaxXpRequirement) * cosMultiplier);
 
         //Update UI
         UIManager.instance?.UpdateXpStats(currentXp, levelupXp);
