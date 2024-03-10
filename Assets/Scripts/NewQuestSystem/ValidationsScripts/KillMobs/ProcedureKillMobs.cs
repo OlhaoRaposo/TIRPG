@@ -8,6 +8,8 @@ public class ProcedureKillMobs : StepModule
     public string mobCode;
     public int amountToKill;
     public int currentAmountKilled;
+    private bool destroyOnKill = true;
+    public string questCode;
     
    [SerializeField] private List<GameObject> enemys;
    [SerializeField] protected internal UnityEvent onKill = new UnityEvent();
@@ -18,12 +20,14 @@ public class ProcedureKillMobs : StepModule
     public override void SetActive(bool async) {
        enemys = new List<GameObject>(GameObject.FindGameObjectsWithTag("Enemy"));
        onKill.AddListener(AddKill);
-       onComplete.AddListener(OnCompleted);
        this.async = async;
        foreach (var enemy in enemys) {
-           enemy.AddComponent<KillDetection>();
-           enemy.GetComponent<KillDetection>().SetKillDetection(onKill.Invoke);
-          
+           if(enemy.TryGetComponent(out EnemyBehaviour eb)) {
+               if(eb.mySpawner.bestiaryCode == mobCode) {
+                  KillDetection enDetection = enemy.AddComponent<KillDetection>();
+                   enDetection.SetInvokes(onKill.Invoke,destroyOnKill);
+               }
+           }
        }
     }
     public override void SetInactive()
@@ -39,10 +43,13 @@ public class ProcedureKillMobs : StepModule
     {
         currentAmountKilled++;
         if (currentAmountKilled >= amountToKill) {
-            onComplete.Invoke();
-        }
+            Debug.LogWarning("KILL COMPLETE");
+            OnCompleted();
+        }else
+            Debug.LogWarning("KILL ADDED");
     }
     public void OnCompleted() {
+        QuestManager.instance.AddValidation(questCode);
         if(invoked) return;
         invoked = !async;
     }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
@@ -21,9 +22,10 @@ public class NPC : MonoBehaviour
     //TextArea
     [Header("Referencias do NPC")]
     public NPCReferenceData npcReference;
+    public DialogueDatabase dialogueDatabase;
     public bool hasQuest;
     public string questToGive;
-
+    
     void Start() {
          if(npcType == NPCtYPE.CanPatrol) {
             npcAgent = this.GetComponent<NavMeshAgent>();
@@ -59,9 +61,9 @@ public class NPC : MonoBehaviour
         PlayerCamera.instance.ToggleAimLock(true);
         ResetDialogue();
     }
-
     private void ResetDialogue() {
         Quest quest = QuestManager.instance.FindQuestOnDatabase(questToGive);
+        StopCoroutine("WriteText");
         StartCoroutine(WriteText(""));
         foreach (var dialogue in quest.dialogue) {
             dialogue.alreadySaid = false;
@@ -113,7 +115,13 @@ public class NPC : MonoBehaviour
         npcAgent.isStopped = true;
     }
 }
-[System.Serializable]
+[Serializable]
+public class DialogueDatabase
+{
+    public List<Dialogue> randomDialogues = new List<Dialogue>();
+}
+
+[Serializable]
 public class NPCReferenceData :  PropertyAttribute
 {
     [Header("Características do NPC")]

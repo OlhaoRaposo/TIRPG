@@ -210,6 +210,14 @@ public class EnemyBehaviour : MonoBehaviour
     }
     public void Die()
     {
+        if(TryGetComponent(out KillDetection kd)) {
+            kd.onKill.Invoke();
+           if(mySpawner.spawner.TryGetComponent(out Spawner sp)) {
+               sp.hasQuestOnCourse = true;
+               sp.onKill = this.GetComponent<KillDetection>().onKill;
+           }
+            Debug.Log("KilledEn");
+        }
         Destroy(this.gameObject);
         ItemDropManager.instance.DropItem(dropInfo, transform.position);
         PlayerStats.instance.GainXp(Random.Range(30,100));

@@ -20253,17 +20253,17 @@ PrefabInstance:
     - target: {fileID: 1508783018654206334, guid: b3839721f89ffea40aa0163cedac67f6,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.12218328
+      value: 0.12218327
       objectReference: {fileID: 0}
     - target: {fileID: 1508783018654206334, guid: b3839721f89ffea40aa0163cedac67f6,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000012252035
+      value: 5.297979e-17
       objectReference: {fileID: 0}
     - target: {fileID: 1508783018654206334, guid: b3839721f89ffea40aa0163cedac67f6,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000000001508294
+      value: 1.4893547e-16
       objectReference: {fileID: 0}
     - target: {fileID: 2812347602307586822, guid: b3839721f89ffea40aa0163cedac67f6,
         type: 3}
@@ -20278,12 +20278,12 @@ PrefabInstance:
     - target: {fileID: 4132184705103604313, guid: b3839721f89ffea40aa0163cedac67f6,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000017698467
+      value: 0.000000017698467
       objectReference: {fileID: 0}
     - target: {fileID: 4132184705103604313, guid: b3839721f89ffea40aa0163cedac67f6,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0000000011521811
+      value: -0.0000000011521811
       objectReference: {fileID: 0}
     - target: {fileID: 5908008789760694223, guid: b3839721f89ffea40aa0163cedac67f6,
         type: 3}
@@ -22653,6 +22653,8 @@ MonoBehaviour:
     refuseButton: {fileID: 1919285372}
     finishButton: {fileID: 1172206289}
     HasQuestIcon: {fileID: 0}
+  dialogueDatabase:
+    randomDialogues: []
   hasQuest: 0
   questToGive: IrAteKrek
 --- !u!195 &949074270
@@ -23412,20 +23414,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: LoboGuara
       objectReference: {fileID: 0}
+    - target: {fileID: 2033175873465419165, guid: 0ade76b34aef5834e820c649330fbb85,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7082032125843026720, guid: 0ade76b34aef5834e820c649330fbb85,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.79844475
+      value: -2.15
       objectReference: {fileID: 0}
     - target: {fileID: 7082032125843026720, guid: 0ade76b34aef5834e820c649330fbb85,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.8609047
+      value: 6.49
       objectReference: {fileID: 0}
     - target: {fileID: 7082032125843026720, guid: 0ade76b34aef5834e820c649330fbb85,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 8.022993
+      value: 36.26
       objectReference: {fileID: 0}
     - target: {fileID: 7082032125843026720, guid: 0ade76b34aef5834e820c649330fbb85,
         type: 3}
@@ -23878,6 +23885,79 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1001 &1112800043
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2033175873465419165, guid: 0ade76b34aef5834e820c649330fbb85,
+        type: 3}
+      propertyPath: m_Name
+      value: LoboGuara (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2033175873465419165, guid: 0ade76b34aef5834e820c649330fbb85,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7082032125843026720, guid: 0ade76b34aef5834e820c649330fbb85,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7082032125843026720, guid: 0ade76b34aef5834e820c649330fbb85,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 6.49
+      objectReference: {fileID: 0}
+    - target: {fileID: 7082032125843026720, guid: 0ade76b34aef5834e820c649330fbb85,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 35.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 7082032125843026720, guid: 0ade76b34aef5834e820c649330fbb85,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7082032125843026720, guid: 0ade76b34aef5834e820c649330fbb85,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7082032125843026720, guid: 0ade76b34aef5834e820c649330fbb85,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7082032125843026720, guid: 0ade76b34aef5834e820c649330fbb85,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7082032125843026720, guid: 0ade76b34aef5834e820c649330fbb85,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7082032125843026720, guid: 0ade76b34aef5834e820c649330fbb85,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7082032125843026720, guid: 0ade76b34aef5834e820c649330fbb85,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0ade76b34aef5834e820c649330fbb85, type: 3}
 --- !u!1001 &1113982773
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31771,7 +31851,7 @@ MonoBehaviour:
         _modules:
           editorOpen: 1
           _modules:
-          - rid: 3916064163111632896
+          - rid: 6144561565493886976
   activeQuests: []
   completedQuests: []
   references:
@@ -31837,8 +31917,8 @@ MonoBehaviour:
         onTriggerExit:
           m_PersistentCalls:
             m_Calls: []
-    - rid: 3916064163111632896
-      type: {class: ProcedureInteractNPC, ns: , asm: Assembly-CSharp}
+    - rid: 6144561565493886976
+      type: {class: ProcedureKillMobs, ns: , asm: Assembly-CSharp}
       data:
         editorOpen: 1
         _enabled: 1
@@ -31846,24 +31926,15 @@ MonoBehaviour:
           _modules:
             editorOpen: 1
             _modules: []
-        npc: {fileID: 949074267}
-        destroyOnTrigger: 1
-        onTriggerEnter:
+        mobCode: 03A
+        amountToKill: 2
+        currentAmountKilled: 0
+        questCode: IrAteKrek
+        enemys: []
+        onKill:
           m_PersistentCalls:
-            m_Calls:
-            - m_Target: {fileID: 1829701880}
-              m_TargetAssemblyTypeName: QuestManager, Assembly-CSharp
-              m_MethodName: AddValidation
-              m_Mode: 5
-              m_Arguments:
-                m_ObjectArgument: {fileID: 0}
-                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-                m_IntArgument: 0
-                m_FloatArgument: 0
-                m_StringArgument: IrAteKrek
-                m_BoolArgument: 0
-              m_CallState: 2
-        onTriggerExit:
+            m_Calls: []
+        onComplete:
           m_PersistentCalls:
             m_Calls: []
 --- !u!4 &1829701881
@@ -33517,6 +33588,51 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1735012604}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2026416062
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2026416064}
+  - component: {fileID: 2026416063}
+  m_Layer: 0
+  m_Name: WorldManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2026416063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2026416062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2be4a21105aaa9439f041032db16541, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnWasCreated: 0
+--- !u!4 &2026416064
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2026416062}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.1975117, y: 5.059067, z: 15.313496}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &2026539555 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2089470310461763266, guid: a965fe39607a2f94887eaa154156a3fb,
@@ -36092,6 +36208,8 @@ MonoBehaviour:
     refuseButton: {fileID: 0}
     finishButton: {fileID: 0}
     HasQuestIcon: {fileID: 0}
+  dialogueDatabase:
+    randomDialogues: []
   hasQuest: 0
   questToGive: 
 --- !u!114 &2961901390777869378
@@ -36125,6 +36243,8 @@ MonoBehaviour:
     refuseButton: {fileID: 0}
     finishButton: {fileID: 0}
     HasQuestIcon: {fileID: 0}
+  dialogueDatabase:
+    randomDialogues: []
   hasQuest: 0
   questToGive: 
 --- !u!114 &2961901391745798131
@@ -36158,6 +36278,8 @@ MonoBehaviour:
     refuseButton: {fileID: 770935112}
     finishButton: {fileID: 201511582}
     HasQuestIcon: {fileID: 0}
+  dialogueDatabase:
+    randomDialogues: []
   hasQuest: 1
   questToGive: IrAteKrek
 --- !u!33 &3074280573227396719
@@ -37752,3 +37874,5 @@ SceneRoots:
   - {fileID: 2132587000}
   - {fileID: 322291091}
   - {fileID: 1039501205}
+  - {fileID: 1112800043}
+  - {fileID: 2026416064}

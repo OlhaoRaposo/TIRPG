@@ -37,18 +37,21 @@ public class QuestManager : MonoBehaviour
     public void AddValidation(string questCode) {
         Quest quest = FindActiveQuest(questCode);
         int index =0;
-        foreach (var step in quest.steps) {
-            if (!step.isComplete) {
-                step.isComplete = true;
-                CalculateValidations(quest);
-                quest.currentStep++;
-                if (index < quest.steps.Count) {
-                    if(!quest.isComplete)
-                        quest.steps[index+1].SetActive();
+        if (quest != null)
+        {
+            foreach (var step in quest.steps) {
+                if (!step.isComplete) {
+                    step.isComplete = true;
+                    CalculateValidations(quest);
+                    quest.currentStep++;
+                    if (index < quest.steps.Count) {
+                        if(!quest.isComplete)
+                            quest.steps[index+1].SetActive();
+                    }
+                    return;
                 }
-                return;
+                index++;
             }
-            index++;
         }
     }
     private void CalculateValidations(Quest quest) {
@@ -92,4 +95,5 @@ public class QuestManager : MonoBehaviour
             } 
         }
     }
+
 }
