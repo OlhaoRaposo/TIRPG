@@ -32,7 +32,8 @@ public class PlayerController : MonoBehaviour
         StaminaRegen();
         GroundCheck();
 
-        Move();
+        if(WorldController.worldController.isGameStarted)
+            Move();
         //ToggleFightStyle();
     }
 
