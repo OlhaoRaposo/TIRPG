@@ -17,6 +17,7 @@ public class WorldController : MonoBehaviour
     private Transform cameraTransform;
     private GameObject player;
     private CinemachineBrain brain;
+    private GameObject essentialsCanvas;
     
     private void Start()
     {
@@ -26,6 +27,9 @@ public class WorldController : MonoBehaviour
         }else {
             Destroy(gameObject);
         }
+
+        essentialsCanvas = GameObject.Find("====CANVAS====");
+        essentialsCanvas.SetActive(false);
         camera = Camera.main.gameObject;
         cameraTransform = GameObject.Find("CameraPositionReference").transform;
         player = GameObject.FindGameObjectWithTag("Player");
@@ -44,25 +48,29 @@ public class WorldController : MonoBehaviour
         if (playingAnimation) {
             camera.transform.position = Vector3.Lerp(camera.transform.position, cameraTransform.position, Time.deltaTime * 2);
             camera.transform.rotation = Quaternion.Lerp(camera.transform.rotation, cameraTransform.rotation, Time.deltaTime * 2);
-            player.transform.position = Vector3.Lerp(player.transform.position, player.transform.position +new Vector3(0, 0, 5), Time.deltaTime * 2);
         }
     }
 
     public void StartGame() {
        Debug.Log("Game Started");
        isGameStarted = true;
+       //Play Player out of stopChest(nao sei o nome de parapeito)
        if (player.TryGetComponent(out Animator anim)) {
-           anim.SetTrigger("Start");
+           anim.SetTrigger("Start"); 
        }
+       //Unload NewMenu Scene
        SceneManager.UnloadSceneAsync("NewMenu");
-       playingAnimation = true;
+       //Começa as animaçoes do jogo
        StartCoroutine("PlayAnimation");
     }
 
     public IEnumerator PlayAnimation() {
-        PlayerCamera.instance.ToggleAimLock(true);
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(3);
+        playingAnimation = true;
+        yield return new WaitForSeconds(3);
         brain.enabled = true;
         playingAnimation = false;
+        PlayerCamera.instance.ToggleAimLock(true);
+        essentialsCanvas.SetActive(true);
     }
 }

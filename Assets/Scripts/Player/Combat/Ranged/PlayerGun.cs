@@ -33,8 +33,10 @@ public class PlayerGun : MonoBehaviour
     {
         if (UIManager.instance.GetIsInMenus()) return;
 
-        Shoot();
-        Reload();
+        if (WorldController.worldController.isGameStarted) {
+            Shoot();
+            Reload();
+        }
     }
 
     private void Shoot()
