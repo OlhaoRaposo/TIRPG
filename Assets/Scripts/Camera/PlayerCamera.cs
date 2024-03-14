@@ -81,7 +81,14 @@ public class PlayerCamera : MonoBehaviour
 
     public void LockCamera(bool lockCamera)
     {
-        myCinemachineBrain.enabled = !lockCamera;
+        if (lockCamera == true)
+        {
+            myCinemachineCamera.m_XAxis.m_MaxSpeed = 0;
+            myCinemachineCamera.m_YAxis.m_MaxSpeed = 0;
+        }else {
+            myCinemachineCamera.m_XAxis.m_MaxSpeed = camSpeedX;
+            myCinemachineCamera.m_YAxis.m_MaxSpeed = camSpeedY;
+        }
     }
     private void Aim()
     {

@@ -33,6 +33,7 @@ public class NPC : MonoBehaviour
          } 
          npcReference.talkBox.SetActive(true);
         if (interactable) {
+            npcReference.npcText.text = "";
             npcReference.npcNameReference.text = npcReference.npcName;
             npcReference.perfilImage.sprite = npcReference.perfilSprite;
         }
@@ -40,24 +41,21 @@ public class NPC : MonoBehaviour
     }
     public void Interact() {
         if (npcType == NPCtYPE.CanPatrol) { StopNpc(); }
-        if (hasQuest) { 
-            EnableChatBox();
-            TalkQuest();
-        }else {
-            
-        }
+        
+        EnableChatBox();
+        Talk();
     }
     #region ChatBox
     public void EnableChatBox() {
         talkBox.SetActive(true);
-        PlayerCamera.instance.LockCamera(true);
+        PlayerCamera.instance.LockCamera(false);
         PlayerCamera.instance.ToggleAimLock(false);
         DefaultButtonConfiguration();
     }
     public void DisableChatBox() {
         npcReference.npcText.text = "";
         talkBox.SetActive(false);
-        PlayerCamera.instance.LockCamera(false);
+        PlayerCamera.instance.LockCamera(true);
         PlayerCamera.instance.ToggleAimLock(true);
         ResetDialogue();
     }
@@ -77,6 +75,12 @@ public class NPC : MonoBehaviour
         npcReference.finishButton.gameObject.SetActive(true);
         npcReference.nextButton.gameObject.SetActive(true);
     }
+    private void EnableLastBoxConfiguration() {
+        npcReference.acceptButton.gameObject.SetActive(false);
+        npcReference.refuseButton.gameObject.SetActive(false);
+        npcReference.finishButton.gameObject.SetActive(true);
+        npcReference.nextButton.gameObject.SetActive(false);
+    }
     private void AcceptButtonConfiguration() {
         npcReference.acceptButton.gameObject.SetActive(true);
         npcReference.refuseButton.gameObject.SetActive(true);
@@ -84,9 +88,22 @@ public class NPC : MonoBehaviour
         npcReference.nextButton.gameObject.SetActive(false);
     }
     #endregion
+
+    public void Talk() {
+        if (hasQuest) {
+           //CALCULO CASO TENHA QUEST 
+        }else {
+            //CALCULO CASO NÃO TENHA QUEST
+                //Pegar um diálogo aleatório
+                int rnd = UnityEngine.Random.Range(0, dialogueDatabase.randomDialogues.Count);
+                StartCoroutine(WriteText(dialogueDatabase.randomDialogues[rnd].dialogue));
+        }
+        
+    }
     public void TalkQuest()
     {
-        npcReference.npcText.text = "";
+        StopCoroutine(WriteText(""));
+        StartCoroutine(WriteText(""));
         Quest quest = QuestManager.instance.FindQuestOnDatabase(questToGive);
         if (currentDialogueIndex == quest.dialogue.Count) { 
             ResetDialogue();
@@ -109,6 +126,7 @@ public class NPC : MonoBehaviour
             npcReference.npcText.text += letter;
             yield return new WaitForSeconds(0.05f);
         }
+        currentDialogueIndex++;
     }
     private void StopNpc() {
         npcAgent.destination = this.transform.position;
@@ -116,8 +134,7 @@ public class NPC : MonoBehaviour
     }
 }
 [Serializable]
-public class DialogueDatabase
-{
+public class DialogueDatabase{
     public List<Dialogue> randomDialogues = new List<Dialogue>();
 }
 
@@ -157,6 +174,7 @@ public class NPCEditor : Editor
     {
         serializedObject.Update();
         SerializedProperty npcReferenceProp = serializedObject.FindProperty("npcReference");
+        SerializedProperty dialogueDatabase = serializedObject.FindProperty("dialogueDatabase");
         NPC myTarget = (NPC)target;
         myTarget.currentState = (NPC.CurrentState)EditorGUILayout.EnumPopup("NPC State", myTarget.currentState);
         myTarget.interactable = EditorGUILayout.Toggle("Interactable", myTarget.interactable);
@@ -173,6 +191,7 @@ public class NPCEditor : Editor
                 myTarget.npcAgent = (NavMeshAgent)EditorGUILayout.ObjectField("Enemy Agent", myTarget.npcAgent, typeof(NavMeshAgent), true);
                 break;
         }
+        EditorGUILayout.PropertyField(dialogueDatabase, true);
         myTarget.npcCode = EditorGUILayout.TextField("NPC Code", myTarget.npcCode);
         myTarget.hasQuest = EditorGUILayout.Toggle("Has Quest", myTarget.hasQuest);
         if (myTarget.hasQuest) { 
