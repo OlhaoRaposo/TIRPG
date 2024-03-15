@@ -24,14 +24,16 @@ public class NPC : MonoBehaviour
     public NPCReferenceData npcReference;
     public DialogueDatabase dialogueDatabase;
     public bool hasQuest;
-    public string questToGive;
+    public List<string> questToGive;
+    public int atualQuestIndex;
+    public string currentQuest;
     
     void Start() {
          if(npcType == NPCtYPE.CanPatrol) {
             npcAgent = this.GetComponent<NavMeshAgent>();
-            
          } 
          npcReference.talkBox.SetActive(true);
+         currentQuest = questToGive[atualQuestIndex];
         if (interactable) {
             npcReference.npcText.text = "";
             npcReference.npcNameReference.text = npcReference.npcName;
@@ -41,7 +43,6 @@ public class NPC : MonoBehaviour
     }
     public void Interact() {
         if (npcType == NPCtYPE.CanPatrol) { StopNpc(); }
-        
         EnableChatBox();
         Talk();
     }
@@ -60,15 +61,10 @@ public class NPC : MonoBehaviour
         ResetDialogue();
     }
     private void ResetDialogue() {
-        Quest quest = QuestManager.instance.FindQuestOnDatabase(questToGive);
-        StopCoroutine("WriteText");
-        StartCoroutine(WriteText(""));
-        foreach (var dialogue in quest.dialogue) {
-            dialogue.alreadySaid = false;
-        }
         currentDialogueIndex = 0;
+        StartCoroutine(WriteText(""));
+        npcReference.npcText.text = "";
     }
-
     private void DefaultButtonConfiguration() {
         npcReference.acceptButton.gameObject.SetActive(false);
         npcReference.refuseButton.gameObject.SetActive(false);
@@ -88,23 +84,36 @@ public class NPC : MonoBehaviour
         npcReference.nextButton.gameObject.SetActive(false);
     }
     #endregion
-
     public void Talk() {
+        ResetDialogue();
         if (hasQuest) {
            //CALCULO CASO TENHA QUEST 
+           if (QuestManager.instance.CheckIfIsComplete(currentQuest)) {
+               //Minha quest em questao ja esta completa e nao tenho outra para dar
+               if (questToGive.IndexOf(currentQuest) == questToGive.Count) {
+                   int rnd = UnityEngine.Random.Range(0, dialogueDatabase.randomDialogues.Count);
+                   StartCoroutine(WriteText(dialogueDatabase.randomDialogues[rnd].dialogue));
+                   EnableLastBoxConfiguration();
+               }
+           }else {
+               //Minha quest em questao nao esta completa
+               if (QuestManager.instance.CheckIfIsActive(currentQuest)) {
+                   //Minha quest em questao ja esta ativa
+                   Quest myQuest = QuestManager.instance.FindActiveQuest(currentQuest);
+                   StartCoroutine(WriteText(myQuest.questAlreadyGiven[currentDialogueIndex].dialogue));
+               }
+           }
         }else {
             //CALCULO CASO NÃO TENHA QUEST
                 //Pegar um diálogo aleatório
                 int rnd = UnityEngine.Random.Range(0, dialogueDatabase.randomDialogues.Count);
                 StartCoroutine(WriteText(dialogueDatabase.randomDialogues[rnd].dialogue));
+                EnableLastBoxConfiguration();
         }
-        
     }
     public void TalkQuest()
     {
-        StopCoroutine(WriteText(""));
-        StartCoroutine(WriteText(""));
-        Quest quest = QuestManager.instance.FindQuestOnDatabase(questToGive);
+        Quest quest = QuestManager.instance.FindQuestOnDatabase(currentQuest);
         if (currentDialogueIndex == quest.dialogue.Count) { 
             ResetDialogue();
             StartCoroutine(WriteText("Você deseja aceitar a missão?"));
@@ -118,7 +127,8 @@ public class NPC : MonoBehaviour
         }
     }
     public void AcceptQuest() {
-        QuestManager.instance.AddQuest(questToGive);
+        QuestManager.instance.AddQuest(currentQuest);
+        atualQuestIndex++;
         DisableChatBox();
     }
     private IEnumerator WriteText(string text) {
@@ -175,6 +185,7 @@ public class NPCEditor : Editor
         serializedObject.Update();
         SerializedProperty npcReferenceProp = serializedObject.FindProperty("npcReference");
         SerializedProperty dialogueDatabase = serializedObject.FindProperty("dialogueDatabase");
+        SerializedProperty questToGive = serializedObject.FindProperty("questToGive");
         NPC myTarget = (NPC)target;
         myTarget.currentState = (NPC.CurrentState)EditorGUILayout.EnumPopup("NPC State", myTarget.currentState);
         myTarget.interactable = EditorGUILayout.Toggle("Interactable", myTarget.interactable);
@@ -197,6 +208,8 @@ public class NPCEditor : Editor
         if (myTarget.hasQuest) { 
             EditorGUILayout.PropertyField(serializedObject.FindProperty("questToGive"), true);   
         }
+        myTarget.currentQuest = EditorGUILayout.TextField("Current Quest", myTarget.currentQuest);
+        myTarget.atualQuestIndex = EditorGUILayout.IntField("Atual Quest Index", myTarget.atualQuestIndex);
         EditorGUILayout.PropertyField(npcReferenceProp, true);
         serializedObject.ApplyModifiedProperties();
     }

@@ -33,7 +33,28 @@ public class QuestManager : MonoBehaviour
         }
         return questToReturn;
     }
-    
+
+    public bool CheckIfIsComplete(string questCode)
+    {
+        bool completed = false;
+        foreach (var quests in completedQuests) {
+          if(quests.code == questCode)
+          {
+              completed = true;
+          }
+        }
+
+        return completed;
+    }
+    public bool CheckIfIsActive(string questCode) {
+        bool active = false;
+        foreach (var quests in activeQuests) {
+          if(quests.code == questCode) {
+              active = true;
+          }
+        }
+        return active;
+    }
     public void AddValidation(string questCode) {
         Quest quest = FindActiveQuest(questCode);
         int index =0;

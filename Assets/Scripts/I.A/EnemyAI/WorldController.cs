@@ -42,9 +42,6 @@ public class WorldController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A)) {
-            PlayerCamera.instance.ToggleAimLock(!PlayerCamera.instance.locked);
-        }
         if (playingAnimation) {
             camera.transform.position = Vector3.Lerp(camera.transform.position, cameraTransform.position, Time.deltaTime * 2);
             camera.transform.rotation = Quaternion.Lerp(camera.transform.rotation, cameraTransform.rotation, Time.deltaTime * 2);
