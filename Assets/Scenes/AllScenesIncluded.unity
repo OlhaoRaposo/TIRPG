@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -11247,7 +11247,8 @@ PrefabInstance:
       value: Essentials
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 6956214870844219183, guid: 3004360c9fd7b2f41ad76ead7312e2e2, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3004360c9fd7b2f41ad76ead7312e2e2, type: 3}
@@ -11521,13 +11522,54 @@ MonoBehaviour:
     - alreadySaid: 0
       dialogue: CE TEM Q ATRAVESSAR ESSES 2 CUBO PRA COMPLETAR SAPORRA JAE?
       audio: {fileID: 0}
-    questAlreadyGiven: []
-    steps: []
+    questAlreadyGiven:
+    - alreadySaid: 0
+      dialogue: CE JA COMPLETO ESSE CARAI PA MIM?
+      audio: {fileID: 0}
+    steps:
+    - isComplete: 0
+      isActive: 0
+      stepSubtitle: 
+      validation:
+        _modules:
+          editorOpen: 1
+          _modules:
+          - rid: 8516496363031101441
   activeQuests: []
   completedQuests: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 8516496363031101441
+      type: {class: ProcedureTrigger, ns: , asm: Assembly-CSharp}
+      data:
+        editorOpen: 1
+        _enabled: 1
+        inspect:
+          _modules:
+            editorOpen: 1
+            _modules: []
+        _colliderObject: {fileID: 1087393166}
+        player: {fileID: 1624773993}
+        destroyOnTrigger: 1
+        onTriggerEnter:
+          m_PersistentCalls:
+            m_Calls:
+            - m_Target: {fileID: 487334631}
+              m_TargetAssemblyTypeName: QuestManager, Assembly-CSharp
+              m_MethodName: AddValidation
+              m_Mode: 5
+              m_Arguments:
+                m_ObjectArgument: {fileID: 0}
+                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+                m_IntArgument: 0
+                m_FloatArgument: 0
+                m_StringArgument: IrAteKrek
+                m_BoolArgument: 0
+              m_CallState: 2
+        onTriggerExit:
+          m_PersistentCalls:
+            m_Calls: []
 --- !u!4 &487334632
 Transform:
   m_ObjectHideFlags: 0
@@ -25221,8 +25263,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1062340365}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.34, y: 0.55, z: 15}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 940.87616, y: 62.26, z: 367.3}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -25770,8 +25812,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1087393166}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.55, y: 0.55, z: 10.7}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 948.7, y: 62.26, z: 367.3}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -30591,12 +30633,12 @@ PrefabInstance:
     - target: {fileID: 4132184705103604313, guid: b3839721f89ffea40aa0163cedac67f6,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.21670857
+      value: 0.21670854
       objectReference: {fileID: 0}
     - target: {fileID: 4132184705103604313, guid: b3839721f89ffea40aa0163cedac67f6,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.01410786
+      value: 0.014107857
       objectReference: {fileID: 0}
     - target: {fileID: 4132184705103604313, guid: b3839721f89ffea40aa0163cedac67f6,
         type: 3}
@@ -30606,7 +30648,7 @@ PrefabInstance:
     - target: {fileID: 4132184705103604313, guid: b3839721f89ffea40aa0163cedac67f6,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.06341271
+      value: 0.06341272
       objectReference: {fileID: 0}
     - target: {fileID: 4481183346284975727, guid: b3839721f89ffea40aa0163cedac67f6,
         type: 3}
@@ -38430,6 +38472,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2149898566040538900, guid: 1d7e2d31e8f3aa840a12d3762739c672,
     type: 3}
   m_PrefabInstance: {fileID: 1622366974}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1624773993 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4614305784611415217, guid: b3839721f89ffea40aa0163cedac67f6,
+    type: 3}
+  m_PrefabInstance: {fileID: 1312395947}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1627177903
 PrefabInstance:
@@ -52772,7 +52820,7 @@ MonoBehaviour:
     - alreadySaid: 0
       dialogue: BoaSaudacao
       audio: {fileID: 0}
-  hasQuest: 0
+  hasQuest: 1
   questToGive:
   - IrAteKrek
   - IrAteKrek2
@@ -53497,7 +53545,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 128721069003260647}
         m_TargetAssemblyTypeName: NPC, Assembly-CSharp
-        m_MethodName: TalkQuest
+        m_MethodName: Talk
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -54738,7 +54786,7 @@ SceneRoots:
   - {fileID: 1407669125}
   - {fileID: 1431424148}
   - {fileID: 23420073}
-  - {fileID: 28410549120702205}
-  - {fileID: 487334632}
   - {fileID: 1062340369}
   - {fileID: 1087393170}
+  - {fileID: 28410549120702205}
+  - {fileID: 487334632}

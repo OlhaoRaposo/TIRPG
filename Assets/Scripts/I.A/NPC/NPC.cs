@@ -61,7 +61,6 @@ public class NPC : MonoBehaviour
         ResetDialogue();
     }
     private void ResetDialogue() {
-        currentDialogueIndex = 0;
         StartCoroutine(WriteText(""));
         npcReference.npcText.text = "";
     }
@@ -95,7 +94,21 @@ public class NPC : MonoBehaviour
                    StartCoroutine(WriteText(dialogueDatabase.randomDialogues[rnd].dialogue));
                    EnableLastBoxConfiguration();
                }
-           }else {
+           }else if (!QuestManager.instance.CheckIfIsActive(currentQuest)) {
+               Quest quest = QuestManager.instance.FindQuestOnDatabase(currentQuest);
+               if (currentDialogueIndex == quest.dialogue.Count) { 
+                   ResetDialogue();
+                   StartCoroutine(WriteText("Você deseja aceitar a missão?"));
+                   AcceptButtonConfiguration();
+                   return;
+               }
+               if (!quest.dialogue[currentDialogueIndex].alreadySaid) {
+                   StartCoroutine(WriteText(quest.dialogue[currentDialogueIndex].dialogue));
+                   quest.dialogue[currentDialogueIndex].alreadySaid = true;
+                   currentDialogueIndex++;
+               }
+               Debug.Log("ae");
+           }else if(!QuestManager.instance.CheckIfIsComplete(currentQuest)) {
                //Minha quest em questao nao esta completa
                if (QuestManager.instance.CheckIfIsActive(currentQuest)) {
                    //Minha quest em questao ja esta ativa
@@ -111,7 +124,7 @@ public class NPC : MonoBehaviour
                 EnableLastBoxConfiguration();
         }
     }
-    public void TalkQuest()
+    /*public void TalkQuest()
     {
         Quest quest = QuestManager.instance.FindQuestOnDatabase(currentQuest);
         if (currentDialogueIndex == quest.dialogue.Count) { 
@@ -125,7 +138,7 @@ public class NPC : MonoBehaviour
             quest.dialogue[currentDialogueIndex].alreadySaid = true;
             currentDialogueIndex++;
         }
-    }
+    }*/
     public void AcceptQuest() {
         QuestManager.instance.AddQuest(currentQuest);
         atualQuestIndex++;
@@ -136,7 +149,6 @@ public class NPC : MonoBehaviour
             npcReference.npcText.text += letter;
             yield return new WaitForSeconds(0.05f);
         }
-        currentDialogueIndex++;
     }
     private void StopNpc() {
         npcAgent.destination = this.transform.position;
@@ -208,6 +220,7 @@ public class NPCEditor : Editor
         if (myTarget.hasQuest) { 
             EditorGUILayout.PropertyField(serializedObject.FindProperty("questToGive"), true);   
         }
+        myTarget.currentDialogueIndex = EditorGUILayout.IntField("Current Dialogue Index", myTarget.currentDialogueIndex);
         myTarget.currentQuest = EditorGUILayout.TextField("Current Quest", myTarget.currentQuest);
         myTarget.atualQuestIndex = EditorGUILayout.IntField("Atual Quest Index", myTarget.atualQuestIndex);
         EditorGUILayout.PropertyField(npcReferenceProp, true);
