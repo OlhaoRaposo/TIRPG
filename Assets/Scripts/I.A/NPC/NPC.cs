@@ -86,6 +86,7 @@ public class NPC : MonoBehaviour
     #endregion
     public void Talk()
     {
+        npcReference.npcText.text = "";
         if(isWriting) {
             forcedStop = true;
             return;

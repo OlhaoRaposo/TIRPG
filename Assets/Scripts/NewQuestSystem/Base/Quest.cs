@@ -6,6 +6,8 @@ public class Quest
 {
   [Header("Info")]
   public string code;
+  public string title;
+  public string description;
   public bool isComplete = false;
   public int currentStep = 0;
   public bool hasQuestReward;

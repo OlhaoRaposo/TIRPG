@@ -9,6 +9,9 @@ public class QuestManager : MonoBehaviour
     public List<Quest> activeQuests = new List<Quest>();
     public List<Quest> completedQuests = new List<Quest>();
 
+    [SerializeField] private GameObject questPrefab;
+    [SerializeField] private Transform questParent;
+
     private void Start() {
         if(instance == null) {
            instance = this; 
@@ -93,6 +96,7 @@ public class QuestManager : MonoBehaviour
     public void CompleteQuest(Quest quest){
         completedQuests.Add(quest);
         activeQuests.Remove(quest);
+        Destroy(questParent.transform.Find(quest.title).gameObject);
         AddReward(quest);
         AudioBoard.instance.PlayAudio("Bell");
     }
@@ -107,13 +111,19 @@ public class QuestManager : MonoBehaviour
         }
     }
     public void AddQuest(string questCode) {
+        questParent.gameObject.SetActive(true);
         activeQuests.Add(FindQuestOnDatabase(questCode));
         if (activeQuests.Contains(FindQuestOnDatabase(questCode))) {
             foreach (var quest in activeQuests) {
                 if (quest == FindQuestOnDatabase(questCode)) {
                    quest.steps[0].SetActive();
+                   GameObject questUi = Instantiate(questPrefab, questParent);
+                   questUi.TryGetComponent(out QuestComponent qc); qc.questTitle.text = quest.title; qc.questDescription.text = quest.description;
+                   questUi.name = quest.title;
                 }
             } 
+            
+            questParent.gameObject.SetActive(true);
         }
     }
 
