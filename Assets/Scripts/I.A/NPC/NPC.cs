@@ -28,6 +28,9 @@ public class NPC : MonoBehaviour
     public int atualQuestIndex;
     public string currentQuest;
     
+    public bool isWriting,forcedStop;
+    public float talkingSpeed = .8f;
+    
     void Start() {
          if(npcType == NPCtYPE.CanPatrol) {
             npcAgent = this.GetComponent<NavMeshAgent>();
@@ -58,10 +61,8 @@ public class NPC : MonoBehaviour
         talkBox.SetActive(false);
         PlayerCamera.instance.LockCamera(true);
         PlayerCamera.instance.ToggleAimLock(true);
-        ResetDialogue();
     }
-    private void ResetDialogue() {
-        StartCoroutine(WriteText(""));
+    public void ResetDialogue() {
         npcReference.npcText.text = "";
     }
     private void DefaultButtonConfiguration() {
@@ -83,45 +84,48 @@ public class NPC : MonoBehaviour
         npcReference.nextButton.gameObject.SetActive(false);
     }
     #endregion
-    public void Talk() {
-        ResetDialogue();
+    public void Talk()
+    {
+        if(isWriting) {
+            forcedStop = true;
+            return;
+        }
         if (hasQuest) {
            //CALCULO CASO TENHA QUEST 
            if (QuestManager.instance.CheckIfIsComplete(currentQuest)) {
                //Minha quest em questao ja esta completa e nao tenho outra para dar
                if (questToGive.IndexOf(currentQuest) == questToGive.Count) {
                    int rnd = UnityEngine.Random.Range(0, dialogueDatabase.randomDialogues.Count);
-                   StartCoroutine(WriteText(dialogueDatabase.randomDialogues[rnd].dialogue));
+                   Chat(dialogueDatabase.randomDialogues[rnd].dialogue);
                    EnableLastBoxConfiguration();
                }
            }else if (!QuestManager.instance.CheckIfIsActive(currentQuest)) {
                Quest quest = QuestManager.instance.FindQuestOnDatabase(currentQuest);
                if (currentDialogueIndex == quest.dialogue.Count) { 
-                   ResetDialogue();
-                   StartCoroutine(WriteText("Você deseja aceitar a missão?"));
+                   Chat("Você deseja aceitar a missão?");
                    AcceptButtonConfiguration();
                    return;
                }
                if (!quest.dialogue[currentDialogueIndex].alreadySaid) {
-                   StartCoroutine(WriteText(quest.dialogue[currentDialogueIndex].dialogue));
+                   Chat(quest.dialogue[currentDialogueIndex].dialogue);
                    quest.dialogue[currentDialogueIndex].alreadySaid = true;
                    currentDialogueIndex++;
                }
-               Debug.Log("ae");
            }else if(!QuestManager.instance.CheckIfIsComplete(currentQuest)) {
                //Minha quest em questao nao esta completa
                if (QuestManager.instance.CheckIfIsActive(currentQuest)) {
                    //Minha quest em questao ja esta ativa
                    Quest myQuest = QuestManager.instance.FindActiveQuest(currentQuest);
-                   StartCoroutine(WriteText(myQuest.questAlreadyGiven[currentDialogueIndex].dialogue));
+                   Chat(myQuest.questAlreadyGiven[currentDialogueIndex].dialogue);
                }
            }
         }else {
             //CALCULO CASO NÃO TENHA QUEST
                 //Pegar um diálogo aleatório
                 int rnd = UnityEngine.Random.Range(0, dialogueDatabase.randomDialogues.Count);
-                StartCoroutine(WriteText(dialogueDatabase.randomDialogues[rnd].dialogue));
+                Chat(dialogueDatabase.randomDialogues[rnd].dialogue);
                 EnableLastBoxConfiguration();
+                
         }
     }
     /*public void TalkQuest()
@@ -144,11 +148,23 @@ public class NPC : MonoBehaviour
         atualQuestIndex++;
         DisableChatBox();
     }
-    private IEnumerator WriteText(string text) {
-        foreach (char letter in text) {
-            npcReference.npcText.text += letter;
-            yield return new WaitForSeconds(0.05f);
+
+    public void Chat(string text) { 
+        StartCoroutine(WriteText(text,0));
+    }
+    private IEnumerator WriteText(string text, int aux) {
+        int x = aux;
+        npcReference.npcText.text += text[aux];
+        yield return new WaitForSeconds(talkingSpeed);
+        if (forcedStop) {
+            StopCoroutine("WriteText");
+            npcReference.npcText.text = text;
+            forcedStop = false;
+            yield break;
         }
+        x++;
+        if(aux < text.Length -1)
+            StartCoroutine(WriteText(text, x));
     }
     private void StopNpc() {
         npcAgent.destination = this.transform.position;
@@ -220,6 +236,7 @@ public class NPCEditor : Editor
         if (myTarget.hasQuest) { 
             EditorGUILayout.PropertyField(serializedObject.FindProperty("questToGive"), true);   
         }
+        myTarget.isWriting = EditorGUILayout.Toggle("Is Writing", myTarget.isWriting);
         myTarget.currentDialogueIndex = EditorGUILayout.IntField("Current Dialogue Index", myTarget.currentDialogueIndex);
         myTarget.currentQuest = EditorGUILayout.TextField("Current Quest", myTarget.currentQuest);
         myTarget.atualQuestIndex = EditorGUILayout.IntField("Atual Quest Index", myTarget.atualQuestIndex);

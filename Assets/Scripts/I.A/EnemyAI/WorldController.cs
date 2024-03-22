@@ -24,7 +24,7 @@ public class WorldController : MonoBehaviour
         }else {
             Destroy(gameObject);
         }
-
+        SceneManager.LoadSceneAsync("NewMenu", LoadSceneMode.Additive);
         essentialsCanvas = GameObject.Find("====CANVAS====");
         essentialsCanvas.SetActive(false);
         camera = Camera.main.gameObject;
