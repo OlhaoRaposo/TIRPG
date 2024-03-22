@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -53,7 +54,7 @@ public class UIManager : MonoBehaviour
     }
     /*void Start()
     {
-        //As próximas linhas servem somente para inicializar os slots do inventário (vou tirar isso dps)
+        //As prï¿½ximas linhas servem somente para inicializar os slots do inventï¿½rio (vou tirar isso dps)
         ToggleInGameMenus();
         Invoke("ToggleInGameMenus", .1f);
     }*/
@@ -152,6 +153,19 @@ public class UIManager : MonoBehaviour
     {
         ToggleCursorLockMode();
         isInMenus = !isInMenus;
+
+        if(isInMenus == true)
+        {
+            PlayerController.instance?.ToggleWeaponSwap(false);
+            PlayerGun.instance?.ShootToggle(false);
+            PlayerMeleeCombat.instance?.MeleeAttackToggle(false);
+        }
+        else
+        {
+            PlayerController.instance?.ToggleWeaponSwap(true);
+            PlayerGun.instance?.ShootToggle(true);
+            PlayerMeleeCombat.instance?.MeleeAttackToggle(true);
+        }
 
         if (currentMerchant == null)
         {

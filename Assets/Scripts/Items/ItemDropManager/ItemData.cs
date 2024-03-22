@@ -8,6 +8,8 @@ public class ItemData : ScriptableObject
     [Header("Item types")]
     public ItemType itemType;
     public WeaponType weaponType;
+    public PlayerMeleeBase meleeBase;
+    public PlayerGunBase gunBase;
     [Space]
     public GameObject prefab;
     public int value;

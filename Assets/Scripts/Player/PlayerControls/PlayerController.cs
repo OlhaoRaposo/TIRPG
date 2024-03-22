@@ -226,7 +226,10 @@ public class PlayerController : MonoBehaviour
         {
             if (isRanged == false && Input.GetKeyDown(KeyCode.Alpha1))
             {
-                rangedWeapon.SetActive(true);
+                if(PlayerInventory.instance.GetRanged() != null)
+                {
+                    rangedWeapon.SetActive(true);
+                }
                 meleeWeapon.SetActive(false);
                 if (isGrounded == true)
                 {
@@ -240,7 +243,10 @@ public class PlayerController : MonoBehaviour
             if (isRanged == true && Input.GetKeyDown(KeyCode.Alpha2))
             {
                 rangedWeapon.SetActive(false);
-                meleeWeapon.SetActive(true);
+                if(PlayerInventory.instance.GetMelee() != null)
+                {
+                    meleeWeapon.SetActive(true);
+                }
                 if (isGrounded == true)
                 {
                     animator.Play("RangedToMelee");

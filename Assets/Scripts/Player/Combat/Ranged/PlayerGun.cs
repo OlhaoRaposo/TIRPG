@@ -16,7 +16,7 @@ public class PlayerGun : MonoBehaviour
     [Header("References")]
     [SerializeField] private PlayerGunBase equipedWeapon;
     [SerializeField] private Image reloadImage;
-    [SerializeField] private GameObject effect;
+    private float holdTime;
 
     private void Awake()
     {
@@ -25,26 +25,28 @@ public class PlayerGun : MonoBehaviour
 
     private void Start()
     {
-        ammo = equipedWeapon.ammo;
-        UIManager.instance.UpdateAmmo($"{ammo}/{equipedWeapon.ammo}");
+        SetNewGunWeapon(equipedWeapon);
     }
 
     private void Update()
     {
-        if (UIManager.instance.GetIsInMenus()) return;
-
         Shoot();
         Reload();
     }
 
+    public void SetNewGunWeapon(PlayerGunBase newWeapon)
+    {
+        equipedWeapon = newWeapon;
+        ammo = equipedWeapon.ammo;
+        UIManager.instance.UpdateAmmo($"{ammo}/{equipedWeapon.ammo}");
+    }
+
     private void Shoot()
     {
-        if (Input.GetMouseButton(0) == true && isReloading == false && DialogueManager.instance.isPlayingDialogue == false && canShoot == true)
+        if (isReloading == false && DialogueManager.instance.isPlayingDialogue == false && canShoot == true)
         {
             if (ammo > 0)
             {
-                PlayerCamera.instance.playerAnimator.SetLayerWeight(1, 1);
-                PlayerCamera.instance.playerAnimator.SetFloat("AimVertical", -PlayerCamera.instance.cameraBody.transform.eulerAngles.x / 60);
                 if (Input.GetMouseButton(1) == false)
                 {
                     PlayerCamera.instance.AlignRotation(PlayerCamera.instance.cameraBody.gameObject);
@@ -55,8 +57,10 @@ public class PlayerGun : MonoBehaviour
 
                     case PlayerGunBase.TriggerType.Auto:
                         {
-                            if (shootCD < Time.time)
+                            if (Input.GetMouseButton(0) == true && shootCD < Time.time)
                             {
+                                PlayerCamera.instance.playerAnimator.SetLayerWeight(1, 1);
+                                PlayerCamera.instance.playerAnimator.SetFloat("AimVertical", -PlayerCamera.instance.cameraBody.transform.eulerAngles.x / 60);
                                 SummonBullets();
                             }
                             break;
@@ -67,6 +71,8 @@ public class PlayerGun : MonoBehaviour
                             {
                                 if (shootCD < Time.time)
                                 {
+                                    PlayerCamera.instance.playerAnimator.SetLayerWeight(1, 1);
+                                    PlayerCamera.instance.playerAnimator.SetFloat("AimVertical", -PlayerCamera.instance.cameraBody.transform.eulerAngles.x / 60);
                                     SummonBullets();
                                 }
                             }
@@ -74,28 +80,16 @@ public class PlayerGun : MonoBehaviour
                         }
                     case PlayerGunBase.TriggerType.Hold:
                         {
-                            float aux = 0;
                             if (Input.GetMouseButton(0) == true)
                             {
-                                if (equipedWeapon.fireRate >= aux + Time.time)
-                                {
-                                    SummonBullets();
-                                }
-                                else
-                                {
-                                    SummonBullets();
-                                }
+                                PlayerCamera.instance.playerAnimator.SetLayerWeight(1, 1);
+                                PlayerCamera.instance.playerAnimator.SetFloat("AimVertical", -PlayerCamera.instance.cameraBody.transform.eulerAngles.x / 60);
+                                holdTime += Time.deltaTime;
                             }
+                            //Soltar
                             if (Input.GetMouseButtonUp(0) == true)
                             {
-                                if (equipedWeapon.fireRate >= aux + Time.time)
-                                {
-                                    SummonBullets();
-                                }
-                                else
-                                {
-                                    SummonBullets();
-                                }
+                                SummonBullets();
                             }
                             break;
                         }
@@ -108,7 +102,7 @@ public class PlayerGun : MonoBehaviour
         }
         else if (PlayerCamera.instance.isAiming == false)
         {
-            if(isReloading == false)
+            if (isReloading == false)
             {
                 PlayerCamera.instance.playerAnimator.SetLayerWeight(1, 0);
             }
@@ -129,7 +123,7 @@ public class PlayerGun : MonoBehaviour
         Vector2 screenCenter = new Vector2(Screen.width / 2, Screen.height / 2);
         Vector3 target = Vector3.zero;
         Ray cameraRay = PlayerCamera.instance.cameraBody.ScreenPointToRay(screenCenter);
-        if (Physics.Raycast(cameraRay, out RaycastHit hitPos, 999, aimCollisionLayer) == true)
+        if (Physics.Raycast(cameraRay, out RaycastHit hitPos, float.MaxValue, aimCollisionLayer) == true)
         {
             target = hitPos.point;
         }
@@ -144,8 +138,17 @@ public class PlayerGun : MonoBehaviour
             Vector3 startingPos = new Vector3(transform.position.x + aux, transform.position.y + aux, transform.position.z);
             Vector3 targetAim = (target - transform.position).normalized;
 
-            Instantiate(equipedWeapon.projectile, startingPos, Quaternion.LookRotation(targetAim, Vector3.up), null);
-            Instantiate(effect, startingPos, Quaternion.LookRotation(targetAim, Vector3.up), transform);
+            GameObject projectile = Instantiate(equipedWeapon.projectile, startingPos, Quaternion.LookRotation(targetAim, Vector3.up), null);
+            if (equipedWeapon.triggerType == PlayerGunBase.TriggerType.Hold)
+            {
+                if (holdTime / shootCD < 1)
+                {
+                    Debug.Log("Atirou mais fraco");
+                    projectile.GetComponent<PlayerProjectile>().SetSpeed(holdTime);
+                    holdTime = 0;
+                }
+            }
+            Instantiate(equipedWeapon.effect, startingPos, Quaternion.LookRotation(targetAim, Vector3.up), transform);
             //PlayerCamera.instance.ShakeCamera(equipedWeapon.recoil);
             ammo--;
         }

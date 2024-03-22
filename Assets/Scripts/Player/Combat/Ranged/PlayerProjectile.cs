@@ -50,4 +50,9 @@ public class PlayerProjectile : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
+    public void SetSpeed(float speedMultiplier)
+    {
+        travelSpeed *= speedMultiplier;
+    }
 }
