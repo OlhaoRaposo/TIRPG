@@ -26,6 +26,7 @@ public class Reward
   public enum RoyaltyType {
     city,nature
   }
+  public List<Dialogue> rewardDialogue;
   public RoyaltyType royaltyType;
   public float royaltyValue;
 }

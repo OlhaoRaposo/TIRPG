@@ -11,7 +11,6 @@ public class QuestManager : MonoBehaviour
 
     [SerializeField] private GameObject questPrefab;
     [SerializeField] private Transform questParent;
-
     private void Start() {
         if(instance == null) {
            instance = this; 
@@ -90,10 +89,22 @@ public class QuestManager : MonoBehaviour
         }
         if (isCompleted) {
             quest.isComplete = true;
-            CompleteQuest(quest);
+            NPC npc = FindNpc(quest.code);
+            npc.QuestIsCompleted();
+            npc.HandleQuestIcon();
         }
     }
-    public void CompleteQuest(Quest quest){
+    private NPC FindNpc(string questCode) {
+        NPC npcToReturn = null;
+        foreach (var npc in FindObjectsOfType<NPC>()) {
+            if (npc.currentQuest == questCode) {
+                npcToReturn = npc;
+            }
+        }
+        return npcToReturn;
+    }
+    public void CompleteQuest(string questCode) {
+        Quest quest = FindQuestOnDatabase(questCode);
         completedQuests.Add(quest);
         activeQuests.Remove(quest);
         Destroy(questParent.transform.Find(quest.title).gameObject);
@@ -126,5 +137,4 @@ public class QuestManager : MonoBehaviour
             questParent.gameObject.SetActive(true);
         }
     }
-
 }

@@ -6,11 +6,14 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
+using Random = UnityEngine.Random;
 
 public class NPC : MonoBehaviour
 {
     public enum CurrentState { Idle, Talking, Interacting, }
     public CurrentState currentState;
+    public bool canInteractWithOtherNPC;
     public bool interactable;
     public GameObject talkBox;
     public enum NPCtYPE { Static, CanPatrol, }
@@ -18,6 +21,12 @@ public class NPC : MonoBehaviour
     public string npcCode;
     public NavMeshAgent npcAgent;
     public int currentDialogueIndex;
+    public bool currentQuestIsCompleted;
+
+    public Vector3 patrolDestination;
+    public bool hasArrived;
+    private Coroutine patrol;
+    private bool canInteractAgain;
     
     //TextArea
     [Header("Referencias do NPC")]
@@ -27,13 +36,13 @@ public class NPC : MonoBehaviour
     public List<string> questToGive;
     public int atualQuestIndex;
     public string currentQuest;
-    
-    public bool isWriting,forcedStop;
-    public float talkingSpeed = .8f;
-    
-    void Start() {
+    void Start()
+    {
+        patrol = StartCoroutine(Patrol());
          if(npcType == NPCtYPE.CanPatrol) {
-            npcAgent = this.GetComponent<NavMeshAgent>();
+            npcAgent = GetComponent<NavMeshAgent>();
+            patrolDestination = ReturnARandomPoint(transform.position);
+            StartCoroutine(Patrol());
          } 
          npcReference.talkBox.SetActive(true);
          currentQuest = questToGive[atualQuestIndex];
@@ -43,6 +52,7 @@ public class NPC : MonoBehaviour
             npcReference.perfilImage.sprite = npcReference.perfilSprite;
         }
         npcReference.talkBox.SetActive(false);
+        HandleQuestIcon();
     }
     public void Interact() {
         if (npcType == NPCtYPE.CanPatrol) { StopNpc(); }
@@ -61,9 +71,6 @@ public class NPC : MonoBehaviour
         talkBox.SetActive(false);
         PlayerCamera.instance.LockCamera(true);
         PlayerCamera.instance.ToggleAimLock(true);
-    }
-    public void ResetDialogue() {
-        npcReference.npcText.text = "";
     }
     private void DefaultButtonConfiguration() {
         npcReference.acceptButton.gameObject.SetActive(false);
@@ -84,99 +91,165 @@ public class NPC : MonoBehaviour
         npcReference.nextButton.gameObject.SetActive(false);
     }
     #endregion
-    public void Talk()
-    {
-        npcReference.npcText.text = "";
-        if(isWriting) {
-            forcedStop = true;
-            return;
-        }
-        if (hasQuest) {
-           //CALCULO CASO TENHA QUEST 
-           if (QuestManager.instance.CheckIfIsComplete(currentQuest)) {
-               //Minha quest em questao ja esta completa e nao tenho outra para dar
-               if (questToGive.IndexOf(currentQuest) == questToGive.Count) {
-                   int rnd = UnityEngine.Random.Range(0, dialogueDatabase.randomDialogues.Count);
-                   Chat(dialogueDatabase.randomDialogues[rnd].dialogue);
-                   EnableLastBoxConfiguration();
-               }
-           }else if (!QuestManager.instance.CheckIfIsActive(currentQuest)) {
-               Quest quest = QuestManager.instance.FindQuestOnDatabase(currentQuest);
-               if (currentDialogueIndex == quest.dialogue.Count) { 
-                   Chat("Você deseja aceitar a missão?");
-                   AcceptButtonConfiguration();
-                   return;
-               }
-               if (!quest.dialogue[currentDialogueIndex].alreadySaid) {
-                   Chat(quest.dialogue[currentDialogueIndex].dialogue);
-                   quest.dialogue[currentDialogueIndex].alreadySaid = true;
-                   currentDialogueIndex++;
-               }
-           }else if(!QuestManager.instance.CheckIfIsComplete(currentQuest)) {
-               //Minha quest em questao nao esta completa
-               if (QuestManager.instance.CheckIfIsActive(currentQuest)) {
-                   //Minha quest em questao ja esta ativa
-                   Quest myQuest = QuestManager.instance.FindActiveQuest(currentQuest);
-                   Chat(myQuest.questAlreadyGiven[currentDialogueIndex].dialogue);
-               }
-           }
-        }else {
-            //CALCULO CASO NÃO TENHA QUEST
-                //Pegar um diálogo aleatório
-                int rnd = UnityEngine.Random.Range(0, dialogueDatabase.randomDialogues.Count);
-                Chat(dialogueDatabase.randomDialogues[rnd].dialogue);
+    public void Talk() {
+        if (currentQuestIsCompleted) {
+            npcReference.questIcon.SetActive(true);
+            Quest quest = QuestManager.instance.FindQuestOnDatabase(currentQuest);
+            if(currentDialogueIndex == quest.questReward.rewardDialogue.Count) {
+                currentDialogueIndex = 0;
                 EnableLastBoxConfiguration();
-                
+                QuestManager.instance.CompleteQuest(currentQuest);
+                npcReference.questIcon.SetActive(false);
+                atualQuestIndex++;
+                currentQuest = questToGive[atualQuestIndex];
+            }else {
+                TypeWritter.instance.Write(npcReference.npcText, quest.questReward.rewardDialogue[currentDialogueIndex].dialogue);
+                TypeWritter.instance.AttCurrentIndex(this);
+                DefaultButtonConfiguration();
+            }
+        }
+        if (!hasQuest) {
+            int rnd = Random.Range(0, dialogueDatabase.randomDialogues.Count);
+            TypeWritter.instance.Write(npcReference.npcText, dialogueDatabase.randomDialogues[rnd].dialogue);
+        }else if (hasQuest) {
+            //Quest ja esta concluida
+            if (QuestManager.instance.CheckIfIsComplete(currentQuest)) {
+                Quest quest = QuestManager.instance.FindQuestOnDatabase(currentQuest);
+                if(currentDialogueIndex == quest.questReward.rewardDialogue.Count) {
+                    currentDialogueIndex = 0;
+                    EnableLastBoxConfiguration();
+                }
+                TypeWritter.instance.Write(npcReference.npcText, quest.questReward.rewardDialogue[currentDialogueIndex].dialogue);
+                TypeWritter.instance.AttCurrentIndex(this);
+            }else if(!QuestManager.instance.CheckIfIsComplete(currentQuest) && QuestManager.instance.CheckIfIsActive(currentQuest)) {
+                //Quests não esta completa mas esta ativa
+                Quest quest = QuestManager.instance.FindQuestOnDatabase(currentQuest);
+                TypeWritter.instance.Write(npcReference.npcText, quest.questAlreadyGiven[currentDialogueIndex].dialogue);
+                TypeWritter.instance.AttCurrentIndex(this);
+                if (currentDialogueIndex == quest.questAlreadyGiven.Count) {
+                    currentDialogueIndex = 0;
+                    EnableLastBoxConfiguration(); 
+                }
+            }else if (!QuestManager.instance.CheckIfIsComplete(currentQuest) && !QuestManager.instance.CheckIfIsActive(currentQuest)) {
+                //Quest nao esta nem completa nem ativa
+                Quest quest = QuestManager.instance.FindQuestOnDatabase(currentQuest);
+                if (currentDialogueIndex == quest.dialogue.Count) {
+                    TypeWritter.instance.Write(npcReference.npcText, "Você aceita essa missão?");
+                    AcceptButtonConfiguration();
+                    currentDialogueIndex = 0;
+                }else {
+                    TypeWritter.instance.Write(npcReference.npcText, quest.dialogue[currentDialogueIndex].dialogue);
+                    TypeWritter.instance.AttCurrentIndex(this);
+                }
+            }
+        }
+        HandleQuestIcon();
+    }
+    public void QuestIsCompleted() {
+        currentQuestIsCompleted = true;
+    }
+    public void HandleQuestIcon(){
+        Debug.Log("HandleQuestIcon");
+        if (currentQuestIsCompleted) {
+            npcReference.questIcon.SetActive(true);
+            Debug.Log("Active True");
+        }else if(hasQuest && !QuestManager.instance.CheckIfIsActive(currentQuest)) {
+            npcReference.questIcon.SetActive(true);
+            Debug.Log("Active True");
+        }else if (QuestManager.instance.CheckIfIsActive(currentQuest)) {
+            npcReference.questIcon.SetActive(false);
+            Debug.Log("Active False");
         }
     }
-    /*public void TalkQuest()
-    {
-        Quest quest = QuestManager.instance.FindQuestOnDatabase(currentQuest);
-        if (currentDialogueIndex == quest.dialogue.Count) { 
-            ResetDialogue();
-            StartCoroutine(WriteText("Você deseja aceitar a missão?"));
-            AcceptButtonConfiguration();
-            return;
-        }
-        if (!quest.dialogue[currentDialogueIndex].alreadySaid) {
-            StartCoroutine(WriteText(quest.dialogue[currentDialogueIndex].dialogue));
-            quest.dialogue[currentDialogueIndex].alreadySaid = true;
-            currentDialogueIndex++;
-        }
-    }*/
     public void AcceptQuest() {
         QuestManager.instance.AddQuest(currentQuest);
         atualQuestIndex++;
+        HandleQuestIcon();
         DisableChatBox();
-    }
-
-    public void Chat(string text) { 
-        StartCoroutine(WriteText(text,0));
-    }
-    private IEnumerator WriteText(string text, int aux) {
-        int x = aux;
-        npcReference.npcText.text += text[aux];
-        yield return new WaitForSeconds(talkingSpeed);
-        if (forcedStop) {
-            StopCoroutine("WriteText");
-            npcReference.npcText.text = text;
-            forcedStop = false;
-            yield break;
-        }
-        x++;
-        if(aux < text.Length -1)
-            StartCoroutine(WriteText(text, x));
     }
     private void StopNpc() {
         npcAgent.destination = this.transform.position;
         npcAgent.isStopped = true;
+    }
+    private void Update() {
+        CheckRemainingDistance();
+        HandleNpcInteraction();
+    }
+    private void HandleNpcInteraction() {
+        if (canInteractWithOtherNPC) {
+            Collider[] objects;
+            objects = Physics.OverlapSphere(transform.position, 10);
+            foreach (var detections in objects) {
+                if (detections.TryGetComponent(out NPC npc)) {
+                    if (npc.canInteractAgain) {
+                        canInteractAgain = false;                     
+                        StopCoroutine(patrol);                        
+                        StopNpc();                                    
+                        currentState = CurrentState.Interacting;      
+                        StartCoroutine(BackToPatrol());               
+                        StartCoroutine(ResetInteraction());           
+                                              
+                        npc.canInteractAgain = false;                 
+                        npc.StopCoroutine(npc.patrol);                
+                        npc.StopNpc();                                
+                        npc.currentState = CurrentState.Interacting;  
+                        npc.StartCoroutine(BackToPatrol());           
+                        npc.StartCoroutine(ResetInteraction());       
+                    }
+                }
+            }
+        }                
+    }
+
+    IEnumerator BackToPatrol() {
+        yield return new WaitForSeconds(Random.Range(5, 8));
+        StartCoroutine(Patrol());
+    }                
+    IEnumerator ResetInteraction() {
+        yield return new WaitForSeconds(Random.Range(6, 12));
+        canInteractAgain = true;
+    }
+
+    private void CheckRemainingDistance() {
+        Vector3 distance = transform.position - patrolDestination;
+        if (distance.magnitude <= 2) {
+            hasArrived = true;
+        }else {
+            hasArrived = false;
+        }
+        Debug.Log(distance.magnitude);
+    }
+
+    IEnumerator Patrol() {
+        StartCoroutine(ImStuckStepBro(patrolDestination));
+        if(hasArrived)    
+            npcAgent.SetDestination(ReturnARandomPoint(transform.position));
+        yield return new WaitForSeconds(3);
+        StartCoroutine(Patrol());
+    }
+
+    IEnumerator ImStuckStepBro(Vector3 basePosition) {
+        Vector3 pos = basePosition;
+        yield return new WaitForSeconds(10);
+        if(pos == patrolDestination) {
+            npcAgent.SetDestination(ReturnARandomPoint(transform.position));
+        }
+    }
+    private Vector3 ReturnARandomPoint(Vector3 referentialPoint) {
+      Vector3 point;  
+      point = referentialPoint + Random.insideUnitSphere * 10;
+      point.y += 3;
+      if(Physics.Raycast(point, Vector3.down, out RaycastHit hit, 20)) {
+        point = hit.point;
+      }
+      patrolDestination = point;
+      return point;
     }
 }
 [Serializable]
 public class DialogueDatabase{
     public List<Dialogue> randomDialogues = new List<Dialogue>();
 }
-
 [Serializable]
 public class NPCReferenceData :  PropertyAttribute
 {
@@ -188,12 +261,11 @@ public class NPCReferenceData :  PropertyAttribute
     [Header("Referência do NPC em cena")]
     public TextMeshProUGUI npcText;
     public GameObject talkBox;
+    public GameObject questIcon;
     public Button nextButton;
     public Button acceptButton;
     public Button refuseButton;
     public Button finishButton;
-    [Header("Prefabs Utilizados")]
-    public GameObject HasQuestIcon;
 }
 #if UNITY_EDITOR
 [CustomEditor(typeof(NPC))]
@@ -203,8 +275,7 @@ public class NPCEditor : Editor
     public SerializedProperty npcReference;
     public SerializedProperty npcStates;
     
-    void OnEnable()
-    {
+    void OnEnable() {
         questArray = serializedObject.FindProperty("questToGive");
         npcReference = serializedObject.FindProperty("npcReference");
         npcStates = serializedObject.FindProperty("npcStates");
@@ -229,6 +300,8 @@ public class NPCEditor : Editor
                 break;
             case NPC.NPCtYPE.CanPatrol:
                 myTarget.npcAgent = (NavMeshAgent)EditorGUILayout.ObjectField("Enemy Agent", myTarget.npcAgent, typeof(NavMeshAgent), true);
+                myTarget.patrolDestination = EditorGUILayout.Vector3Field("Patrol Destination", myTarget.patrolDestination);
+                myTarget.hasArrived = EditorGUILayout.Toggle("Has Arrived", myTarget.hasArrived);
                 break;
         }
         EditorGUILayout.PropertyField(dialogueDatabase, true);
@@ -237,7 +310,6 @@ public class NPCEditor : Editor
         if (myTarget.hasQuest) { 
             EditorGUILayout.PropertyField(serializedObject.FindProperty("questToGive"), true);   
         }
-        myTarget.isWriting = EditorGUILayout.Toggle("Is Writing", myTarget.isWriting);
         myTarget.currentDialogueIndex = EditorGUILayout.IntField("Current Dialogue Index", myTarget.currentDialogueIndex);
         myTarget.currentQuest = EditorGUILayout.TextField("Current Quest", myTarget.currentQuest);
         myTarget.atualQuestIndex = EditorGUILayout.IntField("Atual Quest Index", myTarget.atualQuestIndex);
