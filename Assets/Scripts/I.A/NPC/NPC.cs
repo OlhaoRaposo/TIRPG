@@ -26,7 +26,7 @@ public class NPC : MonoBehaviour
     public Vector3 patrolDestination;
     public bool hasArrived;
     private Coroutine patrol;
-    private bool canInteractAgain;
+    public bool canInteractAgain;
     
     //TextArea
     [Header("Referencias do NPC")]
@@ -52,7 +52,8 @@ public class NPC : MonoBehaviour
             npcReference.perfilImage.sprite = npcReference.perfilSprite;
         }
         npcReference.talkBox.SetActive(false);
-        HandleQuestIcon();
+        if(hasQuest)
+            HandleQuestIcon();
     }
     public void Interact() {
         if (npcType == NPCtYPE.CanPatrol) { StopNpc(); }
@@ -173,7 +174,7 @@ public class NPC : MonoBehaviour
     }
     private void Update() {
         CheckRemainingDistance();
-        HandleNpcInteraction();
+        //HandleNpcInteraction();
     }
     private void HandleNpcInteraction() {
         if (canInteractWithOtherNPC) {
@@ -212,7 +213,7 @@ public class NPC : MonoBehaviour
 
     private void CheckRemainingDistance() {
         Vector3 distance = transform.position - patrolDestination;
-        if (distance.magnitude <= 2) {
+        if (distance.magnitude <= 4) {
             hasArrived = true;
         }else {
             hasArrived = false;
@@ -224,6 +225,7 @@ public class NPC : MonoBehaviour
         StartCoroutine(ImStuckStepBro(patrolDestination));
         if(hasArrived)    
             npcAgent.SetDestination(ReturnARandomPoint(transform.position));
+        Debug.Log("Patroling");
         yield return new WaitForSeconds(3);
         StartCoroutine(Patrol());
     }
@@ -237,7 +239,7 @@ public class NPC : MonoBehaviour
     }
     private Vector3 ReturnARandomPoint(Vector3 referentialPoint) {
       Vector3 point;  
-      point = referentialPoint + Random.insideUnitSphere * 10;
+      point = referentialPoint + Random.insideUnitSphere * 12;
       point.y += 3;
       if(Physics.Raycast(point, Vector3.down, out RaycastHit hit, 20)) {
         point = hit.point;
@@ -294,6 +296,10 @@ public class NPCEditor : Editor
         myTarget.currentDialogueIndex = EditorGUILayout.IntField("Current Dialogue Index", myTarget.currentDialogueIndex);
         myTarget.talkBox = (GameObject)EditorGUILayout.ObjectField("Talk Box", myTarget.talkBox, typeof(GameObject), true);
         EditorGUILayout.Space();
+        myTarget.canInteractWithOtherNPC = EditorGUILayout.Toggle("Can Interact With Other NPC", myTarget.canInteractWithOtherNPC);
+        if (myTarget.canInteractWithOtherNPC) {
+            myTarget.canInteractAgain = EditorGUILayout.Toggle("Can Interact Again", myTarget.canInteractAgain);
+        }
         myTarget.npcType = (NPC.NPCtYPE)EditorGUILayout.EnumPopup("NPC Type", myTarget.npcType);
         switch (myTarget.npcType) {
             case NPC.NPCtYPE.Static:
