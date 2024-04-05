@@ -213,7 +213,7 @@ public class NPC : MonoBehaviour
 
     private void CheckRemainingDistance() {
         Vector3 distance = transform.position - patrolDestination;
-        if (distance.magnitude <= 4) {
+        if (distance.magnitude <= 3) {
             hasArrived = true;
         }else {
             hasArrived = false;

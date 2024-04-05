@@ -82,11 +82,11 @@ public class WorldController : MonoBehaviour
     }
     private void UpdateTimeOfDay() {
         currentHour = currentHour.AddSeconds(Time.deltaTime * timeMultiplier);
-        if (currentHour.Hour >= 18.5) {
+        if (currentHour.Hour == 18) {
             foreach (var light in lightsObjects) {
                 light.SetActive(true);
             }
-        }else {
+        }else if (currentHour.Hour >= 6 && currentHour.Hour <= 17) {
             foreach (var light in lightsObjects) {
                 light.SetActive(false);
             }
@@ -122,12 +122,12 @@ public class WorldController : MonoBehaviour
         sunLight.moonLight.intensity = Mathf.Lerp(sunLight.maxMoonLightIntesity, 0, sunLight.lightAnimation.lightChangeCurve.Evaluate(dotProduct));
         RenderSettings.ambientLight = Color.Lerp(sunLight.lightAnimation.nightAmbientLight, sunLight.lightAnimation.dayAmbientLight, sunLight.lightAnimation.lightChangeCurve.Evaluate(dotProduct));
         //changes the ambient intensity to the min in start hour and max in mid sunset hour
-        RenderSettings.ambientIntensity = Mathf.Lerp(1, 2.74f, sunLight.lightAnimation.lightChangeCurve.Evaluate(dotProduct));
-        //changes the fog density to the min in start hour and max in mid sunset hour
-        RenderSettings.fogDensity = Mathf.Lerp(0.01f, 0.05f, sunLight.lightAnimation.lightChangeCurve.Evaluate(dotProduct));
+        RenderSettings.ambientIntensity = Mathf.Lerp(.32f, 2.74f, sunLight.lightAnimation.lightChangeCurve.Evaluate(dotProduct));
         //lerp the volume of the day post processing to night post proccessing between day and night
-        dayPostProcessing.weight = Mathf.Lerp(1, 0, sunLight.lightAnimation.lightChangeCurve.Evaluate(dotProduct));
-        nightPostProcessing.weight = Mathf.Lerp(0, 1, sunLight.lightAnimation.lightChangeCurve.Evaluate(dotProduct));
+        if(dayPostProcessing !=null)
+            dayPostProcessing.weight = Mathf.Lerp(1, 0, sunLight.lightAnimation.lightChangeCurve.Evaluate(dotProduct));
+        if(nightPostProcessing !=null)
+            nightPostProcessing.weight = Mathf.Lerp(0, 1, sunLight.lightAnimation.lightChangeCurve.Evaluate(dotProduct));
     }
     private TimeSpan CalculateTimeDiference(TimeSpan fromTime, TimeSpan toTime)
     {
