@@ -66,27 +66,6 @@ public class Fishing : MonoBehaviour
                 }
             }
         }
-
-        /*if(Input.GetMouseButtonDown(0))
-        {
-            pescando = true;
-
-            PosicaoMouse = Input.mousePosition;
-
-            if (Vector3.Distance(pontoDeArraste, PosicaoMouse) < 1)
-            {
-                timePesca += Time.deltaTime;
-
-                if(timePesca >= 3f)
-                {
-                    Pescou();
-                }
-            }
-            else
-            {
-                timePesca = 0;
-            }
-        }*/
     }
 
     void Arraste()
