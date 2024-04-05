@@ -8,6 +8,7 @@ public class PlayerProjectile : MonoBehaviour
     [SerializeField] private float fallOffRange;
     [SerializeField] private float travelSpeed;
     [SerializeField] private float lifeTime;
+    [SerializeField] private DamageElementManager.DamageElement bulletElement = DamageElementManager.DamageElement.Physical;
 
     private Vector3 startPos;
 
@@ -40,7 +41,7 @@ public class PlayerProjectile : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Enemy"))
         {
-            other.gameObject.SendMessage("TakeDamage", damage);
+            other.gameObject.GetComponent<EnemyBehaviour>().TakeDamage(damage, bulletElement);
             Hitmark.instance.ToggleHitmark();
         }
         Destroy(gameObject);
