@@ -8,22 +8,24 @@ public class PlayerStats : MonoBehaviour
 
     [SerializeField] CharacterAttributeData startAttributeData;
 
-    [Header("Levelup formula variables (levelUpXp = ax� + bx + c)")]
-    [SerializeField] float a;
-    [SerializeField] float b;
-    [SerializeField] float c;
-
+    [SerializeField] int maxLevel = 10;
     int level = 0;
 
+    [SerializeField] LevelUpData levelupData;
+
+    [SerializeField] int maxXpRequirement = 10000;
+    int actualMaxXpRequirement;
+
+    bool canGetXp = true;
     int currentXp = 0;
     int levelupXp = 0;
 
     float xpMultiplier = 1f;
 
-   public int strength;
-   public int dexterity;
-   public int endurance;
-   public int intelligence;
+    public int strength;
+    public int agility;
+    public int endurance;
+    public int intelligence;
 
     float meleeDamageMultiplier = 1f;
     float meleeAttackSpeedMultiplier = 1f;
@@ -31,12 +33,20 @@ public class PlayerStats : MonoBehaviour
     int pointsAddedWhenLevelUp = 5;
     int availablePoints = 0;
 
+    [SerializeField] List<SkillData> skills = new List<SkillData>();
+    /*List<Skill> rangedSkills = new List<Skill>();
+    List<Skill> meleeSkills = new List<Skill>();
+    List<Skill> passiveSkills = new List<Skill>();
+    List<Skill> grenadeSkills = new List<Skill>();
+    List<Skill> otherSkills = new List<Skill>();*/
+
     void Awake()
     {
         instance = this;
     }
     void Start()
     {
+        actualMaxXpRequirement = maxXpRequirement / 2;
         SetStartAttributes();
         LevelUp();
     }
@@ -44,25 +54,36 @@ public class PlayerStats : MonoBehaviour
     {
         CharacterAttributeData startData = startAttributeData;
         strength = startData.strength;
-        dexterity = startData.dexterity;
+        agility = startData.agility;
         endurance = startData.endurance;
         intelligence = startData.intelligence;
     }
+
+
     public void GainXp(int xp)
     {
-        currentXp += (int)(xp * xpMultiplier);
-        UIManager.instance.UpdateXpStats(currentXp, levelupXp);
+        if (!canGetXp) return;
 
+        currentXp += (int)(xp * xpMultiplier);
         if (currentXp >= levelupXp)
         {
-            LevelUp();
+            if (level < maxLevel)
+            {
+                LevelUp();
+            }
+            else
+            {
+                currentXp = levelupXp;
+                UIManager.instance.UpdateXpStats(currentXp, levelupXp);
+                canGetXp = false;
+            }
         }
         else
         {
             UIManager.instance?.UpdateXpStats(currentXp, levelupXp);
         }
     }
-    [ContextMenu("Level up")]
+    [ContextMenu("(Testing only) Level up")]
     public void LevelUp()
     {
         currentXp = 0;
@@ -71,16 +92,70 @@ public class PlayerStats : MonoBehaviour
         availablePoints += pointsAddedWhenLevelUp;
         UIManager.instance.UpdateAvailablePoints(availablePoints);
         UIManager.instance.UpdateHUDLevel(level);
-        SetLevelUpXp(level);
+        
+        levelupXp = GetLevelUpXp();
+
+        //Debug.Log(levelupXp);
+
+        UIManager.instance?.UpdateXpStats(currentXp, levelupXp);
     }
-    public void SetLevelUpXp(int nextLevel)
+    [ContextMenu("Set levelup values")]
+    public void SetLevelUpValues()
     {
-        //Funcao que calcula xp necessario para upar de nivel
-        levelupXp = (int)Mathf.Floor(a * (nextLevel ^ 3) + b * nextLevel + c);
+        levelupData.Clear();
+        for (int i = 0; i < maxLevel; i++)
+        {
+            LevelUp();
+            levelupData.AddLevelUpXp(levelupXp);
+        }
+    }
+    [ContextMenu("(Testing only) Get more points")]
+    public void GainPoints()
+    {
+        availablePoints += 10;
+        UIManager.instance.UpdateAvailablePoints(availablePoints);
+    }
+
+
+    //Funcao que calcula xp necessario para upar de nivel
+    public void SetLevelUpXp()
+    {
+        float cosAngle = level * (/*180*/Mathf.PI / maxLevel);
+
+        float cosMultiplier = 1f;
+        /*if (cosAngle > (Mathf.Deg2Rad * 45) && cosAngle < (Mathf.Deg2Rad * 135))
+        {
+            Debug.Log(level);
+            *//*Debug.Log(cosAngle);
+            Debug.Log(cosAngle - Mathf.Deg2Rad * 45);
+            Debug.Log(Mathf.Deg2Rad * 90);
+            Debug.Log((cosAngle - Mathf.Deg2Rad * 45) / (Mathf.Deg2Rad * 90));*//*
+
+            //cosMultiplier = 1 - Mathf.Lerp(-0.25f, 0.25f, (cosAngle - Mathf.Deg2Rad * 45) / (Mathf.Deg2Rad * 90));
+            //cosMultiplier = 1 - Mathf.PingPong((cosAngle - Mathf.Deg2Rad * 45) / (Mathf.Deg2Rad * 90), .25f);
+        }*/
+
+        cosMultiplier = 1 - Mathf.PingPong(cosAngle / Mathf.PI, .25f);
+        //Debug.Log(cosMultiplier);
+
+        levelupXp = (int)(((-Mathf.Cos(cosAngle) * actualMaxXpRequirement) + actualMaxXpRequirement) * cosMultiplier);
 
         //Update UI
         UIManager.instance?.UpdateXpStats(currentXp, levelupXp);
     }
+    public int GetLevelUpXp()
+    {
+        if (levelupData.xpPerLevel.Count == 0) SetLevelUpValues();
+
+        return levelupData.xpPerLevel[level - 1];
+    }
+
+    public void AddSkill(SkillData skillData)
+    {
+        skills.Add(skillData);
+        DecreasePoints(skillData.skillPointsRequired);
+    }
+
     public void IncreaseStrength()
     {
         if (!DecreasePoints()) return;
@@ -92,7 +167,7 @@ public class PlayerStats : MonoBehaviour
         UIManager.instance.UpdateAvailablePoints(availablePoints);
         UIManager.instance.UpdateStrength(strength);
     }
-    public void IncreaseDexterity()
+    public void IncreaseAgility() //NECESSARIO ATUALIZAR
     {
         if (!DecreasePoints()) return;
 
@@ -101,9 +176,9 @@ public class PlayerStats : MonoBehaviour
         //Aumenta a velocidade de ataques melee
         IncreaseMeleeAttackSpeedMultiplier();
 
-        dexterity++;
+        agility++;
         UIManager.instance.UpdateAvailablePoints(availablePoints);
-        UIManager.instance.UpdateDexterity(dexterity);
+        UIManager.instance.UpdateAgility(agility);
     }
     public void IncreaseEndurance()
     {
@@ -139,6 +214,18 @@ public class PlayerStats : MonoBehaviour
         availablePoints--;
         return true;
     }
+    bool DecreasePoints(uint points)
+    {
+        if (availablePoints < points) return false;
+
+        availablePoints -= (int)points;
+        return true;
+    }
+    public int GetAvailablePoints()
+    {
+        return availablePoints;
+    }
+
     void IncreaseXpMultiplier()
     {
         xpMultiplier += .1f;
@@ -147,7 +234,7 @@ public class PlayerStats : MonoBehaviour
     {
         meleeDamageMultiplier += .1f;
     }
-    void IncreaseMeleeAttackSpeedMultiplier()
+    void IncreaseMeleeAttackSpeedMultiplier() //NECESSARIO ATUALIZAR
     {
         meleeAttackSpeedMultiplier += .1f;
     }
@@ -156,6 +243,7 @@ public class PlayerStats : MonoBehaviour
         //Diminuir distancia de espalhamento
         //Diminuir chance de espalhamento
     }
+
     public float GetMeleeDamageMultiplier()
     {
         return meleeDamageMultiplier;
@@ -164,9 +252,9 @@ public class PlayerStats : MonoBehaviour
     {
         return strength;
     }
-    public int GetDexterity()
+    public int GetAgility()
     {
-        return dexterity;
+        return agility;
     }
     public int GetEndurance()
     {
