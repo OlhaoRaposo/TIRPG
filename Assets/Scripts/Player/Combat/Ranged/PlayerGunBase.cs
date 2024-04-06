@@ -12,4 +12,5 @@ public class PlayerGunBase : ScriptableObject
     public float missfireRadius;
     public float recoil;
     public GameObject projectile;
+    public GameObject effect;
 }

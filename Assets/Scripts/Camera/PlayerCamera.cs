@@ -76,7 +76,7 @@ public class PlayerCamera : MonoBehaviour
     {
         Aim();
         SetCameraZoom();
-        //CursorLockControl();
+        CursorLockControl();
     }
 
     public void LockCamera(bool lockCamera)

@@ -60,15 +60,15 @@ public class EnemyBehaviour : MonoBehaviour
         DettectPlayerOrAudioNearby();
         SyncronizeMovement();
     }
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, DamageElementManager.DamageElement damageElement)
     {
         float actualDamage;
         actualDamage = 1;
         Image lifeBar = EnemyCanvas.transform.Find("LifeBar").transform.Find("LifeBarFill").GetComponent<Image>();
         life -= Mathf.Round((actualDamage * damage));
         lifeBar.fillAmount = life / lifeMax;
-        GameObject damageObj = Instantiate(damageCanvas, transform.position + new Vector3(-2, 2.8f,0) , transform.rotation, transform);
-        damageObj.transform.GetChild(0).GetComponent<Text>().text = Mathf.Round((actualDamage * damage)).ToString();
+
+        DamageElementManager.instance.ApplyDamageEffect(this, damageElement, Mathf.Round((actualDamage * damage)));
 
         if (enemyTarget == null) {
             if (!isAttacking) {
@@ -86,6 +86,33 @@ public class EnemyBehaviour : MonoBehaviour
                 myNavMeshAgent.enemyAnimator.SetTrigger("Die");
             }
         }
+    }
+
+    public void InflictDirectDamage(float damage)
+    {
+        float actualDamage;
+        actualDamage = 1;
+        Image lifeBar = EnemyCanvas.transform.Find("LifeBar").transform.Find("LifeBarFill").GetComponent<Image>();
+        life -= Mathf.Round((actualDamage * damage));
+        lifeBar.fillAmount = life / lifeMax;
+
+        if (life <= 0)
+        {
+            if (myNavMeshAgent.enemyAnimator.GetBool("isAlive"))
+            {
+                myNavMeshAgent.enemyAnimator.SetBool("isAlive",false);
+                myNavMeshAgent.enemyAnimator.SetTrigger("Die");
+            }
+        }
+    }
+
+    public void InstantiateText(float totalDamage, Color textColor)
+    {
+        GameObject damageObj = Instantiate(damageCanvas, transform.position + new Vector3(-2, 2.8f,0) , transform.rotation, transform);
+        Text damageTxt = damageObj.transform.GetChild(0).GetComponent<Text>();
+
+        damageTxt.text = Mathf.Round((totalDamage)).ToString();
+        damageTxt.color = textColor;
     }
     private void SyncronizeMovement()
     {
