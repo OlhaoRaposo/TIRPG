@@ -174,43 +174,45 @@ public class NPC : MonoBehaviour
     }
     private void Update() {
         CheckRemainingDistance();
-        //HandleNpcInteraction();
+        HandleNpcInteraction();
     }
     private void HandleNpcInteraction() {
+        npcReference.interactIcon.SetActive(currentState == CurrentState.Interacting);
         if (canInteractWithOtherNPC) {
             Collider[] objects;
-            objects = Physics.OverlapSphere(transform.position, 10);
+            objects = Physics.OverlapSphere(transform.position, 2);
             foreach (var detections in objects) {
                 if (detections.TryGetComponent(out NPC npc)) {
-                    if (npc.canInteractAgain) {
-                        canInteractAgain = false;                     
-                        StopCoroutine(patrol);                        
-                        StopNpc();                                    
-                        currentState = CurrentState.Interacting;      
-                        StartCoroutine(BackToPatrol());               
-                        StartCoroutine(ResetInteraction());           
-                                              
-                        npc.canInteractAgain = false;                 
-                        npc.StopCoroutine(npc.patrol);                
-                        npc.StopNpc();                                
-                        npc.currentState = CurrentState.Interacting;  
-                        npc.StartCoroutine(BackToPatrol());           
-                        npc.StartCoroutine(ResetInteraction());       
+                    if (npc != this) {
+                        if (canInteractAgain && npc.canInteractAgain) {
+                            if (currentState == CurrentState.Idle && npc.currentState == CurrentState.Idle) {
+                                InteractWithNpc(npc.gameObject.transform);
+                                npc.InteractWithNpc(gameObject.transform);
+                            }
+                        }
                     }
                 }
             }
         }                
     }
-
-    IEnumerator BackToPatrol() {
-        yield return new WaitForSeconds(Random.Range(5, 8));
-        StartCoroutine(Patrol());
-    }                
-    IEnumerator ResetInteraction() {
-        yield return new WaitForSeconds(Random.Range(6, 12));
-        canInteractAgain = true;
+    private void InteractWithNpc(Transform npcTransform) {
+        transform.LookAt(npcTransform);
+        npcAgent.SetDestination(npcTransform.position);
+        canInteractAgain = false;
+        StopCoroutine(patrol);
+        StopNpc();
+        currentState = CurrentState.Interacting;
+        StartCoroutine(ResetInteraction());
     }
-
+    IEnumerator ResetInteraction() {
+        yield return new WaitForSeconds(8);
+        npcAgent.isStopped = false;
+        StartCoroutine(Patrol());
+        currentState = CurrentState.Idle;
+        yield return new WaitForSeconds(Random.Range(8,10));
+        canInteractAgain = true;
+        Debug.Log("Reseted npc" + gameObject.name);
+    }
     private void CheckRemainingDistance() {
         Vector3 distance = transform.position - patrolDestination;
         if (distance.magnitude <= 3) {
@@ -218,9 +220,7 @@ public class NPC : MonoBehaviour
         }else {
             hasArrived = false;
         }
-        Debug.Log(distance.magnitude);
     }
-
     IEnumerator Patrol() {
         StartCoroutine(ImStuckStepBro(patrolDestination));
         if(hasArrived)    
@@ -229,7 +229,6 @@ public class NPC : MonoBehaviour
         yield return new WaitForSeconds(3);
         StartCoroutine(Patrol());
     }
-
     IEnumerator ImStuckStepBro(Vector3 basePosition) {
         Vector3 pos = basePosition;
         yield return new WaitForSeconds(10);
@@ -264,6 +263,7 @@ public class NPCReferenceData :  PropertyAttribute
     public TextMeshProUGUI npcText;
     public GameObject talkBox;
     public GameObject questIcon;
+    public GameObject interactIcon;
     public Button nextButton;
     public Button acceptButton;
     public Button refuseButton;
