@@ -115,19 +115,19 @@ public class UIManager : MonoBehaviour
     }
     public void UpdateStrength(int strength)
     {
-        strengthText.text = "Strength: " + strength.ToString();
+        strengthText.text = strength.ToString();
     }
     public void UpdateAgility(int agility)
     {
-        agilityText.text = "Agility: " + agility.ToString();
+        agilityText.text = agility.ToString();
     }
     public void UpdateEndurance(int endurance)
     {
-        enduranceText.text = "Endurance: " + endurance.ToString();
+        enduranceText.text = endurance.ToString();
     }
     public void UpdateIntelligence(int intelligence)
     {
-        intelligenceText.text = "Intelligence: " + intelligence.ToString();
+        intelligenceText.text = intelligence.ToString();
     }
     public void UpdateAllAttributes()
     {
@@ -292,7 +292,7 @@ public class UIManager : MonoBehaviour
 
         skillName.text = skill.GetData()._name;
         skillIcon.sprite = skill.GetData().icon;
-        skillPointsRequirement.text = $"Points required:\n{PlayerStats.instance?.GetAvailablePoints()}/{skill.GetData().skillPointsRequired}";
+        UpdatePointsText();
         skillDescription.text = skill.GetData().description;
         FillAttributeRequirementsText(skill.GetData());
 
@@ -327,6 +327,10 @@ public class UIManager : MonoBehaviour
                     break;
             }
         }
+    }
+    public void UpdatePointsText()
+    {
+        skillPointsRequirement.text = $"Points required:\n{PlayerStats.instance?.GetAvailablePoints()}/{selectedSkill.GetData().skillPointsRequired}";
     }
     public void CallGetSkill()
     {

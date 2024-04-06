@@ -37,6 +37,8 @@ public class Skill: MonoBehaviour
 
         //Desabilita o botao de adquirir a skill
         UIManager.instance?.DisableGetSkillButton();
+
+        UIManager.instance.UpdatePointsText();
     }
     public bool CanUnlockSkill()
     {
