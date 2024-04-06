@@ -36850,6 +36850,62 @@ Transform:
   - {fileID: 823460413}
   m_Father: {fileID: 487572618}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &604225481
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 604225483}
+  - component: {fileID: 604225482}
+  m_Layer: 0
+  m_Name: DamageElementManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &604225482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 604225481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 914aa079266c4094d99d36bedef6342e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enhanceDamageAdd: 5
+  enhanceDamageMultiplyLimit: 30
+  enhanceCooldown: 1
+  enhanceDuration: 5
+  dotTicks: 3
+  dotTickTime: 1
+  damageDecay: 50
+  stunChance: 10
+  stunDuration: 1
+  stunCooldown: 3
+  criticalChance: 20
+  criticalMultiplier: 2
+--- !u!4 &604225483
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 604225481}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &604972008
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -79913,7 +79969,7 @@ PrefabInstance:
     - target: {fileID: 5429378951918882904, guid: b3839721f89ffea40aa0163cedac67f6,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6434159294552469811, guid: b3839721f89ffea40aa0163cedac67f6,
         type: 3}
@@ -130374,6 +130430,7 @@ SceneRoots:
   - {fileID: 1499168655}
   - {fileID: 2099737912}
   - {fileID: 1161323864}
+  - {fileID: 604225483}
   - {fileID: 477790534}
   - {fileID: 1307479123}
   - {fileID: 1868229237}
