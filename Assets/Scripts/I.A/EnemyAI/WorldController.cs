@@ -30,7 +30,7 @@ public class WorldController : MonoBehaviour
     private SunLight sunLight;
     private List<GameObject> lightsObjects = new List<GameObject>();
     private Volume dayPostProcessing, nightPostProcessing;
-    
+
     private void Start()
     {
         if (worldController == null) {
@@ -49,6 +49,8 @@ public class WorldController : MonoBehaviour
         brain.enabled = false;
         Camera.main.gameObject.transform.localPosition = new Vector3(-.5f, 0f,-5);
         Camera.main.gameObject.transform.localRotation = Quaternion.Euler(10.7f, -5, 0);
+        PlayerCamera.instance.ToggleAimLock(false);
+        PlayerCamera.instance.ToggleAimLock(false);
         PlayerCamera.instance.ToggleAimLock(false);
         InitiateTime();
     }
