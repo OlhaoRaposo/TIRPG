@@ -23,7 +23,7 @@ RenderSettings:
   m_AmbientSkyColor: {r: 0.064845845, g: 0.06363474, b: 0.09433961, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 1
+  m_AmbientIntensity: 1.4
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.3270737, g: 0.46527034, b: 0.4716981, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: d682741ce75533d45ae2d34348a83dac, type: 2}
@@ -78772,12 +78772,12 @@ MonoBehaviour:
   spawnWasCreated: 0
   isGameStarted: 0
   blend: 0
-  timeMultiplier: 2000
+  timeMultiplier: 80
   timeText: {fileID: 1074689015}
   sunLight:
     sunLight: {fileID: 1252311492}
-    maxSunLightIntesity: 1
-    sunriseHour: 5
+    maxSunLightIntesity: 2
+    sunriseHour: 6
     sunsetHour: 20
     moonLight: {fileID: 579781321}
     maxMoonLightIntesity: 0.2
@@ -78793,15 +78793,24 @@ MonoBehaviour:
           tangentMode: 34
           weightedMode: 0
           inWeight: 0
-          outWeight: 0
+          outWeight: 0.33333334
         - serializedVersion: 3
           time: 1
           value: 1
-          inSlope: 1
-          outSlope: 1
+          inSlope: -0.0016016364
+          outSlope: -0.0016016364
           tangentMode: 34
           weightedMode: 0
-          inWeight: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 1.9844698
+          value: 0.012376649
+          inSlope: -1.0032033
+          outSlope: -1.0032033
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0.33333334
           outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
