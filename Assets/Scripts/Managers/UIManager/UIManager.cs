@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
@@ -13,7 +14,16 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject questsPanel;
     [SerializeField] GameObject optionsPanel;
     [SerializeField] GameObject shopPanel;
+
     [SerializeField] GameObject skillTreePanel;
+    RectTransform skillTreeTransform;
+
+    /*
+    [SerializeField] GameObject strengthSkillTreePanel;
+    [SerializeField] GameObject enduranceSkillTreePanel;
+    [SerializeField] GameObject agilitySkillTreePanel;
+    [SerializeField] GameObject intelligenceSkillTreePanel;
+    */
 
     [SerializeField] Text merchantInventoryLabel;
     [SerializeField] Text shopInfluenceInfo;
@@ -41,6 +51,12 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] Text healthPointsText;
     [SerializeField] Text staminaPointsText;
+    [SerializeField] Text attributeDescription;
+
+    [SerializeField] string strengthDescription;
+    [SerializeField] string enduranceDescription;
+    [SerializeField] string agilityDescription;
+    [SerializeField] string intelligenceDescription;
 
     [SerializeField] Text ammoText;
 
@@ -55,18 +71,25 @@ public class UIManager : MonoBehaviour
     [SerializeField] Button getSkillButton;
     Skill selectedSkill;
 
+    string selectedAttribute = "";
+
+    bool isInSkillTree = false;
     bool isInMenus = false;
     bool cursorState = true;
     void Awake()
     {
         instance = this;
     }
-    /*void Start()
+    void Start()
     {
+        /*
         //As pr�ximas linhas servem somente para inicializar os slots do invent�rio (vou tirar isso dps)
         ToggleInGameMenus();
         Invoke("ToggleInGameMenus", .1f);
-    }*/
+        */
+
+        skillTreeTransform = skillTreePanel.transform.Find("Skills").GetComponent<RectTransform>();
+    }
     void Update()
     {
         if (currentMerchant != null)
@@ -76,6 +99,8 @@ public class UIManager : MonoBehaviour
                 ToggleShopPanel();
             }
         }
+
+        //Debug.Log(EventSystem.current.currentSelectedGameObject.name);
     }
     public ShopSlot[] GetShopSlotsBuy()
     {
@@ -138,6 +163,18 @@ public class UIManager : MonoBehaviour
     public void UpdateAvailablePoints(int points)
     {
         availablePointsText.text = points.ToString();
+    }
+    public void UpdateAttributeDescription()
+    {
+        switch (selectedAttribute)
+        {
+            default: Debug.LogError("Invalid selected attribute (string)"); break;
+
+            case "strength": attributeDescription.text = strengthDescription; break;
+            case "endurance": attributeDescription.text = enduranceDescription; break;
+            case "agility": attributeDescription.text = agilityDescription; break;
+            case "intelligence": attributeDescription.text = intelligenceDescription; break;
+        }
     }
     public void ShowTextFeedback(string s)
     {
@@ -278,13 +315,43 @@ public class UIManager : MonoBehaviour
     {
         return currentMerchant;
     }
+    public void SelectAttribute(string attribute)
+    {
+        selectedAttribute = attribute;
+
+        UpdateAttributeDescription();
+    }
     public void ToggleSkillTreePanel()
     {
         selectedSkill = null;
-
-        DisableAllPanels();
         DisableSelectedSkillPanel();
+
         skillTreePanel.SetActive(!skillTreePanel.activeSelf);
+        ReseetSkillTreePosition();
+        /*
+        switch (selectedAttribute)
+        {
+            default: Debug.LogError("Invalid selected attribute (string)"); return;
+
+            case "strength": strengthSkillTreePanel.SetActive(!strengthSkillTreePanel.activeSelf); break;
+            case "endurance": enduranceSkillTreePanel.SetActive(!enduranceSkillTreePanel.activeSelf); break;
+            case "agility": agilitySkillTreePanel.SetActive(!agilitySkillTreePanel.activeSelf); break;
+            case "intelligence": intelligenceSkillTreePanel.SetActive(!intelligenceSkillTreePanel.activeSelf); break;
+        }
+        */
+
+        statsPanel.SetActive(!statsPanel.activeSelf);
+
+        isInSkillTree = !isInSkillTree;
+        SkillTree.instance.GetDragClass().SetSkillTreeState(isInSkillTree);
+    }
+    void ReseetSkillTreePosition()
+    {
+        skillTreeTransform.localPosition = Vector3.zero;
+    }
+    public void SetSkillTreePosition(Vector3 newPos)
+    {
+        skillTreeTransform.position += newPos;
     }
     public void DisableSelectedSkillPanel()
     {

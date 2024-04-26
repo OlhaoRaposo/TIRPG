@@ -5,12 +5,17 @@ using UnityEngine;
 public class SkillTree : MonoBehaviour
 {
     public static SkillTree instance;
+    SkillTreeDragMove dragClass;
 
     [SerializeField] List<Skill> skills;
 
     private void Awake()
     {
         instance = this;
+    }
+    private void Start()
+    {
+        dragClass = GetComponent<SkillTreeDragMove>();
     }
     public Skill GetSkillByData(SkillData data)
     {
@@ -38,5 +43,9 @@ public class SkillTree : MonoBehaviour
         }
 
         return skills;
+    }
+    public SkillTreeDragMove GetDragClass()
+    {
+        return dragClass;
     }
 }
