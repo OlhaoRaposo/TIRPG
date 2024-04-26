@@ -1,40 +1,53 @@
 using UnityEngine;
 
-public class PlayerControllerTester : MonoBehaviour
+public class CameraControllerTester : MonoBehaviour
 {
-    public float moveSpeed = 5.0f;
-    public float jumpForce = 8.0f;
+    public Transform playerCamera;
+    public float moveSpeed = 5f;
+    public float sprintSpeed = 10f;
+    public float rotationSpeed = 5f;
+    public float cameraRotationSpeed = 2f;
+    public float jumpForce = 5f;
     public float gravity = -9.81f;
+    public CharacterController controller;
 
-    private CharacterController characterController;
-    private Vector3 velocity;
+    private Vector3 moveDirection;
+    private float yRotation = 0f;
 
-    void Awake()
+    void Start()
     {
-        characterController = GetComponent<CharacterController>();
+        Cursor.lockState = CursorLockMode.Locked;
+        controller = GetComponent<CharacterController>();
     }
 
     void Update()
     {
-        // Movimento horizontal
+        // Movimento do jogador
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
-        Vector3 movementDirection = new Vector3(horizontalInput, 0.0f, verticalInput);
-        movementDirection = transform.TransformDirection(movementDirection);
 
-        // Pulo
-        if (Input.GetKeyDown(KeyCode.Space) && characterController.isGrounded)
+        Vector3 move = transform.right * horizontalInput + transform.forward * verticalInput;
+        float currentSpeed = Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : moveSpeed;
+        controller.Move(move * currentSpeed * Time.deltaTime);
+
+        // Rotação do jogador
+        float mouseX = Input.GetAxis("Mouse X") * rotationSpeed;
+        transform.Rotate(Vector3.up * mouseX);
+
+        // Rotação da câmera
+        float mouseY = Input.GetAxis("Mouse Y") * cameraRotationSpeed;
+        yRotation -= mouseY;
+        yRotation = Mathf.Clamp(yRotation, -90f, 90f);
+        playerCamera.transform.localRotation = Quaternion.Euler(yRotation, 0f, 0f);
+
+        // Aplicar gravidade ao jogador
+        moveDirection.y += gravity * Time.deltaTime;
+        controller.Move(moveDirection * Time.deltaTime);
+
+        // Pular
+        if (controller.isGrounded && Input.GetButtonDown("Jump"))
         {
-            velocity.y = jumpForce;
+            moveDirection.y = Mathf.Sqrt(jumpForce * -2f * gravity);
         }
-
-        // Gravidade
-        velocity.y += gravity * Time.deltaTime;
-
-        // Movimento
-        characterController.Move(movementDirection * moveSpeed * Time.deltaTime + velocity * Time.deltaTime);
-
-        // Rotacao
-        transform.Rotate(0.0f, Input.GetAxis("Mouse X") * Time.deltaTime * 100.0f, 0.0f);
     }
 }
