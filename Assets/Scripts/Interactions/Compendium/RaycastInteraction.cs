@@ -26,8 +26,12 @@ public class RaycastInteraction : MonoBehaviour
                 if (hit.distance <= 15) {
                     interactCanvas.SetActive(true);
                     if (Input.GetKeyDown(KeyCode.E)) {
-                        if(canInteract)
-                            hit.collider.gameObject.SendMessage("Interact",this.gameObject);
+                        if (canInteract) {
+                            hit.collider.gameObject.SendMessage("Interact");
+                            if (hit.collider.gameObject.TryGetComponent(out InteractDetection interact)){
+                               interact.OnInteract();
+                            }
+                        }
                         canInteract = false;
                         Debug.Log("Interacted");
                     }

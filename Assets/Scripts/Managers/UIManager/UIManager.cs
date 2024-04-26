@@ -13,6 +13,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject questsPanel;
     [SerializeField] GameObject optionsPanel;
     [SerializeField] GameObject shopPanel;
+    [SerializeField] GameObject skillTreePanel;
 
     [SerializeField] Text merchantInventoryLabel;
     [SerializeField] Text shopInfluenceInfo;
@@ -34,7 +35,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] Text lvlText_menu;
 
     [SerializeField] Text strengthText;
-    [SerializeField] Text dexterityText;
+    [SerializeField] Text agilityText;
     [SerializeField] Text enduranceText;
     [SerializeField] Text intelligenceText;
 
@@ -45,6 +46,15 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] Text availablePointsText;
 
+    [SerializeField] GameObject skillPanel;
+    [SerializeField] Image skillIcon;
+    [SerializeField] Text skillName;
+    [SerializeField] Text skillDescription;
+    [SerializeField] Text skillAttributeRequirements;
+    [SerializeField] Text skillPointsRequirement;
+    [SerializeField] Button getSkillButton;
+    Skill selectedSkill;
+
     bool isInMenus = false;
     bool cursorState = true;
     void Awake()
@@ -53,7 +63,7 @@ public class UIManager : MonoBehaviour
     }
     /*void Start()
     {
-        //As próximas linhas servem somente para inicializar os slots do inventário (vou tirar isso dps)
+        //As prï¿½ximas linhas servem somente para inicializar os slots do inventï¿½rio (vou tirar isso dps)
         ToggleInGameMenus();
         Invoke("ToggleInGameMenus", .1f);
     }*/
@@ -104,24 +114,24 @@ public class UIManager : MonoBehaviour
     }
     public void UpdateStrength(int strength)
     {
-        strengthText.text = "Strength: " + strength.ToString();
+        strengthText.text = strength.ToString();
     }
-    public void UpdateDexterity(int dexterity)
+    public void UpdateAgility(int agility)
     {
-        dexterityText.text = "Dexterity: " + dexterity.ToString();
+        agilityText.text = agility.ToString();
     }
     public void UpdateEndurance(int endurance)
     {
-        enduranceText.text = "Endurance: " + endurance.ToString();
+        enduranceText.text = endurance.ToString();
     }
     public void UpdateIntelligence(int intelligence)
     {
-        intelligenceText.text = "Intelligence: " + intelligence.ToString();
+        intelligenceText.text = intelligence.ToString();
     }
     public void UpdateAllAttributes()
     {
         UpdateStrength(PlayerStats.instance.GetStrength());
-        UpdateDexterity(PlayerStats.instance.GetDexterity());
+        UpdateAgility(PlayerStats.instance.GetAgility());
         UpdateEndurance(PlayerStats.instance.GetEndurance());
         UpdateIntelligence(PlayerStats.instance.GetIntelligence());
     }
@@ -152,6 +162,19 @@ public class UIManager : MonoBehaviour
     {
         ToggleCursorLockMode();
         isInMenus = !isInMenus;
+
+        if(isInMenus == true)
+        {
+            PlayerController.instance?.ToggleWeaponSwap(false);
+            PlayerGun.instance?.ShootToggle(false);
+            PlayerMeleeCombat.instance?.MeleeAttackToggle(false);
+        }
+        else
+        {
+            PlayerController.instance?.ToggleWeaponSwap(true);
+            PlayerGun.instance?.ShootToggle(true);
+            PlayerMeleeCombat.instance?.MeleeAttackToggle(true);
+        }
 
         if (currentMerchant == null)
         {
@@ -255,13 +278,83 @@ public class UIManager : MonoBehaviour
     {
         return currentMerchant;
     }
+    public void ToggleSkillTreePanel()
+    {
+        selectedSkill = null;
+
+        DisableAllPanels();
+        DisableSelectedSkillPanel();
+        skillTreePanel.SetActive(!skillTreePanel.activeSelf);
+    }
+    public void DisableSelectedSkillPanel()
+    {
+        skillPanel.SetActive(false);
+    }
+    public void EnableSelectedSkillPanel()
+    {
+        if (selectedSkill != null) return;
+
+        skillPanel.SetActive(true);
+    }
+    public void SelectSkill(Skill skill)
+    {
+        EnableSelectedSkillPanel();
+
+        selectedSkill = skill;
+
+        skillName.text = skill.GetData()._name;
+        skillIcon.sprite = skill.GetData().icon;
+        UpdatePointsText();
+        skillDescription.text = skill.GetData().description;
+        FillAttributeRequirementsText(skill.GetData());
+
+        getSkillButton.interactable = skill.CanUnlockSkill();
+    }
+    public void DisableGetSkillButton()
+    {
+        getSkillButton.interactable = false;
+    }
+    void FillAttributeRequirementsText(SkillData skillData)
+    {
+        skillAttributeRequirements.text = "";
+
+        foreach (SkillAttributeRequirement req in skillData.requirements)
+        {
+            switch (req.attribute)
+            {
+                case SkillAttributeRequirement.Attribute.Strength:
+                    skillAttributeRequirements.text += $"Strength: {PlayerStats.instance?.GetStrength()}/{req.amount}\n";
+                    break;
+
+                case SkillAttributeRequirement.Attribute.Agility:
+                    skillAttributeRequirements.text += $"Agility: {PlayerStats.instance?.GetAgility()}/{req.amount}\n";
+                    break;
+
+                case SkillAttributeRequirement.Attribute.Intelligence:
+                    skillAttributeRequirements.text += $"Intelligence: {PlayerStats.instance?.GetIntelligence()}/{req.amount}\n";
+                    break;
+
+                case SkillAttributeRequirement.Attribute.Endurance:
+                    skillAttributeRequirements.text += $"Endurance: {PlayerStats.instance?.GetEndurance()}/{req.amount}\n";
+                    break;
+            }
+        }
+    }
+    public void UpdatePointsText()
+    {
+        skillPointsRequirement.text = $"Points required:\n{PlayerStats.instance?.GetAvailablePoints()}/{selectedSkill.GetData().skillPointsRequired}";
+    }
+    public void CallGetSkill()
+    {
+        selectedSkill.AcquireSkill();
+    }
     public void CallIncreaseStrength()
     {
         PlayerStats.instance.IncreaseStrength();
     }
-    public void CallIncreaseDexterity()
+    public void CallIncreaseAgility()
     {
-        PlayerStats.instance.IncreaseDexterity();
+        PlayerStats.instance.IncreaseAgility();
     }
     public void CallIncreaseEndurance()
     {

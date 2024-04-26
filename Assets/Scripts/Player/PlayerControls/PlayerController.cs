@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController instance;
     [Header("Variables")]
     [SerializeField] float speed;
     [SerializeField] float runSpeed;
@@ -14,11 +15,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float stamina = 100f;
     [SerializeField] bool isRunning = false;
     [SerializeField] bool isJumping = false;
-    [SerializeField] bool isGrounded = true;
+    public bool isGrounded = true;
     [SerializeField] bool isDashing = true;
     [SerializeField] bool stealthMode = false;
+    [SerializeField] private bool canSwapWeapon = true;
     private float speedModifier;
-    private bool startedFall = true, isRanged = true;
+    private bool startedFall = true, isRanged = true, canMove = true;
 
 
     [Header("References")]
@@ -27,13 +29,18 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Animator animator;
     private Vector3 startRelativePoint;
 
+    void Awake()
+    {
+        instance = this;
+    }
+
     void Update()
     {
         StaminaRegen();
         GroundCheck();
 
         Move();
-        //ToggleFightStyle();
+        SwapWeapon();
     }
 
     private void StaminaRegen()
@@ -78,156 +85,199 @@ public class PlayerController : MonoBehaviour
 
     private void Move()
     {
-        float x = Input.GetAxis("Horizontal");
-        float y = Input.GetAxis("Vertical");
-
-        //Movement
-        if (x != 0 || y != 0)
+        if (canMove == true)
         {
-            //Run
-            if (Input.GetKey(InputController.instance.run) && (x != 0 || y != 0) && stamina >= 0.125f)
-            {
-                PlayerHPController.instance.ChangeStamina(0.125f, true);
-                stamina -= 0.125f;
+            float x = Input.GetAxis("Horizontal");
+            float y = Input.GetAxis("Vertical");
 
-                isRunning = true;
-                animator.speed = runSpeed;
-                if (isDashing == false && isJumping == false && isGrounded == true)
-                {
-                    animator.Play("Walk Tree");
-                }
-            }
-            else
+            //Movement
+            if (x != 0 || y != 0)
             {
-                isRunning = false;
-                animator.speed = speed;
-                if (isDashing == false && isJumping == false && isGrounded == true)
+                //Run
+                if (Input.GetKey(InputController.instance.run) && (x != 0 || y != 0) && stamina >= 0.125f)
                 {
-                    animator.Play("Walk Tree");
-                }
-            }
+                    PlayerHPController.instance.ChangeStamina(0.125f, true);
+                    stamina -= 0.125f;
 
-            if (isDashing == false)
-            {
-                PlayerCamera.instance.AlignRotation(PlayerCamera.instance.cameraBody.gameObject);
-            }
-
-            if (y <= 0)
-            {
-                animator.speed *= 0.8f;
-            }
-
-            animator.SetFloat("WalkHorizontal", x);
-            animator.SetFloat("WalkVertical", y);
-
-            if (startedFall == false && isJumping == false && isGrounded == false)
-            {
-                Vector3 dir = Vector3.zero;
-                if (Input.GetAxis("Vertical") > 0)
-                {
-                    dir += PlayerCamera.instance.GetCameraForward();
+                    isRunning = true;
+                    animator.speed = runSpeed;
+                    if (isDashing == false && isJumping == false && isGrounded == true)
+                    {
+                        animator.Play("Walk Tree");
+                    }
                 }
-                if (Input.GetAxis("Vertical") < 0)
+                else
                 {
-                    dir -= PlayerCamera.instance.GetCameraForward();
-                }
-                if (Input.GetAxis("Horizontal") > 0)
-                {
-                    dir += PlayerCamera.instance.GetCameraRight();
-                }
-                if (Input.GetAxis("Horizontal") < 0)
-                {
-                    dir -= PlayerCamera.instance.GetCameraRight();
+                    isRunning = false;
+                    animator.speed = speed;
+                    if (isDashing == false && isJumping == false && isGrounded == true)
+                    {
+                        animator.Play("Walk Tree");
+                    }
                 }
 
-                controller.Move(speed * dir * Time.fixedDeltaTime);
-            }
-            x = 0;
-            y = 0;
-        }
+                if (isDashing == false)
+                {
+                    PlayerCamera.instance.AlignRotation(PlayerCamera.instance.cameraBody.gameObject);
+                }
 
-        //Jump && fall
-        if (Input.GetKeyDown(InputController.instance.jump) && isGrounded == true && stealthMode == false && stamina >= 15f)
-        {
-            PlayerHPController.instance.ChangeStamina(15f, true);
-            stamina -= 15f;
+                if (y <= 0)
+                {
+                    animator.speed *= 0.8f;
+                }
 
-            startRelativePoint = transform.position;
-            isJumping = true;
-            animator.SetBool("IsJumping", true);
-        }
+                animator.SetFloat("WalkHorizontal", x);
+                animator.SetFloat("WalkVertical", y);
 
-        if (isJumping == true)
-        {
-            speedModifier = ((jumpHeight - RelativeDistance()) / 2) + 0.1f;
-            if (RelativeDistance() < jumpHeight)
-            {
-                controller.Move(Vector3.up * speedModifier * -gravity * Time.deltaTime);
+                if (startedFall == false && isJumping == false && isGrounded == false)
+                {
+                    Vector3 dir = Vector3.zero;
+                    if (Input.GetAxis("Vertical") > 0)
+                    {
+                        dir += PlayerCamera.instance.GetCameraForward();
+                    }
+                    if (Input.GetAxis("Vertical") < 0)
+                    {
+                        dir -= PlayerCamera.instance.GetCameraForward();
+                    }
+                    if (Input.GetAxis("Horizontal") > 0)
+                    {
+                        dir += PlayerCamera.instance.GetCameraRight();
+                    }
+                    if (Input.GetAxis("Horizontal") < 0)
+                    {
+                        dir -= PlayerCamera.instance.GetCameraRight();
+                    }
+
+                    controller.Move(speed * dir * Time.fixedDeltaTime);
+                }
+                x = 0;
+                y = 0;
             }
-            else
+
+            //Jump && fall
+            if (Input.GetKeyDown(InputController.instance.jump) && isGrounded == true && stealthMode == false && stamina >= 15f)
             {
-                isJumping = false;
-                animator.SetBool("IsJumping", false);
-            }
-        }
-        else if (isGrounded == false)
-        {
-            if (startedFall == true)
-            {
+                PlayerHPController.instance.ChangeStamina(15f, true);
+                stamina -= 15f;
+
                 startRelativePoint = transform.position;
-                startedFall = false;
+                isJumping = true;
+                animator.SetBool("IsJumping", true);
             }
-            float speedModifier = (RelativeDistance() / 2) + 0.1f;
 
-            if (RelativeDistance() >= 2)
+            if (isJumping == true)
             {
-                speedModifier = 1;
+                speedModifier = ((jumpHeight - RelativeDistance(Vector3.up)) / 2) + 0.25f;
+                if (RelativeDistance(Vector3.up) < jumpHeight)
+                {
+                    controller.Move(Vector3.up * speedModifier * -gravity * Time.deltaTime);
+                }
+                else
+                {
+                    isJumping = false;
+                    animator.SetBool("IsJumping", false);
+                }
+            }
+            else if (isGrounded == false)
+            {
+                if (startedFall == true)
+                {
+                    startRelativePoint = transform.position;
+                    startedFall = false;
+                }
+                float speedModifier = (RelativeDistance(Vector3.up) / 2) + 0.25f;
+
+                if (RelativeDistance(Vector3.up) >= 2)
+                {
+                    speedModifier = 1;
+                }
+
+                controller.Move(Vector3.up * speedModifier * gravity * Time.deltaTime);
+            }
+            else
+            {
+                startedFall = true;
             }
 
-            controller.Move(Vector3.up * speedModifier * gravity * Time.deltaTime);
-        }
-        else
-        {
-            startedFall = true;
-        }
 
+            //Dash
+            if (Input.GetKeyDown(InputController.instance.dash) && isGrounded && stamina >= 25f && isDashing == false)
+            {
+                PlayerHPController.instance.ChangeStamina(25f, true);
+                stamina -= 25f;
 
-        //Dash
-        if (Input.GetKeyDown(InputController.instance.dash) && isGrounded && stamina >= 25f && isDashing == false)
-        {
-            PlayerHPController.instance.ChangeStamina(25f, true);
-            stamina -= 25f;
-
-            StartCoroutine(DashAction());
-            Invoke("StopDash", 2);
+                StartCoroutine(DashAction());
+                Invoke("StopDash", 2);
+            }
         }
     }
 
-    private void ToggleFightStyle()
+    public void ToggleMove(bool toggle)
     {
-        if (isRanged == false && Input.GetKeyDown(KeyCode.Alpha1))
+        canMove = toggle;
+        animator.SetFloat("WalkHorizontal", 0);
+        animator.SetFloat("WalkVertical", 0);
+    }
+
+    private void SwapWeapon() //TROCAR INPUTS
+    {
+        if (canSwapWeapon == true)
         {
-            rangedWeapon.SetActive(true);
-            meleeWeapon.SetActive(false);
-            if (isGrounded == true)
+            if (isRanged == false && Input.GetKeyDown(KeyCode.Alpha1))
             {
-                animator.Play("RangedToMelee");
+                if(PlayerInventory.instance.GetRanged() != null)
+                {
+                    rangedWeapon.SetActive(true);
+                }
+                meleeWeapon.SetActive(false);
+                if (isGrounded == true)
+                {
+                    animator.Play("MeleeToRanged");
+                    StartCoroutine(SwapWeaponAction(animator.GetCurrentAnimatorClipInfo(1).Length * 0.7f));
+                }
+
+                isRanged = true;
             }
 
-            isRanged = true;
-        }
-
-        if (isRanged == true && Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            rangedWeapon.SetActive(false);
-            meleeWeapon.SetActive(true);
-            if (isGrounded == true)
+            if (isRanged == true && Input.GetKeyDown(KeyCode.Alpha2))
             {
-                animator.Play("MeleeToRanged");
-            }
+                rangedWeapon.SetActive(false);
+                if(PlayerInventory.instance.GetMelee() != null)
+                {
+                    meleeWeapon.SetActive(true);
+                }
+                if (isGrounded == true)
+                {
+                    animator.Play("RangedToMelee");
+                    StartCoroutine(SwapWeaponAction(animator.GetCurrentAnimatorClipInfo(1).Length * 0.7f));
+                }
 
-            isRanged = false;
+                isRanged = false;
+            }
         }
+    }
+
+    private IEnumerator SwapWeaponAction(float time)
+    {
+        animator.SetLayerWeight(1, 1);
+        canSwapWeapon = false;
+
+        PlayerMeleeCombat.instance.MeleeAttackToggle(false);
+        PlayerGun.instance.ShootToggle(false);
+
+        yield return new WaitForSeconds(time);
+
+        animator.SetLayerWeight(1, 0);
+        canSwapWeapon = true;
+
+        PlayerMeleeCombat.instance.MeleeAttackToggle(true);
+        PlayerGun.instance.ShootToggle(true);
+    }
+
+    public void ToggleWeaponSwap(bool toggle)
+    {
+        canSwapWeapon = toggle;
     }
 
     private IEnumerator DashAction()
@@ -248,9 +298,9 @@ public class PlayerController : MonoBehaviour
             movingDir = (transform.forward * Input.GetAxis("Vertical")) + (transform.right * Input.GetAxis("Horizontal"));
         }
 
-        while (RelativeDistance() < dashLength && isDashing == true)
+        while (RelativeDistance(new Vector3(1, 0, 1)) < dashLength && isDashing == true)
         {
-            controller.Move((dashLength - RelativeDistance() + 1) * 7.5f * movingDir.normalized * Time.deltaTime);
+            controller.Move((dashLength - RelativeDistance(new Vector3(1, 0, 1)) + 1) * 7.5f * movingDir.normalized * Time.deltaTime);
             yield return new WaitForSeconds(Time.deltaTime);
         }
 
@@ -266,9 +316,12 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("IsDashing", false);
     }
 
-    private float RelativeDistance()
+    private float RelativeDistance(Vector3 axis)
     {
-        return Vector3.Distance(transform.position, startRelativePoint);
+        Vector3 normalizedStart, normalizedEnd;
+        normalizedStart = new Vector3(axis.x * startRelativePoint.x, axis.y * startRelativePoint.y, axis.z * startRelativePoint.z);
+        normalizedEnd = new Vector3(axis.x * transform.position.x, axis.y * transform.position.y, axis.z * transform.position.z);
+        return Vector3.Distance(normalizedStart, normalizedEnd);
     }
 
 }

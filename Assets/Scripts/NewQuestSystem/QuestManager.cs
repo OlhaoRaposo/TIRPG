@@ -1,212 +1,140 @@
-using System;
 using System.Collections.Generic;
-using System.IO;
-using TMPro;
-using Unity.Mathematics;
 using UnityEngine;
 
-[Serializable]
-public class QuestDatabase
-{
-    public List<Quest> allQuestsInDatabase = new List<Quest>();
-}
 public class QuestManager : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject questsHierarchy;
-    [SerializeField]
-    private GameObject questPrefab;
-    
     public static QuestManager instance;
-    //AtualQuests
+    [Header("Adicionar todas quests do jogo aqui:")]
+    public List<Quest> allQuestsInDatabase = new List<Quest>();
     public List<Quest> activeQuests = new List<Quest>();
-    //Invetory Quests
     public List<Quest> completedQuests = new List<Quest>();
-    //Database
-    public QuestDatabase database;
-    private string jsonPath;
-    public Quest[] questToAdd;
-    private void Awake() {
-        instance = this;
-        jsonPath = Application.dataPath + "/QuestJsonDatabase.json";
-        InsertOnDatabase();
-    }
-    #region JsonRegion
-   public Quest Read(string questName) {
-        if (File.Exists(jsonPath)) {
-            QuestDatabase data = new QuestDatabase();
-            string s = File.ReadAllText(jsonPath);
-            data = JsonUtility.FromJson<QuestDatabase>(s);
-            foreach (var var in data.allQuestsInDatabase) {
-                if(var.questName == questName) {
-                    return var;
-                }
-            }
-        }
-        return null;
-    }
-    void InsertOnDatabase() {
-        QuestDatabase newData = new QuestDatabase();
-        if (File.Exists(jsonPath)) {
-            string content = File.ReadAllText(jsonPath);
-            newData = JsonUtility.FromJson<QuestDatabase>(content);
-            database = newData;
-            bool contain = false;
-            List<Quest> questsToAddBase = new List<Quest>();
-            foreach (var var in newData.allQuestsInDatabase) {
-                foreach (var x in questToAdd) {
-                    if (var.questName == x.questName) {
-                        contain = true;
-                        return;
-                    }else {
-                        contain = false;
-                    }
-                }
-                if (contain)
-                    return;
-                else {
-                    foreach (var quest in questToAdd) {
-                        newData.allQuestsInDatabase.Add(quest);
-                    }
-                    database = newData;
-                    string s = JsonUtility.ToJson(newData, true);
-                    File.WriteAllText(jsonPath, s);
-                }
-            } 
+
+    [SerializeField] private GameObject questPrefab;
+    [SerializeField] private Transform questParent;
+    private void Start() {
+        if(instance == null) {
+           instance = this; 
         }else {
-            foreach (var quest in questToAdd) {
-                newData.allQuestsInDatabase.Add(quest);
-            }
-            database = newData;
-            string s = JsonUtility.ToJson(newData, true);
-            File.WriteAllText(jsonPath, s);
-        }
+           Destroy(this); }
     }
-    #endregion
-    public void SendValidation(string questName, string phaseName) {
-        if(activeQuests.Count == 0) {
-            Debug.Log("No Quests Active");
-            return;
-        }
-        foreach (var obj in activeQuests) {
-            if (obj.questName == questName) {
-                foreach (var var in obj.phases) {
-                    if (var.name == phaseName) {
-                        var.isComplete = true;
-                        AttQuestPhase();
-                        Debug.Log("Validation Sent to " + obj);
-                        return;
-                    }
-                }
+    public Quest FindQuestOnDatabase(string questCode) {
+        Quest questToReturn = null;
+        foreach (var quest in allQuestsInDatabase) {
+            if(quest.code == questCode) {
+                questToReturn = quest;
             }
         }
+        return questToReturn;
     }
-    public bool CheckIfIsComplete(string questName) {
-        foreach (var var in activeQuests) {
-            if (var.questName == questName) {
-                foreach (var phase in var.phases) {
-                    if (phase.isComplete == false) {
-                        return false;
-                    }
-                }
-                return true;
+    public Quest FindActiveQuest(string questCode) {
+        Quest questToReturn = null;
+        foreach (var quest in activeQuests) {
+            if(quest.code == questCode) {
+                questToReturn = quest;
             }
         }
-        return false;
+        return questToReturn;
     }
 
-    public void AttQuestPhase()
+    public bool CheckIfIsComplete(string questCode)
     {
-        foreach (var quest in activeQuests) {
-            foreach (var phase in quest.phases) {
-                if(phase.isComplete == false) {
-                    quest.atualPhase = phase;
+        bool completed = false;
+        foreach (var quests in completedQuests) {
+          if(quests.code == questCode)
+          {
+              completed = true;
+          }
+        }
+
+        return completed;
+    }
+    public bool CheckIfIsActive(string questCode) {
+        bool active = false;
+        foreach (var quests in activeQuests) {
+          if(quests.code == questCode) {
+              active = true;
+          }
+        }
+        return active;
+    }
+    public void AddValidation(string questCode) {
+        Quest quest = FindActiveQuest(questCode);
+        int index =0;
+        if (quest != null)
+        {
+            foreach (var step in quest.steps) {
+                if (!step.isComplete) {
+                    step.isComplete = true;
+                    CalculateValidations(quest);
+                    quest.currentStep++;
+                    if (index < quest.steps.Count) {
+                        if(!quest.isComplete)
+                            quest.steps[index+1].SetActive();
+                    }
                     return;
                 }
+                index++;
             }
         }
     }
-    public bool CheckIfALreadyHaveQuest(string questName) {
-        foreach (var var in activeQuests) {
-            if (var.questName == questName) {
-                return true;
+    private void CalculateValidations(Quest quest) {
+        bool isCompleted = false;
+        foreach (var step in quest.steps) {
+            if (!step.isComplete) {
+                isCompleted = false;
+                return;
+            }else {
+                isCompleted = true;
             }
         }
-        return false;
+        if (isCompleted) {
+            quest.isComplete = true;
+            NPC npc = FindNpc(quest.code);
+            npc.QuestIsCompleted();
+            npc.HandleQuestIcon();
+        }
     }
-    public bool FindInCompletedQuests(string questName) {
-        foreach (var var in completedQuests) {
-            if (var.questName == questName) {
-                return true;
+    private NPC FindNpc(string questCode) {
+        NPC npcToReturn = null;
+        foreach (var npc in FindObjectsOfType<NPC>()) {
+            if (npc.currentQuest == questCode) {
+                npcToReturn = npc;
             }
         }
-        return false;
+        return npcToReturn;
     }
-    
-    public bool FindInActiveQuests(string questName) {
-        foreach (var var in activeQuests) {
-            if (var.questName == questName) {
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    public void AddQuest(string questName) {
-        activeQuests.Add(Read(questName));
-       GameObject quest =  Instantiate(questPrefab, transform.position,quaternion.identity, questsHierarchy.transform);
-       quest.name = Read(questName).questDescription;
-       quest.GetComponentInChildren<TextMeshProUGUI>().text = Read(questName).questDescription;
-       AttQuestPhase();
-    }
-    public void CompleteQuest(string questName) {
-        AddLoyaltyPoints(Read(questName));
-        AddItens(Read(questName));
-        AddXP(Read(questName));
-        CheckIfIsLinkedToAnotherQuest(Read(questName));
-        completedQuests.Add(Read(questName));
-        if (activeQuests.Count > 0) {
-            foreach (var var in activeQuests) {
-                if (var.questName == questName) {
-                    activeQuests.Remove(var);
-                    Destroy(GameObject.Find(Read(questName).questDescription)); 
-                    return;
-                } 
-            }
-        }else {
-            Debug.Log("No Quests Active, What are you doing?");
-        }
-    }
-    private void CheckIfIsLinkedToAnotherQuest(Quest quest)
-    {
-        if (quest.rewards.questReward != "")
-            AddQuest(quest.rewards.questReward);
-        else
-            return;
-    }
-    
-    private static void AddXP(Quest quest) {
-        PlayerStats.instance.GainXp(quest.rewards.xp);
-    }
-    
-    private static void AddItens(Quest quest) {
-        foreach (var var in quest.rewards.itens) {
-            PlayerInventory.instance.AddItemToInventory(var);
-        }
-    }
-    
-    public void FailQuest(Quest quest) {
+    public void CompleteQuest(string questCode) {
+        Quest quest = FindQuestOnDatabase(questCode);
+        completedQuests.Add(quest);
         activeQuests.Remove(quest);
+        Destroy(questParent.transform.Find(quest.title).gameObject);
+        AddReward(quest);
+        AudioBoard.instance.PlayAudio("Bell");
     }
-    private static void AddLoyaltyPoints(Quest quest) 
-    {
-        switch (quest.rewards.loyaltyType) {
-            case Reward.LoyaltyType.City:
-                LoyaltySystem.instance.AddPointsInfluenceCity(quest.rewards.loyalty);
-                break;
-            case Reward.LoyaltyType.Nature:
-                LoyaltySystem.instance.AddPointsInfluenceNature(quest.rewards.loyalty);
-                break;
+    private void AddReward(Quest quest) {
+        if(quest.questReward.royaltyType == Reward.RoyaltyType.city) {
+            LoyaltySystem.instance.AddPointsInfluenceCity(quest.questReward.royaltyValue);
+        }else if (quest.questReward.royaltyType == Reward.RoyaltyType.nature) {
+            LoyaltySystem.instance.AddPointsInfluenceNature(quest.questReward.royaltyValue);
+        }
+        if (quest.hasQuestReward) {
+            AddQuest(quest.questRewardCode);
+        }
+    }
+    public void AddQuest(string questCode) {
+        questParent.gameObject.SetActive(true);
+        activeQuests.Add(FindQuestOnDatabase(questCode));
+        if (activeQuests.Contains(FindQuestOnDatabase(questCode))) {
+            foreach (var quest in activeQuests) {
+                if (quest == FindQuestOnDatabase(questCode)) {
+                   quest.steps[0].SetActive();
+                   GameObject questUi = Instantiate(questPrefab, questParent);
+                   questUi.TryGetComponent(out QuestComponent qc); qc.questTitle.text = quest.title; qc.questDescription.text = quest.description;
+                   questUi.name = quest.title;
+                }
+            } 
+            
+            questParent.gameObject.SetActive(true);
         }
     }
 }

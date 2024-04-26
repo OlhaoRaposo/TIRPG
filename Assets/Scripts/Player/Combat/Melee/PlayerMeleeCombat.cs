@@ -1,96 +1,118 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMeleeCombat : MonoBehaviour
 {
-    [SerializeField] Animator animator;
-    [SerializeField] float comboExecutionWindow = .5f;
-    [SerializeField] BoxCollider attackCollider;
+    public static PlayerMeleeCombat instance;
 
-    bool isInCombo = false;
-    bool canAttack = true;
+    [Header("Variables")]
+    float damage;
+    float comboExecutionWindowPercentage = 0.8f;
+    float[] comboWindowTime;
     int comboIndex = 0;
-    float nextComboAttack;
+    float nextAttackCooldown = 0;
+    bool canAttack = true;
+    bool isInCombo = false;
 
-    void Update()
+    [Header("References")]
+    [SerializeField] PlayerMeleeBase weapon;
+    [SerializeField] PlayerController player;
+    [SerializeField] Animator animator;
+    [SerializeField] Collider attackCollider;
+
+    private void Awake()
     {
+        instance = this;
+    }
 
-        if (Input.GetMouseButtonDown(0) && canAttack)
+    private void OnEnable()
+    {
+        comboIndex = 0;
+    }
+
+    private void OnDisable()
+    {
+        EndCombo();
+    }
+
+    private void Start()
+    {
+        SetNewMeleeWeapon(weapon);
+    }
+
+    private void Update()
+    {
+        MeleeAttack();
+    }
+
+    public void SetNewMeleeWeapon(PlayerMeleeBase newWeapon)
+    {
+        damage = newWeapon.damage;
+        comboExecutionWindowPercentage = newWeapon.comboExecutionWindowPercentage;
+        
+        //Setar animações override
+    }
+
+    private void MeleeAttack()
+    {
+        if (Input.GetMouseButtonDown(0) && canAttack && player.isGrounded == true)
         {
-            if (!isInCombo)
-            {
-                EnableCombo();
-            }
-            
-            comboIndex = (comboIndex + 1) % 4;
 
             if (comboIndex == 0)
             {
-                if (isInCombo)
+                StartCombo();
+            }
+
+            if (Time.time >= nextAttackCooldown)
+            {
+                string nextAttack = "Melee_0" + comboIndex;
+                
+                PlayerCamera.instance.AlignRotation(PlayerCamera.instance.cameraBody.gameObject);
+                animator.Play(nextAttack, 0);
+                
+                isInCombo = true;
+
+                float nextAttackTime = animator.GetCurrentAnimatorStateInfo(0).length * comboExecutionWindowPercentage;
+                nextAttackCooldown = Time.time + nextAttackTime;
+                
+                if(comboIndex >= 2)
                 {
-                    DisableCombo();
+                    comboIndex = 0;
+                }
+                else
+                {
+                    comboIndex++;
                 }
             }
-            else
-            {
-                animator.SetInteger("ComboIndex", comboIndex);
-                animator.SetTrigger("Attack");
-                StartCoroutine(ComboExecutionWindow());
-            }
+
         }
-        
-        if (isInCombo)
+
+        if (isInCombo == true && Time.time >= nextAttackCooldown + (animator.GetCurrentAnimatorStateInfo(0).length * (1 - comboExecutionWindowPercentage)))
         {
-            if (Time.time > nextComboAttack)
-            {
-                DisableCombo();
-            }
+            EndCombo();
         }
     }
-    void EnableCombo()
+
+    private void StartCombo()
     {
         isInCombo = true;
-        //canAttack = false;
-        animator.SetBool("CanAttack", canAttack);
-        animator.SetBool("IsInCombo", isInCombo);
+        PlayerController.instance?.ToggleMove(false);
     }
-    void DisableCombo()
+
+    private void EndCombo()
     {
         isInCombo = false;
-        //canAttack = true;
         comboIndex = 0;
-        animator.SetBool("CanAttack", canAttack);
-        animator.SetInteger("ComboIndex", comboIndex);
-        animator.SetBool("IsInCombo", isInCombo);
-    }
-    public void EnableCollider()
-    {
-        attackCollider.enabled = true;
-    }
-    public void DisableCollider()
-    {
-        attackCollider.enabled = false;
+        PlayerController.instance?.ToggleMove(true);
+        animator.Play("Walk Tree", 0);
     }
 
-    IEnumerator ComboExecutionWindow()
+    public void MeleeAttackToggle(bool toggle)
     {
-        while (true)
-        {
-            if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= .75f)
-            {
-                nextComboAttack = Time.time + comboExecutionWindow;
-                canAttack = true;
-                animator.SetBool("CanAttack", canAttack);
-                break;
-            }
-            else
-            {
-                canAttack = false;
-                animator.SetBool("CanAttack", canAttack);
-            }
-
-            yield return null;
-        }
+        canAttack = toggle;
     }
+
+    //LÓGICA DE DANO
 }

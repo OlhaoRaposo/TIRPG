@@ -16,6 +16,7 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] private float currentSense;
     [SerializeField] private float regularFov;
     [SerializeField] private float aimFov;
+    public bool locked;
 
     public bool isAiming;
     private float camSpeedX, camSpeedY;
@@ -23,6 +24,7 @@ public class PlayerCamera : MonoBehaviour
     [Header("References")]
     [SerializeField] private GameObject playerObject;
     [SerializeField] private GameObject playerAim;
+    [SerializeField] private CinemachineBrain myCinemachineBrain;
 
     private CinemachineFreeLook myCinemachineCamera;
     private Vector3 startingPos, startingAimPos;
@@ -69,14 +71,25 @@ public class PlayerCamera : MonoBehaviour
             myCinemachineCamera.m_YAxis.m_InvertInput = false;
         }
     }
-
+    
     private void Update()
     {
         Aim();
         SetCameraZoom();
-        //CursorLockControl();
+        CursorLockControl();
     }
 
+    public void LockCamera(bool lockCamera)
+    {
+        if (lockCamera == true)
+        {
+            myCinemachineCamera.m_XAxis.m_MaxSpeed = 0;
+            myCinemachineCamera.m_YAxis.m_MaxSpeed = 0;
+        }else {
+            myCinemachineCamera.m_XAxis.m_MaxSpeed = camSpeedX;
+            myCinemachineCamera.m_YAxis.m_MaxSpeed = camSpeedY;
+        }
+    }
     private void Aim()
     {
         if (Input.GetMouseButtonDown(1) == true)

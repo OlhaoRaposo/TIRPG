@@ -37,7 +37,6 @@ public class LoboGuaraWeapon : MonoBehaviour
     public float CalculateDistance()
     {
         Vector3 distance = user.enemyTarget.transform.position - user.transform.position;
-        Debug.Log(distance.magnitude + " distancia");
         return distance.magnitude;
     }
     public void NormalAtack()
@@ -47,9 +46,7 @@ public class LoboGuaraWeapon : MonoBehaviour
         {
             Animator userAnimator = user.gameObject.TryGetComponent(out Animator animator) ? animator : null; 
             userAnimator.SetTrigger("AttackL");
-            Debug.Log("Ataque normal");
         }
-        Debug.Log(CalculateDistance());
     }
     public void NormalAreaAtack()
     {
@@ -58,9 +55,7 @@ public class LoboGuaraWeapon : MonoBehaviour
         {
             Animator userAnimator = user.gameObject.TryGetComponent(out Animator animator) ? animator : null; 
             userAnimator.SetTrigger("AttackR");
-            Debug.Log("Ataque normal");
         }
-        Debug.Log(CalculateDistance());
     }
     public void EspecialAtack()
     {
@@ -69,9 +64,7 @@ public class LoboGuaraWeapon : MonoBehaviour
         {
             Animator userAnimator = user.gameObject.TryGetComponent(out Animator animator) ? animator : null; 
             userAnimator.SetTrigger("HeavyAttack");
-            Debug.Log("Ataque normal");
         }
-        Debug.Log(CalculateDistance());
     }
     
     void OnTriggerEnter(Collider other)

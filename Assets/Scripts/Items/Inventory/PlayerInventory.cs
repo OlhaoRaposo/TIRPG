@@ -82,13 +82,16 @@ public class PlayerInventory : MonoBehaviour
     {
         meleeWeaponSlot.SetItem(null);
         GameObject droppedItem = Instantiate(itemData.prefab, PlayerInteractions.instance.transform.position + (Vector3.up + PlayerInteractions.instance.transform.forward), Quaternion.identity);
-        ItemDropManager.instance.SetItemParent(droppedItem.transform);
+        PlayerMeleeCombat.instance.gameObject.SetActive(false);
+        //ItemDropManager.instance.SetItemParent(droppedItem.transform);
     }
     public void DropRangedWeapon(ItemData itemData)
     {
         rangedWeaponSlot.SetItem(null);
         GameObject droppedItem = Instantiate(itemData.prefab, PlayerInteractions.instance.transform.position + (Vector3.up + PlayerInteractions.instance.transform.forward), Quaternion.identity);
-        ItemDropManager.instance.SetItemParent(droppedItem.transform);
+        PlayerGun.instance.gameObject.SetActive(false);
+        //ItemDropManager.instance.SetItemParent(droppedItem.transform);
+
     }
     void SortInventory()
     {
@@ -116,11 +119,13 @@ public class PlayerInventory : MonoBehaviour
     {
         RemoveItemFromInventory(weaponData);
         meleeWeaponSlot.SetItem(weaponData);
+        PlayerMeleeCombat.instance?.SetNewMeleeWeapon(weaponData.meleeBase);
     }
     public void EquipRangedWeapon(ItemData weaponData)
     {
         RemoveItemFromInventory(weaponData);
         rangedWeaponSlot.SetItem(weaponData);
+        PlayerGun.instance?.SetNewGunWeapon(weaponData.gunBase);
     }
     public void EquipConsumable(ItemData consumableData)
     {
@@ -131,6 +136,14 @@ public class PlayerInventory : MonoBehaviour
     {
         RemoveItemFromInventory(throwableData);
         throwableSlot.SetItem(throwableData);
+    }
+    public ItemData GetMelee()
+    {
+        return meleeWeaponSlot.GetItem();
+    }
+    public ItemData GetRanged()
+    {
+        return rangedWeaponSlot.GetItem();
     }
     public ItemData GetThrowable()
     {

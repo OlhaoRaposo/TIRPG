@@ -1,10 +1,13 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Spawner : MonoBehaviour
 {
  public ScriptableObject bestiary;
  public string prefabCode;
+ public bool hasQuestOnCourse;
+ public UnityEvent onKill = new UnityEvent();
 
   public void StartRespawnProcess()
   {
@@ -26,7 +29,16 @@ public class Spawner : MonoBehaviour
   IEnumerator Respawn(float time)
   {
    yield return new WaitForSeconds(time);
-   Instantiate(SearchEntityOnBestiary(prefabCode), transform.position, Quaternion.identity);
+   GameObject enemy = Instantiate(SearchEntityOnBestiary(prefabCode), transform.position, Quaternion.identity);
+   CheckIfHasQuestOnCourse(enemy);
    Destroy(this.gameObject);
+  }
+  
+  void CheckIfHasQuestOnCourse(GameObject enemy)
+  {
+   if(hasQuestOnCourse) {
+    enemy.AddComponent<KillDetection>();
+    enemy.GetComponent<KillDetection>().SetInvokes(onKill.Invoke,true);
+   }
   }
 }

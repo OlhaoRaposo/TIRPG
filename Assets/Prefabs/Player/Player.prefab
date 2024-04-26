@@ -3102,7 +3102,6 @@ MonoBehaviour:
     m_Bits: 1
   equipedWeapon: {fileID: 11400000, guid: 6121deddc3b6256458ed3b1a1e1bedf5, type: 2}
   reloadImage: {fileID: 0}
-  effect: {fileID: 6311905094092980648, guid: 0629727cffee602439289c4c24bcdb0a, type: 3}
 --- !u!1 &6327791738155717092
 GameObject:
   m_ObjectHideFlags: 0
@@ -3494,6 +3493,7 @@ MonoBehaviour:
   isGrounded: 1
   isDashing: 0
   stealthMode: 0
+  canSwapWeapon: 1
   controller: {fileID: 781033918976680780}
   rangedWeapon: {fileID: 6241156400474366124}
   meleeWeapon: {fileID: 8814491649899622192}
@@ -4644,6 +4644,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7872025114831172721}
   - component: {fileID: 1296391711812945491}
+  - component: {fileID: 196894061420636690}
   m_Layer: 0
   m_Name: MacheteLamina
   m_TagString: Untagged
@@ -4800,6 +4801,28 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.00012982881, y: 0.0031697946, z: 0.014685517}
     m_Extent: {x: 0.0014196021, y: 0.00038214843, z: 0.0023947153}
   m_DirtyAABB: 0
+--- !u!64 &196894061420636690
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8757284944444359781}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1 &8814491649899622192
 GameObject:
   m_ObjectHideFlags: 0
@@ -4840,14 +4863,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8814491649899622192}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 301ef19b8d4a92147a7525f875b87ba0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weapon: {fileID: 11400000, guid: ef512ff55e55f404dbaff0f2a1eb7f89, type: 2}
+  player: {fileID: 3549592608225399686}
   animator: {fileID: 5813722358040975170}
-  comboExecutionWindow: 0.5
-  attackCollider: {fileID: 0}
+  attackCollider: {fileID: 196894061420636690}
 --- !u!1 &8979034094375809502
 GameObject:
   m_ObjectHideFlags: 0
