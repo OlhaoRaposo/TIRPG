@@ -152,7 +152,6 @@ public class PlayerGun : MonoBehaviour
             {
                 if (holdTime / shootCD < 1)
                 {
-                    Debug.Log("Atirou mais fraco");
                     projectile.GetComponent<PlayerProjectile>().SetSpeed(holdTime);
                     holdTime = 0;
                 }

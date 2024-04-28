@@ -226,6 +226,7 @@ public class PlayerController : MonoBehaviour
         {
             if (isRanged == false && Input.GetKeyDown(KeyCode.Alpha1))
             {
+                StopAllCoroutines();
                 if(PlayerInventory.instance.GetRanged() != null)
                 {
                     allWeapons.transform.Find(PlayerGun.instance.GetGunName()).gameObject.SetActive(true);
@@ -244,6 +245,7 @@ public class PlayerController : MonoBehaviour
 
             if (isRanged == true && Input.GetKeyDown(KeyCode.Alpha2))
             {
+                StopAllCoroutines();
                 allWeapons.transform.Find(PlayerGun.instance.GetGunName()).gameObject.SetActive(false);
                 if(PlayerInventory.instance.GetMelee() != null)
                 {
