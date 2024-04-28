@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("References")]
     [SerializeField] CharacterController controller;
-    [SerializeField] GameObject rangedWeapon, meleeWeapon;
+    [SerializeField] GameObject rangedWeapon, meleeWeapon, allWeapons;
     [SerializeField] Animator animator;
     private Vector3 startRelativePoint;
 
@@ -228,31 +228,35 @@ public class PlayerController : MonoBehaviour
             {
                 if(PlayerInventory.instance.GetRanged() != null)
                 {
-                    rangedWeapon.SetActive(true);
+                    allWeapons.transform.Find(PlayerGun.instance.GetGunName()).gameObject.SetActive(true);
                 }
-                meleeWeapon.SetActive(false);
+                allWeapons.transform.Find(PlayerMeleeCombat.instance.GetMeleeName()).gameObject.SetActive(false);
                 if (isGrounded == true)
                 {
-                    animator.Play("MeleeToRanged");
+                    animator.Play($"Switch to {PlayerGun.instance.GetGunName()}");
                     StartCoroutine(SwapWeaponAction(animator.GetCurrentAnimatorClipInfo(1).Length * 0.7f));
                 }
 
+                PlayerGun.instance.enabled = true;
+                PlayerMeleeCombat.instance.enabled = false;
                 isRanged = true;
             }
 
             if (isRanged == true && Input.GetKeyDown(KeyCode.Alpha2))
             {
-                rangedWeapon.SetActive(false);
+                allWeapons.transform.Find(PlayerGun.instance.GetGunName()).gameObject.SetActive(false);
                 if(PlayerInventory.instance.GetMelee() != null)
                 {
-                    meleeWeapon.SetActive(true);
+                    allWeapons.transform.Find(PlayerMeleeCombat.instance.GetMeleeName()).gameObject.SetActive(true);
                 }
                 if (isGrounded == true)
                 {
-                    animator.Play("RangedToMelee");
+                    animator.Play($"Switch to {PlayerMeleeCombat.instance.GetMeleeName()}");
                     StartCoroutine(SwapWeaponAction(animator.GetCurrentAnimatorClipInfo(1).Length * 0.7f));
                 }
 
+                PlayerGun.instance.enabled = false;
+                PlayerMeleeCombat.instance.enabled = true;
                 isRanged = false;
             }
         }

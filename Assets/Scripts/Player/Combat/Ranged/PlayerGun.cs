@@ -9,6 +9,8 @@ public class PlayerGun : MonoBehaviour
     [Header("Variables")]
     [SerializeField] private float cameraOffset;
     [SerializeField] private int ammo;
+    [SerializeField] private string gunName;
+    [SerializeField] private string gunMag;
     private float shootCD = 0;
     private bool isReloading = false, canShoot = true;
     [SerializeField] private LayerMask aimCollisionLayer = new LayerMask();
@@ -38,7 +40,14 @@ public class PlayerGun : MonoBehaviour
     {
         equipedWeapon = newWeapon;
         ammo = equipedWeapon.ammo;
+        gunName = newWeapon.modelName;
+        gunMag = newWeapon.ammoName;
         UIManager.instance.UpdateAmmo($"{ammo}/{equipedWeapon.ammo}");
+    }
+
+    public string GetGunName()
+    {
+        return gunName;
     }
 
     private void Shoot()

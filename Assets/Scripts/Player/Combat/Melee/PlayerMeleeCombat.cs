@@ -8,6 +8,7 @@ public class PlayerMeleeCombat : MonoBehaviour
     public static PlayerMeleeCombat instance;
 
     [Header("Variables")]
+    [SerializeField] private string weaponName;
     float damage;
     float comboExecutionWindowPercentage = 0.8f;
     float[] comboWindowTime;
@@ -29,7 +30,7 @@ public class PlayerMeleeCombat : MonoBehaviour
 
     private void OnEnable()
     {
-        comboIndex = 0;
+        comboIndex = 1;
     }
 
     private void OnDisable()
@@ -40,6 +41,7 @@ public class PlayerMeleeCombat : MonoBehaviour
     private void Start()
     {
         SetNewMeleeWeapon(weapon);
+        this.enabled = false;
     }
 
     private void Update()
@@ -51,8 +53,14 @@ public class PlayerMeleeCombat : MonoBehaviour
     {
         damage = newWeapon.damage;
         comboExecutionWindowPercentage = newWeapon.comboExecutionWindowPercentage;
+        weaponName = newWeapon.modelName;
         
         //Setar animações override
+    }
+
+    public string GetMeleeName()
+    {
+        return weaponName;
     }
 
     private void MeleeAttack()
@@ -60,14 +68,14 @@ public class PlayerMeleeCombat : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && canAttack && player.isGrounded == true)
         {
 
-            if (comboIndex == 0)
+            if (comboIndex == 1)
             {
                 StartCombo();
             }
 
             if (Time.time >= nextAttackCooldown)
             {
-                string nextAttack = "Melee_0" + comboIndex;
+                string nextAttack = $"{weaponName} " + comboIndex;
                 
                 PlayerCamera.instance.AlignRotation(PlayerCamera.instance.cameraBody.gameObject);
                 animator.Play(nextAttack, 0);
@@ -77,9 +85,10 @@ public class PlayerMeleeCombat : MonoBehaviour
                 float nextAttackTime = animator.GetCurrentAnimatorStateInfo(0).length * comboExecutionWindowPercentage;
                 nextAttackCooldown = Time.time + nextAttackTime;
                 
-                if(comboIndex >= 2)
+                if(comboIndex >= 4)
                 {
-                    comboIndex = 0;
+                    animator.Play($"{weaponName} Heavy", 0);
+                    comboIndex = 1;
                 }
                 else
                 {
