@@ -146,6 +146,7 @@ public class DamageElementManager : MonoBehaviour
 
     private IEnumerator DamageEnhanceUptime()
     {
+        
         enhanceDurationResetTime = enhanceDuration;
         while (enhanceDurationResetTime >= 0)
         {
