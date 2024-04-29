@@ -67,7 +67,7 @@ public class PlayerMeleeCombat : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && canAttack && player.isGrounded == true)
         {
-
+            PlayerCamera.instance.playerAnimator.SetLayerWeight(1, 0);
             if (comboIndex == 1)
             {
                 StartCombo();
