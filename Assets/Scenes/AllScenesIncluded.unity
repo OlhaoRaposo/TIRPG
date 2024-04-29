@@ -20108,10 +20108,25 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2830963833244830641, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
         type: 3}
+      propertyPath: maxLevel
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 2830963833244830641, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+        type: 3}
       propertyPath: levelupData
       value: 
       objectReference: {fileID: 11400000, guid: 32a530b8d3abdea4e93f825ad6c46605,
         type: 2}
+    - target: {fileID: 3081418389639027840, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 477790535}
+    - target: {fileID: 3081418389639027840, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SelectAttribute
+      objectReference: {fileID: 0}
     - target: {fileID: 4385603509228590703, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
         type: 3}
       propertyPath: m_IsActive
@@ -20172,10 +20187,55 @@ PrefabInstance:
       propertyPath: m_Name
       value: Essentials
       objectReference: {fileID: 0}
+    - target: {fileID: 5598497455609606971, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 477790535}
+    - target: {fileID: 5598497455609606971, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleSkillTreePanel
+      objectReference: {fileID: 0}
     - target: {fileID: 6524205845604770219, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6865822112230556123, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 477790535}
+    - target: {fileID: 6865822112230556123, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SelectAttribute
+      objectReference: {fileID: 0}
+    - target: {fileID: 7543724329625456916, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 477790535}
+    - target: {fileID: 7543724329625456916, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SelectAttribute
+      objectReference: {fileID: 0}
+    - target: {fileID: 8267677845713006370, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8526996246571591458, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 477790535}
+    - target: {fileID: 8526996246571591458, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SelectAttribute
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -20188,6 +20248,18 @@ PrefabInstance:
       addedObject: {fileID: 1074689014}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3004360c9fd7b2f41ad76ead7312e2e2, type: 3}
+--- !u!114 &477790535 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6619199530294600485, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+    type: 3}
+  m_PrefabInstance: {fileID: 477790534}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 243dad71ed9073c4faf29df8084314e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &480540130
 GameObject:
   m_ObjectHideFlags: 0
