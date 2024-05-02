@@ -9,6 +9,8 @@ public class PlayerGun : MonoBehaviour
     [Header("Variables")]
     [SerializeField] private float cameraOffset;
     [SerializeField] private int ammo;
+    [SerializeField] private string gunName;
+    [SerializeField] private string gunMag;
     private float shootCD = 0;
     private bool isReloading = false, canShoot = true;
     [SerializeField] private LayerMask aimCollisionLayer = new LayerMask();
@@ -38,7 +40,14 @@ public class PlayerGun : MonoBehaviour
     {
         equipedWeapon = newWeapon;
         ammo = equipedWeapon.ammo;
+        gunName = newWeapon.modelName;
+        gunMag = newWeapon.ammoName;
         UIManager.instance.UpdateAmmo($"{ammo}/{equipedWeapon.ammo}");
+    }
+
+    public string GetGunName()
+    {
+        return gunName;
     }
 
     private void Shoot()
@@ -60,6 +69,8 @@ public class PlayerGun : MonoBehaviour
                             if (Input.GetMouseButton(0) == true && shootCD < Time.time)
                             {
                                 PlayerCamera.instance.playerAnimator.SetLayerWeight(1, 1);
+                                PlayerCamera.instance.playerAnimator.Play($"{gunName} Aim Tree");
+                                Debug.Log("Ativou layer");
                                 PlayerCamera.instance.playerAnimator.SetFloat("AimVertical", -PlayerCamera.instance.cameraBody.transform.eulerAngles.x / 60);
                                 SummonBullets();
                             }
@@ -72,6 +83,7 @@ public class PlayerGun : MonoBehaviour
                                 if (shootCD < Time.time)
                                 {
                                     PlayerCamera.instance.playerAnimator.SetLayerWeight(1, 1);
+                                    PlayerCamera.instance.playerAnimator.Play($"{gunName} Aim Tree");
                                     PlayerCamera.instance.playerAnimator.SetFloat("AimVertical", -PlayerCamera.instance.cameraBody.transform.eulerAngles.x / 60);
                                     SummonBullets();
                                 }
@@ -83,6 +95,7 @@ public class PlayerGun : MonoBehaviour
                             if (Input.GetMouseButton(0) == true)
                             {
                                 PlayerCamera.instance.playerAnimator.SetLayerWeight(1, 1);
+                                PlayerCamera.instance.playerAnimator.Play($"{gunName} Aim Tree");
                                 PlayerCamera.instance.playerAnimator.SetFloat("AimVertical", -PlayerCamera.instance.cameraBody.transform.eulerAngles.x / 60);
                                 holdTime += Time.deltaTime;
                             }
@@ -143,7 +156,6 @@ public class PlayerGun : MonoBehaviour
             {
                 if (holdTime / shootCD < 1)
                 {
-                    Debug.Log("Atirou mais fraco");
                     projectile.GetComponent<PlayerProjectile>().SetSpeed(holdTime);
                     holdTime = 0;
                 }

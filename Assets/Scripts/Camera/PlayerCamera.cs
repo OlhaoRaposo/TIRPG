@@ -95,6 +95,7 @@ public class PlayerCamera : MonoBehaviour
         if (Input.GetMouseButtonDown(1) == true)
         {
             playerAnimator.SetLayerWeight(1, 1);
+            playerAnimator.Play($"{PlayerGun.instance.GetGunName()} Aim Tree");
             playerAnimator.SetFloat("AimVertical", -cameraBody.transform.eulerAngles.x / 60);
 
             SetCameraOrbit(true);
