@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1796727387847369802}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.09351697, y: 0.000000017039074, z: -0.0000000016004564, w: 0.9956177}
+  m_LocalRotation: {x: 0.09351697, y: 0.000000017130978, z: -0.0000000016090885, w: 0.9956177}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -304,14 +304,15 @@ MonoBehaviour:
   cameraSense: 0.5
   aimSense: 0.125
   zoomStrength: 2.5
-  rotationLerpTime: 1
   isInverted: 0
   currentSense: 0
   regularFov: 60
   aimFov: 30
+  locked: 0
   isAiming: 0
   playerObject: {fileID: 4614305784611415217}
   playerAim: {fileID: 5204357090613209198}
+  myCinemachineBrain: {fileID: 0}
   cameraBody: {fileID: 0}
   playerAnimator: {fileID: 0}
 --- !u!114 &430289278962086328
@@ -459,7 +460,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4520045464470876224}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.06496309, y: 0.000000017736863, z: -0.0000000011546805, w: 0.9978877}
+  m_LocalRotation: {x: 0.06496309, y: -0.000000017698467, z: 0.0000000011521809, w: 0.9978877}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -953,7 +954,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9062121036635837257}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.12218325, y: 0.000000019369262, z: -0.0000000023844646, w: 0.9925076}
+  m_LocalRotation: {x: 0.12218325, y: 0.000000017077465, z: -0.0000000021023316, w: 0.9925076}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1235,6 +1236,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 3863168994368119176, guid: 9e4a10b4a83e3cc4fb507e2e11e96b72,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 067ced5378058a643bd130cc95bb839d, type: 2}
     - target: {fileID: 3896669954268210359, guid: 9e4a10b4a83e3cc4fb507e2e11e96b72,
         type: 3}
       propertyPath: m_Layer
