@@ -19,7 +19,7 @@ public class SkillTreeDragMove : MonoBehaviour
 
         if (Input.GetMouseButton(2))
         {
-            Vector3 newSkillTreePos = (Input.mousePosition - mousePos0) * 0.005f;
+            Vector3 newSkillTreePos = (Input.mousePosition - mousePos0) * 0.01f;
             UIManager.instance.SetSkillTreePosition(newSkillTreePos);
         }
     }

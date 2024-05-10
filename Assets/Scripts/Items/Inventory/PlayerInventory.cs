@@ -27,6 +27,8 @@ public class PlayerInventory : MonoBehaviour
     }
     void Update()
     {
+        if (SceneController.instance.GetIsInMainMenu()) return;
+
         if (Input.GetKeyDown(InputController.instance.inventory))
         {
             UIManager.instance?.ToggleInGameMenus();
