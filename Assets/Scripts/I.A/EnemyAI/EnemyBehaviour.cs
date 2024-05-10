@@ -169,10 +169,8 @@ public class EnemyBehaviour : MonoBehaviour
             if (detections.gameObject.CompareTag("Player"))
                 enemyTarget = detections.gameObject;
         }
-
         if (isAttacking)
             myNavMeshAgent.enemyAgent.SetDestination(enemyTarget.transform.position);
-        
         if (enemyTarget != null) {
             if (enemyTarget.CompareTag("Player")) {
                 if (!isAttacking) { Attack(); }
@@ -235,6 +233,7 @@ public class EnemyBehaviour : MonoBehaviour
         spawn.GetComponent<Spawner>().prefabCode = mySpawner.bestiaryCode;
         mySpawner.spawner = spawn;
     }
+
     public void Die()
     {
         if(TryGetComponent(out KillDetection kd)) {
