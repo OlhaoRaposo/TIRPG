@@ -42,6 +42,7 @@ public class WorldController : MonoBehaviour
             Destroy(gameObject);
         }
         SceneManager.LoadSceneAsync("NewMenu", LoadSceneMode.Additive);
+        SceneController.instance.SetIsInMainMenu(true);
         essentialsCanvas = GameObject.Find("====CANVAS====");
         essentialsCanvas.SetActive(false);
         camera = Camera.main.gameObject;
@@ -65,6 +66,7 @@ public class WorldController : MonoBehaviour
         }
         //Unload NewMenu Scene
         SceneManager.UnloadSceneAsync("NewMenu");
+        SceneController.instance.SetIsInMainMenu(false);
         //Começa as animaçoes do jogo
         StartCoroutine("PlayAnimation");
     }

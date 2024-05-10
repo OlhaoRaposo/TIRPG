@@ -18,13 +18,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject skillTreePanel;
     RectTransform skillTreeTransform;
 
-    /*
-    [SerializeField] GameObject strengthSkillTreePanel;
-    [SerializeField] GameObject enduranceSkillTreePanel;
-    [SerializeField] GameObject agilitySkillTreePanel;
-    [SerializeField] GameObject intelligenceSkillTreePanel;
-    */
-
     [SerializeField] Text merchantInventoryLabel;
     [SerializeField] Text shopInfluenceInfo;
     [SerializeField] ShopSlot[] shopSlots_buy;
@@ -75,7 +68,7 @@ public class UIManager : MonoBehaviour
 
     bool isInSkillTree = false;
     bool isInMenus = false;
-    bool cursorState = true;
+    bool cursorLockState = false;
     void Awake()
     {
         instance = this;
@@ -285,10 +278,14 @@ public class UIManager : MonoBehaviour
                 break;
         }
     }
+    public void SetCursorLockState(bool state)
+    {
+        cursorLockState = state;
+    }
     void ToggleCursorLockMode()
     {
-        cursorState = !cursorState;
-        PlayerCamera.instance.ToggleAimLock(cursorState);
+        cursorLockState = !cursorLockState;
+        PlayerCamera.instance.ToggleAimLock(cursorLockState);
     }
     void DisableAllPanels()
     {
@@ -297,6 +294,7 @@ public class UIManager : MonoBehaviour
         questsPanel?.SetActive(false);
         optionsPanel?.SetActive(false);
         shopPanel?.SetActive(false);
+        DisableSkillTree();
 
         currentMerchant = null;
     }
@@ -343,6 +341,20 @@ public class UIManager : MonoBehaviour
         statsPanel.SetActive(!statsPanel.activeSelf);
 
         isInSkillTree = !isInSkillTree;
+        SkillTree.instance.GetDragClass().SetSkillTreeState(isInSkillTree);
+    }
+    void DisableSkillTree()
+    {
+        if (selectedSkill != null)
+        {
+            selectedSkill = null;
+            DisableSelectedSkillPanel();
+        }
+
+        skillTreePanel.SetActive(false);
+        ReseetSkillTreePosition();
+
+        isInSkillTree = false;
         SkillTree.instance.GetDragClass().SetSkillTreeState(isInSkillTree);
     }
     void ReseetSkillTreePosition()
