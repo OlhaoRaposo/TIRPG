@@ -51,7 +51,7 @@ public class PlayerCamera : MonoBehaviour
         camSpeedY = myCinemachineCamera.m_YAxis.m_MaxSpeed;
 
         SetCameraOrbit(false);
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void SetValues(float cameraSense, float aimSense, float zoomStrength, bool isInverted)
@@ -62,14 +62,7 @@ public class PlayerCamera : MonoBehaviour
         this.isInverted = isInverted;
 
         SetCurrentSense(cameraSense);
-        if (isInverted == true)
-        {
-            myCinemachineCamera.m_YAxis.m_InvertInput = true;
-        }
-        else
-        {
-            myCinemachineCamera.m_YAxis.m_InvertInput = false;
-        }
+        myCinemachineCamera.m_YAxis.m_InvertInput = isInverted;
     }
     
     private void Update()

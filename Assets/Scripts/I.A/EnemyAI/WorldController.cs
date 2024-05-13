@@ -41,32 +41,26 @@ public class WorldController : MonoBehaviour
         }else {
             Destroy(gameObject);
         }
-        SceneManager.LoadSceneAsync("NewMenu", LoadSceneMode.Additive);
-        SceneController.instance.SetIsInMainMenu(true);
         essentialsCanvas = GameObject.Find("====CANVAS====");
         essentialsCanvas.SetActive(false);
-        camera = Camera.main.gameObject;
+        //camera = Camera.main.gameObject;
         cameraTransform = GameObject.Find("CameraPositionReference").transform;
         player = GameObject.FindGameObjectWithTag("Player");
         brain = Camera.main.gameObject.GetComponent<CinemachineBrain>();
         brain.enabled = false;
         Camera.main.gameObject.transform.localPosition = new Vector3(-.5f, 0f,-5);
         Camera.main.gameObject.transform.localRotation = Quaternion.Euler(10.7f, -5, 0);
-        PlayerCamera.instance.ToggleAimLock(false);
-        PlayerCamera.instance.ToggleAimLock(false);
-        PlayerCamera.instance.ToggleAimLock(false);
         InitiateTime();
     }
     public void StartGame() {
         Debug.Log("Game Started");
         isGameStarted = true;
         //Play Player out of stopChest(nao sei o nome de parapeito)
-        if (player.TryGetComponent(out Animator anim)) {
-            anim.SetTrigger("Start"); 
-        }
+        PlayerController.instance.PlayStartAnimation();
         //Unload NewMenu Scene
-        SceneManager.UnloadSceneAsync("NewMenu");
-        SceneController.instance.SetIsInMainMenu(false);
+        SceneController.instance.UnloadMenu();
+        //Load Gameplay scenes
+        SceneController.instance.LoadGameplayScenes();
         //Começa as animaçoes do jogo
         StartCoroutine("PlayAnimation");
     }
@@ -79,8 +73,8 @@ public class WorldController : MonoBehaviour
     }
     private void Update() {
         if (playingAnimation) {
-            camera.transform.position = Vector3.Lerp(camera.transform.position, cameraTransform.position, Time.deltaTime * 2);
-            camera.transform.rotation = Quaternion.Lerp(camera.transform.rotation, cameraTransform.rotation, Time.deltaTime * 2);
+            Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, cameraTransform.position, Time.deltaTime * 2);
+            Camera.main.transform.rotation = Quaternion.Lerp(Camera.main.transform.rotation, cameraTransform.rotation, Time.deltaTime * 2);
         }
         UpdateTimeOfDay();
         UpdateLightSettings();
