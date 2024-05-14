@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 public class Enemy : MonoBehaviour
 { IState state;
@@ -11,6 +12,8 @@ public class Enemy : MonoBehaviour
  public GameObject target;
  public NavMeshAgent agent ;
  public Animator enemyAnimator;
+ public UnityEvent OnStart;
+ 
  
  
  private Collider[] targetsDetected;
@@ -30,7 +33,7 @@ public class Enemy : MonoBehaviour
  }
  private void Start() {
    if(!TryGetComponent(out NavMeshAgent ag)){
-     Debug.LogWarning("You Forgot to add a NavMeshAgent to the enemy, adding one now."); }
+     Debug.LogWarning("You Forgot to add a NavMeshAgent to the enemy, add one now."); }
 
    if (!TryGetComponent(out Animator an))
      Debug.LogWarning("You Forgot to set the Animator THIS ENEMY NO LONGER WILL WORK");
@@ -38,6 +41,7 @@ public class Enemy : MonoBehaviour
    life = data.maxLife >= 0 ? data.maxLife : 300;
    energy = data.maxEnergy;
    ChangeState(new PatrolState(this));
+   OnStart.Invoke();
  }
  private void OnAnimatorMove() {
    Vector3 rootPosition = enemyAnimator.rootPosition;
@@ -47,6 +51,10 @@ public class Enemy : MonoBehaviour
    enemyAnimator.rootPosition = rootPosition;
    transform.position = agent.nextPosition;
    enemyAnimator.rootPosition = agent.nextPosition;
+ }
+
+ private void Test() {
+   Debug.Log("Tai");
  }
  private void SyncronizeMovement()
  {
