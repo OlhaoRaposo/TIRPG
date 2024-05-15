@@ -259,21 +259,73 @@ PrefabInstance:
       propertyPath: m_Name
       value: Forest
       objectReference: {fileID: 0}
-    - target: {fileID: 5239548516501247501, guid: 68774b918963a7e42b1fe6f444d4f51e,
+    - target: {fileID: 8471268833097116717, guid: 68774b918963a7e42b1fe6f444d4f51e,
         type: 3}
-      propertyPath: m_IsActive
-      value: 1
+      propertyPath: m_LocalPosition.x
+      value: 46.32
       objectReference: {fileID: 0}
-    - target: {fileID: 5257643465275742925, guid: 68774b918963a7e42b1fe6f444d4f51e,
+    - target: {fileID: 8471268833097116717, guid: 68774b918963a7e42b1fe6f444d4f51e,
         type: 3}
-      propertyPath: m_IsActive
-      value: 1
+      propertyPath: m_LocalPosition.y
+      value: 16.46
+      objectReference: {fileID: 0}
+    - target: {fileID: 8471268833097116717, guid: 68774b918963a7e42b1fe6f444d4f51e,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 619.52
+      objectReference: {fileID: 0}
+    - target: {fileID: 8471268833097116717, guid: 68774b918963a7e42b1fe6f444d4f51e,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.90949434
+      objectReference: {fileID: 0}
+    - target: {fileID: 8471268833097116717, guid: 68774b918963a7e42b1fe6f444d4f51e,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.41571635
+      objectReference: {fileID: 0}
+    - target: {fileID: 8471268833097116717, guid: 68774b918963a7e42b1fe6f444d4f51e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -49.129
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1676314341173696016, guid: 68774b918963a7e42b1fe6f444d4f51e,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4532662174065277921}
   m_SourcePrefab: {fileID: 100100000, guid: 68774b918963a7e42b1fe6f444d4f51e, type: 3}
+--- !u!1 &4532662174065277920 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1676314341173696016, guid: 68774b918963a7e42b1fe6f444d4f51e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1443720756}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &4532662174065277921
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4532662174065277920}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -8770316102746909988, guid: bc47221f2a385f948b94f70935366817, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
