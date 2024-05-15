@@ -85,19 +85,19 @@ public class SwitchButton : MonoBehaviour
     void Awake()
     {
         //Inicializa os textos das descrições das ações.
-        descJump.text = "Jump";
-        descDash.text = "Dash";
-        descRun.text = "Sprint";
-        descStealthMode.text = "Stealth Mode";
-        descInventory.text = "Inventory";
-        descMap.text = "Map";
-        descThrowables.text = "Throwables";
-        descConsumables.text = "Consumables";
-        descInteraction.text = "Interaction";
-        descPrimaryWeapon.text = "Primary Weapon";
-        descSecondaryWeapon.text = "Secondary Weapon";
-        descReloadGun.text = "Reload";
-        descSkillTree.text = "Skill Tree";
+        descJump.text = "Pular";
+        descDash.text = "Esquivar";
+        descRun.text = "Correr";
+        descStealthMode.text = "Modo Furtivo";
+        descInventory.text = "Inventário";
+        descMap.text = "Mapa";
+        descThrowables.text = "Arremesáveis";
+        descConsumables.text = "Consumíveis";
+        descInteraction.text = "Interação";
+        descPrimaryWeapon.text = "Arma Primária";
+        descSecondaryWeapon.text = "Arma Secundária";
+        descReloadGun.text = "Recarregar";
+        descSkillTree.text = "Habilidades";
     }
 
     //Atualiza os textos que indica as tecla de comando para realizar as ações ao abrir o menu ou ao fazer a alteração de alguma tecla.
