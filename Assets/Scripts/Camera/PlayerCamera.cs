@@ -206,8 +206,7 @@ public class PlayerCamera : MonoBehaviour
             myCinemachineCamera.m_YAxis.m_MaxSpeed = 0;
             Cursor.lockState = CursorLockMode.None;
         }
-
-        UIManager.instance.SetCursorLockState(toggle);
+        ToggleMovement(toggle);
     }
 
     public void ToggleMovement(bool toggle)
