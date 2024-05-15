@@ -43,6 +43,11 @@ public class PlayerController : MonoBehaviour
         SwapWeapon();
     }
 
+    public void PlayStartAnimation()
+    {
+        animator?.SetTrigger("Start");
+    }
+
     private void StaminaRegen()
     {
         if (stamina < PlayerHPController.instance.GetMaxStamina() && isRunning == false && isDashing == false && isGrounded == true)

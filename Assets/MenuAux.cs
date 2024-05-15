@@ -8,4 +8,8 @@ public class MenuAux : MonoBehaviour
     {
         WorldController.worldController.StartGame();
     }
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }

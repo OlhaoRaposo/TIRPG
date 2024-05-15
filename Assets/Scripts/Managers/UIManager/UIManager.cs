@@ -281,6 +281,7 @@ public class UIManager : MonoBehaviour
     public void SetCursorLockState(bool state)
     {
         cursorLockState = state;
+        //Debug.Log($"Is the cursor locked? {cursorLockState}");
     }
     void ToggleCursorLockMode()
     {
@@ -445,7 +446,10 @@ public class UIManager : MonoBehaviour
     }
     public void CallMainMenu()
     {
-        SceneController.instance.LoadSceneByIndex(0);
+        //Disable in game canvas
+        GameObject.Find("====CANVAS====").SetActive(false);
+
+        SceneController.instance.LoadMenu();
     }
     public void CallQuitGame()
     {
