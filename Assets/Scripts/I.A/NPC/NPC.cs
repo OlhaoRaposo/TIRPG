@@ -9,6 +9,7 @@ using TMPro;
 using Unity.VisualScripting;
 using Random = UnityEngine.Random;
 
+[RequireComponent(typeof(Interactable_Npc))]
 public class NPC : MonoBehaviour
 {
     public enum CurrentState { Idle, Talking, Interacting, }
@@ -168,7 +169,7 @@ public class NPC : MonoBehaviour
         HandleQuestIcon();
         DisableChatBox();
     }
-    private void StopNpc() {
+    public void StopNpc() {
         npcAgent.destination = this.transform.position;
         npcAgent.isStopped = true;
     }
