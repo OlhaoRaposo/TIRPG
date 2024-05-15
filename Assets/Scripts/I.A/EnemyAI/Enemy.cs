@@ -25,7 +25,6 @@ public class Enemy : MonoBehaviour
  public Weapon weapon;
  private Vector2 smoothVelocity;
  private Vector2 velocity;
- 
  [HideInInspector]public bool isAtacking;
  private void Awake() {
    enemyAnimator.applyRootMotion = true;
@@ -43,7 +42,6 @@ public class Enemy : MonoBehaviour
    energy = data.maxEnergy;
    weapon.SetUser(this);
    ChangeState(new PatrolState(this));
-   
    OnStart.Invoke();
  }
  private void OnAnimatorMove() {

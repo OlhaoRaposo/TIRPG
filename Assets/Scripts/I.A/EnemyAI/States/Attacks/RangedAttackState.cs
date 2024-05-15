@@ -1,16 +1,12 @@
-public class RangedAttackState : IState
-{
+public class RangedAttackState : IState {
     public Enemy enemy;
     public RangedAttackState(Enemy enemy) {
         this.enemy = enemy;
     }
-    public void Enter()
-    {
+    public void Enter() {
     }
-    public void Update()
-    {
+    public void Update() {
     }
-    public void Exit()
-    {
+    public void Exit() {
     }
 }

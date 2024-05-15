@@ -1,14 +1,21 @@
+using UnityEngine;
+
 public class JumpAttackState : IState {
     public Enemy enemy;
     public JumpAttackState (Enemy enemy) {
         this.enemy = enemy;
     }
     public void Enter() {
-        enemy.transform.LookAt(enemy.target.transform.position);
+        enemy.transform.LookAt(jumpPosition());
         enemy.weapon.Attack("_Jump");
     }
-    public void Update() {
-      
+    private Vector3 jumpPosition() {
+        Vector3 pos = new Vector3();
+        pos = enemy.target.transform.position;
+        pos += Random.insideUnitSphere * 1.5f;
+        pos.y = enemy.target.transform.position.y;
+        return pos;
     }
+    public void Update() { }
     public void Exit(){ }
 }
