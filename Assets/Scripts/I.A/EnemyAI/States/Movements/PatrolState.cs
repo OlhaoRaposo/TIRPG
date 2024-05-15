@@ -30,8 +30,10 @@ public class PatrolState : IState {
    
    public void Update() {
       CheckRemainingDistance();
-      if(enemy.TargetDistance() <= 10){
-         enemy.ChangeState(new ChaseState(enemy));
+      if(enemy.target != null){
+         if(enemy.TargetDistance() <= 10){
+            enemy.ChangeState(new ChaseState(enemy));
+         }
       }
    }
    
