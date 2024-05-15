@@ -14,7 +14,7 @@ public class WorldController : MonoBehaviour
     public bool isGameStarted;
     private bool playingAnimation;
     
-    private GameObject camera;
+    private new GameObject camera;
     private Transform cameraTransform;
     private GameObject player;
     private CinemachineBrain brain;
