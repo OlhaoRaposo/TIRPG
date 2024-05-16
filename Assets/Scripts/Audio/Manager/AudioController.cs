@@ -9,9 +9,9 @@ public class AudioController : MonoBehaviour
 
     private void Start() //Seta todos os valores de audio para os valores salvos quando o código é iniciado.
     {
-        /*master.value = PlayerPrefs.GetFloat("masterVol", master.value);
+        master.value = PlayerPrefs.GetFloat("masterVol", master.value);
         bgm.value = PlayerPrefs.GetFloat("bgmVol", bgm.value);
-        sfx.value = PlayerPrefs.GetFloat("sfxVol", sfx.value);*/
+        sfx.value = PlayerPrefs.GetFloat("sfxVol", sfx.value);
     }
     public void MasterVolumeChange() //O "BGMVolumeChange" e o "SFXVolumeChange" seguem a mesma lógica.
     {

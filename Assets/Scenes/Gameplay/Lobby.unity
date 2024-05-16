@@ -5587,7 +5587,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.19
+  m_VoxelSize: 0.2
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: f0afae5f39eabda498ccdb843a0bd096, type: 2}
   m_BuildHeightMesh: 0
@@ -17168,6 +17168,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6311824193071609321, guid: 25a730a99defe9144a37ae9775ab14a8,
+        type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 3908515611830662094, guid: d51eb6ea9796f0b45ad3a2492a86691f,
+        type: 2}
     - target: {fileID: 6995744473437070582, guid: 25a730a99defe9144a37ae9775ab14a8,
         type: 3}
       propertyPath: m_Name
@@ -17393,7 +17399,8 @@ AudioSource:
   m_GameObject: {fileID: 322291089}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -8388715408010885703, guid: d51eb6ea9796f0b45ad3a2492a86691f,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 664b8445e127af547880c3920999e247, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -20253,17 +20260,17 @@ PrefabInstance:
     - target: {fileID: 1508783018654206334, guid: b3839721f89ffea40aa0163cedac67f6,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.12218327
+      value: 0.12218328
       objectReference: {fileID: 0}
     - target: {fileID: 1508783018654206334, guid: b3839721f89ffea40aa0163cedac67f6,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 5.297979e-17
+      value: 0.000000012252035
       objectReference: {fileID: 0}
     - target: {fileID: 1508783018654206334, guid: b3839721f89ffea40aa0163cedac67f6,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 1.4893547e-16
+      value: -0.000000001508294
       objectReference: {fileID: 0}
     - target: {fileID: 2812347602307586822, guid: b3839721f89ffea40aa0163cedac67f6,
         type: 3}
@@ -20278,12 +20285,12 @@ PrefabInstance:
     - target: {fileID: 4132184705103604313, guid: b3839721f89ffea40aa0163cedac67f6,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000017698467
+      value: -0.000000017698467
       objectReference: {fileID: 0}
     - target: {fileID: 4132184705103604313, guid: b3839721f89ffea40aa0163cedac67f6,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0000000011521811
+      value: 0.0000000011521811
       objectReference: {fileID: 0}
     - target: {fileID: 5908008789760694223, guid: b3839721f89ffea40aa0163cedac67f6,
         type: 3}
@@ -22588,6 +22595,7 @@ GameObject:
   - component: {fileID: 949074270}
   - component: {fileID: 949074269}
   - component: {fileID: 949074268}
+  - component: {fileID: 949074275}
   m_Layer: 0
   m_Name: NPCTEST (1)
   m_TagString: Interactable
@@ -22635,12 +22643,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
+  canInteractWithOtherNPC: 0
   interactable: 1
   talkBox: {fileID: 903178958}
   npcType: 0
   npcCode: NPCC7
   npcAgent: {fileID: 0}
   currentDialogueIndex: 0
+  currentQuestIsCompleted: 0
+  patrolDestination: {x: 0, y: 0, z: 0}
+  hasArrived: 0
+  canInteractAgain: 0
   npcReference:
     perfilSprite: {fileID: 21300000, guid: 9cf77986ef2141048a7621896c3a348e, type: 3}
     perfilImage: {fileID: 1729100837}
@@ -22648,15 +22661,18 @@ MonoBehaviour:
     npcNameReference: {fileID: 1705310099}
     npcText: {fileID: 1096314411}
     talkBox: {fileID: 903178958}
+    questIcon: {fileID: 0}
+    interactIcon: {fileID: 0}
     nextButton: {fileID: 167616421}
     acceptButton: {fileID: 1676847909}
     refuseButton: {fileID: 1919285372}
     finishButton: {fileID: 1172206289}
-    HasQuestIcon: {fileID: 0}
   dialogueDatabase:
     randomDialogues: []
   hasQuest: 0
-  questToGive: IrAteKrek
+  questToGive: []
+  atualQuestIndex: 0
+  currentQuest: 
 --- !u!195 &949074270
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -22768,6 +22784,18 @@ Transform:
   - {fileID: 903178959}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &949074275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 949074267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af2e66858db1e824eb9f070e9d9e5978, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &951485085
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31809,11 +31837,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allQuestsInDatabase:
   - code: IrAteKrek
+    title: 
+    description: 
     isComplete: 0
     currentStep: 0
     hasQuestReward: 0
     questRewardCode: 
     questReward:
+      rewardDialogue: []
       royaltyType: 0
       royaltyValue: 0
     dialogue:
@@ -31854,6 +31885,8 @@ MonoBehaviour:
           - rid: 6144561565493886976
   activeQuests: []
   completedQuests: []
+  questPrefab: {fileID: 0}
+  questParent: {fileID: 0}
   references:
     version: 2
     RefIds:
@@ -33618,6 +33651,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnWasCreated: 0
+  isGameStarted: 0
+  blend: 0
+  timeMultiplier: 0
+  timeText: {fileID: 0}
+  sunLight:
+    sunLight: {fileID: 0}
+    maxSunLightIntesity: 0
+    sunriseHour: 0
+    sunsetHour: 0
+    moonLight: {fileID: 0}
+    maxMoonLightIntesity: 0
+    lightAnimation:
+      lightChangeCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      dayAmbientLight: {r: 0, g: 0, b: 0, a: 0}
+      nightAmbientLight: {r: 0, g: 0, b: 0, a: 0}
+    clock: {fileID: 0}
+  skyBoxMaterial: {fileID: 0}
 --- !u!4 &2026416064
 Transform:
   m_ObjectHideFlags: 0
@@ -35633,6 +35688,7 @@ GameObject:
   - component: {fileID: 8124852311501482811}
   - component: {fileID: 2961901390777869378}
   - component: {fileID: 6223421792678144292}
+  - component: {fileID: 8124852311501482812}
   m_Layer: 0
   m_Name: NPC (7)
   m_TagString: Interactable
@@ -35655,6 +35711,7 @@ GameObject:
   - component: {fileID: 8124852312385257610}
   - component: {fileID: 2961901391745798131}
   - component: {fileID: 6223421791800640149}
+  - component: {fileID: 8124852312385257611}
   m_Layer: 0
   m_Name: NPCTEST
   m_TagString: Interactable
@@ -35677,6 +35734,7 @@ GameObject:
   - component: {fileID: 8124852310398056853}
   - component: {fileID: 2961901389741815532}
   - component: {fileID: 6223421793789967242}
+  - component: {fileID: 8124852310398056854}
   m_Layer: 0
   m_Name: NPC (6)
   m_TagString: Interactable
@@ -36190,12 +36248,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
+  canInteractWithOtherNPC: 0
   interactable: 0
   talkBox: {fileID: 0}
   npcType: 1
   npcCode: QNPC01
   npcAgent: {fileID: 0}
   currentDialogueIndex: 0
+  currentQuestIsCompleted: 0
+  patrolDestination: {x: 0, y: 0, z: 0}
+  hasArrived: 0
+  canInteractAgain: 0
   npcReference:
     perfilSprite: {fileID: 0}
     perfilImage: {fileID: 0}
@@ -36203,15 +36266,18 @@ MonoBehaviour:
     npcNameReference: {fileID: 0}
     npcText: {fileID: 0}
     talkBox: {fileID: 0}
+    questIcon: {fileID: 0}
+    interactIcon: {fileID: 0}
     nextButton: {fileID: 0}
     acceptButton: {fileID: 0}
     refuseButton: {fileID: 0}
     finishButton: {fileID: 0}
-    HasQuestIcon: {fileID: 0}
   dialogueDatabase:
     randomDialogues: []
   hasQuest: 0
-  questToGive: 
+  questToGive: []
+  atualQuestIndex: 0
+  currentQuest: 
 --- !u!114 &2961901390777869378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36225,12 +36291,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
+  canInteractWithOtherNPC: 0
   interactable: 0
   talkBox: {fileID: 0}
   npcType: 1
   npcCode: QNPC01
   npcAgent: {fileID: 0}
   currentDialogueIndex: 0
+  currentQuestIsCompleted: 0
+  patrolDestination: {x: 0, y: 0, z: 0}
+  hasArrived: 0
+  canInteractAgain: 0
   npcReference:
     perfilSprite: {fileID: 0}
     perfilImage: {fileID: 0}
@@ -36238,15 +36309,18 @@ MonoBehaviour:
     npcNameReference: {fileID: 0}
     npcText: {fileID: 0}
     talkBox: {fileID: 0}
+    questIcon: {fileID: 0}
+    interactIcon: {fileID: 0}
     nextButton: {fileID: 0}
     acceptButton: {fileID: 0}
     refuseButton: {fileID: 0}
     finishButton: {fileID: 0}
-    HasQuestIcon: {fileID: 0}
   dialogueDatabase:
     randomDialogues: []
   hasQuest: 0
-  questToGive: 
+  questToGive: []
+  atualQuestIndex: 0
+  currentQuest: 
 --- !u!114 &2961901391745798131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36260,12 +36334,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
+  canInteractWithOtherNPC: 0
   interactable: 1
   talkBox: {fileID: 1731571653}
   npcType: 0
   npcCode: NPCC7
   npcAgent: {fileID: 0}
   currentDialogueIndex: 0
+  currentQuestIsCompleted: 0
+  patrolDestination: {x: 0, y: 0, z: 0}
+  hasArrived: 0
+  canInteractAgain: 0
   npcReference:
     perfilSprite: {fileID: 21300000, guid: 9cf77986ef2141048a7621896c3a348e, type: 3}
     perfilImage: {fileID: 1231737510}
@@ -36273,15 +36352,18 @@ MonoBehaviour:
     npcNameReference: {fileID: 1193858029}
     npcText: {fileID: 1469894920}
     talkBox: {fileID: 1731571653}
+    questIcon: {fileID: 0}
+    interactIcon: {fileID: 0}
     nextButton: {fileID: 106768772}
     acceptButton: {fileID: 1686491083}
     refuseButton: {fileID: 770935112}
     finishButton: {fileID: 201511582}
-    HasQuestIcon: {fileID: 0}
   dialogueDatabase:
     randomDialogues: []
   hasQuest: 1
-  questToGive: IrAteKrek
+  questToGive: []
+  atualQuestIndex: 0
+  currentQuest: 
 --- !u!33 &3074280573227396719
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -37609,6 +37691,18 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &8124852310398056854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1553243800666730659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af2e66858db1e824eb9f070e9d9e5978, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!195 &8124852311501482811
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -37631,6 +37725,18 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &8124852311501482812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1553243799622672909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af2e66858db1e824eb9f070e9d9e5978, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!195 &8124852312385257610
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -37653,6 +37759,18 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &8124852312385257611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1553243799749446076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af2e66858db1e824eb9f070e9d9e5978, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8708449404008639208
 GameObject:
   m_ObjectHideFlags: 0
