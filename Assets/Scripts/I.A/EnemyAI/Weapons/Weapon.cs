@@ -6,7 +6,7 @@ public class Weapon : MonoBehaviour {
     public float damage;
     public float cadence;
     public bool isPrincipal;
-    public Enemy enemy;
+    public EnemyBehaviour enemy;
     [SerializeField] string attackSelected;
     public EnemySelection selection;
     [Header("Case Shoots")]
@@ -15,8 +15,7 @@ public class Weapon : MonoBehaviour {
     public enum EnemySelection {
         Lobo,Aranha,Boitata,Robo,
     }
-
-    public void SetUser(Enemy en) {
+    public void SetUser(EnemyBehaviour en) {
         enemy = en;
     }
     public void Attack(string attackSelected) {
@@ -35,7 +34,6 @@ public class Weapon : MonoBehaviour {
                 Shoot(); 
                 yield return new WaitForSeconds(.1f);
         }
-         
         yield return new WaitForSeconds(cadence);
         enemy.isAtacking = false;
         enemy.ChangeState(new ChaseState(enemy));
@@ -45,8 +43,6 @@ public class Weapon : MonoBehaviour {
         enemy.transform.LookAt(enemy.target.transform.position);
         Instantiate(bullet, gunRoot.transform.position, gunRoot.transform.rotation);
     }
-    
-    
     void OnTriggerEnter(Collider other) {
         if(other.gameObject.CompareTag("Player")) {
             PlayerHPController.instance.ChangeHP(damage, true);

@@ -30,11 +30,10 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Player"))
-        {
+        if(other.gameObject.CompareTag("Player")) {
             PlayerHPController.instance.ChangeHP(damage, true);
         }else if(other.gameObject.CompareTag("Enemy")) {
-            other.gameObject.SendMessage("TakeDamage", damage);
+            other.gameObject.SendMessage("TakeDamage", damage, (SendMessageOptions)DamageElementManager.DamageElement.Physical);
         }
         Destroy(this.gameObject);
     }

@@ -1,84 +1,109 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class ArmadeiraWeapon : MonoBehaviour
 {
-    public EnemyBehaviour user;
-    public float damage;
-    public float cadence;
-    public void Attack()
-    {
-        StartCoroutine(CadenceTime(user.energy));
-    }
-     IEnumerator CadenceTime(float energy)
-     {
-         if (user.isAttacking) {
-             user.myNavMeshAgent.enemyAgent.SetDestination(user.enemyTarget.transform.position);
-             if(energy >= 50) {
-                 EspecialAtack();
-                 user.energy-=100;
-             }else {
-                 int odds = Random.Range(0, 100);
-                    if (odds <= 50) {
-                        NormalAtack();
-                    } else {
-                        NormalAreaAtack();
-                    }
-             }
-             yield return new WaitForSeconds(cadence);
-             StartCoroutine(CadenceTime(user.energy));
+    [SerializeField] private List<Transform> gunRoots;
+     public GameObject normalBullet;
+     public GameObject especialBullet;
+     public GameObject target;
+     public EnemyBehaviour user;
+     private bool isShooting;
+
+     public void Attack(string expression){
+         Debug.Log("Attacking with: " + expression);
+        
+        switch (expression) {
+           case "_melee1":
+               StartCoroutine(MeleeHit(expression));
+               break;
+           case "_melee2":
+               StartCoroutine(MeleeHit(expression));
+               break;
+           case "_melee3":
+               StartCoroutine(MeleeHit(expression));
+               break;
+           case "_ranged1":
+               StartCoroutine(NormalShoot(4,expression));
+               break;
+           case "_ranged2":
+               StartCoroutine(NormalShoot(12,expression));
+               break;
+           case "_esp1":
+               StartCoroutine(EspecialShoot(4,expression));
+               break;
+           case "_esp2":
+               StartCoroutine(EspecialShoot(12,expression));
+               break;
+           case "_Jump":
+               StartCoroutine(Jump(expression));
+               break;
          }
      }
-     public float CalculateDistance()
+
+     private void Update()
      {
-         Vector3 distance = user.enemyTarget.transform.position - user.transform.position;
-         return distance.magnitude;
+         if (isShooting) {
+             Transform userTransform = user.transform;
+             Quaternion targetRotation = Quaternion.LookRotation(target.transform.position - userTransform.position);
+             userTransform.rotation = Quaternion.Lerp(userTransform.rotation, targetRotation, .15f * Time.deltaTime);
+         }
      }
-    public void NormalAtack()
-    {
-        user.myNavMeshAgent.enemyAgent.SetDestination(user.enemyTarget.transform.position);
-        user.transform.LookAt(user.enemyTarget.transform.position);
-        Animator userAnimator = user.gameObject.TryGetComponent(out Animator animator) ? animator : null; 
-        if (CalculateDistance() > 6) {
-            int odds0 = Random.Range(0, 100);
-            if (odds0 <= 25) {
-                EspecialAtack();
-            } 
-        }else {
-            int odds = Random.Range(0, 100);
-            if (odds <= 50) {
-                userAnimator.SetTrigger("NormalAttackL");
-            } else {
-                userAnimator.SetTrigger("NormalAttackR");
+
+     IEnumerator MeleeHit(string expression) {
+         user.enemyAnimator.SetTrigger(expression);
+         yield return new WaitForSeconds(1);
+         user.ChangeState(new ChaseState(user));
+     }
+     IEnumerator NormalShoot(int shoots,string expression) {
+         isShooting = true;
+         user.agent.SetDestination(user.transform.position);
+            for (int i = 0; i < shoots; i++){
+                user.enemyAnimator.SetTrigger(expression);
+                user.transform.LookAt(user.target.transform.position);
+                int rndRoot = Random.Range(0, gunRoots.Count);
+                GameObject bullet = Instantiate(normalBullet, gunRoots[rndRoot].position, gunRoots[rndRoot].rotation);
+                yield return new WaitForSeconds(0.5f);
             }
-        }
-    }
-    public void NormalAreaAtack()
-    {
-        user.myNavMeshAgent.enemyAgent.SetDestination(user.enemyTarget.transform.position);
-        user.transform.LookAt(user.enemyTarget.transform.position);
-        if (CalculateDistance() > 6) {
-            int odds0 = Random.Range(0, 100);
-            if (odds0 <= 25) {
-                EspecialAtack();
-            } 
-        }else {
-            Animator userAnimator = user.gameObject.TryGetComponent(out Animator animator) ? animator : null; 
-            userAnimator.SetTrigger("ComboAttack");
-        }
-    }
-    public void EspecialAtack()
-    {
-        user.myNavMeshAgent.enemyAgent.SetDestination(user.enemyTarget.transform.position);
-        Animator userAnimator = user.gameObject.TryGetComponent(out Animator animator) ? animator : null; 
-        userAnimator.SetTrigger("EspecialAttack");
-    }
-    
-    void OnTriggerEnter(Collider other)
-    {
-        if(other.gameObject.CompareTag("Player"))
-        {
-            PlayerHPController.instance.ChangeHP(damage, true);
-        }
-    }
+            yield return new WaitForSeconds(1);
+            user.ChangeState(new ChaseState(user));
+            isShooting = false;
+     }
+     IEnumerator EspecialShoot(int shoots,string expression){
+         isShooting = true;
+         user.agent.SetDestination(user.transform.position);
+         yield return new WaitForSeconds(1);
+         user.enemyAnimator.SetTrigger(expression);
+         user.enemyAnimator.SetBool("bastionActive", true);
+         yield return new WaitForSeconds(2);
+         List<GameObject> targets = null;
+         Vector3[] points = new Vector3[shoots];
+         
+         for (int i = 0; i < shoots; i++) {
+             points[i] = user.target.transform.position + Random.insideUnitSphere * 6;
+             GameObject tr = Instantiate(target, new Vector3(points[i].x, 0, points[i].z), Quaternion.identity);
+             yield return new WaitForSeconds(.1f);
+         }
+         yield return new WaitForSeconds(.5f);
+         for (int i = 0; i < shoots; i++) {
+            Instantiate(especialBullet, points[i] + new Vector3(0, 10,0), Quaternion.identity);
+            yield return new WaitForSeconds(0.5f);
+         }
+         
+         yield return new WaitForSeconds(.5f);
+         user.enemyAnimator.SetBool("bastionActive", false);
+         yield return new WaitForSeconds(.5f);
+         isShooting = false;
+         user.ChangeState(new ChaseState(user));
+     }
+     IEnumerator Jump(string expression) {
+         user.transform.LookAt(user.transform.forward);
+         user.enemyAnimator.SetTrigger(expression);
+         user.transform.LookAt(user.transform.forward);
+         yield return new WaitForSeconds(3);
+         user.ChangeState(new ChaseState(user));
+     }
 }

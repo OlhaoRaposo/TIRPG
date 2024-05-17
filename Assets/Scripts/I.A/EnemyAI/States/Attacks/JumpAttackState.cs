@@ -1,13 +1,13 @@
 using UnityEngine;
 
 public class JumpAttackState : IState {
-    public Enemy enemy;
-    public JumpAttackState (Enemy enemy) {
+    public EnemyBehaviour enemy;
+    public JumpAttackState (EnemyBehaviour enemy) {
         this.enemy = enemy;
     }
     public void Enter() {
         enemy.transform.LookAt(jumpPosition());
-        enemy.weapon.Attack("_Jump");
+        enemy.weapon.SendMessage("Attack","_Jump");
     }
     private Vector3 jumpPosition() {
         Vector3 pos = new Vector3();

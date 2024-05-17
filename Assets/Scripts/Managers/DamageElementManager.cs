@@ -72,7 +72,6 @@ public class DamageElementManager : MonoBehaviour
                 }
         }
     }
-
     private void AcidEffect(EnemyBehaviour enemy, float damage)
     {
         if(currentEnhance != null)
@@ -176,11 +175,10 @@ public class DamageElementManager : MonoBehaviour
         }
         currentBurn = null;
     }
-
     private IEnumerator StunEnemy(EnemyBehaviour enemy)
     {
         enemy.gameObject.GetComponent<NavMeshAgent>().enabled = false;
-        enemy.isAttacking = false;
+       // enemy.isAttacking = false;
         yield return new WaitForSeconds(stunDuration);
         enemy.gameObject.GetComponent<NavMeshAgent>().enabled = true;
     }

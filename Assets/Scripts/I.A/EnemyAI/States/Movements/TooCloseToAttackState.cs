@@ -2,17 +2,16 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class TooCloseToAttackState : IState {
-    public Enemy enemy;
+    public EnemyBehaviour enemy;
     private float distanceWanted;
     public GameObject target;
-    public TooCloseToAttackState(Enemy enemy) {
+    public TooCloseToAttackState(EnemyBehaviour enemy) {
         this.enemy = enemy;
     }
     public void Enter() {
         Debug.Log("Entered" + enemy.currentState);
         enemy.agent.SetDestination(newPositionFromPlayer());
     }
-
     private Vector3 newPositionFromPlayer() {
         Vector3 newPosition = new Vector3();
         NavMeshHit hit;

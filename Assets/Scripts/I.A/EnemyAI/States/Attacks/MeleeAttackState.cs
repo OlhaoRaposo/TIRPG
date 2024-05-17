@@ -1,11 +1,11 @@
 using UnityEngine;
 public class MeleeAttackState : IState {
-    public Enemy enemy;
-    public MeleeAttackState(Enemy enemy) {
+    public EnemyBehaviour enemy;
+    public MeleeAttackState(EnemyBehaviour enemy) {
         this.enemy = enemy;
     }
     public void Enter() {
-       enemy.weapon.Attack(SelectAttack());
+        enemy.weapon.SendMessage("Attack",SelectAttack());
     }
     string SelectAttack() { 
         string attack = "";
