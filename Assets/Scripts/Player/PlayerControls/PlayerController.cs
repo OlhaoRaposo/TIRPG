@@ -329,4 +329,8 @@ public class PlayerController : MonoBehaviour
         return Vector3.Distance(normalizedStart, normalizedEnd);
     }
 
+    public void TeleportPlayer(Vector3 newPosition)
+    {
+        transform.position = newPosition;
+    }
 }
