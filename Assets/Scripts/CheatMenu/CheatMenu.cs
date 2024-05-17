@@ -23,6 +23,8 @@ public class CheatMenu : MonoBehaviour
     }
     void Update()
     {
+        if (SceneController.instance.GetIsInMainMenu()) return;
+
         if (Input.GetKeyDown(shortcut) && !UIManager.instance.GetIsInMenus())
         {
             UIManager.instance.ToggleCheatMenu();
