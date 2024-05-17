@@ -33,6 +33,8 @@ public class WorldController : MonoBehaviour
     private Volume dayPostProcessing, nightPostProcessing;
     [SerializeField] Material skyBoxMaterial;
 
+    private Camera mainCam;
+
     private void Start()
     {
         if (worldController == null) {
@@ -48,8 +50,8 @@ public class WorldController : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         brain = Camera.main.gameObject.GetComponent<CinemachineBrain>();
         brain.enabled = false;
-        Camera.main.gameObject.transform.localPosition = new Vector3(-.5f, 0f,-5);
-        Camera.main.gameObject.transform.localRotation = Quaternion.Euler(10.7f, -5, 0);
+        mainCam = Camera.main;
+        mainCam.gameObject.SetActive(false);
         InitiateTime();
     }
     public void StartGame() {
@@ -72,10 +74,6 @@ public class WorldController : MonoBehaviour
         lightsObjects.AddRange(GameObject.FindGameObjectsWithTag("LightObject"));
     }
     private void Update() {
-        if (playingAnimation) {
-            Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, cameraTransform.position, Time.deltaTime * 2);
-            Camera.main.transform.rotation = Quaternion.Lerp(Camera.main.transform.rotation, cameraTransform.rotation, Time.deltaTime * 2);
-        }
         UpdateTimeOfDay();
         UpdateLightSettings();
         RotateSun();
@@ -129,7 +127,6 @@ public class WorldController : MonoBehaviour
        float percentage = range / diference;
        blend = percentage;
     }
-
     private void UpdateLightSettings()
     {
         float dotProduct = Vector3.Dot(sunLight.sunLight.transform.forward, Vector3.down);
@@ -148,13 +145,14 @@ public class WorldController : MonoBehaviour
         return difference;
     }
     public IEnumerator PlayAnimation() {
-        yield return new WaitForSeconds(3);
-        playingAnimation = true;
-        yield return new WaitForSeconds(3);
-        brain.enabled = true;
-        playingAnimation = false;
+        CameraFolow.folow.started = true;
+        yield return new WaitForSeconds(4);
+        Debug.LogWarning("FINALIZADO COROUTINE");
         PlayerCamera.instance.ToggleAimLock(true);
         essentialsCanvas.SetActive(true);
+        mainCam.gameObject.SetActive(true);
+        brain.enabled = true;
+        CameraFolow.folow.gameObject.SetActive(false);
     }
 }
 [Serializable]
