@@ -7,7 +7,7 @@ public class Weapon : MonoBehaviour {
     public float cadence;
     public bool isPrincipal;
     public Enemy enemy;
-    private string attackSelected;
+    [SerializeField] string attackSelected;
     public EnemySelection selection;
     [Header("Case Shoots")]
     [SerializeField] private GameObject bullet;
@@ -29,8 +29,13 @@ public class Weapon : MonoBehaviour {
     IEnumerator AttackPlayer() {
         enemy.isAtacking = true;
         enemy.enemyAnimator.SetTrigger(attackSelected);
-        if (attackSelected.Contains("Ranged")) {
-           Shoot(); }
+        if (attackSelected.Contains("Shoot")) { 
+            enemy.agent.SetDestination(enemy.transform.position);
+            yield return new WaitForSeconds(.5f);
+                Shoot(); 
+                yield return new WaitForSeconds(.1f);
+        }
+         
         yield return new WaitForSeconds(cadence);
         enemy.isAtacking = false;
         enemy.ChangeState(new ChaseState(enemy));
@@ -38,7 +43,7 @@ public class Weapon : MonoBehaviour {
 
     void Shoot(){
         enemy.transform.LookAt(enemy.target.transform.position);
-        Instantiate(bullet, gunRoot.transform.position, Quaternion.identity);
+        Instantiate(bullet, gunRoot.transform.position, gunRoot.transform.rotation);
     }
     
     

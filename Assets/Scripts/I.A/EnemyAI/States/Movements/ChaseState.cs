@@ -39,7 +39,7 @@ public class ChaseState : IState {
                break;
             case Enemy.EnemyType.rangedAndMelee:
                int rnd2 = Random.Range(0, 100);
-               if(rnd2 <= 20)
+               if(rnd2 <= 10)
                   enemy.ChangeState(new JumpAttackState(enemy));
                else
                   enemy.ChangeState(new RangedAttackState(enemy));

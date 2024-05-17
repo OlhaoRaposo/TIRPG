@@ -16,7 +16,7 @@ public class TooCloseToAttackState : IState {
     private Vector3 newPositionFromPlayer() {
         Vector3 newPosition = new Vector3();
         NavMeshHit hit;
-        newPosition = enemy.transform.position - target.transform.position;
+        newPosition = enemy.transform.position - enemy.target.transform.position;
         newPosition = newPosition.normalized;
         newPosition *= distanceWanted;
         newPosition += Random.insideUnitSphere * 3;
@@ -28,14 +28,15 @@ public class TooCloseToAttackState : IState {
         }
         return newPosition;
     }
-
     private float CalculateDistance() {
         float distance = 0;
-        Vector3 targetDistance = enemy.transform.position - target.transform.position;
-        distance = targetDistance.magnitude;
+        Vector3 targetDistance = enemy.transform.position - enemy.target.transform.position;
+        distance = 1- targetDistance.magnitude;
         return distance;
     }
     public void Update() {
+        if (CalculateDistance() >= 10)
+            enemy.ChangeState(new ChaseState(enemy));
     }
     public void Exit(){ }
 }
