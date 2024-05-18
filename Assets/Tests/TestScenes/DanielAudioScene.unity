@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1109,6 +1109,7 @@ MonoBehaviour:
   speed: 1
   loop: 0
   rotationSpeed: 1
+  started: 0
 --- !u!4 &2082881683
 Transform:
   m_ObjectHideFlags: 0
@@ -11516,18 +11517,20 @@ MonoBehaviour:
       bestiaryCode: 03A
       spawner: {fileID: 7336646412705050281, guid: b94aca3b6b5c9f2438cb9bc12956c29b,
         type: 3}
-  EnemyCanvas: {fileID: 0}
-  damageCanvas: {fileID: 0}
+  EnemyCanvas: {fileID: 3141963529751905490}
+  damageCanvas: {fileID: 5743749419630533794, guid: 93bd076d1d8d2db40bde06dbd1bc9614,
+    type: 3}
   triggers:
     meleeAttacks:
     - AttackL
     - AttackR
+    - HeavyAttack
     rangedAttacks: []
     specialAttacks:
     - HeavyAttack
     jumpAttacks:
     - _Jump
-  weapon: {fileID: 0}
+  weapon: {fileID: 224559995229067790}
   isAtacking: 0
   mySpawner:
     bestiaryCode: 

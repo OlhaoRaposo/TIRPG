@@ -11,6 +11,8 @@ public class Bullet : MonoBehaviour
     private float damage;
     [SerializeField]
     private float timeToDestroy;
+    [SerializeField] 
+    private bool moveFoward;
 
     private void Start()
     {
@@ -25,7 +27,8 @@ public class Bullet : MonoBehaviour
 
     private void FixedUpdate()
     {
-        transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        if(moveFoward)
+            transform.Translate(Vector3.forward * speed * Time.deltaTime);
     }
 
     private void OnTriggerEnter(Collider other)
