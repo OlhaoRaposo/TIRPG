@@ -78,9 +78,9 @@ public class CheatMenu : MonoBehaviour
     {
         hasInfiniteAmmo = !hasInfiniteAmmo;
     }
-    public void GainExperiencePoints(int amount)
+    public void LevelUp()
     {
-        PlayerStats.instance.GainXp(amount);
+        PlayerStats.instance.LevelUp();
     }
     public bool GetHasInfiniteHP()
     {

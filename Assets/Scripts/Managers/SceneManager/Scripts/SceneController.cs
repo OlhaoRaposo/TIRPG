@@ -24,6 +24,7 @@ public class SceneController : MonoBehaviour
         //SceneManager.sceneUnloaded += scene => Debug.Log($"Unloaded {scene.name}");
 
         LoadAdditiveSceneByName("PlayerScene");
+        LoadGameplayScenes();
     }
     void Start()
     {
@@ -32,7 +33,6 @@ public class SceneController : MonoBehaviour
     public void LoadMenu()
     {
         LoadAdditiveSceneAsyncByName("NewMenu");
-        LoadAdditiveSceneAsyncByName("LobbyScene");
         isInMainMenu = true;
     }
     public void UnloadMenu()
