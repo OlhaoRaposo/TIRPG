@@ -56,7 +56,7 @@ public class PlayerCameraMovement : MonoBehaviour
 
     private void Update()
     {
-        if (/*WorldController.worldController.isGameStarted*/ true)
+        if (WorldController.worldController.isGameStarted)
         {
             CameraMove();
             PlayerAim();

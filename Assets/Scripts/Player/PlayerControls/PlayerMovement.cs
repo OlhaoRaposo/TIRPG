@@ -25,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (/*WorldController.worldController.isGameStarted*/ true)
+        if (WorldController.worldController.isGameStarted)
         {
             StaminaRegen();
             Movement();
