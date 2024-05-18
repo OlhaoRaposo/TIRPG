@@ -98,8 +98,8 @@ public class PlayerCameraMovement : MonoBehaviour
                     if (360 - Mathf.Abs(transform.eulerAngles.x) > cameraVerticalClamping)
                     {
                         Debug.Log("PARO");
-                        transform.localPosition = previousCamPosition;
-                        transform.localEulerAngles = previousCamRotation;
+                        transform.localPosition = new Vector3(transform.localPosition.x, previousCamPosition.y, transform.localPosition.z);
+                        transform.localEulerAngles = new Vector3(previousCamRotation.x, transform.localEulerAngles.y, transform.localEulerAngles.z);;
                     }
                     else
                     {
