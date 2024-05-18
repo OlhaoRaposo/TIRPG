@@ -1,12 +1,12 @@
 using UnityEngine;
 
 public class RangedAttackState : IState {
-    public Enemy enemy;
-    public RangedAttackState(Enemy enemy) {
+    public EnemyBehaviour enemy;
+    public RangedAttackState(EnemyBehaviour enemy) {
         this.enemy = enemy;
     }
     public void Enter() {
-        enemy.weapon.Attack(SelectAttack());
+        enemy.weapon.SendMessage("Attack",SelectAttack());
     }
     private void Aim() {
         Vector3 fowardPos = enemy.target.transform.position + (enemy.target.transform.forward * 2);

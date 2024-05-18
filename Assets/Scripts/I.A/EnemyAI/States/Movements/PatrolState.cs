@@ -2,18 +2,18 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class PatrolState : IState {
-   public Enemy enemy;
+   public EnemyBehaviour enemy;
    private Animator enemyAnimator;
 
-   public PatrolState(Enemy enemy) {
+   public PatrolState(EnemyBehaviour enemy) {
       this.enemy = enemy;
    }
    public void Enter() {
       Debug.Log("Entered" + enemy.currentState);
       enemyAnimator = enemy.enemyAnimator;
       enemy.agent.speed = 4;
-      if(enemy != null && enemy.currentState != Enemy.EnemyState.Patrol){
-         enemy.currentState = Enemy.EnemyState.Patrol;
+      if(enemy != null && enemy.currentState != EnemyBehaviour.EnemyState.Patrol){
+         enemy.currentState = EnemyBehaviour.EnemyState.Patrol;
       }
       enemy.agent.SetDestination(SelectRandomLocation(enemy.transform.position));
    }
