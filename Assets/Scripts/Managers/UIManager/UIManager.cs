@@ -85,15 +85,6 @@ public class UIManager : MonoBehaviour
 
         skillTreeTransform = skillTreePanel.transform.Find("Skills").GetComponent<RectTransform>();
     }
-    void Update()
-    {
-        if (Input.GetKey(KeyCode.Escape))
-        {
-            ToggleShopPanel();
-        }
-
-        //Debug.Log(EventSystem.current.currentSelectedGameObject.name);
-    }
     public ShopSlot[] GetShopSlotsBuy()
     {
         return shopSlots_buy;
@@ -251,7 +242,7 @@ public class UIManager : MonoBehaviour
         UpdateShopInfluenceInfo();
         UpdateMerchantNameText();
     }
-    void ToggleShopPanel()
+    public void ToggleShopPanel()
     {
         if (currentMerchant == null) return;
 
@@ -284,7 +275,7 @@ public class UIManager : MonoBehaviour
         cursorLockState = state;
         //Debug.Log($"Is the cursor locked? {cursorLockState}");
     }
-    void ToggleCursorLockMode()
+    public void ToggleCursorLockMode()
     {
         cursorLockState = !cursorLockState;
         PlayerCameraMovement.instance.ToggleAimLock(cursorLockState);
