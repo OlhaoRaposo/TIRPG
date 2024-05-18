@@ -15,6 +15,7 @@ MonoBehaviour:
   components:
   - {fileID: 672836186877554598}
   - {fileID: 8962078841675176179}
+  - {fileID: 8282872290421690549}
 --- !u!114 &672836186877554598
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -29,20 +30,54 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 1
   postExposure:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 0
   contrast:
     m_OverrideState: 1
-    m_Value: -30
+    m_Value: -3
   colorFilter:
     m_OverrideState: 1
-    m_Value: {r: 0.82102174, g: 0.8490566, b: 0.84410256, a: 1}
+    m_Value: {r: 0.8235582, g: 0.8773585, b: 0.8639084, a: 1}
   hueShift:
     m_OverrideState: 0
     m_Value: 9
   saturation:
     m_OverrideState: 0
     m_Value: 26
+--- !u!114 &8282872290421690549
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 558a8e2b6826cf840aae193990ba9f2e, type: 3}
+  m_Name: ShadowsMidtonesHighlights
+  m_EditorClassIdentifier: 
+  active: 1
+  shadows:
+    m_OverrideState: 1
+    m_Value: {x: 1, y: 0.8526454, z: 0.84227407, w: -0.25873223}
+  midtones:
+    m_OverrideState: 0
+    m_Value: {x: 1, y: 1, z: 1, w: 0}
+  highlights:
+    m_OverrideState: 1
+    m_Value: {x: 0.6505426, y: 1, z: 0.7894041, w: 0.62095743}
+  shadowsStart:
+    m_OverrideState: 0
+    m_Value: 0
+  shadowsEnd:
+    m_OverrideState: 0
+    m_Value: 0.3
+  highlightsStart:
+    m_OverrideState: 0
+    m_Value: 0.55
+  highlightsEnd:
+    m_OverrideState: 0
+    m_Value: 1
 --- !u!114 &8962078841675176179
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -64,15 +99,15 @@ MonoBehaviour:
     m_Value: 0.4
   intensity:
     m_OverrideState: 1
-    m_Value: 4.31
+    m_Value: 2
   scatter:
     m_OverrideState: 1
-    m_Value: 0.755
+    m_Value: 0.427
   clamp:
     m_OverrideState: 0
     m_Value: 65472
   tint:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: {r: 0.990566, g: 0.956643, b: 0.7709594, a: 1}
   highQualityFiltering:
     m_OverrideState: 0
