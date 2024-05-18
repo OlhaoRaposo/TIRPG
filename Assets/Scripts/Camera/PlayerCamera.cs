@@ -207,6 +207,7 @@ public class PlayerCamera : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
         }
         ToggleMovement(toggle);
+        UIManager.instance.SetCursorLockState(toggle);
     }
 
     public void ToggleMovement(bool toggle)

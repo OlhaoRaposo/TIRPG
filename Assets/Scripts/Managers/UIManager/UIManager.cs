@@ -18,6 +18,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject skillTreePanel;
     RectTransform skillTreeTransform;
 
+    [SerializeField] GameObject cheatMenuPanel;
+
     [SerializeField] Text merchantInventoryLabel;
     [SerializeField] Text shopInfluenceInfo;
     [SerializeField] ShopSlot[] shopSlots_buy;
@@ -85,12 +87,9 @@ public class UIManager : MonoBehaviour
     }
     void Update()
     {
-        if (currentMerchant != null)
+        if (Input.GetKey(KeyCode.Escape))
         {
-            if (Input.GetKey(KeyCode.Escape))
-            {
-                ToggleShopPanel();
-            }
+            ToggleShopPanel();
         }
 
         //Debug.Log(EventSystem.current.currentSelectedGameObject.name);
@@ -193,7 +192,7 @@ public class UIManager : MonoBehaviour
         ToggleCursorLockMode();
         isInMenus = !isInMenus;
 
-        if(isInMenus == true)
+        /*if(isInMenus)
         {
             PlayerController.instance?.ToggleWeaponSwap(false);
             PlayerGun.instance?.ShootToggle(false);
@@ -204,12 +203,18 @@ public class UIManager : MonoBehaviour
             PlayerController.instance?.ToggleWeaponSwap(true);
             PlayerGun.instance?.ShootToggle(true);
             PlayerMeleeCombat.instance?.MeleeAttackToggle(true);
-        }
+        }*/
+        PlayerController.instance?.ToggleWeaponSwap(!isInMenus);
+        PlayerGun.instance?.ShootToggle(!isInMenus);
+        PlayerMeleeCombat.instance?.MeleeAttackToggle(!isInMenus);
 
         if (currentMerchant == null)
         {
             inGameMenusParent.SetActive(!inGameMenusParent.activeSelf);
+
             DisableAllPanels();
+            DisablePanel(cheatMenuPanel);
+
             ToggleCrosshair();
             ToggleInventoryPanel();
         }
@@ -239,6 +244,11 @@ public class UIManager : MonoBehaviour
         DisableAllPanels();
         optionsPanel.SetActive(!inventoryPanel.activeSelf);
     }
+    public void ToggleCheatMenu()
+    {
+        cheatMenuPanel.SetActive(!cheatMenuPanel.activeSelf);
+        ToggleCursorLockMode();
+    }
     public void ToggleShopPanel(MerchantInventory merchantInventory)
     {
         isInMenus = !isInMenus;
@@ -254,6 +264,8 @@ public class UIManager : MonoBehaviour
     }
     void ToggleShopPanel()
     {
+        if (currentMerchant == null) return;
+
         isInMenus = !isInMenus;
 
         DisableAllPanels();
@@ -287,6 +299,10 @@ public class UIManager : MonoBehaviour
     {
         cursorLockState = !cursorLockState;
         PlayerCamera.instance.ToggleAimLock(cursorLockState);
+    }
+    void DisablePanel(GameObject go)
+    {
+        go.SetActive(false);
     }
     void DisableAllPanels()
     {

@@ -23,7 +23,7 @@ public class ProcedureTrigger : StepModule
     {
         onTriggerEnter.AddListener(Enter);
         onTriggerExit.AddListener(Exit);
-        _colliderObject.AddComponent<TriggerCollisionDetector>().SetTrigger(player.GetComponent<Collider>(), !async && destroyOnTrigger, onTriggerEnter.Invoke, onTriggerExit.Invoke);
+        _colliderObject.AddComponent<TriggerCollisionDetector>().SetTrigger(PlayerController.instance.GetComponent<Collider>(), !async && destroyOnTrigger, onTriggerEnter.Invoke, onTriggerExit.Invoke);
         _colliderObject.GetComponent<TriggerCollisionDetector>().destroyOnTrigger = destroyOnTrigger;
         this.async = async;
     }

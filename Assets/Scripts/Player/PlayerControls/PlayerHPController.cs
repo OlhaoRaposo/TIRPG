@@ -44,6 +44,8 @@ public class PlayerHPController : MonoBehaviour
 
     public void ChangeHP(float changeAmmount, bool isDecrease)
     {
+        if (CheatMenu.instance.GetHasInfiniteHP()) return;
+
         if(isDecrease == true)
         {
             currentHP -= changeAmmount;
@@ -82,7 +84,9 @@ public class PlayerHPController : MonoBehaviour
 
     public void ChangeStamina(float changeAmmount, bool isDecrease)
     {
-        if(isDecrease == true)
+        if (CheatMenu.instance.GetHasInfiniteStamina()) return;
+
+        if (isDecrease == true)
         {
             currentStamina -= changeAmmount;
             staminaImage.fillAmount = currentStamina / staminaMax;
