@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,20 +10,20 @@ public class PlayerCameraMovement : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private float cameraSense;
     [SerializeField] private float aimSense;
-    [SerializeField] private float zoomStrength;
     [SerializeField] private bool isInverted;
 
     [Header("Variables")]
     [SerializeField] private float currentSense;
     [SerializeField] private float regularFov;
     [SerializeField] private float aimFov;
+    [SerializeField] private float cameraVerticalClamping;
     public bool locked;
-
     public bool isAiming;
     private float camSpeedX, camSpeedY;
+    private Vector3 previousCamRotation, previousCamPosition;
 
     [Header("References")]
-    [SerializeField] private GameObject playerObject;
+    public GameObject playerObject;
     [SerializeField] private GameObject playerAim;
 
     private Vector3 startingPos, startingAimPos;
@@ -40,17 +41,14 @@ public class PlayerCameraMovement : MonoBehaviour
     private void Start()
     {
         startingPos = transform.position;
+        previousCamPosition = startingPos;
         startingAimPos = playerAim.transform.localPosition;
-
-        camSpeedX = currentSense;
-        camSpeedY = currentSense * 0.7f;
     }
 
-    public void SetValues(float cameraSense, float aimSense, float zoomStrength, bool isInverted)
+    public void SetValues(float cameraSense, float aimSense, bool isInverted)
     {
         this.cameraSense = cameraSense;
         this.aimSense = aimSense;
-        this.zoomStrength = zoomStrength;
         this.isInverted = isInverted;
 
         SetCurrentSense(cameraSense);
@@ -58,7 +56,7 @@ public class PlayerCameraMovement : MonoBehaviour
 
     private void Update()
     {
-        if (true /*BIRIGUINAIT DE TER INICIADO O JOGO*/)
+        if (WorldController.worldController.isGameStarted)
         {
             CameraMove();
             PlayerAim();
@@ -70,16 +68,68 @@ public class PlayerCameraMovement : MonoBehaviour
     //POSIÇÃO E MOVIMENTO
     private void CameraMove()
     {
+        float x = Input.GetAxis("Mouse X") * camSpeedX;
+        float y = Input.GetAxis("Mouse Y") * camSpeedY;
 
+        transform.RotateAround(playerObject.transform.position, Vector3.up, x);
+        transform.RotateAround(playerObject.transform.position, -transform.right, y);
+
+        if (transform.localEulerAngles != previousCamRotation && transform.localPosition != previousCamPosition)
+        {
+            //IMPEDIR QUE A CÂMERA FIQUE INVERTIDA, GAMBIARRA POR QUE ESSA MERDA DE ÂNGULO NN FUNCIONA DIREITO POR NADA
+            if (transform.eulerAngles.x < 180)
+            {
+                if (Mathf.Abs(transform.eulerAngles.x) > cameraVerticalClamping)
+                {
+                    Debug.Log("PARO");
+                    transform.localPosition = previousCamPosition;
+                    transform.localEulerAngles = previousCamRotation;
+                }
+                else
+                {
+                    previousCamPosition = transform.localPosition;
+                    previousCamRotation = transform.localEulerAngles;
+                }
+            }
+            else
+            {
+                if (transform.eulerAngles.x > 180)
+                {
+                    if (360 - Mathf.Abs(transform.eulerAngles.x) > cameraVerticalClamping)
+                    {
+                        Debug.Log("PARO");
+                        transform.localPosition = new Vector3(transform.localPosition.x, previousCamPosition.y, transform.localPosition.z);
+                        transform.localEulerAngles = new Vector3(previousCamRotation.x, transform.localEulerAngles.y, transform.localEulerAngles.z);;
+                    }
+                    else
+                    {
+                        previousCamPosition = transform.localPosition;
+                        previousCamRotation = transform.localEulerAngles;
+                    }
+                }
+            }
+
+        }
     }
 
     private void PlayerAim()
     {
-        
+        if (Input.GetMouseButton(1) == true)
+        {
+            AlignTargetWithCamera(playerObject);
+            cameraBody.fieldOfView = aimFov;
+        }
+        else
+        {
+            cameraBody.fieldOfView = regularFov;
+        }
     }
+
     public void AlignTargetWithCamera(GameObject target)
     {
-        playerObject.transform.rotation = Quaternion.Euler(0, target.transform.eulerAngles.y, 0);
+        transform.SetParent(null);
+        target.transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
+        transform.SetParent(playerObject.transform);
     }
     public Vector3 GetCameraForward()
     {
@@ -93,7 +143,7 @@ public class PlayerCameraMovement : MonoBehaviour
     //EFEITOS, SENSIBILIDADE & UTILIDADE
     private void SetCurrentSense(float sense)
     {
-        
+
     }
 
     public void ShakeCamera(float strength)
@@ -103,10 +153,10 @@ public class PlayerCameraMovement : MonoBehaviour
 
     private void SetCameraZoom()
     {
-        
+
     }
 
-    //TRAVAR CÂMERA POR QUALQUER MOTIVO QUE SEJA E LIBERAR O CURSOR TAMBÉM POR QUALQUER MOTIVO Q SEJA
+    //TRAVAR CÂMERA POR QUALQUER MOTIVO QUE SEJA E LIBERAR O CURSOR TAMBÉM POR QUALQUER MOTIVO Q SEJA INGAME
     private void CursorLockControl()
     {
         if (Input.GetKeyDown(KeyCode.LeftAlt) == true)
@@ -122,21 +172,20 @@ public class PlayerCameraMovement : MonoBehaviour
         }
     }
 
+    //TRAVAR CÂMERA POR QUALQUER MOTIVO QUE SEJA E LIBERAR O CURSOR TAMBÉM POR QUALQUER MOTIVO Q SEJA, CHAME ESSA FUNÇÃO NA TELA INICIAL DANIEL -->
     public void ToggleAimLock(bool toggle)
     {
         if (toggle == true)
         {
             Cursor.lockState = CursorLockMode.Locked;
+            camSpeedX = currentSense;
+            camSpeedY = currentSense * 0.7f;
         }
         else
         {
             Cursor.lockState = CursorLockMode.None;
+            camSpeedX = 0;
+            camSpeedY = 0;
         }
-        ToggleCameraMovement(toggle);
-    }
-
-    public void ToggleCameraMovement(bool toggle)
-    {
-        
     }
 }

@@ -54,8 +54,6 @@ public class PlayerMeleeCombat : MonoBehaviour
         damage = newWeapon.damage;
         comboExecutionWindowPercentage = newWeapon.comboExecutionWindowPercentage;
         weaponName = newWeapon.modelName;
-        
-        //Setar animações override
     }
 
     public string GetMeleeName()

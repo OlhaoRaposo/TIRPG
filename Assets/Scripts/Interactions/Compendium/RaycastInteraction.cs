@@ -20,7 +20,7 @@ public class RaycastInteraction : MonoBehaviour
     {
         
         Vector2 screenCenter = new Vector2(Screen.width / 2, Screen.height / 2);
-        Ray cameraRay = PlayerCamera.instance.cameraBody.ScreenPointToRay(screenCenter);
+        Ray cameraRay = PlayerCameraMovement.instance.cameraBody.ScreenPointToRay(screenCenter);
         if (Physics.Raycast(cameraRay, out RaycastHit hit, 5)) {
             if (hit.collider.gameObject.CompareTag("Interactable")) {
                 if (hit.distance <= 15) {
