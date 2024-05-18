@@ -8,11 +8,14 @@ public class PlayerMovement : MonoBehaviour
 {
 
     [SerializeField] private Animator playerAnimator;
-    [SerializeField] private Rigidbody playerRigidBody; //Eu odeio character controllers :)
+    [SerializeField] private CharacterController playerController; //Eu odeio character controllers :)
     [SerializeField] private CapsuleCollider playerCollider;
-    [SerializeField] private float walkSpeedMultiplier, runSpeedMultiplier, jumpForce, stamina = 100f;
+    [SerializeField] private float walkSpeedMultiplier, runSpeedMultiplier, jumpHeight, stamina = 100f;
     [SerializeField] private bool isRunning = false, isDashing = false, isJumping = false, isGrounded = true;
     [SerializeField] private bool canSwapWeapon = true;
+    private float speedModifier;
+    private Vector3 startRelativePoint;
+    private bool startedFall = false;
 
     private void Start()
     {
@@ -22,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (true /*COLOCAR CONDIÇÃO Q O JOGO DEU PLAY*/)
+        if (/*WorldController.worldController.isGameStarted*/ true)
         {
             StaminaRegen();
             Movement();
@@ -70,6 +73,12 @@ public class PlayerMovement : MonoBehaviour
             playerAnimator.speed = walkSpeedMultiplier;
         }
 
+        //SE ESTÁ INDO PRA FRENTE OLHAR PARA ONDE ESTÁ INDO, E O MESMO AO FAZER STRAFE
+        if (y > 0 || x != 0)
+        {
+            PlayerCameraMovement.instance.AlignTargetWithCamera(PlayerCameraMovement.instance.playerObject);
+        }
+
 
         //ANDAR MAIS DEVAGAR INDO PARA TRÁS, VULGO, Y < 0, REDUZINDO A VELOCIDADE EM 20%
         if (y < 0)
@@ -77,8 +86,29 @@ public class PlayerMovement : MonoBehaviour
             playerAnimator.speed = 1;
         }
 
-        //TOCAR ANIMAÇÕES DE ANDAR SE ESTIVER NO CHÃO, SEM PULAR, E SEM DASH
-        if (isDashing == false && isJumping == false && isGrounded == true)
+        
+        if (isGrounded == false) //PERMITE MOVIMENTAÇÃO NO AR SEM ANIMAÇÕES DE ANDAR NO CHÃO
+        {
+            Vector3 dir = Vector3.zero;
+            if (y > 0)
+            {
+                dir += PlayerCameraMovement.instance.GetCameraForward();
+            }
+            if (y < 0)
+            {
+                dir -= PlayerCameraMovement.instance.GetCameraForward();
+            }
+            if (x > 0)
+            {
+                dir += PlayerCameraMovement.instance.GetCameraRight();
+            }
+            if (x < 0)
+            {
+                dir -= PlayerCameraMovement.instance.GetCameraRight();
+            }
+            playerController.Move(dir * runSpeedMultiplier * 2 * Time.deltaTime);
+        }
+        else if (isDashing == false && isJumping == false) //TOCAR ANIMAÇÕES DE ANDAR SE ESTIVER NO CHÃO, SEM PULAR, E SEM DASH
         {
             playerAnimator.Play("Walk Tree");
         }
@@ -109,21 +139,59 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             isGrounded = false;
-            isJumping = false;
-
-            playerAnimator.SetBool("IsJumping", false);
             playerAnimator.SetBool("IsGrounded", false);
         }
     }
 
     private void Jump()
     {
-        //ESTÁ NO CHÃO E TEM STAMINA NESCESSÁRIA?
-        if (Input.GetKeyDown(InputController.instance.jump) && isGrounded == true && stamina >= 15)
+        //Jump && fall
+        if (Input.GetKeyDown(InputController.instance.jump) && isGrounded == true && stamina >= 15f)
         {
+            PlayerHPController.instance.ChangeStamina(15f, true);
+            stamina -= 15f;
+
+            startRelativePoint = transform.position;
             isJumping = true;
             playerAnimator.SetBool("IsJumping", true);
-            playerRigidBody.AddForce(jumpForce * Vector3.up, ForceMode.Force);
+            //COMEÇOU O PULO
+        }
+
+        if (isJumping == true)
+        {
+            speedModifier = ((jumpHeight - RelativeDistance(Vector3.up)) / 2) + 0.25f;
+            if (RelativeDistance(Vector3.up) < jumpHeight)
+            {
+                playerController.Move(Vector3.up * speedModifier * 9.8f * Time.deltaTime);
+                //MOVIMENTAÇÃO NO ESTADO DE PULAR
+            }
+            else
+            {
+                isJumping = false;
+                playerAnimator.SetBool("IsJumping", false);
+                //PAROU O PULO
+            }
+        }
+        else if (isGrounded == false)
+        {
+            if (startedFall == true)
+            {
+                startRelativePoint = transform.position;
+                startedFall = false;
+            }
+            float speedModifier = (RelativeDistance(Vector3.up) / 2) + 0.25f;
+
+            if (RelativeDistance(Vector3.up) >= 2)
+            {
+                speedModifier = 1.25f;
+            }
+
+            playerController.Move(Vector3.up * speedModifier * -9.8f * Time.deltaTime);
+        }
+        else
+        {
+            //COMECOU A CAIR
+            startedFall = true;
         }
     }
 
@@ -132,6 +200,9 @@ public class PlayerMovement : MonoBehaviour
         //SÓ DA DASH SE ESTÁ NO CHÃO, TEM STAMINA PARA TAL E NÃO ESTÁ DANDO DASH ATUALMENTE
         if (Input.GetKeyDown(InputController.instance.dash) && isGrounded && isDashing == false && stamina >= 25f)
         {
+            PlayerHPController.instance.ChangeStamina(25f, true);
+            stamina -= 25;
+
             isDashing = true;
             playerAnimator.speed = runSpeedMultiplier;
             playerAnimator.SetBool("IsDashing", true);
@@ -148,5 +219,18 @@ public class PlayerMovement : MonoBehaviour
     private void WeaponSwap()
     {
 
+    }
+
+    private float RelativeDistance(Vector3 axis) //SERVE PARA CALCULAR PULOS DO PLAYER, CALCULA A MUDANÇA DE VELOCIDADE EM RELAÇÃO AO PONTO DE PARTIDA PARA DEIXAR A GRAVIDADE MAIS REALISTA.
+    {
+        Vector3 normalizedStart, normalizedEnd;
+        normalizedStart = new Vector3(axis.x * startRelativePoint.x, axis.y * startRelativePoint.y, axis.z * startRelativePoint.z);
+        normalizedEnd = new Vector3(axis.x * transform.position.x, axis.y * transform.position.y, axis.z * transform.position.z);
+        if(isGrounded == false && isJumping == false && Vector3.Distance(normalizedStart, normalizedEnd) >= 1)
+        {
+            //TOCA A ANIMAÇÃO DE QUEDA
+            playerAnimator.Play("Falling");
+        }
+        return Vector3.Distance(normalizedStart, normalizedEnd);
     }
 }
