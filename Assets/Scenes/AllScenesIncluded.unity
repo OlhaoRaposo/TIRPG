@@ -347,6 +347,51 @@ PrefabInstance:
       propertyPath: fastTravelForest
       value: 
       objectReference: {fileID: 477790538}
+    - target: {fileID: 2360312147422877375, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+        type: 3}
+      propertyPath: gameplayScenes.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2360312147422877375, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+        type: 3}
+      propertyPath: gameplayScenes.Array.data[0]
+      value: TerrainScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 2360312147422877375, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+        type: 3}
+      propertyPath: gameplayScenes.Array.data[1]
+      value: CityScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 2360312147422877375, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+        type: 3}
+      propertyPath: gameplayScenes.Array.data[2]
+      value: ForestScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 2360312147422877375, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+        type: 3}
+      propertyPath: gameplayScenes.Array.data[3]
+      value: MountainScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 2360312147422877375, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+        type: 3}
+      propertyPath: gameplayScenes.Array.data[4]
+      value: RiverScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 2360312147422877375, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+        type: 3}
+      propertyPath: gameplayScenes.Array.data[5]
+      value: LobbyScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 2360312147422877375, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+        type: 3}
+      propertyPath: gameplayScenes.Array.data[6]
+      value: LobbyScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 2360312147422877375, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+        type: 3}
+      propertyPath: gameplayScenes.Array.data[7]
+      value: LobbyScene
+      objectReference: {fileID: 0}
     - target: {fileID: 2830963833244830641, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
         type: 3}
       propertyPath: maxLevel
@@ -488,7 +533,8 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SelectAttribute
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2135399481206684922, guid: 3004360c9fd7b2f41ad76ead7312e2e2, type: 3}
     m_RemovedGameObjects:
     - {fileID: 6956214870844219183, guid: 3004360c9fd7b2f41ad76ead7312e2e2, type: 3}
     - {fileID: 6524205845604770219, guid: 3004360c9fd7b2f41ad76ead7312e2e2, type: 3}
@@ -545,7 +591,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &487334631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -558,49 +604,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5796b92a7ce8eb149a3fd5bc44dfb208, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allQuestsInDatabase:
-  - code: IrAteKrek
-    title: Caminhar de Krek
-    description: Va ate os cubos que krek pediu
-    isComplete: 0
-    currentStep: 0
-    hasQuestReward: 0
-    questRewardCode: 
-    questReward:
-      rewardDialogue: []
-      royaltyType: 0
-      royaltyValue: 0
-    dialogue:
-    - alreadySaid: 0
-      dialogue: BOM DIA GARAI
-      audio: {fileID: 0}
-    - alreadySaid: 0
-      dialogue: EU SO DECIVAR
-      audio: {fileID: 0}
-    - alreadySaid: 0
-      dialogue: CE TEM Q ATRAVESSAR ESSES 2 CUBO PRA COMPLETAR SAPORRA JAE?
-      audio: {fileID: 0}
-    questAlreadyGiven:
-    - alreadySaid: 0
-      dialogue: CE JA COMPLETO ESSE CARAI PA MIM?
-      audio: {fileID: 0}
-    steps:
-    - isComplete: 0
-      isActive: 0
-      stepSubtitle: Vai no cubo 1
-      validation:
-        _modules:
-          editorOpen: 1
-          _modules:
-          - rid: 8516496363031101441
-    - isComplete: 0
-      isActive: 0
-      stepSubtitle: Vai no cubo 2
-      validation:
-        _modules:
-          editorOpen: 1
-          _modules:
-          - rid: 6144561862982238209
+  allQuestsInDatabase: []
   activeQuests: []
   completedQuests: []
   questPrefab: {fileID: 8305372821688568562, guid: 5927261659d590d43afe0e6fe0454a6c,
@@ -608,103 +612,7 @@ MonoBehaviour:
   questParent: {fileID: 1671921168}
   references:
     version: 2
-    RefIds:
-    - rid: 6144561862982238209
-      type: {class: ProcedureTrigger, ns: , asm: Assembly-CSharp}
-      data:
-        editorOpen: 1
-        _enabled: 1
-        inspect:
-          _modules:
-            editorOpen: 1
-            _modules: []
-        _colliderObject: {fileID: 0}
-        player: {fileID: 0}
-        destroyOnTrigger: 0
-        onTriggerEnter:
-          m_PersistentCalls:
-            m_Calls:
-            - m_Target: {fileID: 487334631}
-              m_TargetAssemblyTypeName: QuestManager, Assembly-CSharp
-              m_MethodName: AddValidation
-              m_Mode: 5
-              m_Arguments:
-                m_ObjectArgument: {fileID: 0}
-                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-                m_IntArgument: 0
-                m_FloatArgument: 0
-                m_StringArgument: IrAteKrek
-                m_BoolArgument: 0
-              m_CallState: 2
-            - m_Target: {fileID: 0}
-              m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-              m_MethodName: SetActive
-              m_Mode: 6
-              m_Arguments:
-                m_ObjectArgument: {fileID: 0}
-                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-                m_IntArgument: 0
-                m_FloatArgument: 0
-                m_StringArgument: 
-                m_BoolArgument: 0
-              m_CallState: 2
-        onTriggerExit:
-          m_PersistentCalls:
-            m_Calls: []
-    - rid: 8516496363031101441
-      type: {class: ProcedureTrigger, ns: , asm: Assembly-CSharp}
-      data:
-        editorOpen: 1
-        _enabled: 1
-        inspect:
-          _modules:
-            editorOpen: 1
-            _modules: []
-        _colliderObject: {fileID: 0}
-        player: {fileID: 0}
-        destroyOnTrigger: 0
-        onTriggerEnter:
-          m_PersistentCalls:
-            m_Calls:
-            - m_Target: {fileID: 487334631}
-              m_TargetAssemblyTypeName: QuestManager, Assembly-CSharp
-              m_MethodName: AddValidation
-              m_Mode: 5
-              m_Arguments:
-                m_ObjectArgument: {fileID: 0}
-                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-                m_IntArgument: 0
-                m_FloatArgument: 0
-                m_StringArgument: IrAteKrek
-                m_BoolArgument: 0
-              m_CallState: 2
-            - m_Target: {fileID: 0}
-              m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-              m_MethodName: SetActive
-              m_Mode: 6
-              m_Arguments:
-                m_ObjectArgument: {fileID: 0}
-                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-                m_IntArgument: 0
-                m_FloatArgument: 0
-                m_StringArgument: 
-                m_BoolArgument: 1
-              m_CallState: 2
-            - m_Target: {fileID: 0}
-              m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-              m_MethodName: SetActive
-              m_Mode: 6
-              m_Arguments:
-                m_ObjectArgument: {fileID: 0}
-                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-                m_IntArgument: 0
-                m_FloatArgument: 0
-                m_StringArgument: 
-                m_BoolArgument: 0
-              m_CallState: 2
-        onTriggerExit:
-          m_PersistentCalls:
-            m_Calls: []
+    RefIds: []
 --- !u!4 &487334632
 Transform:
   m_ObjectHideFlags: 0
@@ -1100,6 +1008,7 @@ MonoBehaviour:
   speed: 1
   loop: 0
   rotationSpeed: 1
+  started: 0
 --- !u!4 &928399234
 Transform:
   m_ObjectHideFlags: 0

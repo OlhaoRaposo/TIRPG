@@ -391,6 +391,73 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &433252416
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 433252418}
+  - component: {fileID: 433252417}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &433252417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 433252416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2be4a21105aaa9439f041032db16541, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnWasCreated: 0
+  isGameStarted: 0
+  blend: 0
+  timeMultiplier: 0
+  timeText: {fileID: 0}
+  sunLight:
+    sunLight: {fileID: 0}
+    maxSunLightIntesity: 0
+    sunriseHour: 0
+    sunsetHour: 0
+    moonLight: {fileID: 0}
+    maxMoonLightIntesity: 0
+    lightAnimation:
+      lightChangeCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      dayAmbientLight: {r: 0, g: 0, b: 0, a: 0}
+      nightAmbientLight: {r: 0, g: 0, b: 0, a: 0}
+    clock: {fileID: 0}
+  skyBoxMaterial: {fileID: 0}
+--- !u!4 &433252418
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 433252416}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.9126909, y: 1.5109997, z: 1.4861717}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &442825050
 GameObject:
   m_ObjectHideFlags: 0
@@ -11696,3 +11763,4 @@ SceneRoots:
   - {fileID: 2082881683}
   - {fileID: 561172648}
   - {fileID: 1015252217}
+  - {fileID: 433252418}

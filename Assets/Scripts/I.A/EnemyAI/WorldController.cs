@@ -48,8 +48,6 @@ public class WorldController : MonoBehaviour
         //camera = Camera.main.gameObject;
         cameraTransform = GameObject.Find("CameraPositionReference").transform;
         player = GameObject.FindGameObjectWithTag("Player");
-        brain = Camera.main.gameObject.GetComponent<CinemachineBrain>();
-        brain.enabled = false;
         mainCam = Camera.main;
         mainCam.gameObject.SetActive(false);
         InitiateTime();
@@ -58,13 +56,13 @@ public class WorldController : MonoBehaviour
         Debug.Log("Game Started");
         isGameStarted = true;
         //Play Player out of stopChest(nao sei o nome de parapeito)
-        PlayerController.instance.PlayStartAnimation();
+        //PlayerController.instance.PlayStartAnimation();
         //Unload NewMenu Scene
         SceneController.instance.UnloadMenu();
         //Load Gameplay scenes
         SceneController.instance.LoadGameplayScenes();
         //Começa as animaçoes do jogo
-        StartCoroutine("PlayAnimation");
+        StartCoroutine(PlayAnimation());
     }
     private void InitiateTime() {
         //Pegar o horario do save game
@@ -148,10 +146,9 @@ public class WorldController : MonoBehaviour
         CameraFolow.folow.started = true;
         yield return new WaitForSeconds(4);
         Debug.LogWarning("FINALIZADO COROUTINE");
-        PlayerCamera.instance.ToggleAimLock(true);
+        PlayerCameraMovement.instance.ToggleAimLock(true);
         essentialsCanvas.SetActive(true);
         mainCam.gameObject.SetActive(true);
-        brain.enabled = true;
         CameraFolow.folow.gameObject.SetActive(false);
     }
 }

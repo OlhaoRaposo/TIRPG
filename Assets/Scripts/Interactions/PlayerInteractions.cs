@@ -43,6 +43,9 @@ public class PlayerInteractions : MonoBehaviour
     }
     void RaycastCheck()
     {
+        if(Camera.main == null)
+            return;
+        
         Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
 
         if (Physics.SphereCast(ray, interactRadius, out RaycastHit hit, 10f, interactLayer))
