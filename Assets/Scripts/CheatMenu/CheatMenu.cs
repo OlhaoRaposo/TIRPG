@@ -35,16 +35,16 @@ public class CheatMenu : MonoBehaviour
         switch (location)
         {
             case "Forest":
-                PlayerController.instance.TeleportPlayer(fastTravelForest.position);
+                PlayerMovement.instance.TeleportPlayer(fastTravelForest.position);
                 break;
             case "Lobby":
-                PlayerController.instance.TeleportPlayer(fastTravelLobby.position);
+                PlayerMovement.instance.TeleportPlayer(fastTravelLobby.position);
                 break;
             case "City":
-                PlayerController.instance.TeleportPlayer(fastTravelCity.position);
+                PlayerMovement.instance.TeleportPlayer(fastTravelCity.position);
                 break;
             case "Mountain":
-                PlayerController.instance.TeleportPlayer(fastTravelMountain.position);
+                PlayerMovement.instance.TeleportPlayer(fastTravelMountain.position);
                 break;
             default:
                 Debug.LogError("Invalid Location", this);

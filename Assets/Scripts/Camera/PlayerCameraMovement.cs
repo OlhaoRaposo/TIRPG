@@ -1,3 +1,4 @@
+using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -187,5 +188,8 @@ public class PlayerCameraMovement : MonoBehaviour
             camSpeedX = 0;
             camSpeedY = 0;
         }
+        UIManager.instance.SetCursorLockState(toggle);
     }
 }
+
+

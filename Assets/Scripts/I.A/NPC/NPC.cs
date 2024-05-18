@@ -64,15 +64,15 @@ public class NPC : MonoBehaviour
     #region ChatBox
     public void EnableChatBox() {
         talkBox.SetActive(true);
-        PlayerCamera.instance.LockCamera(false);
-        PlayerCamera.instance.ToggleAimLock(false);
+        //PlayerCamera.instance.LockCamera(false);
+        PlayerCameraMovement.instance.ToggleAimLock(false);
         DefaultButtonConfiguration();
     }
     public void DisableChatBox() {
         npcReference.npcText.text = "";
         talkBox.SetActive(false);
-        PlayerCamera.instance.LockCamera(true);
-        PlayerCamera.instance.ToggleAimLock(true);
+        //PlayerCamera.instance.LockCamera(true);
+        PlayerCameraMovement.instance.ToggleAimLock(true);
     }
     private void DefaultButtonConfiguration() {
         npcReference.acceptButton.gameObject.SetActive(false);

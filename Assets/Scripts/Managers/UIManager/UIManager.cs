@@ -192,19 +192,8 @@ public class UIManager : MonoBehaviour
         ToggleCursorLockMode();
         isInMenus = !isInMenus;
 
-        /*if(isInMenus)
-        {
-            PlayerController.instance?.ToggleWeaponSwap(false);
-            PlayerGun.instance?.ShootToggle(false);
-            PlayerMeleeCombat.instance?.MeleeAttackToggle(false);
-        }
-        else
-        {
-            PlayerController.instance?.ToggleWeaponSwap(true);
-            PlayerGun.instance?.ShootToggle(true);
-            PlayerMeleeCombat.instance?.MeleeAttackToggle(true);
-        }*/
-        PlayerController.instance?.ToggleWeaponSwap(!isInMenus);
+        //PlayerController.instance?.ToggleWeaponSwap(!isInMenus);
+        PlayerMovement.instance.WeaponSwap();
         PlayerGun.instance?.ShootToggle(!isInMenus);
         PlayerMeleeCombat.instance?.MeleeAttackToggle(!isInMenus);
 
@@ -298,7 +287,7 @@ public class UIManager : MonoBehaviour
     void ToggleCursorLockMode()
     {
         cursorLockState = !cursorLockState;
-        PlayerCamera.instance.ToggleAimLock(cursorLockState);
+        PlayerCameraMovement.instance.ToggleAimLock(cursorLockState);
     }
     void DisablePanel(GameObject go)
     {

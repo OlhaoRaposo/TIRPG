@@ -19,7 +19,7 @@ public class PlayerMeleeCombat : MonoBehaviour
 
     [Header("References")]
     [SerializeField] PlayerMeleeBase weapon;
-    [SerializeField] PlayerController player;
+    //[SerializeField] PlayerController player;
     [SerializeField] Animator animator;
     [SerializeField] Collider attackCollider;
 
@@ -63,9 +63,9 @@ public class PlayerMeleeCombat : MonoBehaviour
 
     private void MeleeAttack()
     {
-        if (Input.GetMouseButtonDown(0) && canAttack && player.isGrounded == true)
+        if (Input.GetMouseButtonDown(0) && canAttack && PlayerMovement.instance.GetIsGrounded())
         {
-            PlayerCamera.instance.playerAnimator.SetLayerWeight(1, 0);
+            PlayerCameraMovement.instance.playerAnimator.SetLayerWeight(1, 0);
             if (comboIndex == 1)
             {
                 StartCombo();
@@ -74,8 +74,8 @@ public class PlayerMeleeCombat : MonoBehaviour
             if (Time.time >= nextAttackCooldown)
             {
                 string nextAttack = $"{weaponName} " + comboIndex;
-                
-                PlayerCamera.instance.AlignRotation(PlayerCamera.instance.cameraBody.gameObject);
+
+                PlayerCameraMovement.instance.AlignTargetWithCamera(PlayerCameraMovement.instance.cameraBody.gameObject);
                 animator.Play(nextAttack, 0);
                 
                 isInCombo = true;
@@ -105,14 +105,14 @@ public class PlayerMeleeCombat : MonoBehaviour
     private void StartCombo()
     {
         isInCombo = true;
-        PlayerController.instance?.ToggleMove(false);
+        PlayerMovement.instance?.ToggleMove(false);
     }
 
     private void EndCombo()
     {
         isInCombo = false;
         comboIndex = 0;
-        PlayerController.instance?.ToggleMove(true);
+        PlayerMovement.instance?.ToggleMove(true);
         animator.Play("Walk Tree", 0);
     }
 

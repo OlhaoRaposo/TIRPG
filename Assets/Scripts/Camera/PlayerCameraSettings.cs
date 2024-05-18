@@ -34,7 +34,7 @@ public class PlayerCameraSettings : MonoBehaviour
 
     public void SetCameraValues()
     {
-        PlayerCamera.instance.SetValues(cameraSense.value, aimSense.value, zoomStrength.value, isInverted);
+        PlayerCameraMovement.instance.SetValues(cameraSense.value, aimSense.value, /*zoomStrength.value, */ isInverted);
         SaveCameraValues();
     }
 

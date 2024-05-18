@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Animations;
@@ -6,6 +7,7 @@ using UnityEngine.Animations.Rigging;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public static PlayerMovement instance;
 
     [SerializeField] private Animator playerAnimator;
     [SerializeField] private CharacterController playerController; //Eu odeio character controllers :)
@@ -13,13 +15,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float walkSpeedMultiplier, runSpeedMultiplier, jumpHeight, stamina = 100f;
     [SerializeField] private bool isRunning = false, isDashing = false, isJumping = false, isGrounded = true;
     [SerializeField] private bool canSwapWeapon = true;
+    [SerializeField] bool canMove = true;
     private float speedModifier;
     private Vector3 startRelativePoint;
     private bool startedFall = false;
 
-    private void Start()
+    private void Awake()
     {
-
+        instance = this;
     }
 
 
@@ -216,11 +219,19 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void WeaponSwap()
+    public void WeaponSwap()
     {
 
     }
 
+    public bool GetIsGrounded()
+    {
+        return isGrounded;
+    }
+    public void TeleportPlayer(Vector3 newPosition)
+    {
+        transform.position = newPosition;
+    }
     private float RelativeDistance(Vector3 axis) //SERVE PARA CALCULAR PULOS DO PLAYER, CALCULA A MUDANÇA DE VELOCIDADE EM RELAÇÃO AO PONTO DE PARTIDA PARA DEIXAR A GRAVIDADE MAIS REALISTA.
     {
         Vector3 normalizedStart, normalizedEnd;
@@ -233,4 +244,14 @@ public class PlayerMovement : MonoBehaviour
         }
         return Vector3.Distance(normalizedStart, normalizedEnd);
     }
+
+    public void ToggleMove(bool toggle)
+    {
+        canMove = toggle;
+        playerAnimator.SetFloat("WalkHorizontal", 0);
+        playerAnimator.SetFloat("WalkVertical", 0);
+    }
 }
+
+
+
