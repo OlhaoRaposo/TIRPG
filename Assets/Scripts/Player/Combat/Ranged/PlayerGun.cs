@@ -64,7 +64,16 @@ public class PlayerGun : MonoBehaviour
                             {
                                 PlayerCameraMovement.instance.playerAnimator.SetLayerWeight(1, 1);
                                 PlayerCameraMovement.instance.playerAnimator.Play($"{gunName} Aim Tree");
-                                PlayerCameraMovement.instance.playerAnimator.SetFloat("AimVertical", -PlayerCameraMovement.instance.cameraBody.transform.eulerAngles.x / 60);
+
+                                if (PlayerCameraMovement.instance.cameraBody.transform.eulerAngles.x > 180)
+                                {
+                                    PlayerCameraMovement.instance.playerAnimator.SetFloat("AimVertical", (360 - PlayerCameraMovement.instance.cameraBody.transform.eulerAngles.x) / PlayerCameraMovement.instance.cameraVerticalClamping);
+                                }
+                                else if (PlayerCameraMovement.instance.cameraBody.transform.eulerAngles.x < 180)
+                                {
+                                    PlayerCameraMovement.instance.playerAnimator.SetFloat("AimVertical", -PlayerCameraMovement.instance.cameraBody.transform.eulerAngles.x / PlayerCameraMovement.instance.cameraVerticalClamping);
+                                }
+
                                 SummonBullets();
                             }
                             break;
@@ -75,7 +84,16 @@ public class PlayerGun : MonoBehaviour
                             {
                                 PlayerCameraMovement.instance.playerAnimator.SetLayerWeight(1, 1);
                                 PlayerCameraMovement.instance.playerAnimator.Play($"{gunName} Aim Tree");
-                                PlayerCameraMovement.instance.playerAnimator.SetFloat("AimVertical", -PlayerCameraMovement.instance.cameraBody.transform.eulerAngles.x / 60);
+
+                                if (PlayerCameraMovement.instance.cameraBody.transform.eulerAngles.x > 180)
+                                {
+                                    PlayerCameraMovement.instance.playerAnimator.SetFloat("AimVertical", (360 - PlayerCameraMovement.instance.cameraBody.transform.eulerAngles.x) / PlayerCameraMovement.instance.cameraVerticalClamping);
+                                }
+                                else if (PlayerCameraMovement.instance.cameraBody.transform.eulerAngles.x < 180)
+                                {
+                                    PlayerCameraMovement.instance.playerAnimator.SetFloat("AimVertical", -PlayerCameraMovement.instance.cameraBody.transform.eulerAngles.x / PlayerCameraMovement.instance.cameraVerticalClamping);
+                                }
+
                                 SummonBullets();
                             }
                             break;
@@ -86,7 +104,16 @@ public class PlayerGun : MonoBehaviour
                             {
                                 PlayerCameraMovement.instance.playerAnimator.SetLayerWeight(1, 1);
                                 PlayerCameraMovement.instance.playerAnimator.Play($"{gunName} Aim Tree");
-                                PlayerCameraMovement.instance.playerAnimator.SetFloat("AimVertical", -PlayerCameraMovement.instance.cameraBody.transform.eulerAngles.x / 60);
+
+                                if (PlayerCameraMovement.instance.cameraBody.transform.eulerAngles.x > 180)
+                                {
+                                    PlayerCameraMovement.instance.playerAnimator.SetFloat("AimVertical", (360 - PlayerCameraMovement.instance.cameraBody.transform.eulerAngles.x) / PlayerCameraMovement.instance.cameraVerticalClamping);
+                                }
+                                else if (PlayerCameraMovement.instance.cameraBody.transform.eulerAngles.x < 180)
+                                {
+                                    PlayerCameraMovement.instance.playerAnimator.SetFloat("AimVertical", -PlayerCameraMovement.instance.cameraBody.transform.eulerAngles.x / PlayerCameraMovement.instance.cameraVerticalClamping);
+                                }
+
                                 holdTime += Time.deltaTime;
                             }
                             //Soltar
@@ -129,6 +156,7 @@ public class PlayerGun : MonoBehaviour
         if (Physics.Raycast(cameraRay, out RaycastHit hitPos, float.MaxValue, aimCollisionLayer) == true)
         {
             target = hitPos.point;
+            PlayerCameraMovement.instance.AlignTargetWithCamera(PlayerCameraMovement.instance.playerObject);
         }
         else
         {
