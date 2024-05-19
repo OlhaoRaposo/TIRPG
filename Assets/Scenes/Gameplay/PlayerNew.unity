@@ -163,7 +163,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 4279813642432384021, guid: 6215edca62b84f449afadc39af3d537d, type: 3}
+  - {fileID: -3880357521470541584, guid: 6215edca62b84f449afadc39af3d537d, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -463,12 +463,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &426793565 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4670043954889427360, guid: 19c0d48b5348dff4d98f286c8798d476,
-    type: 3}
-  m_PrefabInstance: {fileID: 4348805177652067935}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &426793566 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3569510600899491572, guid: 19c0d48b5348dff4d98f286c8798d476,
@@ -859,20 +853,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2489183347767840752, guid: 9e4a10b4a83e3cc4fb507e2e11e96b72,
+    - target: {fileID: 3208873498257623823, guid: 9e4a10b4a83e3cc4fb507e2e11e96b72,
         type: 3}
-      propertyPath: interactCanvas
+      propertyPath: equipedWeapon
       value: 
-      objectReference: {fileID: 426793565}
+      objectReference: {fileID: 11400000, guid: e58a1c9064fa80f46a8728fedf74ea36,
+        type: 2}
     - target: {fileID: 6759132695369782341, guid: 9e4a10b4a83e3cc4fb507e2e11e96b72,
         type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 8260017535287847366, guid: 9e4a10b4a83e3cc4fb507e2e11e96b72,
+    - target: {fileID: 7718223378934002719, guid: 9e4a10b4a83e3cc4fb507e2e11e96b72,
         type: 3}
-      propertyPath: m_IsActive
-      value: 0
+      propertyPath: m_Name
+      value: PlayerModel
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

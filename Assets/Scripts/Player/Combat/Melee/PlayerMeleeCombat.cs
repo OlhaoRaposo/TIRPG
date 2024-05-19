@@ -15,7 +15,7 @@ public class PlayerMeleeCombat : MonoBehaviour
     int comboIndex = 0;
     float nextAttackCooldown = 0;
     bool canAttack = true;
-    bool isInCombo = false;
+    [HideInInspector] public bool isInCombo = false;
 
     [Header("References")]
     [SerializeField] PlayerMeleeBase weapon;
@@ -75,15 +75,15 @@ public class PlayerMeleeCombat : MonoBehaviour
             {
                 string nextAttack = $"{weaponName} " + comboIndex;
 
-                PlayerCameraMovement.instance.AlignTargetWithCamera(PlayerCameraMovement.instance.cameraBody.gameObject);
+                PlayerCameraMovement.instance.AlignTargetWithCamera(PlayerCameraMovement.instance.playerObject);
                 animator.Play(nextAttack, 0);
-                
+
                 isInCombo = true;
 
                 float nextAttackTime = animator.GetCurrentAnimatorStateInfo(0).length * comboExecutionWindowPercentage;
                 nextAttackCooldown = Time.time + nextAttackTime;
-                
-                if(comboIndex >= 4)
+
+                if (comboIndex >= 4)
                 {
                     animator.Play($"{weaponName} Heavy", 0);
                     comboIndex = 1;

@@ -9,13 +9,18 @@ public class PlayerMovement : MonoBehaviour
 {
     public static PlayerMovement instance;
 
+    [Header("Movement")]
     [SerializeField] private Animator playerAnimator;
     [SerializeField] private CharacterController playerController; //Eu odeio character controllers :)
     [SerializeField] private CapsuleCollider playerCollider;
+    [SerializeField]private GameObject playerModel;
     [SerializeField] private float walkSpeedMultiplier, runSpeedMultiplier, jumpHeight, stamina = 100f;
-    [SerializeField] private bool isRunning = false, isDashing = false, isJumping = false, isGrounded = true;
-    [SerializeField] private bool canSwapWeapon = true;
-    [SerializeField] bool canMove = true;
+    [SerializeField] private bool isRunning = false, isDashing = false, isJumping = false, isGrounded = true, canMove = true;
+
+    [Header("Combat")]
+    [SerializeField] private GameObject[] allWeapons;
+    [SerializeField] private bool canSwapWeapon = true, isRanged = true;
+
     private float speedModifier;
     private Vector3 startRelativePoint;
     private bool startedFall = false;
@@ -77,7 +82,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //SE ESTÁ INDO PRA FRENTE OLHAR PARA ONDE ESTÁ INDO, E O MESMO AO FAZER STRAFE
-        if (y > 0 || x != 0)
+        if (y != 0 || x != 0)
         {
             PlayerCameraMovement.instance.AlignTargetWithCamera(PlayerCameraMovement.instance.playerObject);
         }
@@ -89,7 +94,7 @@ public class PlayerMovement : MonoBehaviour
             playerAnimator.speed = 1;
         }
 
-        
+
         if (isGrounded == false) //PERMITE MOVIMENTAÇÃO NO AR SEM ANIMAÇÕES DE ANDAR NO CHÃO
         {
             Vector3 dir = Vector3.zero;
@@ -111,7 +116,7 @@ public class PlayerMovement : MonoBehaviour
             }
             playerController.Move(dir * runSpeedMultiplier * 2 * Time.deltaTime);
         }
-        else if (isDashing == false && isJumping == false) //TOCAR ANIMAÇÕES DE ANDAR SE ESTIVER NO CHÃO, SEM PULAR, E SEM DASH
+        else if (isDashing == false && isJumping == false && PlayerMeleeCombat.instance.isInCombo == false) //TOCAR ANIMAÇÕES DE ANDAR SE ESTIVER NO CHÃO, SEM PULAR, SEM DASH, E NÃO ESTÁ REALIZANDO ATAQUES MELEE
         {
             playerAnimator.Play("Walk Tree");
         }
@@ -129,11 +134,11 @@ public class PlayerMovement : MonoBehaviour
 
         if
         (
-            Physics.Raycast(transform.position, Vector3.down, 0.1f) == true
-            || Physics.Raycast(transform.position + horizontalAxisPoint, Vector3.down, 0.1f) == true
-            || Physics.Raycast(transform.position - horizontalAxisPoint, Vector3.down, 0.1f) == true
-            || Physics.Raycast(transform.position + verticalAxisPoint, Vector3.down, 0.1f) == true
-            || Physics.Raycast(transform.position - verticalAxisPoint, Vector3.down, 0.1f) == true
+            Physics.Raycast(transform.position, Vector3.down, 0.25f) == true
+            || Physics.Raycast(transform.position + horizontalAxisPoint, Vector3.down, 0.25f) == true
+            || Physics.Raycast(transform.position - horizontalAxisPoint, Vector3.down, 0.25f) == true
+            || Physics.Raycast(transform.position + verticalAxisPoint, Vector3.down, 0.25f) == true
+            || Physics.Raycast(transform.position - verticalAxisPoint, Vector3.down, 0.25f) == true
         )// CONTROLA AS VARIÁVEIS QUE SÃO AUTO EXPLICATIVAS, E PERMITE O ANIMATOR EXECUTAR TRANSIÇÕES DE PULO OU NÃO
         {
             isGrounded = true;
@@ -221,7 +226,86 @@ public class PlayerMovement : MonoBehaviour
 
     public void WeaponSwap()
     {
-        
+        //SE PUDER TROCAR DE ARMA
+        if (canSwapWeapon == true)
+        {
+            //CASO ESTEJA FORA FORA DA ARMA RANGED E APERTE PARA TROCAR PARA ARMA RANGED
+            if (isRanged == false && Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                //PROCURA A ARMA EQUIPADA
+                foreach (GameObject weapon in allWeapons)
+                {
+                    //VERIFICA SE HÁ INSTÂNCIA (PROTEÇÃO)
+                    if (PlayerInventory.instance.GetRanged() != null)
+                    {
+                        if (weapon.name == PlayerGun.instance.GetGunName())
+                        {
+                            weapon.SetActive(true);
+                        }
+                        if (weapon.name == PlayerMeleeCombat.instance.GetMeleeName())
+                        {
+                            weapon.SetActive(false);
+                        }
+                    }
+                }
+
+                if (isGrounded == true)
+                {
+                    StartCoroutine(SwapWeaponAction(playerAnimator.GetCurrentAnimatorClipInfo(1).Length * 0.7f));
+                    playerAnimator.Play($"Switch to {PlayerGun.instance.GetGunName()}");
+                }
+
+                PlayerGun.instance.enabled = true;
+                PlayerMeleeCombat.instance.enabled = false;
+                isRanged = true;
+            }
+
+            if (isRanged == true && Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                //PROCURA A ARMA EQUIPADA
+                foreach (GameObject weapon in allWeapons)
+                {
+                    //VERIFICA SE HÁ INSTÂNCIA (PROTEÇÃO)
+                    if (PlayerInventory.instance.GetMelee() != null)
+                    {
+                        if (weapon.name == PlayerGun.instance.GetGunName())
+                        {
+                            weapon.SetActive(false);
+                        }
+                        if (weapon.name == PlayerMeleeCombat.instance.GetMeleeName())
+                        {
+                            weapon.SetActive(true);
+                        }
+                    }
+                }
+
+                if (isGrounded == true)
+                {
+                    StartCoroutine(SwapWeaponAction(playerAnimator.GetCurrentAnimatorClipInfo(1).Length * 0.7f));
+                    playerAnimator.Play($"Switch to {PlayerMeleeCombat.instance.GetMeleeName()}");
+                }
+
+                PlayerGun.instance.enabled = false;
+                PlayerMeleeCombat.instance.enabled = true;
+                isRanged = false;
+            }
+        }
+    }
+    private IEnumerator SwapWeaponAction(float time)
+    {
+        playerAnimator.SetLayerWeight(1, 1);
+        canSwapWeapon = false;
+
+        PlayerMeleeCombat.instance.MeleeAttackToggle(false);
+        PlayerGun.instance.ShootToggle(false);
+
+        yield return new WaitForSeconds(time);
+
+        playerAnimator.SetLayerWeight(1, 0);
+        canSwapWeapon = true;
+
+        PlayerMeleeCombat.instance.MeleeAttackToggle(true);
+        PlayerGun.instance.ShootToggle(true);
     }
 
     public bool GetIsGrounded()
@@ -230,21 +314,22 @@ public class PlayerMovement : MonoBehaviour
     }
     public void TeleportPlayer(Vector3 newPosition)
     {
+        gameObject.SetActive(false);
         transform.position = newPosition;
+        gameObject.SetActive(true);
     }
     private float RelativeDistance(Vector3 axis) //SERVE PARA CALCULAR PULOS DO PLAYER, CALCULA A MUDANÇA DE VELOCIDADE EM RELAÇÃO AO PONTO DE PARTIDA PARA DEIXAR A GRAVIDADE MAIS REALISTA.
     {
         Vector3 normalizedStart, normalizedEnd;
         normalizedStart = new Vector3(axis.x * startRelativePoint.x, axis.y * startRelativePoint.y, axis.z * startRelativePoint.z);
         normalizedEnd = new Vector3(axis.x * transform.position.x, axis.y * transform.position.y, axis.z * transform.position.z);
-        if(isGrounded == false && isJumping == false && Vector3.Distance(normalizedStart, normalizedEnd) >= 1)
+        if (isGrounded == false && isJumping == false && Vector3.Distance(normalizedStart, normalizedEnd) >= 1.5f)
         {
             //TOCA A ANIMAÇÃO DE QUEDA
             playerAnimator.Play("Falling");
         }
         return Vector3.Distance(normalizedStart, normalizedEnd);
     }
-
     public void ToggleMove(bool toggle)
     {
         canMove = toggle;

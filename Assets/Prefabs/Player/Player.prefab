@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8072401124269114452}
   - component: {fileID: 8303579219879438141}
-  - component: {fileID: 2489183347767840752}
   m_Layer: 9
   m_Name: Camera
   m_TagString: MainCamera
@@ -59,21 +58,6 @@ MonoBehaviour:
   playerAim: {fileID: 6196279064886286490}
   cameraBody: {fileID: 0}
   playerAnimator: {fileID: 0}
---- !u!114 &2489183347767840752
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 742024874283766784}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48bff7da061f9114f8b29437f2ff36b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactCanvas: {fileID: 0}
-  cameraReference: {fileID: 742024874283766784}
-  canInteract: 1
 --- !u!1 &1075674255410411550
 GameObject:
   m_ObjectHideFlags: 0
@@ -433,6 +417,7 @@ MonoBehaviour:
   playerAnimator: {fileID: 6925541501817674655}
   playerController: {fileID: 7248745612728186558}
   playerCollider: {fileID: 8616715599561582877}
+  playerModel: {fileID: 7718223378934002719}
   walkSpeedMultiplier: 1.25
   runSpeedMultiplier: 1.75
   jumpHeight: 2.5
@@ -441,7 +426,16 @@ MonoBehaviour:
   isDashing: 0
   isJumping: 0
   isGrounded: 1
+  canMove: 1
+  allWeapons:
+  - {fileID: 5282441829031770564}
+  - {fileID: 8260017535287847366}
+  - {fileID: 734082628291753204}
+  - {fileID: 3499605241154645488}
+  - {fileID: 569145573251157363}
+  - {fileID: 5034771272319511912}
   canSwapWeapon: 1
+  isRanged: 1
 --- !u!95 &6925541501817674655
 Animator:
   serializedVersion: 5
@@ -556,8 +550,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponName: 
+  isInCombo: 0
   weapon: {fileID: 11400000, guid: ef512ff55e55f404dbaff0f2a1eb7f89, type: 2}
-  player: {fileID: 0}
   animator: {fileID: 6925541501817674655}
   attackCollider: {fileID: 0}
 --- !u!1001 &7484360896160254286
@@ -746,7 +740,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 77cbaee47b5d6174fa536ade87fb4a37,
         type: 3}
       propertyPath: m_Name
-      value: Personagens1.5
+      value: PlayerModel
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 77cbaee47b5d6174fa536ade87fb4a37,
         type: 3}
@@ -761,7 +755,7 @@ PrefabInstance:
     - target: {fileID: 1548306691783696520, guid: 77cbaee47b5d6174fa536ade87fb4a37,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1883478986562669946, guid: 77cbaee47b5d6174fa536ade87fb4a37,
         type: 3}
@@ -896,6 +890,36 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 33142701914929814}
   m_SourcePrefab: {fileID: 100100000, guid: 77cbaee47b5d6174fa536ade87fb4a37, type: 3}
+--- !u!1 &569145573251157363 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6934356464381969469, guid: 77cbaee47b5d6174fa536ade87fb4a37,
+    type: 3}
+  m_PrefabInstance: {fileID: 7484360896160254286}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &734082628291753204 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7922454987742494138, guid: 77cbaee47b5d6174fa536ade87fb4a37,
+    type: 3}
+  m_PrefabInstance: {fileID: 7484360896160254286}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3499605241154645488 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -2932737294204214082, guid: 77cbaee47b5d6174fa536ade87fb4a37,
+    type: 3}
+  m_PrefabInstance: {fileID: 7484360896160254286}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5034771272319511912 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2450753553049248806, guid: 77cbaee47b5d6174fa536ade87fb4a37,
+    type: 3}
+  m_PrefabInstance: {fileID: 7484360896160254286}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5282441829031770564 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3355967116559691914, guid: 77cbaee47b5d6174fa536ade87fb4a37,
+    type: 3}
+  m_PrefabInstance: {fileID: 7484360896160254286}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6000190472181664359 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3790130815890260777, guid: 77cbaee47b5d6174fa536ade87fb4a37,
@@ -946,3 +970,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shotgunBarrel: {fileID: 7094648485807471423}
+--- !u!1 &8260017535287847366 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1548306691783696520, guid: 77cbaee47b5d6174fa536ade87fb4a37,
+    type: 3}
+  m_PrefabInstance: {fileID: 7484360896160254286}
+  m_PrefabAsset: {fileID: 0}

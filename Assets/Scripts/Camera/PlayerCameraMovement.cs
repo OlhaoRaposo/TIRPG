@@ -80,7 +80,7 @@ public class PlayerCameraMovement : MonoBehaviour
             //IMPEDIR QUE A CÂMERA FIQUE INVERTIDA, GAMBIARRA POR QUE ESSA MERDA DE ÂNGULO NN FUNCIONA DIREITO POR NADA
             if (transform.eulerAngles.x < 180)
             {
-                if (Mathf.Abs(transform.eulerAngles.x) > cameraVerticalClamping)
+                if (Mathf.Abs(transform.eulerAngles.x) > cameraVerticalClamping * 2)
                 {
                     transform.localPosition = previousCamPosition;
                     transform.localEulerAngles = previousCamRotation;
