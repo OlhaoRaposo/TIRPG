@@ -41,7 +41,10 @@ public class PlayerProjectile : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Enemy"))
         {
-            other.gameObject.GetComponent<EnemyBehaviour>().TakeDamage(damage, bulletElement);
+            if(other.TryGetComponent(out EnemyBehaviour en))
+                en.TakeDamage(damage, bulletElement);
+            else if(other.TryGetComponent(out BoitataDamageReceiver bt))
+                bt.TakeDamage(damage, bulletElement);
             Hitmark.instance.ToggleHitmark();
         }
         Destroy(gameObject);

@@ -10,6 +10,7 @@ public class ArmadeiraWeapon : MonoBehaviour
      public GameObject normalBullet;
      public GameObject especialBullet;
      public GameObject target;
+        [SerializeField] private float damage;
      public EnemyBehaviour user;
      private bool isShooting;
 
@@ -43,7 +44,6 @@ public class ArmadeiraWeapon : MonoBehaviour
                break;
          }
      }
-
      private void Update()
      {
          if (isShooting) {
@@ -52,7 +52,12 @@ public class ArmadeiraWeapon : MonoBehaviour
              userTransform.rotation = Quaternion.Lerp(userTransform.rotation, targetRotation, .15f * Time.deltaTime);
          }
      }
-
+     private void OnTriggerEnter(Collider col) {
+         if (col.gameObject.CompareTag("Player")) {
+             PlayerHPController.instance.ChangeHP(damage,true);
+             Debug.Log("HIT");
+         }
+     }
      IEnumerator MeleeHit(string expression) {
          user.enemyAnimator.SetTrigger(expression);
          yield return new WaitForSeconds(1);
@@ -84,6 +89,7 @@ public class ArmadeiraWeapon : MonoBehaviour
          
          for (int i = 0; i < shoots; i++) {
              points[i] = user.target.transform.position + Random.insideUnitSphere * 6;
+             points[i].y = user.target.transform.position.y;
              GameObject tr = Instantiate(target, new Vector3(points[i].x, 0, points[i].z), Quaternion.identity);
              yield return new WaitForSeconds(.1f);
          }
@@ -99,10 +105,11 @@ public class ArmadeiraWeapon : MonoBehaviour
          isShooting = false;
          user.ChangeState(new ChaseState(user));
      }
-     IEnumerator Jump(string expression) {
-         user.transform.LookAt(user.transform.forward);
+     IEnumerator Jump(string expression)
+     {
+         Vector3 lookat = user.target.transform.position - user.transform.position;
+         user.agent.SetDestination(lookat * 10);
          user.enemyAnimator.SetTrigger(expression);
-         user.transform.LookAt(user.transform.forward);
          yield return new WaitForSeconds(3);
          user.ChangeState(new ChaseState(user));
      }

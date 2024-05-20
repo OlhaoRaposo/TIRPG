@@ -46,7 +46,6 @@ public class WorldController : MonoBehaviour
         essentialsCanvas = GameObject.Find("====CANVAS====");
         essentialsCanvas.SetActive(false);
         //camera = Camera.main.gameObject;
-        cameraTransform = GameObject.Find("CameraPositionReference").transform;
         player = GameObject.FindGameObjectWithTag("Player");
         mainCam = Camera.main;
         mainCam.gameObject.SetActive(false);
@@ -143,13 +142,13 @@ public class WorldController : MonoBehaviour
         return difference;
     }
     public IEnumerator PlayAnimation() {
-        CameraFolow.folow.started = true;
-        yield return new WaitForSeconds(4);
+        CameraFolow.follow.Started();
+        yield return new WaitForSeconds(5);
         Debug.LogWarning("FINALIZADO COROUTINE");
         PlayerCameraMovement.instance.ToggleAimLock(true);
         essentialsCanvas.SetActive(true);
         mainCam.gameObject.SetActive(true);
-        CameraFolow.folow.gameObject.SetActive(false);
+        CameraFolow.follow.gameObject.SetActive(false);
     }
 }
 [Serializable]

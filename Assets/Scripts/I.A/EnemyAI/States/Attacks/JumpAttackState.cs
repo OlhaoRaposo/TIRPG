@@ -7,7 +7,13 @@ public class JumpAttackState : IState {
     }
     public void Enter() {
         enemy.transform.LookAt(jumpPosition());
-        enemy.weapon.SendMessage("Attack","_Jump");
+        enemy.weapon.SendMessage("Attack",SelectAttack());
+    }
+    
+    string SelectAttack() { 
+        string attack = "";
+        attack = enemy.triggers.jumpAttacks[Random.Range(0, enemy.triggers.jumpAttacks.Count)];
+        return attack;
     }
     private Vector3 jumpPosition() {
         Vector3 pos = new Vector3();

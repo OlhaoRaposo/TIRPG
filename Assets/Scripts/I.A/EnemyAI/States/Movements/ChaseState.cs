@@ -48,10 +48,12 @@ public class ChaseState : IState {
                   enemy.ChangeState(new RangedAttackState(enemy));
                break;
          }
-      }else if (enemy.TargetDistance() > 10) {
+      }else if (enemy.TargetDistance() > 10 && enemy.TargetDistance() < 20) {
          int rnd2 = Random.Range(0, 100);
          if(rnd2 <= 20)
             enemy.ChangeState(new JumpAttackState(enemy));
+         else 
+            enemy.ChangeState(new ChaseState(enemy));
       }
    }
    public void Exit(){ }

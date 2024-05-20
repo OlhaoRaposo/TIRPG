@@ -11,6 +11,7 @@ public class PatrolState : IState {
    public void Enter() {
       Debug.Log("Entered" + enemy.currentState);
       enemyAnimator = enemy.enemyAnimator;
+      
       enemy.agent.speed = 4;
       if(enemy != null && enemy.currentState != EnemyBehaviour.EnemyState.Patrol){
          enemy.currentState = EnemyBehaviour.EnemyState.Patrol;

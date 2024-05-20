@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class EnemyBehaviour : MonoBehaviour
 { IState state;
@@ -20,6 +21,9 @@ public class EnemyBehaviour : MonoBehaviour
  public enum EnemyType { ranged, melee, rangedAndMelee }
  [Header("Data")]
  public Data data;
+ [Header("Drops&Quests")]
+ public ItemDropInfo[] dropInfo;
+ public QuestType.EnemyTypes questType;
  [Header("Canvas")]
  public GameObject EnemyCanvas;
  public GameObject damageCanvas;
@@ -39,7 +43,6 @@ public class EnemyBehaviour : MonoBehaviour
  private void Start() {
    if(!TryGetComponent(out NavMeshAgent ag)){
      Debug.LogWarning("You Forgot to add a NavMeshAgent to the enemy, add one now."); }
-
    if (!TryGetComponent(out Animator an))
      Debug.LogWarning("You Forgot to set the Animator THIS ENEMY NO LONGER WILL WORK");
    
@@ -90,6 +93,14 @@ public class EnemyBehaviour : MonoBehaviour
    SyncronizeMovement();
    DetectTarget();
  }
+
+ private void OnTriggerEnter(Collider col) {
+   if (col.gameObject.CompareTag("Player")) {
+     PlayerHPController.instance.ChangeHP(10,true);
+     Debug.Log("HIT");
+   }
+ }
+
  private void DetectTarget() {
    targetsDetected = Physics.OverlapSphere(transform.position, 10);
    foreach (var detections in targetsDetected) {
@@ -104,7 +115,23 @@ public class EnemyBehaviour : MonoBehaviour
        ChangeState(new PatrolState(this));
    }
  }
- 
+ public void Die()
+ {
+   if(TryGetComponent(out KillDetection kd)) {
+     kd.onKill.Invoke();
+     if(mySpawner.spawner.TryGetComponent(out Spawner sp)) {
+       sp.hasQuestOnCourse = true;
+       sp.onKill = this.GetComponent<KillDetection>().onKill;
+     }
+     Debug.Log("KilledEn");
+   }
+   Destroy(this.gameObject);
+   ItemDropManager.instance.DropItem(dropInfo, transform.position);
+   PlayerStats.instance.GainXp(Random.Range(30,100));
+   if (mySpawner.spawner.TryGetComponent(out Spawner spawn)) {
+     spawn.GetComponent<Spawner>().StartRespawnProcess();
+   }
+ }
  public void TakeDamage(float damage, DamageElementManager.DamageElement damageElement)
  {
    float actualDamage;
