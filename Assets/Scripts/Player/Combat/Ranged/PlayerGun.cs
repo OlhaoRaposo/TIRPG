@@ -31,8 +31,11 @@ public class PlayerGun : MonoBehaviour
 
     private void Update()
     {
-        Shoot();
-        Reload();
+        if (WorldController.worldController.isGameStarted == true)
+        {
+            Shoot();
+            Reload();
+        }
     }
 
     public void SetNewGunWeapon(PlayerGunBase newWeapon)
@@ -64,7 +67,16 @@ public class PlayerGun : MonoBehaviour
                             {
                                 PlayerCameraMovement.instance.playerAnimator.SetLayerWeight(1, 1);
                                 PlayerCameraMovement.instance.playerAnimator.Play($"{gunName} Aim Tree");
-                                PlayerCameraMovement.instance.playerAnimator.SetFloat("AimVertical", -PlayerCameraMovement.instance.cameraBody.transform.eulerAngles.x / 60);
+
+                                if (PlayerCameraMovement.instance.cameraBody.transform.eulerAngles.x > 180)
+                                {
+                                    PlayerCameraMovement.instance.playerAnimator.SetFloat("AimVertical", (360 - PlayerCameraMovement.instance.cameraBody.transform.eulerAngles.x) / PlayerCameraMovement.instance.cameraVerticalClamping);
+                                }
+                                else if (PlayerCameraMovement.instance.cameraBody.transform.eulerAngles.x < 180)
+                                {
+                                    PlayerCameraMovement.instance.playerAnimator.SetFloat("AimVertical", -PlayerCameraMovement.instance.cameraBody.transform.eulerAngles.x / PlayerCameraMovement.instance.cameraVerticalClamping);
+                                }
+
                                 SummonBullets();
                             }
                             break;
@@ -75,7 +87,16 @@ public class PlayerGun : MonoBehaviour
                             {
                                 PlayerCameraMovement.instance.playerAnimator.SetLayerWeight(1, 1);
                                 PlayerCameraMovement.instance.playerAnimator.Play($"{gunName} Aim Tree");
-                                PlayerCameraMovement.instance.playerAnimator.SetFloat("AimVertical", -PlayerCameraMovement.instance.cameraBody.transform.eulerAngles.x / 60);
+
+                                if (PlayerCameraMovement.instance.cameraBody.transform.eulerAngles.x > 180)
+                                {
+                                    PlayerCameraMovement.instance.playerAnimator.SetFloat("AimVertical", (360 - PlayerCameraMovement.instance.cameraBody.transform.eulerAngles.x) / PlayerCameraMovement.instance.cameraVerticalClamping);
+                                }
+                                else if (PlayerCameraMovement.instance.cameraBody.transform.eulerAngles.x < 180)
+                                {
+                                    PlayerCameraMovement.instance.playerAnimator.SetFloat("AimVertical", -PlayerCameraMovement.instance.cameraBody.transform.eulerAngles.x / PlayerCameraMovement.instance.cameraVerticalClamping);
+                                }
+
                                 SummonBullets();
                             }
                             break;
@@ -86,7 +107,16 @@ public class PlayerGun : MonoBehaviour
                             {
                                 PlayerCameraMovement.instance.playerAnimator.SetLayerWeight(1, 1);
                                 PlayerCameraMovement.instance.playerAnimator.Play($"{gunName} Aim Tree");
-                                PlayerCameraMovement.instance.playerAnimator.SetFloat("AimVertical", -PlayerCameraMovement.instance.cameraBody.transform.eulerAngles.x / 60);
+
+                                if (PlayerCameraMovement.instance.cameraBody.transform.eulerAngles.x > 180)
+                                {
+                                    PlayerCameraMovement.instance.playerAnimator.SetFloat("AimVertical", (360 - PlayerCameraMovement.instance.cameraBody.transform.eulerAngles.x) / PlayerCameraMovement.instance.cameraVerticalClamping);
+                                }
+                                else if (PlayerCameraMovement.instance.cameraBody.transform.eulerAngles.x < 180)
+                                {
+                                    PlayerCameraMovement.instance.playerAnimator.SetFloat("AimVertical", -PlayerCameraMovement.instance.cameraBody.transform.eulerAngles.x / PlayerCameraMovement.instance.cameraVerticalClamping);
+                                }
+
                                 holdTime += Time.deltaTime;
                             }
                             //Soltar
@@ -115,7 +145,7 @@ public class PlayerGun : MonoBehaviour
 
     private void Reload()
     {
-        if (Input.GetKeyDown(InputController.instance.reloadGun) == true && DialogueManager.instance.isPlayingDialogue == false)
+        if (Input.GetKeyDown(InputController.instance.reloadGun) == true)
         {
             StartCoroutine(ReloadAction());
         }
@@ -129,6 +159,7 @@ public class PlayerGun : MonoBehaviour
         if (Physics.Raycast(cameraRay, out RaycastHit hitPos, float.MaxValue, aimCollisionLayer) == true)
         {
             target = hitPos.point;
+            PlayerCameraMovement.instance.AlignTargetWithCamera(PlayerCameraMovement.instance.playerObject);
         }
         else
         {
@@ -164,13 +195,40 @@ public class PlayerGun : MonoBehaviour
     {
         isReloading = true;
         PlayerCameraMovement.instance.playerAnimator.SetLayerWeight(1, 1);
-        //COLOCAR RELOAD DE CADA ARMA AQUI
-        yield return new WaitForSeconds(equipedWeapon.reloadTime);
-        PlayerCameraMovement.instance.playerAnimator.SetLayerWeight(1, 0);
+        switch (equipedWeapon.triggerType)
+        {
+            case PlayerGunBase.TriggerType.Auto:
+            {
+                PlayerCameraMovement.instance.playerAnimator.Play("Reload");
+                yield return new WaitForSeconds(equipedWeapon.reloadTime);
 
+                ammo = equipedWeapon.ammo;
+                UIManager.instance.UpdateAmmo($"{ammo}/{equipedWeapon.ammo}");
+                break;
+            }
+            case PlayerGunBase.TriggerType.Semi:
+            {
+                while (ammo < equipedWeapon.ammo && Input.GetMouseButton(0) == false)
+                {
+                    PlayerCameraMovement.instance.playerAnimator.Play("Reload Round");
+                    yield return new WaitForSeconds(equipedWeapon.reloadTime);
+
+                    ammo++;
+                    UIManager.instance.UpdateAmmo($"{ammo}/{equipedWeapon.ammo}");
+                }
+                break;
+            }
+            case PlayerGunBase.TriggerType.Hold:
+            {
+                yield return new WaitForSeconds(equipedWeapon.reloadTime);
+
+                ammo = equipedWeapon.ammo;
+                UIManager.instance.UpdateAmmo($"{ammo}/{equipedWeapon.ammo}");
+                break;
+            }
+        }
+        PlayerCameraMovement.instance.playerAnimator.SetLayerWeight(1, 0);
         isReloading = false;
-        ammo = equipedWeapon.ammo;
-        UIManager.instance.UpdateAmmo($"{ammo}/{equipedWeapon.ammo}");
     }
 
     public void ShootToggle(bool toggle)

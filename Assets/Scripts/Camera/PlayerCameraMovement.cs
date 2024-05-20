@@ -17,7 +17,7 @@ public class PlayerCameraMovement : MonoBehaviour
     [SerializeField] private float currentSense;
     [SerializeField] private float regularFov;
     [SerializeField] private float aimFov;
-    [SerializeField] private float cameraVerticalClamping;
+    public float cameraVerticalClamping;
     public bool locked;
     public bool isAiming;
     private float camSpeedX, camSpeedY;
@@ -80,9 +80,8 @@ public class PlayerCameraMovement : MonoBehaviour
             //IMPEDIR QUE A CÂMERA FIQUE INVERTIDA, GAMBIARRA POR QUE ESSA MERDA DE ÂNGULO NN FUNCIONA DIREITO POR NADA
             if (transform.eulerAngles.x < 180)
             {
-                if (Mathf.Abs(transform.eulerAngles.x) > cameraVerticalClamping)
+                if (Mathf.Abs(transform.eulerAngles.x) > cameraVerticalClamping * 2)
                 {
-                    Debug.Log("PARO");
                     transform.localPosition = previousCamPosition;
                     transform.localEulerAngles = previousCamRotation;
                 }
@@ -92,21 +91,17 @@ public class PlayerCameraMovement : MonoBehaviour
                     previousCamRotation = transform.localEulerAngles;
                 }
             }
-            else
+            else if (transform.eulerAngles.x > 180)
             {
-                if (transform.eulerAngles.x > 180)
+                if (360 - Mathf.Abs(transform.eulerAngles.x) > cameraVerticalClamping)
                 {
-                    if (360 - Mathf.Abs(transform.eulerAngles.x) > cameraVerticalClamping)
-                    {
-                        Debug.Log("PARO");
-                        transform.localPosition = new Vector3(transform.localPosition.x, previousCamPosition.y, transform.localPosition.z);
-                        transform.localEulerAngles = new Vector3(previousCamRotation.x, transform.localEulerAngles.y, transform.localEulerAngles.z);;
-                    }
-                    else
-                    {
-                        previousCamPosition = transform.localPosition;
-                        previousCamRotation = transform.localEulerAngles;
-                    }
+                    transform.localPosition = previousCamPosition;
+                    transform.localEulerAngles = previousCamRotation;
+                }
+                else
+                {
+                    previousCamPosition = transform.localPosition;
+                    previousCamRotation = transform.localEulerAngles;
                 }
             }
 

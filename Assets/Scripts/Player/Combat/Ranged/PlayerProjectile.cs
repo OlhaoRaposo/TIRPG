@@ -26,11 +26,11 @@ public class PlayerProjectile : MonoBehaviour
     private void Move()
     {
         transform.Translate(Vector3.forward * travelSpeed * Time.deltaTime);
-        if(Vector3.Distance(transform.position, startPos) >= fallOffRange)
+        if (Vector3.Distance(transform.position, startPos) >= fallOffRange)
         {
             travelSpeed -= 0.1f;
             damage -= 0.1f;
-            if(damage <= 0 || travelSpeed <= 0)
+            if (damage <= 0 || travelSpeed <= 0)
             {
                 Destroy(gameObject);
             }
@@ -39,7 +39,7 @@ public class PlayerProjectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("Enemy"))
         {
             if(other.TryGetComponent(out EnemyBehaviour en))
                 en.TakeDamage(damage, bulletElement);
@@ -48,10 +48,10 @@ public class PlayerProjectile : MonoBehaviour
             Hitmark.instance.ToggleHitmark();
         }
         Destroy(gameObject);
-        
-        if (other!= null)
+
+        if (other != null)
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
     }
 
