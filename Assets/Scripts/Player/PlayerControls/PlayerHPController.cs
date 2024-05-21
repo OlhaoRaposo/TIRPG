@@ -53,8 +53,7 @@ public class PlayerHPController : MonoBehaviour
 
             if(currentHP <= 0)
             {
-                Cursor.lockState = CursorLockMode.None;
-                SceneController.instance.LoadMenu();
+                Die();
             } 
         }
         else
@@ -72,7 +71,12 @@ public class PlayerHPController : MonoBehaviour
             }
         }
     }
-
+    [ContextMenu("Die")]
+    void Die()
+    {
+        PlayerCameraMovement.instance.ToggleAimLock(false);
+        SceneController.instance.GameOver();
+    }
     public void SetStamina(float ammount)
     {
         if(ammount > staminaMax)
