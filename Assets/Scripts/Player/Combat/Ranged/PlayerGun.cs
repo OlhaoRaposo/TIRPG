@@ -13,11 +13,12 @@ public class PlayerGun : MonoBehaviour
     private float shootCD = 0;
     private bool isReloading = false, canShoot = true;
     [SerializeField] private LayerMask aimCollisionLayer = new LayerMask();
+    private float holdTime;
+    private bool isHolding = false;
 
     [Header("References")]
     [SerializeField] private PlayerGunBase equipedWeapon;
     [SerializeField] private Image reloadImage;
-    private float holdTime;
 
     private void Awake()
     {
@@ -106,7 +107,10 @@ public class PlayerGun : MonoBehaviour
                             if (Input.GetMouseButton(0) == true)
                             {
                                 PlayerCameraMovement.instance.playerAnimator.SetLayerWeight(1, 1);
-                                PlayerCameraMovement.instance.playerAnimator.Play($"{gunName} Aim Tree");
+                                if (holdTime < shootCD)
+                                {
+                                    PlayerCameraMovement.instance.playerAnimator.Play($"{gunName} Pull Tree");
+                                }
 
                                 if (PlayerCameraMovement.instance.cameraBody.transform.eulerAngles.x > 180)
                                 {
@@ -118,10 +122,15 @@ public class PlayerGun : MonoBehaviour
                                 }
 
                                 holdTime += Time.deltaTime;
+                                if (holdTime >= shootCD)
+                                {
+                                    PlayerCameraMovement.instance.playerAnimator.Play($"{gunName} Hold Tree");
+                                }
                             }
                             //Soltar
                             if (Input.GetMouseButtonUp(0) == true)
                             {
+                                PlayerCameraMovement.instance.playerAnimator.Play($"{gunName} Release Tree");
                                 SummonBullets();
                             }
                             break;
@@ -172,17 +181,39 @@ public class PlayerGun : MonoBehaviour
             Vector3 startingPos = new Vector3(transform.position.x + aux, transform.position.y + aux, transform.position.z);
             Vector3 targetAim = (target - transform.position).normalized;
 
-            GameObject projectile = Instantiate(equipedWeapon.projectile, startingPos, Quaternion.LookRotation(targetAim, Vector3.up), null);
             if (equipedWeapon.triggerType == PlayerGunBase.TriggerType.Hold)
             {
-                if (holdTime / shootCD < 1)
+                if (Physics.Raycast(startingPos, targetAim, out RaycastHit hitEnemy, equipedWeapon.maxRange, aimCollisionLayer) == true)
                 {
-                    projectile.GetComponent<PlayerProjectile>().SetSpeed(holdTime);
-                    holdTime = 0;
+                    if (hitEnemy.transform.gameObject.tag == "Enemy")
+                    {
+                        if (holdTime / shootCD < 1)
+                        {
+                            hitEnemy.transform.gameObject.GetComponent<EnemyBehaviour>().TakeDamage(equipedWeapon.damage * (holdTime / shootCD), equipedWeapon.bulletElement);
+                            Hitmark.instance.ToggleHitmark();
+                        }
+                        else
+                        {
+                            hitEnemy.transform.gameObject.GetComponent<EnemyBehaviour>().TakeDamage(equipedWeapon.damage, equipedWeapon.bulletElement);
+                            Hitmark.instance.ToggleHitmark();
+                        }
+                    }
+                }
+                holdTime = 0;
+            }
+            else
+            {
+                if (Physics.Raycast(startingPos, targetAim, out RaycastHit hitEnemy, equipedWeapon.maxRange, aimCollisionLayer) == true)
+                {
+                    if (hitEnemy.transform.gameObject.tag == "Enemy")
+                    {
+                        hitEnemy.transform.gameObject.GetComponent<EnemyBehaviour>().TakeDamage(equipedWeapon.damage, equipedWeapon.bulletElement);
+                        Hitmark.instance.ToggleHitmark();
+                    }
                 }
             }
-            Instantiate(equipedWeapon.effect, startingPos, Quaternion.LookRotation(targetAim, Vector3.up), transform);
-            //PlayerCameraMovement.instance.ShakeCamera(equipedWeapon.recoil);
+            AudioBoard.instance?.PlayAudio("Shot");
+            PlayerCameraMovement.instance.ShakeCamera(equipedWeapon.recoil);
             ammo--;
         }
 
@@ -198,34 +229,34 @@ public class PlayerGun : MonoBehaviour
         switch (equipedWeapon.triggerType)
         {
             case PlayerGunBase.TriggerType.Auto:
-            {
-                PlayerCameraMovement.instance.playerAnimator.Play("Reload");
-                yield return new WaitForSeconds(equipedWeapon.reloadTime);
-
-                ammo = equipedWeapon.ammo;
-                UIManager.instance.UpdateAmmo($"{ammo}/{equipedWeapon.ammo}");
-                break;
-            }
-            case PlayerGunBase.TriggerType.Semi:
-            {
-                while (ammo < equipedWeapon.ammo && Input.GetMouseButton(0) == false)
                 {
-                    PlayerCameraMovement.instance.playerAnimator.Play("Reload Round");
+                    PlayerCameraMovement.instance.playerAnimator.Play("Reload");
                     yield return new WaitForSeconds(equipedWeapon.reloadTime);
 
-                    ammo++;
+                    ammo = equipedWeapon.ammo;
                     UIManager.instance.UpdateAmmo($"{ammo}/{equipedWeapon.ammo}");
+                    break;
                 }
-                break;
-            }
-            case PlayerGunBase.TriggerType.Hold:
-            {
-                yield return new WaitForSeconds(equipedWeapon.reloadTime);
+            case PlayerGunBase.TriggerType.Semi:
+                {
+                    while (ammo < equipedWeapon.ammo && Input.GetMouseButton(0) == false)
+                    {
+                        PlayerCameraMovement.instance.playerAnimator.Play("Reload Round");
+                        yield return new WaitForSeconds(equipedWeapon.reloadTime);
 
-                ammo = equipedWeapon.ammo;
-                UIManager.instance.UpdateAmmo($"{ammo}/{equipedWeapon.ammo}");
-                break;
-            }
+                        ammo++;
+                        UIManager.instance.UpdateAmmo($"{ammo}/{equipedWeapon.ammo}");
+                    }
+                    break;
+                }
+            case PlayerGunBase.TriggerType.Hold:
+                {
+                    yield return new WaitForSeconds(equipedWeapon.reloadTime);
+
+                    ammo = equipedWeapon.ammo;
+                    UIManager.instance.UpdateAmmo($"{ammo}/{equipedWeapon.ammo}");
+                    break;
+                }
         }
         PlayerCameraMovement.instance.playerAnimator.SetLayerWeight(1, 0);
         isReloading = false;

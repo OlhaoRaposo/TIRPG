@@ -42,7 +42,7 @@ public class PlayerInventory : MonoBehaviour
         {
             Debug.Log("Cant add item to inventory: The inventory is full");
             return false;
-        } 
+        }
 
         items.Add(itemData);
         return true;
@@ -71,7 +71,7 @@ public class PlayerInventory : MonoBehaviour
     }
     public bool LookForItem(ItemData itemData)
     {
-        foreach(ItemData item in items)
+        foreach (ItemData item in items)
         {
             if (item == itemData)
             {
@@ -84,14 +84,31 @@ public class PlayerInventory : MonoBehaviour
     {
         meleeWeaponSlot.SetItem(null);
         GameObject droppedItem = Instantiate(itemData.prefab, PlayerInteractions.instance.transform.position + (Vector3.up + PlayerInteractions.instance.transform.forward), Quaternion.identity);
-        PlayerMeleeCombat.instance.gameObject.SetActive(false);
+        PlayerMeleeCombat.instance.enabled = false;
+        foreach (GameObject playerWeapon in PlayerMovement.instance.allWeapons)
+        {
+            if (playerWeapon.name == PlayerMeleeCombat.instance.GetMeleeName())
+            {
+                playerWeapon.SetActive(false);
+                break;
+            }
+        }
         //ItemDropManager.instance.SetItemParent(droppedItem.transform);
     }
     public void DropRangedWeapon(ItemData itemData)
     {
         rangedWeaponSlot.SetItem(null);
         GameObject droppedItem = Instantiate(itemData.prefab, PlayerInteractions.instance.transform.position + (Vector3.up + PlayerInteractions.instance.transform.forward), Quaternion.identity);
-        PlayerGun.instance.gameObject.SetActive(false);
+        PlayerGun.instance.enabled = false;
+        PlayerMovement.instance.playerModel.transform.Find(PlayerGun.instance.GetGunName()).gameObject.SetActive(false);
+        foreach (GameObject playerWeapon in PlayerMovement.instance.allWeapons)
+        {
+            if (playerWeapon.name == PlayerGun.instance.GetGunName())
+            {
+                playerWeapon.SetActive(false);
+                break;
+            }
+        }
         //ItemDropManager.instance.SetItemParent(droppedItem.transform);
 
     }
@@ -100,7 +117,7 @@ public class PlayerInventory : MonoBehaviour
         ResetItemSlots();
 
         int itemIndex = 0;
-        foreach(InventorySlot slot in slots)
+        foreach (InventorySlot slot in slots)
         {
             if (itemIndex + 1 > items.Count)
             {
@@ -112,7 +129,7 @@ public class PlayerInventory : MonoBehaviour
     }
     void ResetItemSlots()
     {
-        foreach(InventorySlot slot in slots)
+        foreach (InventorySlot slot in slots)
         {
             slot.SetItem(null);
         }
@@ -122,12 +139,44 @@ public class PlayerInventory : MonoBehaviour
         RemoveItemFromInventory(weaponData);
         meleeWeaponSlot.SetItem(weaponData);
         PlayerMeleeCombat.instance?.SetNewMeleeWeapon(weaponData.meleeBase);
+
+        foreach (GameObject playerWeapon in PlayerMovement.instance.allWeapons)
+        {
+            if (playerWeapon.name == PlayerMeleeCombat.instance.GetMeleeName() && PlayerMovement.instance.isRanged == false)
+            {
+                playerWeapon.SetActive(true);
+                PlayerMeleeCombat.instance.enabled = true;
+            }
+            else
+            {
+                if (playerWeapon.name != PlayerGun.instance.GetGunName())
+                {
+                    playerWeapon.SetActive(false);
+                }
+            }
+        }
     }
     public void EquipRangedWeapon(ItemData weaponData)
     {
         RemoveItemFromInventory(weaponData);
         rangedWeaponSlot.SetItem(weaponData);
         PlayerGun.instance?.SetNewGunWeapon(weaponData.gunBase);
+        
+        foreach (GameObject playerWeapon in PlayerMovement.instance.allWeapons)
+        {
+            if (playerWeapon.name == PlayerGun.instance.GetGunName() && PlayerMovement.instance.isRanged == true)
+            {
+                playerWeapon.SetActive(true);
+                PlayerGun.instance.enabled = true;
+            }
+            else
+            {
+                if (playerWeapon.name != PlayerMeleeCombat.instance.GetMeleeName())
+                {
+                    playerWeapon.SetActive(false);
+                }
+            }
+        }
     }
     public void EquipConsumable(ItemData consumableData)
     {
