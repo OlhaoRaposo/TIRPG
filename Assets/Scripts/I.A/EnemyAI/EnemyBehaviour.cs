@@ -147,6 +147,7 @@ public class EnemyBehaviour : MonoBehaviour
      if (enemyAnimator.GetBool("isAlive")) {
        enemyAnimator.SetBool("isAlive",false);
        enemyAnimator.SetTrigger("Die");
+      
      }
    }
  }
