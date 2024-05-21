@@ -374,7 +374,7 @@ CharacterController:
   serializedVersion: 3
   m_Height: 1.75
   m_Radius: 0.3
-  m_SlopeLimit: 45
+  m_SlopeLimit: 70
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
@@ -515,6 +515,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4022807065086187320}
   - component: {fileID: 1578961676915089182}
+  - component: {fileID: 5440751662472678360}
   m_Layer: 9
   m_Name: Melee
   m_TagString: Untagged
@@ -550,10 +551,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponName: 
+  collisionLayer:
+    serializedVersion: 2
+    m_Bits: 0
   isInCombo: 0
   weapon: {fileID: 11400000, guid: ef512ff55e55f404dbaff0f2a1eb7f89, type: 2}
+  target: {fileID: 6196279064886286490}
   animator: {fileID: 6925541501817674655}
-  attackCollider: {fileID: 0}
+--- !u!64 &5440751662472678360
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8814491649899622192}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1001 &7484360896160254286
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -692,6 +718,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: b3053b55d7819f949b8bc5ceae0b1cee, type: 2}
+    - target: {fileID: -1693322200426101985, guid: 77cbaee47b5d6174fa536ade87fb4a37,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0aeff8074a36b2d42a692de01cca22a3, type: 2}
     - target: {fileID: 407729292980908657, guid: 77cbaee47b5d6174fa536ade87fb4a37,
         type: 3}
       propertyPath: m_LocalRotation.w

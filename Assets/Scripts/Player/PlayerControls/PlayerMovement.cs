@@ -13,13 +13,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Animator playerAnimator;
     [SerializeField] private CharacterController playerController; //Eu odeio character controllers :)
     [SerializeField] private CapsuleCollider playerCollider;
-    [SerializeField]private GameObject playerModel;
+    public GameObject playerModel;
     [SerializeField] private float walkSpeedMultiplier, runSpeedMultiplier, jumpHeight, stamina = 100f;
     [SerializeField] private bool isRunning = false, isDashing = false, isJumping = false, isGrounded = true, canMove = true;
 
     [Header("Combat")]
-    [SerializeField] private GameObject[] allWeapons;
-    [SerializeField] private bool canSwapWeapon = true, isRanged = true;
+    public GameObject[] allWeapons;
+    [SerializeField] private bool canSwapWeapon = true;
+    public bool isRanged = true;
 
     private float speedModifier;
     private Vector3 startRelativePoint;
@@ -230,22 +231,18 @@ public class PlayerMovement : MonoBehaviour
         if (canSwapWeapon == true)
         {
             //CASO ESTEJA FORA FORA DA ARMA RANGED E APERTE PARA TROCAR PARA ARMA RANGED
-            if (isRanged == false && Input.GetKeyDown(KeyCode.Alpha1))
+            if (isRanged == false && Input.GetKeyDown(KeyCode.Alpha1) && PlayerInventory.instance.GetRanged() != null)
             {
                 //PROCURA A ARMA EQUIPADA
                 foreach (GameObject weapon in allWeapons)
                 {
-                    //VERIFICA SE HÁ INSTÂNCIA (PROTEÇÃO)
-                    if (PlayerInventory.instance.GetRanged() != null)
+                    if (weapon.name == PlayerGun.instance.GetGunName())
                     {
-                        if (weapon.name == PlayerGun.instance.GetGunName())
-                        {
-                            weapon.SetActive(true);
-                        }
-                        if (weapon.name == PlayerMeleeCombat.instance.GetMeleeName())
-                        {
-                            weapon.SetActive(false);
-                        }
+                        weapon.SetActive(true);
+                    }
+                    if (weapon.name == PlayerMeleeCombat.instance.GetMeleeName())
+                    {
+                        weapon.SetActive(false);
                     }
                 }
 
@@ -260,22 +257,18 @@ public class PlayerMovement : MonoBehaviour
                 isRanged = true;
             }
 
-            if (isRanged == true && Input.GetKeyDown(KeyCode.Alpha2))
+            if (isRanged == true && Input.GetKeyDown(KeyCode.Alpha2) && PlayerInventory.instance.GetMelee() != null)
             {
                 //PROCURA A ARMA EQUIPADA
                 foreach (GameObject weapon in allWeapons)
                 {
-                    //VERIFICA SE HÁ INSTÂNCIA (PROTEÇÃO)
-                    if (PlayerInventory.instance.GetMelee() != null)
+                    if (weapon.name == PlayerGun.instance.GetGunName())
                     {
-                        if (weapon.name == PlayerGun.instance.GetGunName())
-                        {
-                            weapon.SetActive(false);
-                        }
-                        if (weapon.name == PlayerMeleeCombat.instance.GetMeleeName())
-                        {
-                            weapon.SetActive(true);
-                        }
+                        weapon.SetActive(false);
+                    }
+                    if (weapon.name == PlayerMeleeCombat.instance.GetMeleeName())
+                    {
+                        weapon.SetActive(true);
                     }
                 }
 

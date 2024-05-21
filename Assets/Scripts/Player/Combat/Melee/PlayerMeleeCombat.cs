@@ -15,13 +15,13 @@ public class PlayerMeleeCombat : MonoBehaviour
     int comboIndex = 0;
     float nextAttackCooldown = 0;
     bool canAttack = true;
+    [SerializeField] private LayerMask collisionLayer = new LayerMask();
     [HideInInspector] public bool isInCombo = false;
 
     [Header("References")]
     [SerializeField] PlayerMeleeBase weapon;
-    //[SerializeField] PlayerController player;
+    [SerializeField] GameObject target;
     [SerializeField] Animator animator;
-    [SerializeField] Collider attackCollider;
 
     private void Awake()
     {
@@ -65,20 +65,19 @@ public class PlayerMeleeCombat : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && canAttack && PlayerMovement.instance.GetIsGrounded())
         {
-            PlayerCameraMovement.instance.playerAnimator.SetLayerWeight(1, 0);
-            if (comboIndex == 1)
-            {
-                StartCombo();
-            }
-
             if (Time.time >= nextAttackCooldown)
             {
+                PlayerCameraMovement.instance.playerAnimator.SetLayerWeight(1, 0);
+                if (comboIndex == 1)
+                {
+                    StartCombo();
+                }
+
                 string nextAttack = $"{weaponName} " + comboIndex;
 
                 PlayerCameraMovement.instance.AlignTargetWithCamera(PlayerCameraMovement.instance.playerObject);
                 animator.Play(nextAttack, 0);
-
-                isInCombo = true;
+                StartCoroutine(InflictDamage());
 
                 float nextAttackTime = animator.GetCurrentAnimatorStateInfo(0).length * comboExecutionWindowPercentage;
                 nextAttackCooldown = Time.time + nextAttackTime;
@@ -102,6 +101,30 @@ public class PlayerMeleeCombat : MonoBehaviour
         }
     }
 
+    public IEnumerator InflictDamage()
+    {
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length * comboExecutionWindowPercentage);
+        Collider[] hitEnemies = Physics.OverlapSphere(target.transform.position, weapon.reach);
+        if (hitEnemies != null)
+        {
+            foreach (Collider enemy in hitEnemies)
+            {
+                if (enemy.tag == "Enemy")
+                {
+                    if(comboIndex >= 4)
+                    {
+                        enemy.transform.gameObject.GetComponent<EnemyBehaviour>().TakeDamage(weapon.damage * 1.25f, weapon.damageElement);
+                    }
+                    else
+                    {
+                        enemy.transform.gameObject.GetComponent<EnemyBehaviour>().TakeDamage(weapon.damage, weapon.damageElement);
+                    }
+                    Hitmark.instance.ToggleHitmark();
+                }
+            }
+        }
+    }
+
     private void StartCombo()
     {
         isInCombo = true;
@@ -120,6 +143,4 @@ public class PlayerMeleeCombat : MonoBehaviour
     {
         canAttack = toggle;
     }
-
-    //LÓGICA DE DANO
 }
