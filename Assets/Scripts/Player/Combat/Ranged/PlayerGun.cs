@@ -107,9 +107,10 @@ public class PlayerGun : MonoBehaviour
                             if (Input.GetMouseButton(0) == true)
                             {
                                 PlayerCameraMovement.instance.playerAnimator.SetLayerWeight(1, 1);
-                                if (holdTime < shootCD)
+                                if (isHolding == false)
                                 {
                                     PlayerCameraMovement.instance.playerAnimator.Play($"{gunName} Pull Tree");
+                                    isHolding = true;
                                 }
 
                                 if (PlayerCameraMovement.instance.cameraBody.transform.eulerAngles.x > 180)
@@ -199,7 +200,7 @@ public class PlayerGun : MonoBehaviour
                         }
                     }
                 }
-                holdTime = 0;
+                isHolding = false;
             }
             else
             {
@@ -207,7 +208,14 @@ public class PlayerGun : MonoBehaviour
                 {
                     if (hitEnemy.transform.gameObject.tag == "Enemy")
                     {
-                        hitEnemy.transform.gameObject.GetComponent<EnemyBehaviour>().TakeDamage(equipedWeapon.damage, equipedWeapon.bulletElement);
+                        if (hitEnemy.transform.gameObject.TryGetComponent(out EnemyBehaviour en))
+                        {
+                            en.TakeDamage(equipedWeapon.damage, equipedWeapon.bulletElement);
+                        }
+                        else if (hitEnemy.transform.gameObject.TryGetComponent(out BoitataDamageReceiver bt))
+                        {
+                            bt.TakeDamage(equipedWeapon.damage, equipedWeapon.bulletElement);
+                        }
                         Hitmark.instance.ToggleHitmark();
                     }
                 }
