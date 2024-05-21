@@ -46,10 +46,9 @@ public class ArmadeiraWeapon : MonoBehaviour
      }
      private void Update()
      {
-         if (isShooting) {
-             Transform userTransform = user.transform;
-             Quaternion targetRotation = Quaternion.LookRotation(target.transform.position - userTransform.position);
-             userTransform.rotation = Quaternion.Lerp(userTransform.rotation, targetRotation, .15f * Time.deltaTime);
+         if(isShooting){
+             Vector3 pos = new Vector3(user.target.transform.position.x, user.transform.position.y, user.target.transform.position.z);
+             user.transform.LookAt(pos);
          }
      }
      private void OnTriggerEnter(Collider col) {
@@ -66,9 +65,9 @@ public class ArmadeiraWeapon : MonoBehaviour
      IEnumerator NormalShoot(int shoots,string expression) {
          isShooting = true;
          user.agent.SetDestination(user.transform.position);
+         user.transform.LookAt(user.target.transform.position);
             for (int i = 0; i < shoots; i++){
                 user.enemyAnimator.SetTrigger(expression);
-                user.transform.LookAt(user.target.transform.position);
                 int rndRoot = Random.Range(0, gunRoots.Count);
                 GameObject bullet = Instantiate(normalBullet, gunRoots[rndRoot].position, gunRoots[rndRoot].rotation);
                 yield return new WaitForSeconds(0.5f);
@@ -105,10 +104,9 @@ public class ArmadeiraWeapon : MonoBehaviour
          isShooting = false;
          user.ChangeState(new ChaseState(user));
      }
-     IEnumerator Jump(string expression)
-     {
-         Vector3 lookat = user.target.transform.position - user.transform.position;
-         user.agent.SetDestination(lookat * 10);
+     IEnumerator Jump(string expression) {
+         Vector3 dir = user.target.transform.position - user.transform.position;
+         user.agent.SetDestination(user.target.transform.position + dir.normalized);
          user.enemyAnimator.SetTrigger(expression);
          yield return new WaitForSeconds(3);
          user.ChangeState(new ChaseState(user));

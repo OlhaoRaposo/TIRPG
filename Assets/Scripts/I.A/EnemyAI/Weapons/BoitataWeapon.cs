@@ -6,7 +6,7 @@ public class BoitataWeapon : MonoBehaviour
 {
     public EnemyBehaviour user;
     public float damage;
-    public bool isHitting;
+    public GameObject jail;
     public void Attack(string expression){
         Debug.Log("Attacking with: " + expression);
         
@@ -28,9 +28,6 @@ public class BoitataWeapon : MonoBehaviour
                 break;
         }
     }
-    private void Update() {
-    }
-
     IEnumerator Devour(string expression) {
         Vector3 lookat = user.target.transform.position - user.transform.position;
         user.agent.SetDestination(lookat * 10);
@@ -46,7 +43,9 @@ public class BoitataWeapon : MonoBehaviour
     }
     IEnumerator MeleeHit(string expression) {
         user.enemyAnimator.SetTrigger(expression);
+        jail.SetActive(true);
         yield return new WaitForSeconds(8);
+        jail.SetActive(false);
         user.ChangeState(new ChaseState(user));
     }
     IEnumerator MeleeBreath(string expression)
@@ -63,10 +62,8 @@ public class BoitataWeapon : MonoBehaviour
     private void OnTriggerEnter(Collider col) {
         if (col.gameObject.CompareTag("Player")) {
             PlayerHPController.instance.ChangeHP(damage,true);
-            isHitting = true;
             Debug.Log("HIT");
-        }else
-            isHitting = false;
+        }
     }
    
     public void TakeDamage(float damage, DamageElementManager.DamageElement damageElement) {
