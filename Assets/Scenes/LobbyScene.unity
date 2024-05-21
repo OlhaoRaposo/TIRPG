@@ -123,6 +123,74 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &167631754
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5684841742478509078, guid: 5eb7fc299ef9f384683c67f6fd5dcd09,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5684841742478509078, guid: 5eb7fc299ef9f384683c67f6fd5dcd09,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5684841742478509078, guid: 5eb7fc299ef9f384683c67f6fd5dcd09,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5684841742478509078, guid: 5eb7fc299ef9f384683c67f6fd5dcd09,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5684841742478509078, guid: 5eb7fc299ef9f384683c67f6fd5dcd09,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5684841742478509078, guid: 5eb7fc299ef9f384683c67f6fd5dcd09,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5684841742478509078, guid: 5eb7fc299ef9f384683c67f6fd5dcd09,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5684841742478509078, guid: 5eb7fc299ef9f384683c67f6fd5dcd09,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5684841742478509078, guid: 5eb7fc299ef9f384683c67f6fd5dcd09,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5684841742478509078, guid: 5eb7fc299ef9f384683c67f6fd5dcd09,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7335236862668922310, guid: 5eb7fc299ef9f384683c67f6fd5dcd09,
+        type: 3}
+      propertyPath: m_Name
+      value: LobbyVendors
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5eb7fc299ef9f384683c67f6fd5dcd09, type: 3}
 --- !u!1 &239393908
 GameObject:
   m_ObjectHideFlags: 0
@@ -1375,9 +1443,9 @@ MonoBehaviour:
   hasArrived: 1
   canInteractAgain: 1
   npcReference:
-    perfilSprite: {fileID: 21300000, guid: 9cf77986ef2141048a7621896c3a348e, type: 3}
+    perfilSprite: {fileID: 21300000, guid: 96840cb712fffb24c82cf35d03b6d598, type: 3}
     perfilImage: {fileID: 781615628}
-    npcName: Decivar Taguy
+    npcName: lsais dough
     npcNameReference: {fileID: 480540131}
     npcText: {fileID: 1732169653}
     talkBox: {fileID: 959963997}
@@ -1390,10 +1458,13 @@ MonoBehaviour:
   dialogueDatabase:
     randomDialogues:
     - alreadySaid: 0
-      dialogue: 
+      dialogue: A cidade ficam criando essas maracutaia delas
       audio: {fileID: 0}
     - alreadySaid: 0
-      dialogue: 
+      dialogue: "AGORA TEM UMA ARANHA NA PORTA DO MINEIR\xC3O"
+      audio: {fileID: 0}
+    - alreadySaid: 0
+      dialogue: "Voc\xEA nao consegue dar cabo dela pra nois n\xE3o?"
       audio: {fileID: 0}
   hasQuest: 0
   questToGive:
@@ -4623,3 +4694,4 @@ SceneRoots:
   - {fileID: 1701019735}
   - {fileID: 1772372424}
   - {fileID: 823652366}
+  - {fileID: 167631754}
