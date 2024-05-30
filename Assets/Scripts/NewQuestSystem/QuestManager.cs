@@ -90,16 +90,16 @@ public class QuestManager : MonoBehaviour
         if (isCompleted) {
             quest.isComplete = true;
             NPC npc = FindNpc(quest.code);
-            npc.QuestIsCompleted();
-            npc.HandleQuestIcon();
+         //   npc.QuestIsCompleted();
+          //  npc.HandleQuestIcon();
         }
     }
     private NPC FindNpc(string questCode) {
         NPC npcToReturn = null;
         foreach (var npc in FindObjectsOfType<NPC>()) {
-            if (npc.currentQuest == questCode) {
-                npcToReturn = npc;
-            }
+           // if (npc.currentQuest == questCode) {
+           //     npcToReturn = npc;
+           // }
         }
         return npcToReturn;
     }

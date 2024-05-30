@@ -1705,7 +1705,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 480540130}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1713,7 +1713,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -213.68106, y: -3.19635}
+  m_AnchoredPosition: {x: -387.6, y: -3.19635}
   m_SizeDelta: {x: 576.556, y: 52.7379}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &482973958 stripped
@@ -1850,7 +1850,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &527195607
 Transform:
   m_ObjectHideFlags: 0
@@ -1882,18 +1882,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d0fcc4fde033914c9fa0cb5996bd92e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentState: 0
-  canInteractWithOtherNPC: 0
-  interactable: 1
-  talkBox: {fileID: 1094510801}
-  npcType: 1
-  npcCode: NPCC7
-  npcAgent: {fileID: 527195609}
+  dialogues: []
   currentDialogueIndex: 0
-  currentQuestIsCompleted: 0
-  patrolDestination: {x: 0, y: 0, z: 0}
-  hasArrived: 1
-  canInteractAgain: 0
+  isTalking: 0
   npcReference:
     perfilSprite: {fileID: 21300000, guid: 96840cb712fffb24c82cf35d03b6d598, type: 3}
     perfilImage: {fileID: 2005017014}
@@ -1907,24 +1898,6 @@ MonoBehaviour:
     acceptButton: {fileID: 1801130631}
     refuseButton: {fileID: 781517966}
     finishButton: {fileID: 865130837}
-  dialogueDatabase:
-    randomDialogues:
-    - alreadySaid: 0
-      dialogue: "P\xF4, meu camarada, tu t\xE1 me zoando? Viu cobra no meio da montanha
-        da floresta? Essa foi braba, hein! Mas se foi verdade, tu teve sorte pra
-        caramba de n\xE3o ter virado lanche da fera!"
-      audio: {fileID: 0}
-    - alreadySaid: 0
-      dialogue: "J\xE1 t\xE1 rolando essa parada faz tempo, e a gente t\xE1 cansado
-        de esperar. A gente j\xE1 tentou resolver por conta pr\xF3pria, mas n\xE3o
-        deu jeito. Por isso, tamo pedindo a sua ajuda pra dar um basta nisso!"
-      audio: {fileID: 0}
-  hasQuest: 0
-  questToGive:
-  - IrAteKrek
-  - IrAteKrek2
-  atualQuestIndex: 0
-  currentQuest: 
 --- !u!195 &527195609
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2699,81 +2672,6 @@ RectTransform:
   m_AnchoredPosition: {x: 412.75, y: -375}
   m_SizeDelta: {x: 300, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &781615627
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 781615630}
-  - component: {fileID: 781615629}
-  - component: {fileID: 781615628}
-  m_Layer: 7
-  m_Name: PerfilImage
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &781615628
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 781615627}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &781615629
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 781615627}
-  m_CullTransparentMesh: 1
---- !u!224 &781615630
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 781615627}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 985444246}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -610.71313, y: 77.6391}
-  m_SizeDelta: {x: 200, y: 200}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &790945575
 GameObject:
   m_ObjectHideFlags: 0
@@ -2786,7 +2684,6 @@ GameObject:
   - component: {fileID: 790945582}
   - component: {fileID: 790945581}
   - component: {fileID: 790945580}
-  - component: {fileID: 790945578}
   - component: {fileID: 790945577}
   - component: {fileID: 790945583}
   - component: {fileID: 790945579}
@@ -2806,7 +2703,7 @@ Transform:
   m_GameObject: {fileID: 790945575}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.9416432, z: -0, w: 0.33661285}
-  m_LocalPosition: {x: 63.35, y: -21.48993, z: -35.35}
+  m_LocalPosition: {x: 100.6, y: -21.48993, z: -80}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2828,21 +2725,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d0fcc4fde033914c9fa0cb5996bd92e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentState: 0
-  canInteractWithOtherNPC: 0
-  interactable: 1
-  talkBox: {fileID: 959963997}
-  npcType: 1
-  npcCode: NPCC7
-  npcAgent: {fileID: 790945578}
+  dialogues:
+  - sentenceIndex: 0
+    sentences:
+    - Nois ja chamou a prefeitura pra matar aquela aranha umas 30x
+    - "So por que nao \xE9 epoca de elei\xE7\xE3o nao fazem nada"
+    - "Voc\xEA nao poderia fazer essa boa pra gente n\xE3o?"
+  - sentenceIndex: 0
+    sentences:
+    - "C\xEA e o cara ela ta la em cima da montanha"
+    - Fica a vontade
   currentDialogueIndex: 0
-  currentQuestIsCompleted: 0
-  patrolDestination: {x: 0, y: 0, z: 0}
-  hasArrived: 1
-  canInteractAgain: 0
+  isTalking: 0
   npcReference:
     perfilSprite: {fileID: 21300000, guid: 96840cb712fffb24c82cf35d03b6d598, type: 3}
-    perfilImage: {fileID: 781615628}
+    perfilImage: {fileID: 0}
     npcName: lsais dough
     npcNameReference: {fileID: 480540131}
     npcText: {fileID: 1732169653}
@@ -2853,43 +2750,6 @@ MonoBehaviour:
     acceptButton: {fileID: 1121492494}
     refuseButton: {fileID: 1280226419}
     finishButton: {fileID: 1641201551}
-  dialogueDatabase:
-    randomDialogues:
-    - alreadySaid: 0
-      dialogue: "A cidade ficam criando essas maracutaia delas, AGORA TEM UMA ARANHA
-        NA PORTA DO MINEIR\xC3O"
-      audio: {fileID: 0}
-    - alreadySaid: 0
-      dialogue: "Vamo pedir pra prefeitura dar cabo dela pra nois s\xF4"
-      audio: {fileID: 0}
-  hasQuest: 0
-  questToGive:
-  - IrAteKrek
-  - IrAteKrek2
-  atualQuestIndex: 0
-  currentQuest: 
---- !u!195 &790945578
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 790945575}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3
-  m_Acceleration: 2
-  avoidancePriority: 50
-  m_AngularSpeed: 125
-  m_StoppingDistance: 0.6
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0.95
-  m_WalkableMask: 8
-  m_ObstacleAvoidanceType: 4
 --- !u!54 &790945579
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3674,7 +3534,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &959963998
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3790,7 +3650,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 781615630}
   - {fileID: 480540133}
   m_Father: {fileID: 959963998}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

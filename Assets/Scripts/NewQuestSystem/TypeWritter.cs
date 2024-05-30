@@ -1,10 +1,11 @@
-using System.Collections;
-using TMPro;
+using System;using System.Collections;
+using TMPro;using Unity.VisualScripting;
 using UnityEngine;
 
 public class TypeWritter : MonoBehaviour
 {
   public static TypeWritter instance;
+  public Action OnFinishWriting;
   public Coroutine writter;
   
 
@@ -19,6 +20,7 @@ public class TypeWritter : MonoBehaviour
   private void Start() {
     instance = this;
     writter = StartCoroutine(WriteText());
+    OnFinishWriting += EndendWriting;
   }
   public void Write(TextMeshProUGUI textToWrite, string stringToWrite) {
     if (isWriting) {
@@ -32,7 +34,7 @@ public class TypeWritter : MonoBehaviour
       StartCoroutine(WriteText());
     }
   }
-  public void AttCurrentIndex(NPC npc) {
+  public void AttCurrentNPC(NPC npc) {
     attNpc = true;
     this.npc = npc;
   }
@@ -42,12 +44,14 @@ public class TypeWritter : MonoBehaviour
       yield return new WaitForSeconds(talkingSpeed);
       textToWrite.text += letter;
     }
-    if (attNpc) {
-      npc.currentDialogueIndex++;
-      npc = null;
-      attNpc = false;
-    }
     isWriting = false;
+    OnFinishWriting?.Invoke();
     talkingSpeed = .05f;
   }
+  public void EndendWriting() {
+    npc.EndedWriting();
+  }
+  
 }
+
+
