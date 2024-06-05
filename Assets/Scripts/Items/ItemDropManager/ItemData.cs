@@ -12,6 +12,7 @@ public class ItemData : ScriptableObject
     public PlayerGunBase gunBase;
     [Space]
     public GameObject prefab;
+    public bool isStackable;
     public int value;
     public float weight;
     public Sprite sprite;
@@ -23,7 +24,8 @@ public enum ItemType
     NONE,
     WEAPON,
     CONSUMABLE,
-    THROWABLE
+    THROWABLE,
+    AMMO
 }
 public enum WeaponType
 {

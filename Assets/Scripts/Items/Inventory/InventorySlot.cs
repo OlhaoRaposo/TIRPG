@@ -23,7 +23,16 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
             Color color = itemImage.color;
             color.a = 1f;
             itemImage.color = color;
-            itemImage.sprite = item.sprite;
+
+            if (itemData.sprite == null)
+            {
+                Debug.LogError($"ERRO: O item {itemData.name} está sem um icone atribuído");
+            }
+            else
+            {
+                itemImage.sprite = item.sprite;
+            }
+
             itemImage.preserveAspect = true;
         }else{
             Color color = itemImage.color;

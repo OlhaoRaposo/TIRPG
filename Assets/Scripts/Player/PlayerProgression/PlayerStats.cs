@@ -67,6 +67,8 @@ public class PlayerStats : MonoBehaviour
         currentXp += (int)(xp * xpMultiplier);
         if (currentXp >= levelupXp)
         {
+            int remainingXp = currentXp - levelupXp;
+
             if (level < maxLevel)
             {
                 LevelUp();
@@ -77,6 +79,8 @@ public class PlayerStats : MonoBehaviour
                 UIManager.instance.UpdateXpStats(currentXp, levelupXp);
                 canGetXp = false;
             }
+
+            if (remainingXp > 0) GainXp(remainingXp);
         }
         else
         {

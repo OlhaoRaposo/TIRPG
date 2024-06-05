@@ -12,6 +12,8 @@ public class Throwable : MonoBehaviour
     [SerializeField] float explosionRadius = 2f;
     [SerializeField] LayerMask detectionMask;
 
+    [SerializeField] DamageElementManager.DamageElement damageElement = DamageElementManager.DamageElement.Physical;
+
     void OnEnable()
     {
         //Invocar a explosao
@@ -29,7 +31,11 @@ public class Throwable : MonoBehaviour
                 if (c.CompareTag("Enemy"))
                 {
                     //Dar dano nos inimigos
-                    c.gameObject.SendMessage("TakeDamage", damage);
+                    EnemyBehaviour enemyBehaviour;
+                    if (c.TryGetComponent(out enemyBehaviour))
+                    {
+                        enemyBehaviour.TakeDamage(damage, damageElement);
+                    }
                 }
             }
         }
