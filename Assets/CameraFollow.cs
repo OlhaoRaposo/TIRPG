@@ -1,10 +1,13 @@
 using System;
 using UnityEngine;
 
-public class CameraFolow : MonoBehaviour {
-    public static CameraFolow follow;
+public class CameraFollow : MonoBehaviour {
+    public static CameraFollow follow;
 
     private void Start() {
+
+        if (follow != null) return;
+
         follow = this;
     }
 

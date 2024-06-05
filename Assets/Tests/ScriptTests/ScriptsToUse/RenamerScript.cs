@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -16,8 +14,8 @@ public class RenamerScript : MonoBehaviour
             string path = "Assets/" + baseName + " (" + (i + 1) + " )" + ".prefab";
             string newName = baseName + "(" + (i + 1) + " )";
 
-            AssetDatabase.RenameAsset(AssetDatabase.GetAssetPath(obj), newName);
-            PrefabUtility.SaveAsPrefabAsset(obj, path);
+            //AssetDatabase.RenameAsset(AssetDatabase.GetAssetPath(obj), newName);
+           // PrefabUtility.SaveAsPrefabAsset(obj, path);
         }
     }
 

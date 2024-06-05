@@ -40,6 +40,16 @@ public class SceneController : MonoBehaviour
         UnloadSceneByName("NewMenu");
         isInMainMenu = false;
     }
+    public void GameOver()
+    {
+        //Falta resetar a pos e a animacao da camera do menu
+
+        ReloadGameplayScenes();
+        ReloadPlayerScene();
+        LoadMenu();
+
+        WorldController.worldController.RestartGame();
+    }
     public void LoadGameplayScenes()
     {
         foreach(string s in gameplayScenes)
@@ -47,7 +57,23 @@ public class SceneController : MonoBehaviour
             LoadAdditiveSceneAsyncByName(s);
         }
     }
-
+    public void UnloadGameplayScenes()
+    {
+        foreach (string s in gameplayScenes)
+        {
+            UnloadSceneByName(s);
+        }
+    }
+    public void ReloadGameplayScenes()
+    {
+        UnloadGameplayScenes();
+        LoadGameplayScenes();
+    }
+    public void ReloadPlayerScene()
+    {
+        UnloadSceneByName("PlayerScene");
+        LoadAdditiveSceneByName("PlayerScene");
+    }
     public void SetIsInMainMenu(bool b)
     {
         isInMainMenu = b;

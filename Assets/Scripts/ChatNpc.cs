@@ -1,23 +1,25 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using Unity.VisualScripting;
 
 [RequireComponent(typeof(Interactable_Npc))]
-public class NPC : MonoBehaviour
+public class ChatNpc : MonoBehaviour 
 {
     public List<Dialogue> dialogues;
-    [SerializeField] public int currentDialogueIndex;
+    [SerializeField] private int currentDialogueIndex;
+    [SerializeField] private int currentSentenceIndex;
     [SerializeField] private bool isTalking;
     [SerializeField] private NPCReferenceData npcReference;
     private void Start() {
         npcReference.talkBox.SetActive(true);
         npcReference.npcText.text = "";
         npcReference.npcNameReference.text = npcReference.npcName;
+        npcReference.perfilImage.sprite = npcReference.perfilSprite;
         npcReference.talkBox.SetActive(false);
     }
+
     public void Interact() {
         EnableChatBox();
         Talk();
@@ -26,35 +28,20 @@ public class NPC : MonoBehaviour
     public void EnableChatBox() {
         npcReference.talkBox.SetActive(true);
         //TODO
-        //Lock Player Movement
-        //lock Player Camera
-        //lock Player Inputs
+            //Lock Player Movement
+            //lock Player Camera
+            //lock Player Inputs
         DefaultButtonConfiguration();
     }
     public void DisableChatBox() {
         npcReference.npcText.text = "";
         npcReference.talkBox.SetActive(false);
         //TODO
-        //Unock Player Movement
-        //Unlock Player Camera
-        //Unlock Player Inputs
+            //Unock Player Movement
+            //Unlock Player Camera
+            //Unlock Player Inputs
     }
     private void Talk() {
-        TypeWritter.instance.Write(npcReference.npcText,
-            dialogues[currentDialogueIndex].sentences[dialogues[currentDialogueIndex].sentenceIndex]);
-        TypeWritter.instance.AttCurrentNPC(this);
-    }
-    public void EndedWriting() {
-        if (dialogues[currentDialogueIndex].sentenceIndex < dialogues[currentDialogueIndex].sentences.Count -1) {
-            dialogues[currentDialogueIndex].sentenceIndex++;
-        }else {
-            EnableLastBoxConfiguration();
-            if (currentDialogueIndex < dialogues.Count -1) {
-                currentDialogueIndex++;
-            }else {
-                dialogues[currentDialogueIndex].sentenceIndex = 0;
-            }
-        }
     }
     private void DefaultButtonConfiguration() {
         npcReference.acceptButton.gameObject.SetActive(false);
@@ -70,11 +57,7 @@ public class NPC : MonoBehaviour
     }
 }
 [Serializable]
-public class DialogueDatabase{
-    public List<Dialogue> randomDialogues = new List<Dialogue>();
-}
-[Serializable]
-public class NPCReferenceData :  PropertyAttribute
+public class NPCReferenceDataa :  PropertyAttribute
 {
     [Header("Características do NPC")]
     public Sprite perfilSprite;

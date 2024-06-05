@@ -1,13 +1,12 @@
-using Cinemachine;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Animations;
 using UnityEngine;
-using UnityEngine.Animations.Rigging;
 
 public class PlayerMovement : MonoBehaviour
 {
     public static PlayerMovement instance;
+
+    //[Header("CAMERA DO PLAYER")]
+    //[SerializeField] public GameObject CAMERADOPLAYER;
 
     [Header("Movement")]
     [SerializeField] private Animator playerAnimator;
@@ -30,11 +29,9 @@ public class PlayerMovement : MonoBehaviour
     {
         instance = this;
     }
-
-
     private void Update()
     {
-        if (WorldController.worldController.isGameStarted)
+        if (WorldController.worldController.isGameStarted && !SceneController.instance.GetIsInMainMenu())
         {
             StaminaRegen();
             Movement();
