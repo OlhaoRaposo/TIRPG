@@ -20,20 +20,28 @@ public class LuisonWeapon : MonoBehaviour
             case "_Jump":
                 StartCoroutine(Jump(expression));
                 break;
+            case "None":
+                StartCoroutine(None());
+                break;
         }
     }
     IEnumerator Melee(string expression) {
         user.enemyAnimator.SetTrigger(expression);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1.5f);
         user.ChangeState(new ChaseState(user));
     }
-
+    IEnumerator None() {
+        Vector3 offset = user.transform.position - user.target.transform.position;
+        user.agent.SetDestination(user.target.transform.position + offset.normalized * 2);
+        yield return new WaitForSeconds(2);
+        user.ChangeState(new ChaseState(user));
+    }
     IEnumerator Jump(string expression)
     {
-        Vector3 lookat = user.target.transform.position - user.transform.position;
-        user.agent.SetDestination(lookat * 20);
+        Vector3 dir = user.target.transform.position - user.transform.position;
+        user.agent.SetDestination(user.target.transform.position + dir.normalized);
         user.enemyAnimator.SetTrigger(expression);
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(3);
         user.ChangeState(new ChaseState(user));
     }
     private void OnTriggerEnter(Collider col) {

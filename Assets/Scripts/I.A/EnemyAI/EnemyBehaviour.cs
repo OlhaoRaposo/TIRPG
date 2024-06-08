@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
@@ -16,9 +17,6 @@ public class EnemyBehaviour : MonoBehaviour
  public Animator enemyAnimator;
  public UnityEvent OnStart;
  private Collider[] targetsDetected;
- [Header("EnemyType")]
- public EnemyType myType;
- public enum EnemyType { ranged, melee, rangedAndMelee }
  [Header("Data")]
  public Data data;
  [Header("Drops&Quests")]
@@ -26,9 +24,13 @@ public class EnemyBehaviour : MonoBehaviour
  public QuestType.EnemyTypes questType;
  [Header("Canvas")]
  public GameObject EnemyCanvas;
+ public string bossName;
+ public TextMeshProUGUI enemyName;
  public GameObject damageCanvas;
  [Header("Triggers")]
- public Triggers triggers;
+ public List<Attacks> attacks;
+ public List<string> attacksAvailable = new List<string>();
+ public string triggerCode;
  public GameObject weapon;
  private Vector2 smoothVelocity;
  private Vector2 velocity;
@@ -42,11 +44,12 @@ public class EnemyBehaviour : MonoBehaviour
  }
  private void Start() {
    if(!TryGetComponent(out NavMeshAgent ag)){
-     Debug.LogWarning("You Forgot to add a NavMeshAgent to the enemy, add one now."); }
+     Debug.LogWarning("You Forgot to set the NavMeshAgent to the enemy THIS ENEMY NO LONGER WILL WORK."); }
    if (!TryGetComponent(out Animator an))
-     Debug.LogWarning("You Forgot to set the Animator THIS ENEMY NO LONGER WILL WORK");
+     Debug.LogWarning("You Forgot to set the Animator THIS ENEMY NO LONGER WILL WORK.");
    
    life = data.maxLife >= 0 ? data.maxLife : 300;
+   enemyName.text = bossName;
    ChangeState(new PatrolState(this));
    OnStart.Invoke();
  }
@@ -107,6 +110,9 @@ public class EnemyBehaviour : MonoBehaviour
      if (detections.gameObject.CompareTag("Player"))
        target = detections.gameObject;
    }
+   
+   EnemyCanvas.gameObject.SetActive(target != null);
+   
    if (target != null){
      if(currentState != EnemyState.Chase)
         ChangeState(new ChaseState(this));
@@ -183,8 +189,6 @@ public class EnemyBehaviour : MonoBehaviour
 [Serializable]
   public class Data {
     public float maxLife;
-    [Header("Bestiary")]
-    public Bestiary mySpawner;
 }
 [Serializable]
 public class Triggers {
@@ -192,4 +196,17 @@ public class Triggers {
   public List<string> rangedAttacks;
   public List<string> specialAttacks;
   public List<string> jumpAttacks;
+}
+[Serializable]
+public class Attacks
+{
+  [Header("Code")]
+  public string attackCode;
+  [Header("Range")]
+  public float minRange;
+  public float maxRange;
+  [Header("Damage")]
+  public float damage;
+  public DamageElementManager.DamageElement damageElement;
+
 }
