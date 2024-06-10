@@ -55,6 +55,35 @@ public class PlayerInventory : MonoBehaviour
         //Checa se ja possui o item no inventario
         if (LookForItem(itemData, ref items, true))
         {
+            /*
+            //Checa se o item é stackavel
+            if (itemData.isStackable)
+            {
+                //Adiciona uma unidade ao slot
+                //FindItemSlot(itemData).AddToCount();
+            }
+            else //Caso nao seja stackavel
+            {
+                if (!TryToAddItemToList(itemData)) return false;
+            }
+            */
+
+            if (!itemData.isStackable)
+            {
+                if (!TryToAddItemToList(itemData)) return false;
+            }
+        }
+        else
+        {
+            if (!TryToAddItemToList(itemData)) return false;
+        }
+        return true;
+    }
+    public bool AddItemToInventoryInMenu(ItemData itemData)
+    {
+        //Checa se ja possui o item no inventario
+        if (LookForItem(itemData, ref items, true))
+        {
             //Checa se o item é stackavel
             if (itemData.isStackable)
             {
@@ -296,7 +325,7 @@ public class PlayerInventory : MonoBehaviour
         if (consumableSlot.GetItem() != null) ret.Add(consumableSlot.GetItem());
         if (throwableSlot.GetItem() != null) ret.Add(throwableSlot.GetItem());*/
 
-        ret.AddRange(items);
+            ret.AddRange(items);
 
         return ret;
     }

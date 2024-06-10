@@ -79,6 +79,11 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
         itemAmount++;
         itemAmountText.text = itemAmount.ToString();
     }
+    public void DecreaseCount()
+    {
+        itemAmount = Mathf.Clamp(0, 9999, itemAmount);
+        itemAmountText.text = itemAmount.ToString();
+    }
     public ItemData GetItem()
     {
         return itemData.item;

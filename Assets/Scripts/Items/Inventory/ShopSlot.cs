@@ -25,7 +25,7 @@ public class ShopSlot : InventorySlot
                 if (!itemData.Equals(null))
                 {
                     //Debug.Log("Vender " + itemData.name);
-                    UIManager.instance.GetCurrentMerchant().SellItem(itemData.item);
+                    UIManager.instance.GetCurrentMerchant().SellItem(itemData);
                 }
                 break;
         }

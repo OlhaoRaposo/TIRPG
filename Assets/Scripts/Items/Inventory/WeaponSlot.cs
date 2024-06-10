@@ -6,7 +6,7 @@ public class WeaponSlot : InventorySlot
 {
     public override void SetItem(ItemObject item)
     {
-        if (itemData.item != null && item.item != null) PlayerInventory.instance.AddItemToInventory(itemData.item);
+        if (itemData.item != null && item.item != null) PlayerInventory.instance.AddItemToInventoryInMenu(itemData.item);
 
         base.SetItem(item);
     }
