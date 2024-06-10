@@ -11,7 +11,7 @@ public class WorldController : MonoBehaviour
 {
     public bool spawnWasCreated;
     public static WorldController worldController;
-    public bool isGameStarted;
+    public bool isGameStarted = false;
     private bool playingAnimation;
     
     private new GameObject camera;
@@ -29,11 +29,12 @@ public class WorldController : MonoBehaviour
     [Header("LightSpecs")]
     [SerializeField]
     private SunLight sunLight;
-    private List<GameObject> lightsObjects = new List<GameObject>();
+    private GameObject[] lightsObjects;
     private Volume dayPostProcessing, nightPostProcessing;
     [SerializeField] Material skyBoxMaterial;
-
-    private Camera mainCam;
+    
+    [Header("Save")]
+    public bool tutorialCompleted;
 
     private void Start()
     {
@@ -45,10 +46,7 @@ public class WorldController : MonoBehaviour
         }
         essentialsCanvas = GameObject.Find("====CANVAS====");
         essentialsCanvas.SetActive(false);
-        //camera = Camera.main.gameObject;
         player = GameObject.FindGameObjectWithTag("Player");
-        mainCam = Camera.main;
-        mainCam.gameObject.SetActive(false);
         InitiateTime();
     }
     public void StartGame() {
@@ -63,12 +61,21 @@ public class WorldController : MonoBehaviour
         //Começa as animaçoes do jogo
         StartCoroutine(PlayAnimation());
     }
-    private void InitiateTime() {
+    public void InitiateTime() {
         //Pegar o horario do save game
         currentHour = DateTime.Now.Date + TimeSpan.FromHours(13);
         sunLight.sunriseTime = TimeSpan.FromHours(sunLight.sunriseHour);
         sunLight.sunsetTime = TimeSpan.FromHours(sunLight.sunsetHour);
-        lightsObjects.AddRange(GameObject.FindGameObjectsWithTag("LightObject"));
+        lightsObjects = GameObject.FindGameObjectsWithTag("LightObject");
+    }
+    public void RestartGame()
+    {
+        isGameStarted = false;
+        essentialsCanvas.SetActive(false);
+        InitiateTime();
+
+        //PlayerMovement.instance.CAMERADOPLAYER.SetActive(false);
+        CameraFollow.follow.gameObject.SetActive(true);
     }
     private void Update() {
         UpdateTimeOfDay();
@@ -142,13 +149,19 @@ public class WorldController : MonoBehaviour
         return difference;
     }
     public IEnumerator PlayAnimation() {
-        CameraFolow.follow.Started();
+        CameraFollow.follow.Started();
         yield return new WaitForSeconds(5);
         Debug.LogWarning("FINALIZADO COROUTINE");
-        PlayerCameraMovement.instance.ToggleAimLock(true);
         essentialsCanvas.SetActive(true);
-        mainCam.gameObject.SetActive(true);
-        CameraFolow.follow.gameObject.SetActive(false);
+        PlayerCameraMovement.instance.ToggleAimLock(true);
+
+        CameraFollow.follow.gameObject.transform.position = new Vector3(401, 153, -205);
+        CameraFollow.follow.gameObject.transform.rotation = Quaternion.Euler(0, 21, 0);
+        CameraFollow.follow.gameObject.SetActive(false);
+        if (!tutorialCompleted) {
+            PlayerMovement.instance.TeleportPlayer(GameObject.Find("TutorialTeleport").transform.position);
+            tutorialCompleted = true;
+        }
     }
 }
 [Serializable]

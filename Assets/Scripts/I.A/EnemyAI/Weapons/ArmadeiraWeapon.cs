@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -39,7 +38,7 @@ public class ArmadeiraWeapon : MonoBehaviour
            case "_esp2":
                StartCoroutine(EspecialShoot(12,expression));
                break;
-           case "_Jump":
+           case "_jump":
                StartCoroutine(Jump(expression));
                break;
          }

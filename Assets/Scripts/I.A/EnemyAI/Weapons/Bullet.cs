@@ -37,7 +37,8 @@ public class Bullet : MonoBehaviour
             PlayerHPController.instance.ChangeHP(damage, true);
             other.gameObject.GetComponent<PlayerMovement>().TakeKnockback();
         }else if(other.gameObject.CompareTag("Enemy")) {
-            other.gameObject.SendMessage("TakeDamage", damage, (SendMessageOptions)DamageElementManager.DamageElement.Physical);
+            if(other.gameObject.TryGetComponent(out EnemyBehaviour enemyBehaviour))
+                enemyBehaviour.TakeDamage(damage, DamageElementManager.DamageElement.Physical);
         }
         Destroy(this.gameObject);
     }

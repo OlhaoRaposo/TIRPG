@@ -1,78 +1,85 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting;
-using Random = UnityEngine.Random;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Interactable_Npc))]
 public class NPC : MonoBehaviour
 {
-    public enum CurrentState { Idle, Talking, Interacting, }
-    public CurrentState currentState;
-    public bool canInteractWithOtherNPC;
-    public bool interactable;
-    public GameObject talkBox;
-    public enum NPCtYPE { Static, CanPatrol, }
-    public NPCtYPE npcType;
-    public string npcCode;
-    public NavMeshAgent npcAgent;
-    public int currentDialogueIndex;
-    public bool currentQuestIsCompleted;
-
-    public Vector3 patrolDestination;
-    public bool hasArrived;
-    private Coroutine patrol;
-    public bool canInteractAgain;
+    public List<Dialogue> dialogues;
+    [SerializeField] public int currentDialogueIndex;
+    [SerializeField] private bool isTalking;
+    [SerializeField] private NPCReferenceData npcReference;
     
-    //TextArea
-    [Header("Referencias do NPC")]
-    public NPCReferenceData npcReference;
-    public DialogueDatabase dialogueDatabase;
-    public bool hasQuest;
-    public List<string> questToGive;
-    public int atualQuestIndex;
-    public string currentQuest;
-    void Start()
-    {
-        patrol = StartCoroutine(Patrol());
-         if(npcType == NPCtYPE.CanPatrol) {
-            npcAgent = GetComponent<NavMeshAgent>();
-            patrolDestination = ReturnARandomPoint(transform.position);
-            StartCoroutine(Patrol());
-         } 
-         npcReference.talkBox.SetActive(true);
-         currentQuest = questToGive[atualQuestIndex];
-        if (interactable) {
-            npcReference.npcText.text = "";
-            npcReference.npcNameReference.text = npcReference.npcName;
-            npcReference.perfilImage.sprite = npcReference.perfilSprite;
-        }
+    
+    [SerializeField] private bool invoked;
+    [SerializeField] private UnityEvent OnEndDialogue = new UnityEvent();
+    
+    [Header("Tutorial NPC")]
+    public bool isTutorialNPC;
+    [SerializeField] public TutorialNPC tutorialNPC;
+    [SerializeField] public int tutorialIndex;
+    private void Awake() {
+        
+    }
+
+    private void Start() {
+        npcReference.talkBox.SetActive(true);
+        npcReference.npcText.text = "";
+        npcReference.npcNameReference.text = npcReference.npcName;
         npcReference.talkBox.SetActive(false);
-        if(hasQuest)
-            HandleQuestIcon();
+        if (isTutorialNPC) {
+            tutorialNPC.Initiate(tutorialIndex);
+            dialogues = tutorialNPC.dialogues;
+        }
     }
     public void Interact() {
-        if (npcType == NPCtYPE.CanPatrol) { StopNpc(); }
         EnableChatBox();
         Talk();
+        Debug.Log("Npc is Talking " + gameObject.name);
     }
-    #region ChatBox
     public void EnableChatBox() {
-        talkBox.SetActive(true);
-        //PlayerCamera.instance.LockCamera(false);
+        npcReference.talkBox.SetActive(true);
+        //TODO
+        //Lock Player Movement
+        //lock Player Camera
+        //lock Player 
         PlayerCameraMovement.instance.ToggleAimLock(false);
         DefaultButtonConfiguration();
     }
     public void DisableChatBox() {
         npcReference.npcText.text = "";
-        talkBox.SetActive(false);
-        //PlayerCamera.instance.LockCamera(true);
+        npcReference.talkBox.SetActive(false);
+        //TODO
+        //Unock Player Movement
+        //Unlock Player Camera
+        //Unlock Player Inputs
         PlayerCameraMovement.instance.ToggleAimLock(true);
+    }
+    private void Talk() {
+        TypeWritter.instance.Write(npcReference.npcText,
+            dialogues[currentDialogueIndex].sentences[dialogues[currentDialogueIndex].sentenceIndex]);
+        TypeWritter.instance.AttCurrentNPC(this);
+    }
+    public void EndedWriting() {
+        if (dialogues[currentDialogueIndex].sentenceIndex < dialogues[currentDialogueIndex].sentences.Count -1) {
+            dialogues[currentDialogueIndex].sentenceIndex++;
+        }else {
+            EnableLastBoxConfiguration();
+            if(!invoked)
+            {
+                OnEndDialogue.Invoke();
+                invoked = true;
+            }
+            if (currentDialogueIndex < dialogues.Count -1) {
+                currentDialogueIndex++;
+            }else {
+                dialogues[currentDialogueIndex].sentenceIndex = 0;
+            }
+        }
     }
     private void DefaultButtonConfiguration() {
         npcReference.acceptButton.gameObject.SetActive(false);
@@ -86,178 +93,11 @@ public class NPC : MonoBehaviour
         npcReference.finishButton.gameObject.SetActive(true);
         npcReference.nextButton.gameObject.SetActive(false);
     }
-    private void AcceptButtonConfiguration() {
-        npcReference.acceptButton.gameObject.SetActive(true);
-        npcReference.refuseButton.gameObject.SetActive(true);
-        npcReference.finishButton.gameObject.SetActive(false);
-        npcReference.nextButton.gameObject.SetActive(false);
-    }
-    #endregion
-    public void Talk() {
-        if (currentQuestIsCompleted) {
-            npcReference.questIcon.SetActive(true);
-            Quest quest = QuestManager.instance.FindQuestOnDatabase(currentQuest);
-            if(currentDialogueIndex == quest.questReward.rewardDialogue.Count) {
-                currentDialogueIndex = 0;
-                EnableLastBoxConfiguration();
-                QuestManager.instance.CompleteQuest(currentQuest);
-                npcReference.questIcon.SetActive(false);
-                atualQuestIndex++;
-                currentQuest = questToGive[atualQuestIndex];
-            }else {
-                TypeWritter.instance.Write(npcReference.npcText, quest.questReward.rewardDialogue[currentDialogueIndex].dialogue);
-                TypeWritter.instance.AttCurrentIndex(this);
-                DefaultButtonConfiguration();
-            }
-        }
-        if (!hasQuest) {
-            int rnd = Random.Range(0, dialogueDatabase.randomDialogues.Count);
-            TypeWritter.instance.Write(npcReference.npcText, dialogueDatabase.randomDialogues[rnd].dialogue);
-        }else if (hasQuest) {
-            //Quest ja esta concluida
-            if (QuestManager.instance.CheckIfIsComplete(currentQuest)) {
-                Quest quest = QuestManager.instance.FindQuestOnDatabase(currentQuest);
-                if(currentDialogueIndex == quest.questReward.rewardDialogue.Count) {
-                    currentDialogueIndex = 0;
-                    EnableLastBoxConfiguration();
-                }
-                TypeWritter.instance.Write(npcReference.npcText, quest.questReward.rewardDialogue[currentDialogueIndex].dialogue);
-                TypeWritter.instance.AttCurrentIndex(this);
-            }else if(!QuestManager.instance.CheckIfIsComplete(currentQuest) && QuestManager.instance.CheckIfIsActive(currentQuest)) {
-                //Quests não esta completa mas esta ativa
-                Quest quest = QuestManager.instance.FindQuestOnDatabase(currentQuest);
-                TypeWritter.instance.Write(npcReference.npcText, quest.questAlreadyGiven[currentDialogueIndex].dialogue);
-                TypeWritter.instance.AttCurrentIndex(this);
-                if (currentDialogueIndex == quest.questAlreadyGiven.Count) {
-                    currentDialogueIndex = 0;
-                    EnableLastBoxConfiguration(); 
-                }
-            }else if (!QuestManager.instance.CheckIfIsComplete(currentQuest) && !QuestManager.instance.CheckIfIsActive(currentQuest)) {
-                //Quest nao esta nem completa nem ativa
-                Quest quest = QuestManager.instance.FindQuestOnDatabase(currentQuest);
-                if (currentDialogueIndex == quest.dialogue.Count) {
-                    TypeWritter.instance.Write(npcReference.npcText, "Você aceita essa missão?");
-                    AcceptButtonConfiguration();
-                    currentDialogueIndex = 0;
-                }else {
-                    TypeWritter.instance.Write(npcReference.npcText, quest.dialogue[currentDialogueIndex].dialogue);
-                    TypeWritter.instance.AttCurrentIndex(this);
-                }
-            }
-        }
-        HandleQuestIcon();
-    }
-    public void QuestIsCompleted() {
-        currentQuestIsCompleted = true;
-    }
-    public void HandleQuestIcon(){
-        Debug.Log("HandleQuestIcon");
-        if (currentQuestIsCompleted) {
-            npcReference.questIcon.SetActive(true);
-            Debug.Log("Active True");
-        }else if(hasQuest && !QuestManager.instance.CheckIfIsActive(currentQuest)) {
-            npcReference.questIcon.SetActive(true);
-            Debug.Log("Active True");
-        }else if (QuestManager.instance.CheckIfIsActive(currentQuest)) {
-            npcReference.questIcon.SetActive(false);
-            Debug.Log("Active False");
-        }
-    }
-    public void AcceptQuest() {
-        QuestManager.instance.AddQuest(currentQuest);
-        atualQuestIndex++;
-        HandleQuestIcon();
-        DisableChatBox();
-    }
-    public void StopNpc() {
-        npcAgent.destination = this.transform.position;
-        npcAgent.isStopped = true;
-    }
-    private void Update() {
-        CheckRemainingDistance();
-        HandleNpcInteraction();
-    }
-    private void HandleNpcInteraction() {
-        npcReference.interactIcon.SetActive(currentState == CurrentState.Interacting);
-        if (canInteractWithOtherNPC) {
-            Collider[] objects;
-            objects = Physics.OverlapSphere(transform.position, 2);
-            foreach (var detections in objects) {
-                if (detections.TryGetComponent(out NPC npc)) {
-                    if (npc != this) {
-                        if (canInteractAgain && npc.canInteractAgain) {
-                            if (currentState == CurrentState.Idle && npc.currentState == CurrentState.Idle) {
-                                InteractWithNpc(npc.gameObject.transform);
-                                npc.InteractWithNpc(gameObject.transform);
-                            }
-                        }
-                    }
-                }
-            }
-        }                
-    }
-    private void InteractWithNpc(Transform npcTransform) {
-        transform.LookAt(npcTransform);
-        npcAgent.SetDestination(npcTransform.position);
-        canInteractAgain = false;
-        StopCoroutine(patrol);
-        StopNpc();
-        currentState = CurrentState.Interacting;
-        StartCoroutine(ResetInteraction());
-    }
-    IEnumerator ResetInteraction() {
-        yield return new WaitForSeconds(8);
-        npcAgent.isStopped = false;
-        StartCoroutine(Patrol());
-        currentState = CurrentState.Idle;
-        yield return new WaitForSeconds(Random.Range(8,10));
-        canInteractAgain = true;
-        Debug.Log("Reseted npc" + gameObject.name);
-    }
-    private void CheckRemainingDistance() {
-        Vector3 distance = transform.position - patrolDestination;
-        if (distance.magnitude <= 3) {
-            hasArrived = true;
-        }else {
-            hasArrived = false;
-        }
-    }
-    IEnumerator Patrol() {
-        StartCoroutine(ImStuckStepBro(patrolDestination));
-        if(hasArrived)    
-            npcAgent.SetDestination(ReturnARandomPoint(transform.position));
-        Debug.Log("Patroling");
-        yield return new WaitForSeconds(3);
-        StartCoroutine(Patrol());
-    }
-    IEnumerator ImStuckStepBro(Vector3 basePosition) {
-        Vector3 pos = basePosition;
-        yield return new WaitForSeconds(10);
-        if(pos == patrolDestination) {
-            npcAgent.SetDestination(ReturnARandomPoint(transform.position));
-        }
-    }
-    private Vector3 ReturnARandomPoint(Vector3 referentialPoint) {
-      Vector3 point;  
-      point = referentialPoint + Random.insideUnitSphere * 12;
-      point.y += 3;
-      if(Physics.Raycast(point, Vector3.down, out RaycastHit hit, 20)) {
-        point = hit.point;
-      }
-      patrolDestination = point;
-      return point;
-    }
-}
-[Serializable]
-public class DialogueDatabase{
-    public List<Dialogue> randomDialogues = new List<Dialogue>();
 }
 [Serializable]
 public class NPCReferenceData :  PropertyAttribute
 {
     [Header("Características do NPC")]
-    public Sprite perfilSprite;
-    public Image perfilImage;
     public string npcName;
     public TextMeshProUGUI npcNameReference;
     [Header("Referência do NPC em cena")]
@@ -270,58 +110,45 @@ public class NPCReferenceData :  PropertyAttribute
     public Button refuseButton;
     public Button finishButton;
 }
-#if UNITY_EDITOR
-[CustomEditor(typeof(NPC))]
-public class NPCEditor : Editor
-{
-    public SerializedProperty questArray;
-    public SerializedProperty npcReference;
-    public SerializedProperty npcStates;
-    
-    void OnEnable() {
-        questArray = serializedObject.FindProperty("questToGive");
-        npcReference = serializedObject.FindProperty("npcReference");
-        npcStates = serializedObject.FindProperty("npcStates");
-    }
-    public override void OnInspectorGUI()
-    {
-        serializedObject.Update();
-        SerializedProperty npcReferenceProp = serializedObject.FindProperty("npcReference");
-        SerializedProperty dialogueDatabase = serializedObject.FindProperty("dialogueDatabase");
-        SerializedProperty questToGive = serializedObject.FindProperty("questToGive");
-        NPC myTarget = (NPC)target;
-        myTarget.currentState = (NPC.CurrentState)EditorGUILayout.EnumPopup("NPC State", myTarget.currentState);
-        myTarget.interactable = EditorGUILayout.Toggle("Interactable", myTarget.interactable);
-        if(!myTarget.interactable)
-            return;
-        myTarget.currentDialogueIndex = EditorGUILayout.IntField("Current Dialogue Index", myTarget.currentDialogueIndex);
-        myTarget.talkBox = (GameObject)EditorGUILayout.ObjectField("Talk Box", myTarget.talkBox, typeof(GameObject), true);
-        EditorGUILayout.Space();
-        myTarget.canInteractWithOtherNPC = EditorGUILayout.Toggle("Can Interact With Other NPC", myTarget.canInteractWithOtherNPC);
-        if (myTarget.canInteractWithOtherNPC) {
-            myTarget.canInteractAgain = EditorGUILayout.Toggle("Can Interact Again", myTarget.canInteractAgain);
-        }
-        myTarget.npcType = (NPC.NPCtYPE)EditorGUILayout.EnumPopup("NPC Type", myTarget.npcType);
-        switch (myTarget.npcType) {
-            case NPC.NPCtYPE.Static:
+[Serializable]
+public class TutorialNPC  {
+   
+    public List<Dialogue> dialogues = new List<Dialogue>();
+    public int tutorialIndex;
+    public void Initiate(int index) {
+        dialogues = new List<Dialogue>();
+        dialogues.Add(new Dialogue());
+        dialogues.Add(new Dialogue());
+        dialogues[0].sentences = new List<string>();
+        dialogues[1].sentences = new List<string>();
+        switch (index) {
+            case  0:
+                dialogues[0].sentences.Add("Bem vindo ao tutorial de movimentação");
+                dialogues[0].sentences.Add("Utilize as teclas W, A, S, D para se movimentar");
+                dialogues[0].sentences.Add($"Utilize a tecla: '{InputController.instance.jump}' para pular");
+                dialogues[0].sentences.Add($"Com a tecla: '{InputController.instance.dash}' você irar dar um impulso para o lado em que estiver andando");
+                dialogues[0].sentences.Add($"Para correr use: '{InputController.instance.run}'");
+                dialogues[0].sentences.Add($"Ah e para interagir com o proximo tutor aperte a tecla: '{InputController.instance.interaction}'");
+                dialogues[0].sentences.Add("Agora siga em frente");
+                dialogues[1].sentences.Add("Mais a frente o proximo robô ira te ensinar mais alguns truques");
                 break;
-            case NPC.NPCtYPE.CanPatrol:
-                myTarget.npcAgent = (NavMeshAgent)EditorGUILayout.ObjectField("Enemy Agent", myTarget.npcAgent, typeof(NavMeshAgent), true);
-                myTarget.patrolDestination = EditorGUILayout.Vector3Field("Patrol Destination", myTarget.patrolDestination);
-                myTarget.hasArrived = EditorGUILayout.Toggle("Has Arrived", myTarget.hasArrived);
+            case 1:
+                dialogues[0].sentences.Add("Agora para a parte de Interação");
+                dialogues[0].sentences.Add($"Apertando a tecla: '{InputController.instance.inventory}' você ira abrir um menu de inventário contendo todos seus items");
+                dialogues[0].sentences.Add("Pode prosseguir");
+                dialogues[1].sentences.Add("Mais a frente o proximo robô ira te ensinar mais alguns truques");
+                break;
+            case 2:
+                dialogues[0].sentences.Add("Neste momento estamos entrando na parte mais crucial do treinamento o combate");
+                dialogues[0].sentences.Add($"Você tem 2 espaços para armas disponiveis no seu inventario, para alternalos utilize: '{InputController.instance.primaryWeapon} e {InputController.instance.secondaryWeapon}'");
+                dialogues[0].sentences.Add($"Para atirar utilize o botão esquerdo do mouse, e para mirar utilize o botão direito do mouse");
+                dialogues[0].sentences.Add($"Para recarregar sua arma utilize a tecla: '{InputController.instance.reloadGun}'");
+                dialogues[0].sentences.Add($"Com a tecla: '{InputController.instance.throwables}' você ira arremessar um item");
+                dialogues[0].sentences.Add($"e com a: '{InputController.instance.consumables}' você pode recuperar parte da sua vida com um item de cura");
+                dialogues[1].sentences.Add("Você pode testar suas habilidades de combate com boneco de treinamento a frente");
+                dialogues[1].sentences.Add("E para sair daqui use o Teleporte no canto da sala");
+                dialogues[1].sentences.Add("Boa sorte na sua jornada, e lembre-se de sempre se manter forte");
                 break;
         }
-        EditorGUILayout.PropertyField(dialogueDatabase, true);
-        myTarget.npcCode = EditorGUILayout.TextField("NPC Code", myTarget.npcCode);
-        myTarget.hasQuest = EditorGUILayout.Toggle("Has Quest", myTarget.hasQuest);
-        if (myTarget.hasQuest) { 
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("questToGive"), true);   
-        }
-        myTarget.currentDialogueIndex = EditorGUILayout.IntField("Current Dialogue Index", myTarget.currentDialogueIndex);
-        myTarget.currentQuest = EditorGUILayout.TextField("Current Quest", myTarget.currentQuest);
-        myTarget.atualQuestIndex = EditorGUILayout.IntField("Atual Quest Index", myTarget.atualQuestIndex);
-        EditorGUILayout.PropertyField(npcReferenceProp, true);
-        serializedObject.ApplyModifiedProperties();
     }
-} 
-#endif
+}
