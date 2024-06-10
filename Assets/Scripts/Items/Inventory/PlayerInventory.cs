@@ -52,15 +52,12 @@ public class PlayerInventory : MonoBehaviour
     }
     public bool AddItemToInventory(ItemData itemData)
     {
-        ItemObject ob;
-
         //Checa se ja possui o item no inventario
-        if (LookForItem(itemData, out ob))
+        if (LookForItem(itemData, ref items, true))
         {
             //Checa se o item é stackavel
             if (itemData.isStackable)
             {
-                ob.amount++;
                 //Adiciona uma unidade ao slot
                 FindItemSlot(itemData).AddToCount();
             }
@@ -126,6 +123,22 @@ public class PlayerInventory : MonoBehaviour
             }
         }
         o = new ItemObject(null, -1);
+        return false;
+    }
+    public bool LookForItem(ItemData itemData, ref List<ItemObject> objList, bool canIncrementAmount)
+    {
+        for(int i = 0; i < objList.Count; i++)
+        {
+            if (objList[i].item == itemData)
+            {
+                if (canIncrementAmount)
+                {
+                    ItemObject o = new ItemObject(objList[i].item, objList[i].amount + 1);
+                    objList[i] = o;
+                }
+                return true;
+            }
+        }
         return false;
     }
     public bool LookForItem(ItemData itemData)
