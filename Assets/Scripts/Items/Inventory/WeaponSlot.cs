@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class WeaponSlot : InventorySlot
 {
-    public override void SetItem(ItemData item)
+    public override void SetItem(ItemObject item)
     {
-        if (itemData != null && item != null) PlayerInventory.instance.AddItemToInventory(itemData);
+        if (itemData.item != null && item.item != null) PlayerInventory.instance.AddItemToInventory(itemData.item);
 
         base.SetItem(item);
     }
     public override void RightClick()
     {
-        if (itemData != null)
+        if (!itemData.Equals(null))
         {
-            switch (itemData.weaponType)
+            switch (itemData.item.weaponType)
             {
-                case WeaponType.MELEE: PlayerInventory.instance.DropMeleeWeapon(itemData); break;
-                case WeaponType.RANGED: PlayerInventory.instance.DropRangedWeapon(itemData); break;
+                case WeaponType.MELEE: PlayerInventory.instance.DropMeleeWeapon(itemData.item); break;
+                case WeaponType.RANGED: PlayerInventory.instance.DropRangedWeapon(itemData.item); break;
             }
         }
     }

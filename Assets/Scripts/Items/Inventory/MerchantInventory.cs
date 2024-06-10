@@ -203,7 +203,7 @@ public class MerchantInventory : MonoBehaviour
             {
                 break;
             }
-            slot.SetItem(items[itemIndex]);
+            slot.SetItem(new ItemObject(items[itemIndex], 1));
             itemIndex++;
         }
     }
@@ -220,11 +220,11 @@ public class MerchantInventory : MonoBehaviour
     {
         foreach (ShopSlot slot in UIManager.instance.GetShopSlotsBuy())
         {
-            slot.SetItem(null);
+            slot.SetItem();
         }
         foreach (ShopSlot slot in UIManager.instance.GetShopSlotsSell())
         {
-            slot.SetItem(null);
+            slot.SetItem();
         }
     }
     public void SetShopUI()
@@ -235,7 +235,7 @@ public class MerchantInventory : MonoBehaviour
         {
             foreach (ItemData data in weapons)
             {
-                UIManager.instance.GetShopSlotsBuy()[slotIndex].SetItem(data);
+                UIManager.instance.GetShopSlotsBuy()[slotIndex].SetItem(new ItemObject(data, 1));
                 slotIndex++;
             }
         }
@@ -244,7 +244,7 @@ public class MerchantInventory : MonoBehaviour
         {
             foreach (ItemData data in consumables)
             {
-                UIManager.instance.GetShopSlotsBuy()[slotIndex].SetItem(data);
+                UIManager.instance.GetShopSlotsBuy()[slotIndex].SetItem(new ItemObject(data, 1));
                 slotIndex++;
             }
         }
@@ -253,7 +253,7 @@ public class MerchantInventory : MonoBehaviour
         {
             foreach (ItemData data in throwables)
             {
-                UIManager.instance.GetShopSlotsBuy()[slotIndex].SetItem(data);
+                UIManager.instance.GetShopSlotsBuy()[slotIndex].SetItem(new ItemObject(data, 1));
                 slotIndex++;
             }
         }
