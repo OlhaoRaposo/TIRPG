@@ -44,6 +44,12 @@ public class PlayerCameraMovement : MonoBehaviour
         startingPos = transform.position;
         previousCamPosition = startingPos;
         startingAimPos = playerAim.transform.localPosition;
+        transform.position = startingPos;
+    }
+
+    private void OnEnable()
+    {
+        
     }
 
     public void SetValues(float cameraSense, float aimSense, bool isInverted)
@@ -113,10 +119,12 @@ public class PlayerCameraMovement : MonoBehaviour
         if (Input.GetMouseButton(1) == true)
         {
             AlignTargetWithCamera(playerObject);
+            SetCurrentSense(aimSense);
             cameraBody.fieldOfView = aimFov;
         }
         else
         {
+            SetCurrentSense(cameraSense);
             cameraBody.fieldOfView = regularFov;
         }
     }
@@ -139,7 +147,7 @@ public class PlayerCameraMovement : MonoBehaviour
     //EFEITOS, SENSIBILIDADE & UTILIDADE
     private void SetCurrentSense(float sense)
     {
-
+        currentSense = sense;
     }
 
     public void ShakeCamera(float strength)

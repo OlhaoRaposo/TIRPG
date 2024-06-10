@@ -1,9 +1,8 @@
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Animations;
+using UnityEditor.Rendering;
 using UnityEngine;
-using UnityEngine.Animations.Rigging;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -15,12 +14,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private CapsuleCollider playerCollider;
     public GameObject playerModel;
     [SerializeField] private float walkSpeedMultiplier, runSpeedMultiplier, jumpHeight, stamina = 100f;
-    [SerializeField] private bool isRunning = false, isDashing = false, isJumping = false, isGrounded = true, canMove = true;
+    [SerializeField] private bool canMove = true, isRunning = false, isDashing = false, isJumping = false, isGrounded = true;
 
     [Header("Combat")]
     public GameObject[] allWeapons;
     [SerializeField] private bool canSwapWeapon = true;
     public bool isRanged = true;
+    private bool isStaggered = false;
 
     private float speedModifier;
     private Vector3 startRelativePoint;
@@ -37,11 +37,15 @@ public class PlayerMovement : MonoBehaviour
         if (WorldController.worldController.isGameStarted)
         {
             StaminaRegen();
-            Movement();
             GroundCheck();
-            Jump();
-            Dash();
-            WeaponSwap();
+
+            if (isStaggered == false)
+            {
+                Movement();
+                Jump();
+                Dash();
+                WeaponSwap();
+            }
         }
     }
 
@@ -117,14 +121,17 @@ public class PlayerMovement : MonoBehaviour
             }
             playerController.Move(dir * runSpeedMultiplier * 2 * Time.deltaTime);
         }
-        else if (isDashing == false && isJumping == false && PlayerMeleeCombat.instance.isInCombo == false) //TOCAR ANIMAÇÕES DE ANDAR SE ESTIVER NO CHÃO, SEM PULAR, SEM DASH, E NÃO ESTÁ REALIZANDO ATAQUES MELEE
+        else if (isDashing == false && isJumping == false && PlayerMeleeCombat.instance.isInCombo == false && isStaggered == false) //TOCAR ANIMAÇÕES DE ANDAR SE ESTIVER NO CHÃO, SEM PULAR, SEM DASH, E NÃO ESTÁ REALIZANDO ATAQUES MELEE
         {
             playerAnimator.Play("Walk Tree");
         }
 
         //LITERAL MOVIMENTAÇÃO VIA ROOT MOTION
-        playerAnimator.SetFloat("WalkHorizontal", x);
-        playerAnimator.SetFloat("WalkVertical", y);
+        if (canMove == true)
+        {
+            playerAnimator.SetFloat("WalkHorizontal", x);
+            playerAnimator.SetFloat("WalkVertical", y);
+        }
     }
 
     private void GroundCheck()
@@ -207,7 +214,7 @@ public class PlayerMovement : MonoBehaviour
     private void Dash()
     {
         //SÓ DA DASH SE ESTÁ NO CHÃO, TEM STAMINA PARA TAL E NÃO ESTÁ DANDO DASH ATUALMENTE
-        if (Input.GetKeyDown(InputController.instance.dash) && isGrounded && isDashing == false && stamina >= 25f)
+        if (Input.GetKeyDown(InputController.instance.dash) && canMove == true && isGrounded == true && isDashing == false && stamina >= 25f)
         {
             PlayerHPController.instance.ChangeStamina(25f, true);
             stamina -= 25;
@@ -231,7 +238,7 @@ public class PlayerMovement : MonoBehaviour
         if (canSwapWeapon == true)
         {
             //CASO ESTEJA FORA FORA DA ARMA RANGED E APERTE PARA TROCAR PARA ARMA RANGED
-            if (isRanged == false && Input.GetKeyDown(KeyCode.Alpha1) && PlayerInventory.instance.GetRanged() != null)
+            if (isRanged == false && Input.GetKeyDown(InputController.instance.primaryWeapon) && PlayerInventory.instance.GetRanged() != null)
             {
                 //PROCURA A ARMA EQUIPADA
                 foreach (GameObject weapon in allWeapons)
@@ -249,6 +256,7 @@ public class PlayerMovement : MonoBehaviour
                 if (isGrounded == true)
                 {
                     StartCoroutine(SwapWeaponAction(playerAnimator.GetCurrentAnimatorClipInfo(1).Length * 0.7f));
+                    playerAnimator.Play("Walk Tree");
                     playerAnimator.Play($"Switch to {PlayerGun.instance.GetGunName()}");
                 }
 
@@ -257,7 +265,7 @@ public class PlayerMovement : MonoBehaviour
                 isRanged = true;
             }
 
-            if (isRanged == true && Input.GetKeyDown(KeyCode.Alpha2) && PlayerInventory.instance.GetMelee() != null)
+            if (isRanged == true && Input.GetKeyDown(InputController.instance.secondaryWeapon) && PlayerInventory.instance.GetMelee() != null)
             {
                 //PROCURA A ARMA EQUIPADA
                 foreach (GameObject weapon in allWeapons)
@@ -275,6 +283,7 @@ public class PlayerMovement : MonoBehaviour
                 if (isGrounded == true)
                 {
                     StartCoroutine(SwapWeaponAction(playerAnimator.GetCurrentAnimatorClipInfo(1).Length * 0.7f));
+                    playerAnimator.Play("Walk Tree");
                     playerAnimator.Play($"Switch to {PlayerMeleeCombat.instance.GetMeleeName()}");
                 }
 
@@ -323,11 +332,37 @@ public class PlayerMovement : MonoBehaviour
         }
         return Vector3.Distance(normalizedStart, normalizedEnd);
     }
-    public void ToggleMove(bool toggle)
+
+    public void TakeKnockback()
+    {
+        isStaggered = true;
+        playerAnimator.Play("Take Damage");
+        StartCoroutine(StaggerRecovery(Vector3.zero, 1, playerAnimator.GetCurrentAnimatorClipInfo(0).Length));
+    }
+
+    public void TakeHeavyKnockback(Vector3 direction, float strength, float duration)
+    {
+        isStaggered = true;
+        playerAnimator.Play("Player Impact Idle");
+        StartCoroutine(StaggerRecovery(direction, strength, duration));
+
+    }
+    IEnumerator StaggerRecovery(Vector3 direction, float strength, float duration)
+    {
+        float passedTime = 0;
+        while (passedTime < duration)
+        {
+            playerController.Move(direction * strength * Time.deltaTime);
+            passedTime += Time.deltaTime;
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+
+        isStaggered = false;
+    }
+
+    public void TogglePlayerMovement(bool toggle)
     {
         canMove = toggle;
-        playerAnimator.SetFloat("WalkHorizontal", 0);
-        playerAnimator.SetFloat("WalkVertical", 0);
     }
 }
 

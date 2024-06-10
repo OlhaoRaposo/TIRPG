@@ -255,6 +255,12 @@ public class PlayerGun : MonoBehaviour
                         ammo++;
                         UIManager.instance.UpdateAmmo($"{ammo}/{equipedWeapon.ammo}");
                     }
+
+                    if(ammo > equipedWeapon.ammo)
+                    {
+                        ammo = equipedWeapon.ammo;
+                        UIManager.instance.UpdateAmmo($"{ammo}/{equipedWeapon.ammo}");
+                    }
                     break;
                 }
             case PlayerGunBase.TriggerType.Hold:
