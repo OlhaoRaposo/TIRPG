@@ -32,6 +32,9 @@ public class WorldController : MonoBehaviour
     private GameObject[] lightsObjects;
     private Volume dayPostProcessing, nightPostProcessing;
     [SerializeField] Material skyBoxMaterial;
+    
+    [Header("Save")]
+    public bool tutorialCompleted;
 
     private void Start()
     {
@@ -43,7 +46,6 @@ public class WorldController : MonoBehaviour
         }
         essentialsCanvas = GameObject.Find("====CANVAS====");
         essentialsCanvas.SetActive(false);
-        //camera = Camera.main.gameObject;
         player = GameObject.FindGameObjectWithTag("Player");
         InitiateTime();
     }
@@ -156,6 +158,10 @@ public class WorldController : MonoBehaviour
         CameraFollow.follow.gameObject.transform.position = new Vector3(401, 153, -205);
         CameraFollow.follow.gameObject.transform.rotation = Quaternion.Euler(0, 21, 0);
         CameraFollow.follow.gameObject.SetActive(false);
+        if (!tutorialCompleted) {
+            PlayerMovement.instance.TeleportPlayer(GameObject.Find("TutorialTeleport").transform.position);
+            tutorialCompleted = true;
+        }
     }
 }
 [Serializable]

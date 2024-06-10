@@ -35,25 +35,35 @@ public class EnemyBehaviour : MonoBehaviour
  private Vector2 smoothVelocity;
  private Vector2 velocity;
  [HideInInspector]public bool isAtacking;
+ public bool isDummy;
  [Header("Beastiary")]
  public Bestiary mySpawner;
  private void Awake() {
+   if(isDummy)
+     return;
+   
    enemyAnimator.applyRootMotion = true;
    agent.updatePosition = false;
    agent.updateRotation = true;
  }
  private void Start() {
+   
+   
    if(!TryGetComponent(out NavMeshAgent ag)){
      Debug.LogWarning("You Forgot to set the NavMeshAgent to the enemy THIS ENEMY NO LONGER WILL WORK."); }
    if (!TryGetComponent(out Animator an))
      Debug.LogWarning("You Forgot to set the Animator THIS ENEMY NO LONGER WILL WORK.");
    
    life = data.maxLife >= 0 ? data.maxLife : 300;
+   if(isDummy) 
+     return;
    enemyName.text = bossName;
    ChangeState(new PatrolState(this));
    OnStart.Invoke();
  }
  private void OnAnimatorMove() {
+   if(isDummy) 
+     return;
    Vector3 rootPosition = enemyAnimator.rootPosition;
    rootPosition.y = agent.nextPosition.y;
    transform.position = rootPosition;
@@ -90,9 +100,14 @@ public class EnemyBehaviour : MonoBehaviour
    }
  } 
  private void FixedUpdate() {
+   if(isDummy) 
+     return;
+   
    state?.Update();
  }
  private void Update() {
+   if(isDummy) 
+     return;
    SyncronizeMovement();
    DetectTarget();
  }

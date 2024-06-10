@@ -18,8 +18,10 @@ public class ChaseState : IState {
    }
    public void Update()
    {
+      float distance = enemy.TargetDistance();
       Vector3 offset = enemy.transform.position - enemy.target.transform.position;
-      enemy.agent.SetDestination(enemy.target.transform.position + offset.normalized * 2);
+      if (distance >= 2)
+          enemy.agent.SetDestination(enemy.target.transform.position + offset.normalized * 2);
       
       time += Time.deltaTime;
       if (time <= interval) {
@@ -28,11 +30,13 @@ public class ChaseState : IState {
       }else
          return;
       
-      float distance = enemy.TargetDistance();
+      if (distance <= 1)
+         enemy.ChangeState(new TooCloseToAttackState(enemy));
 
       foreach (var atacks in enemy.attacks) {
          if (distance <= atacks.maxRange && distance >= atacks.minRange) {
-           enemy.attacksAvailable.Add(atacks.attackCode);
+            if(!enemy.attacksAvailable.Contains(atacks.attackCode))
+               enemy.attacksAvailable.Add(atacks.attackCode);
          }
       }
 
@@ -45,15 +49,12 @@ public class ChaseState : IState {
    private string ChooseAttack()
    {
       string chosenAttack = "None";
+      
       if (enemy.attacksAvailable.Count > 0) {
          chosenAttack = enemy.attacksAvailable[Random.Range(0, enemy.attacksAvailable.Count)];
-         if(enemy.attacksAvailable.Count > 1)
-            chosenAttack = enemy.attacksAvailable[Random.Range(0, enemy.attacksAvailable.Count)];
-         else
          if (chosenAttack == enemy.triggerCode)
-            chosenAttack = ChooseAttack();
-      }else
-         enemy.ChangeState(new ChaseState(enemy));
+            chosenAttack = "None";
+      }
         
       return chosenAttack;
    }

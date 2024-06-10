@@ -26,7 +26,8 @@ RenderSettings:
   m_AmbientIntensity: 1.4
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.3270737, g: 0.46527034, b: 0.4716981, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: d48a7646f5d0547e889733d84b50cb9f, type: 2}
+  m_SkyboxMaterial: {fileID: -876546973899608171, guid: bddffc45d78ea0647aac5f97447a14d4,
+    type: 3}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -2282,7 +2283,9 @@ MonoBehaviour:
       dayAmbientLight: {r: 0.85490197, g: 0.8666667, b: 0.7254902, a: 0}
       nightAmbientLight: {r: 0.101960786, g: 0.09411765, b: 0.11372549, a: 0}
     clock: {fileID: 0}
-  skyBoxMaterial: {fileID: 2100000, guid: d682741ce75533d45ae2d34348a83dac, type: 2}
+  skyBoxMaterial: {fileID: -876546973899608171, guid: bddffc45d78ea0647aac5f97447a14d4,
+    type: 3}
+  tutorialCompleted: 0
 --- !u!4 &1300635536
 Transform:
   m_ObjectHideFlags: 0
@@ -2316,7 +2319,7 @@ MonoBehaviour:
   text: 
   attNpc: 0
   npc: {fileID: 0}
-  talkingSpeed: 0.005
+  talkingSpeed: 0.002
   isWriting: 0
 --- !u!1 &1415004264
 GameObject:
