@@ -41,7 +41,7 @@ public class PlayerCameraMovement : MonoBehaviour
 
     private void Start()
     {
-        startingPos = transform.position;
+        startingPos = transform.localPosition;
         previousCamPosition = startingPos;
         startingAimPos = playerAim.transform.localPosition;
         transform.position = startingPos;
@@ -173,7 +173,10 @@ public class PlayerCameraMovement : MonoBehaviour
 
     private void SetCameraZoom()
     {
-
+        if(Vector3.Distance(cameraBody.transform.position, playerObject.transform.position) > 3)
+        {
+            transform.localPosition = startingPos;
+        }
     }
 
     //TRAVAR CÂMERA POR QUALQUER MOTIVO QUE SEJA E LIBERAR O CURSOR TAMBÉM POR QUALQUER MOTIVO Q SEJA INGAME

@@ -38,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
         {
             StaminaRegen();
             GroundCheck();
+            Fall();
 
             if (isStaggered == false)
             {
@@ -188,7 +189,11 @@ public class PlayerMovement : MonoBehaviour
                 //PAROU O PULO
             }
         }
-        else if (isGrounded == false)
+    }
+
+    private void Fall()
+    {
+        if (isJumping == false && isGrounded == false)
         {
             if (startedFall == true)
             {
