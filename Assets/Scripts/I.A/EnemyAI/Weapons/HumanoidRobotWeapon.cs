@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using UnityEditor.Animations;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -35,7 +33,8 @@ public class HumanoidRobotWeapon : MonoBehaviour
     }
 
     private IEnumerator Shoot(){ 
-        user.agent.SetDestination(user.transform.position);
+        Vector3 offset = user.transform.position - user.target.transform.position;
+        user.agent.SetDestination(user.target.transform.position + offset.normalized * 2);
         user.transform.LookAt(user.target.transform.position); 
         yield return new WaitForSeconds(.2f);
         Vector3 roundRecoil = gun1.position + new Vector3(10,10,-15);
@@ -53,7 +52,8 @@ public class HumanoidRobotWeapon : MonoBehaviour
         user.ChangeState(new ChaseState(user));
     }
     private IEnumerator Shoot2(){ 
-        user.agent.SetDestination(user.transform.position);
+        Vector3 offset = user.transform.position - user.target.transform.position;
+        user.agent.SetDestination(user.target.transform.position + offset.normalized * 2);
         user.transform.LookAt(user.target.transform.position); 
         
         Vector3 roundRecoil = gun1.position + new Vector3(10,25,-25);
@@ -75,12 +75,13 @@ public class HumanoidRobotWeapon : MonoBehaviour
         yield return new WaitForSeconds(.6f);
         user.ChangeState(new ChaseState(user));
     }
+    
     private IEnumerator None() {
         Vector3 offset = user.transform.position - user.target.transform.position;
         offset = offset.normalized * 3;
         offset += Random.insideUnitSphere * 4;
         user.agent.SetDestination(offset);
-        yield return new WaitForSeconds(Random.Range(2,7));
+        yield return new WaitForSeconds(Random.Range(2,3));
         user.ChangeState(new ChaseState(user));
     }
     

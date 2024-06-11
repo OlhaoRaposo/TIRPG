@@ -69,25 +69,25 @@ public class BoitataWeapon : MonoBehaviour
     IEnumerator RangedBite(string expression) {
         user.transform.LookAt(user.target.transform.position);
         user.enemyAnimator.SetTrigger(expression);
-        yield return new WaitForSeconds(8);
+        yield return new WaitForSeconds(6);
         user.ChangeState(new ChaseState(user));
     }
     IEnumerator MeleeHit(string expression) {
         user.enemyAnimator.SetTrigger(expression);
         jail.SetActive(true);
-        yield return new WaitForSeconds(8);
+        yield return new WaitForSeconds(6);
         jail.SetActive(false);
         user.ChangeState(new ChaseState(user));
     }
     IEnumerator MeleeBreath(string expression)
     {
         user.enemyAnimator.SetTrigger(expression);
-        yield return new WaitForSeconds(8);
+        yield return new WaitForSeconds(6);
         user.ChangeState(new ChaseState(user));
     }
     IEnumerator MeleeBite(string expression) {
         user.enemyAnimator.SetTrigger(expression);
-        yield return new WaitForSeconds(8);
+        yield return new WaitForSeconds(6);
         user.ChangeState(new ChaseState(user));
     }
     private void OnTriggerEnter(Collider col) {

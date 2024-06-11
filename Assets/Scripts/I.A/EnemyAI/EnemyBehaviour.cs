@@ -142,20 +142,19 @@ public class EnemyBehaviour : MonoBehaviour
  }
  public void Die()
  {
-   if(TryGetComponent(out KillDetection kd)) {
+  /* if(TryGetComponent(out KillDetection kd)) {
      kd.onKill.Invoke();
      if(mySpawner.spawner.TryGetComponent(out Spawner sp)) {
        sp.hasQuestOnCourse = true;
        sp.onKill = this.GetComponent<KillDetection>().onKill;
      }
-     Debug.Log("KilledEn");
-   }
+   
+   }*/
+    WorldController.worldController.bossesDefeated.Add(gameObject.name);
+   Debug.Log("KilledEn" + gameObject.name);
    Destroy(this.gameObject);
    ItemDropManager.instance.DropItem(dropInfo, transform.position);
    PlayerStats.instance.GainXp(Random.Range(30,100));
-   if (mySpawner.spawner.TryGetComponent(out Spawner spawn)) {
-     spawn.GetComponent<Spawner>().StartRespawnProcess();
-   }
  }
  public void TakeDamage(float damage, DamageElementManager.DamageElement damageElement)
  {
