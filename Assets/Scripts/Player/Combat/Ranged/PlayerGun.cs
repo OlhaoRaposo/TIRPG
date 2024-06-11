@@ -145,7 +145,7 @@ public class PlayerGun : MonoBehaviour
         }
         else if (PlayerCameraMovement.instance.isAiming == false)
         {
-            if (isReloading == false)
+            if (isReloading == false && PlayerMovement.instance.canSwapWeapon == true)
             {
                 PlayerCameraMovement.instance.playerAnimator.SetLayerWeight(1, 0);
             }

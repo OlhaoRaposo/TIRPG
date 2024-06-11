@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Combat")]
     public GameObject[] allWeapons;
-    [SerializeField] private bool canSwapWeapon = true;
+    public bool canSwapWeapon = true;
     public bool isRanged = true;
     private bool isStaggered = false;
 
@@ -255,9 +255,9 @@ public class PlayerMovement : MonoBehaviour
 
                 if (isGrounded == true)
                 {
-                    StartCoroutine(SwapWeaponAction(playerAnimator.GetCurrentAnimatorClipInfo(1).Length * 0.7f));
                     playerAnimator.Play("Walk Tree");
                     playerAnimator.Play($"Switch to {PlayerGun.instance.GetGunName()}");
+                    StartCoroutine(SwapWeaponAction(playerAnimator.GetCurrentAnimatorClipInfo(1).Length * 0.7f));
                 }
 
                 PlayerGun.instance.enabled = true;
@@ -282,9 +282,9 @@ public class PlayerMovement : MonoBehaviour
 
                 if (isGrounded == true)
                 {
-                    StartCoroutine(SwapWeaponAction(playerAnimator.GetCurrentAnimatorClipInfo(1).Length * 0.7f));
                     playerAnimator.Play("Walk Tree");
                     playerAnimator.Play($"Switch to {PlayerMeleeCombat.instance.GetMeleeName()}");
+                    StartCoroutine(SwapWeaponAction(playerAnimator.GetCurrentAnimatorClipInfo(1).Length * 0.7f));
                 }
 
                 PlayerGun.instance.enabled = false;
