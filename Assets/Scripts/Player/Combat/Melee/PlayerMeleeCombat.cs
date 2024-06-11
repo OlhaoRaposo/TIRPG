@@ -128,14 +128,12 @@ public class PlayerMeleeCombat : MonoBehaviour
     private void StartCombo()
     {
         isInCombo = true;
-        PlayerMovement.instance?.ToggleMove(false);
     }
 
     private void EndCombo()
     {
         isInCombo = false;
         comboIndex = 0;
-        PlayerMovement.instance?.ToggleMove(true);
         animator.Play("Walk Tree", 0);
     }
 

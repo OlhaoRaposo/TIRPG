@@ -44,6 +44,12 @@ public class PlayerCameraMovement : MonoBehaviour
         startingPos = transform.position;
         previousCamPosition = startingPos;
         startingAimPos = playerAim.transform.localPosition;
+        transform.position = startingPos;
+    }
+
+    private void OnEnable()
+    {
+        
     }
 
     public void SetValues(float cameraSense, float aimSense, bool isInverted)
@@ -113,12 +119,30 @@ public class PlayerCameraMovement : MonoBehaviour
         if (Input.GetMouseButton(1) == true)
         {
             AlignTargetWithCamera(playerObject);
+            SetCurrentSense(aimSense);
             cameraBody.fieldOfView = aimFov;
+
+            if(PlayerGun.instance.enabled == true && PlayerGun.instance.isReloading == false)
+            {
+                playerAnimator.SetLayerWeight(1, 1);
+                if(PlayerGun.instance.isHolding == false)
+                {
+                    playerAnimator.Play($"{PlayerGun.instance.GetGunName()} Aim Tree");
+                }
+            }
+            isAiming = true;
         }
         else
         {
+            SetCurrentSense(cameraSense);
             cameraBody.fieldOfView = regularFov;
         }
+
+        if(Input.GetMouseButtonUp(1) == true && PlayerGun.instance.enabled == true && PlayerGun.instance.isReloading == false)
+        {
+            playerAnimator.SetLayerWeight(1, 0);
+        }
+        isAiming = false;
     }
 
     public void AlignTargetWithCamera(GameObject target)
@@ -139,7 +163,7 @@ public class PlayerCameraMovement : MonoBehaviour
     //EFEITOS, SENSIBILIDADE & UTILIDADE
     private void SetCurrentSense(float sense)
     {
-
+        currentSense = sense;
     }
 
     public void ShakeCamera(float strength)
