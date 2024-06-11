@@ -49,7 +49,7 @@ public class PlayerCameraMovement : MonoBehaviour
 
     private void OnEnable()
     {
-        
+
     }
 
     public void SetValues(float cameraSense, float aimSense, bool isInverted)
@@ -78,8 +78,13 @@ public class PlayerCameraMovement : MonoBehaviour
         float x = Input.GetAxis("Mouse X") * camSpeedX;
         float y = Input.GetAxis("Mouse Y") * camSpeedY;
 
-        transform.RotateAround(playerObject.transform.position, Vector3.up, x);
-        transform.RotateAround(playerObject.transform.position, -transform.right, y);
+        if (x != 0 || y != 0)
+        {
+            transform.RotateAround(playerObject.transform.position, Vector3.up, x);
+            transform.RotateAround(playerObject.transform.position, -transform.right, y);
+        }
+
+        Debug.Log(x + " " + y);
 
         if (transform.localEulerAngles != previousCamRotation && transform.localPosition != previousCamPosition)
         {
@@ -122,10 +127,10 @@ public class PlayerCameraMovement : MonoBehaviour
             SetCurrentSense(aimSense);
             cameraBody.fieldOfView = aimFov;
 
-            if(PlayerGun.instance.enabled == true && PlayerGun.instance.isReloading == false)
+            if (PlayerGun.instance.enabled == true && PlayerGun.instance.isReloading == false)
             {
                 playerAnimator.SetLayerWeight(1, 1);
-                if(PlayerGun.instance.isHolding == false)
+                if (PlayerGun.instance.isHolding == false)
                 {
                     playerAnimator.Play($"{PlayerGun.instance.GetGunName()} Aim Tree");
                 }
@@ -138,7 +143,7 @@ public class PlayerCameraMovement : MonoBehaviour
             cameraBody.fieldOfView = regularFov;
         }
 
-        if(Input.GetMouseButtonUp(1) == true && PlayerGun.instance.enabled == true && PlayerGun.instance.isReloading == false)
+        if (Input.GetMouseButtonUp(1) == true && PlayerGun.instance.enabled == true && PlayerGun.instance.isReloading == false)
         {
             playerAnimator.SetLayerWeight(1, 0);
         }
@@ -173,7 +178,7 @@ public class PlayerCameraMovement : MonoBehaviour
 
     private void SetCameraZoom()
     {
-        if(Vector3.Distance(cameraBody.transform.position, playerObject.transform.position) > 3)
+        if (Vector3.Distance(cameraBody.transform.position, playerObject.transform.position) > 3)
         {
             transform.localPosition = startingPos;
         }
