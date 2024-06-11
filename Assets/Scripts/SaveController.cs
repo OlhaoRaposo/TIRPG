@@ -42,6 +42,7 @@ public class SaveController : MonoBehaviour
      save.tutorialDone = WorldController.worldController.tutorialCompleted;
      save.currentHour = WorldController.worldController.currentHour.ToString();
      List<NPC> npcs = FindObjectsOfType<NPC>().ToList();
+     save.npcsInteracted = new List<SaveNPC>();
      foreach (var npc in npcs) {
          if (npc.invoked) {
              save.npcsInteracted.Add(new SaveNPC() {
