@@ -41,6 +41,9 @@ public class ArmadeiraWeapon : MonoBehaviour
            case "_jump":
                StartCoroutine(Jump(expression));
                break;
+           case "None":
+               StartCoroutine(Jump(expression));
+               break;
          }
      }
      private void Update()
