@@ -2503,6 +2503,7 @@ MonoBehaviour:
   life: 5000
   currentState: 0
   target: {fileID: 0}
+  startePoint: {fileID: 0}
   agent: {fileID: 5706223091083968130}
   enemyAnimator: {fileID: 5199741324312066978}
   OnStart:
@@ -2510,7 +2511,13 @@ MonoBehaviour:
       m_Calls: []
   data:
     maxLife: 5000
-  dropInfo: []
+  dropInfo:
+  - data: {fileID: 11400000, guid: 7c04330f3c99a6e418b4356b852536b4, type: 2}
+    dropRate: 1
+  - data: {fileID: 11400000, guid: 59c9fa09545b94a48ac4127fd9f24b70, type: 2}
+    dropRate: 1
+  - data: {fileID: 11400000, guid: ea54df1c4c9c00f42b516321d9bb3884, type: 2}
+    dropRate: 1
   questType: 0
   EnemyCanvas: {fileID: 5430619089479721117}
   bossName: AAP-01
@@ -2532,6 +2539,8 @@ MonoBehaviour:
   triggerCode: 
   weapon: {fileID: 8808023734136701910}
   isAtacking: 0
+  isDummy: 0
+  isDefeted: 0
   mySpawner:
     bestiaryCode: 
     spawner: {fileID: 0}

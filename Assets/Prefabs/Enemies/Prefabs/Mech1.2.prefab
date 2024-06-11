@@ -4593,6 +4593,7 @@ MonoBehaviour:
   life: 40000
   currentState: 0
   target: {fileID: 0}
+  startePoint: {fileID: 0}
   agent: {fileID: 2205143493056213325}
   enemyAnimator: {fileID: 232162544141708608}
   OnStart:
@@ -4600,7 +4601,13 @@ MonoBehaviour:
       m_Calls: []
   data:
     maxLife: 30000
-  dropInfo: []
+  dropInfo:
+  - data: {fileID: 11400000, guid: 5b407b4cf5ff79f4687f54c8a658ba24, type: 2}
+    dropRate: 1
+  - data: {fileID: 11400000, guid: 21dfa65dddbf3644ab6030d616af516d, type: 2}
+    dropRate: 1
+  - data: {fileID: 11400000, guid: b29a12107a5b9644b9e5c36edf860f85, type: 2}
+    dropRate: 1
   questType: 0
   EnemyCanvas: {fileID: 5022192129145349151}
   bossName: Mecha
@@ -4627,6 +4634,8 @@ MonoBehaviour:
   triggerCode: 
   weapon: {fileID: 5862844092608882697}
   isAtacking: 0
+  isDummy: 0
+  isDefeted: 0
   mySpawner:
     bestiaryCode: 
     spawner: {fileID: 0}

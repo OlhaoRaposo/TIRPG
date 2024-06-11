@@ -1219,19 +1219,19 @@ MonoBehaviour:
   life: 0
   currentState: 4
   target: {fileID: 0}
+  startePoint: {fileID: 0}
   agent: {fileID: 6169093210377061535}
   enemyAnimator: {fileID: 8898113502084169631}
   OnStart:
     m_PersistentCalls:
       m_Calls: []
-  myType: 2
   data:
     maxLife: 30000
-    mySpawner:
-      bestiaryCode: 02A
-      spawner: {fileID: 7336646412705050281, guid: b94aca3b6b5c9f2438cb9bc12956c29b,
-        type: 3}
-  dropInfo: []
+  dropInfo:
+  - data: {fileID: 11400000, guid: 5c1cbd38013147e448fef62e6b55c92f, type: 2}
+    dropRate: 1
+  - data: {fileID: 11400000, guid: 86f5acd92cc93a440b5900e7df321733, type: 2}
+    dropRate: 1
   questType: 0
   EnemyCanvas: {fileID: 4181231273725735662}
   bossName: Arachnidroid
@@ -1283,6 +1283,8 @@ MonoBehaviour:
   triggerCode: 
   weapon: {fileID: 62490207866077285}
   isAtacking: 0
+  isDummy: 0
+  isDefeted: 0
   mySpawner:
     bestiaryCode: 02A
     spawner: {fileID: 7336646412705050281, guid: b94aca3b6b5c9f2438cb9bc12956c29b,

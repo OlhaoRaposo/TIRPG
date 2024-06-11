@@ -714,6 +714,7 @@ MonoBehaviour:
   life: 0
   currentState: 4
   target: {fileID: 0}
+  startePoint: {fileID: 0}
   agent: {fileID: 3497307781373383282}
   enemyAnimator: {fileID: 469670329382766075}
   OnStart:
@@ -721,11 +722,13 @@ MonoBehaviour:
       m_Calls: []
   data:
     maxLife: 3000
-    mySpawner:
-      bestiaryCode: 03A
-      spawner: {fileID: 7336646412705050281, guid: b94aca3b6b5c9f2438cb9bc12956c29b,
-        type: 3}
-  dropInfo: []
+  dropInfo:
+  - data: {fileID: 11400000, guid: 5bf546cb44705244196ef3cdf005d90e, type: 2}
+    dropRate: 1
+  - data: {fileID: 11400000, guid: 086cc401751f88a4ba758e336c849246, type: 2}
+    dropRate: 1
+  - data: {fileID: 11400000, guid: 2e46156aa69e4704586518d15797ca72, type: 2}
+    dropRate: 1
   questType: 0
   EnemyCanvas: {fileID: 1114915729019785895}
   bossName: Luison
@@ -757,6 +760,8 @@ MonoBehaviour:
   triggerCode: 
   weapon: {fileID: 6332153149431608734}
   isAtacking: 0
+  isDummy: 0
+  isDefeted: 0
   mySpawner:
     bestiaryCode: 
     spawner: {fileID: 0}
