@@ -1,12 +1,14 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class BoitataWeapon : MonoBehaviour
 {
     public EnemyBehaviour user;
     public float damage;
     public GameObject jail;
+    private bool isOnAnimation;
     public void Attack(string expression){
         Debug.Log("Attacking with: " + expression);
         
@@ -26,13 +28,42 @@ public class BoitataWeapon : MonoBehaviour
             case "_devour":
                 StartCoroutine(Devour(expression));
                 break;
+            case "_crawl":
+                StartCoroutine(Crawl(expression));
+                break;
+            case "None":
+                int rnd = Random.Range(0, 100);
+                    if(rnd<=50)
+                        StartCoroutine(Devour(expression));
+                    else {
+                        StartCoroutine(Crawl(expression));
+                    }
+                break;
         }
     }
+
+    private void Update()
+    {
+        if(user.target!=null && !isOnAnimation)
+            transform.LookAt(user.target.transform.position);
+    }
+
+    IEnumerator Crawl(string expression) {
+        isOnAnimation = true;
+        Vector3 lookat = user.target.transform.position - user.transform.position;
+        user.agent.SetDestination(lookat * 15);
+        user.enemyAnimator.SetTrigger(expression);
+        yield return new WaitForSeconds(5);
+        isOnAnimation = false;
+        user.ChangeState(new ChaseState(user));
+    }
     IEnumerator Devour(string expression) {
+        isOnAnimation = true;
         Vector3 lookat = user.target.transform.position - user.transform.position;
         user.agent.SetDestination(lookat * 10);
         user.enemyAnimator.SetTrigger(expression);
         yield return new WaitForSeconds(5);
+        isOnAnimation = false;
         user.ChangeState(new ChaseState(user));
     }
     IEnumerator RangedBite(string expression) {

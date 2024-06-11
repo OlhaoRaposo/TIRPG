@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3465714745039309969}
   - component: {fileID: 5796737701244494920}
   - component: {fileID: 7434974604098313266}
+  - component: {fileID: 8530038976677137664}
   m_Layer: 0
   m_Name: WindTurbine
   m_TagString: Untagged
@@ -84,6 +85,29 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!136 &8530038976677137664
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1063422420446892766}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.30305862
+  m_Height: 7.6949906
+  m_Direction: 1
+  m_Center: {x: 0, y: 3.8588502, z: 0.024858475}
 --- !u!1 &6797684547753045298
 GameObject:
   m_ObjectHideFlags: 0

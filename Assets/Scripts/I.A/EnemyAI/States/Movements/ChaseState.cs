@@ -1,60 +1,62 @@
+using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
+using Vector3 = UnityEngine.Vector3;
 
 public class ChaseState : IState {
    public EnemyBehaviour enemy;
    public ChaseState(EnemyBehaviour enemy) {
       this.enemy = enemy;
    }
+
+   private float time;
+   float interval = 1.5f;
    public void Enter() {
+      enemy.attacksAvailable.Clear();
       enemy.currentState = EnemyBehaviour.EnemyState.Chase;
-      enemy.agent.speed = 10;
-      if(enemy.target == null){
-         enemy.ChangeState(new PatrolState(enemy));
-      }
+      enemy.agent.speed = 6;
    }
-   public void Update() {
-      enemy.agent.SetDestination(enemy.target.transform.position);
-      if (enemy.TargetDistance() < 5){
-         switch (enemy.myType) {
-            case EnemyBehaviour.EnemyType.ranged:
-               enemy.ChangeState(new TooCloseToAttackState(enemy));
-               break;
-            case EnemyBehaviour.EnemyType.melee:
-               enemy.ChangeState(new MeleeAttackState(enemy));
-               break;
-            case EnemyBehaviour.EnemyType.rangedAndMelee:
-               int rnd2 = Random.Range(0, 100);
-               if(rnd2 <= 50)
-                  enemy.ChangeState(new MeleeAttackState(enemy));
-               else
-                  enemy.ChangeState(new RangedAttackState(enemy));
-               break;
+   public void Update()
+   {
+      float distance = enemy.TargetDistance();
+      Vector3 offset = enemy.transform.position - enemy.target.transform.position;
+      if (distance >= 2)
+          enemy.agent.SetDestination(enemy.target.transform.position + offset.normalized * 2);
+      
+      time += Time.deltaTime;
+      if (time <= interval) {
+         time = 0;
+         interval = Random.Range(1, 3);
+      }else
+         return;
+      
+      if (distance <= 1)
+         enemy.ChangeState(new TooCloseToAttackState(enemy));
+
+      foreach (var atacks in enemy.attacks) {
+         if (distance <= atacks.maxRange && distance >= atacks.minRange) {
+            if(!enemy.attacksAvailable.Contains(atacks.attackCode))
+               enemy.attacksAvailable.Add(atacks.attackCode);
          }
-      }else if(enemy.TargetDistance() > 6 && enemy.TargetDistance() < 10) {
-         switch (enemy.myType) {
-            case EnemyBehaviour.EnemyType.ranged:
-               enemy.ChangeState(new RangedAttackState(enemy));
-               break;
-            case EnemyBehaviour.EnemyType.melee:
-               int rnd = Random.Range(0, 100);
-               if(rnd <= 60)
-                  enemy.ChangeState(new JumpAttackState(enemy));
-               break;
-            case EnemyBehaviour.EnemyType.rangedAndMelee:
-               int rnd2 = Random.Range(0, 100);
-               if(rnd2 <= 30)
-                  enemy.ChangeState(new JumpAttackState(enemy));
-               else
-                  enemy.ChangeState(new RangedAttackState(enemy));
-               break;
-         }
-      }else if (enemy.TargetDistance() > 10 && enemy.TargetDistance() < 20) {
-         int rnd2 = Random.Range(0, 100);
-         if(rnd2 <= 20)
-            enemy.ChangeState(new JumpAttackState(enemy));
-         else 
-            enemy.ChangeState(new ChaseState(enemy));
       }
+
+      foreach (var str in enemy.attacksAvailable) {
+         Debug.Log(str);
+      }
+      enemy.triggerCode = ChooseAttack();
+      enemy.ChangeState(new AttackState(enemy));
+   }
+   private string ChooseAttack()
+   {
+      string chosenAttack = "None";
+      
+      if (enemy.attacksAvailable.Count > 0) {
+         chosenAttack = enemy.attacksAvailable[Random.Range(0, enemy.attacksAvailable.Count)];
+         if (chosenAttack == enemy.triggerCode)
+            chosenAttack = "None";
+      }
+        
+      return chosenAttack;
    }
    public void Exit(){ }
 }

@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1.4
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.3270737, g: 0.46527034, b: 0.4716981, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: d48a7646f5d0547e889733d84b50cb9f, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 366d2992bc73c77499e524076564d444, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -2214,6 +2214,7 @@ GameObject:
   - component: {fileID: 1300635536}
   - component: {fileID: 1300635535}
   - component: {fileID: 1300635537}
+  - component: {fileID: 1300635538}
   m_Layer: 0
   m_Name: WorldController
   m_TagString: Untagged
@@ -2282,7 +2283,9 @@ MonoBehaviour:
       dayAmbientLight: {r: 0.85490197, g: 0.8666667, b: 0.7254902, a: 0}
       nightAmbientLight: {r: 0.101960786, g: 0.09411765, b: 0.11372549, a: 0}
     clock: {fileID: 0}
-  skyBoxMaterial: {fileID: 2100000, guid: d682741ce75533d45ae2d34348a83dac, type: 2}
+  skyBoxMaterial: {fileID: 2100000, guid: 366d2992bc73c77499e524076564d444, type: 2}
+  tutorialCompleted: 0
+  bossesDefeated: []
 --- !u!4 &1300635536
 Transform:
   m_ObjectHideFlags: 0
@@ -2316,8 +2319,21 @@ MonoBehaviour:
   text: 
   attNpc: 0
   npc: {fileID: 0}
-  talkingSpeed: 0.005
+  talkingSpeed: 0.001
   isWriting: 0
+--- !u!114 &1300635538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1300635534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78a2cccf38b39b849a2ddd3818b9dd7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  path: C:/Github/Tekoha/Assets/tekohaSave.json
 --- !u!1 &1415004264
 GameObject:
   m_ObjectHideFlags: 0

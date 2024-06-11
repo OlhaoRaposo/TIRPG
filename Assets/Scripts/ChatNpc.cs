@@ -16,7 +16,6 @@ public class ChatNpc : MonoBehaviour
         npcReference.talkBox.SetActive(true);
         npcReference.npcText.text = "";
         npcReference.npcNameReference.text = npcReference.npcName;
-        npcReference.perfilImage.sprite = npcReference.perfilSprite;
         npcReference.talkBox.SetActive(false);
     }
 
