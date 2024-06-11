@@ -181,6 +181,7 @@ public class PlayerCameraMovement : MonoBehaviour
         if (Vector3.Distance(cameraBody.transform.position, playerObject.transform.position) > 3)
         {
             transform.localPosition = startingPos;
+            transform.localEulerAngles = Vector3.zero;
         }
     }
 

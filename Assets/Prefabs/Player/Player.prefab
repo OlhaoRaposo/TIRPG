@@ -31,7 +31,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5933861143729877105}
-  m_Father: {fileID: 307774727505572980}
+  m_Father: {fileID: 6942144798212599461}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8303579219879438141
 MonoBehaviour:
@@ -304,9 +304,12 @@ MonoBehaviour:
   ammo: 0
   gunName: 
   gunMag: 
+  isReloading: 0
+  canShoot: 1
   aimCollisionLayer:
     serializedVersion: 2
     m_Bits: 1
+  isHolding: 0
   equipedWeapon: {fileID: 11400000, guid: 6121deddc3b6256458ed3b1a1e1bedf5, type: 2}
   reloadImage: {fileID: 0}
 --- !u!1 &6759132695369782341
@@ -350,7 +353,6 @@ Transform:
   - {fileID: 4022807065086187320}
   - {fileID: 1215756133079977749}
   - {fileID: 6942144798212599461}
-  - {fileID: 8072401124269114452}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &7248745612728186558
@@ -422,6 +424,7 @@ MonoBehaviour:
   runSpeedMultiplier: 1.75
   jumpHeight: 2.5
   stamina: 100
+  canMove: 1
   isRunning: 0
   isDashing: 0
   isJumping: 0
@@ -909,7 +912,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 77cbaee47b5d6174fa536ade87fb4a37,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8072401124269114452}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 77cbaee47b5d6174fa536ade87fb4a37,
         type: 3}
