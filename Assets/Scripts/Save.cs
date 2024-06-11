@@ -18,6 +18,7 @@ namespace Tekoha.Database
         public List<string> bossesDefeated;
         
         //PlayerInventory
+        public float playerLife;
             //nem ideia vey
             
         //Loyalty points

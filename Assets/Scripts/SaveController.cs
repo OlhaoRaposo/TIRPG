@@ -20,7 +20,8 @@ public class SaveController : MonoBehaviour
     }
 
     private void OnApplicationQuit() {
-        SaveGame();
+        if(WorldController.worldController.tutorialCompleted)
+            SaveGame();
     }
 
     private void Start() {
@@ -42,6 +43,7 @@ public class SaveController : MonoBehaviour
      save.cameraPosition = PlayerMovement.instance.gameObject.transform.position;
      save.cameraRotation = PlayerMovement.instance.gameObject.transform.rotation;
      save.bossesDefeated = WorldController.worldController.bossesDefeated;
+     save.playerLife = PlayerHPController.instance.GetHp();
      save.cityLoyalty = LoyaltySystem.instance.GetInfluencePointsCity();
      save.natureLoyalty = LoyaltySystem.instance.GetInfluencePointsNature();
      save.tutorialDone = WorldController.worldController.tutorialCompleted;
@@ -53,7 +55,6 @@ public class SaveController : MonoBehaviour
              save.npcsInteracted.Add(new SaveNPC() {
                  npcName = npc.gameObject.name,
                  currentDialogueIndex = npc.currentDialogueIndex
-                 //ADICIONAR O INVOKED
              });
          }
      }
@@ -67,6 +68,7 @@ public class SaveController : MonoBehaviour
             //Player
             PlayerMovement.instance.TeleportPlayer(save.playerPosition);
             PlayerMovement.instance.gameObject.transform.rotation = save.playerRotation;
+            PlayerHPController.instance.SetHP(save.playerLife);
             //Camera
             PlayerCameraMovement.instance.gameObject.transform.rotation = save.cameraRotation;
             //Bosses

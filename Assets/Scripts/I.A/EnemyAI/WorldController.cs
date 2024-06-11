@@ -154,14 +154,18 @@ public class WorldController : MonoBehaviour
         CameraFollow.follow.gameObject.transform.localPosition = new Vector3(0, 0, 0);
         if (!tutorialCompleted) {
             PlayerMovement.instance.TeleportPlayer(GameObject.Find("TutorialTeleport").transform.position);
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(3);
+            essentialsCanvas.SetActive(true);
             GameObject tonhao = GameObject.Find("Tonhao");
             tonhao.GetComponent<NPC>().Interact();
         }
         yield return new WaitForSeconds(3);
         Debug.LogWarning("FINALIZADO COROUTINE");
         essentialsCanvas.SetActive(true);
-        PlayerCameraMovement.instance.ToggleAimLock(true);
+        if(!tutorialCompleted)
+            PlayerCameraMovement.instance.ToggleAimLock(false);
+        else
+            PlayerCameraMovement.instance.ToggleAimLock(true);
         /*
         CameraFollow.follow.gameObject.transform.position = new Vector3(401, 153, -205);
         CameraFollow.follow.gameObject.transform.rotation = Quaternion.Euler(0, 21, 0);

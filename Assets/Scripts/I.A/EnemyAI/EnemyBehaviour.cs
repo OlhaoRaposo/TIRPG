@@ -129,9 +129,15 @@ public class EnemyBehaviour : MonoBehaviour
      if (detections.gameObject.CompareTag("Player"))
        target = detections.gameObject;
    }
-   
    EnemyCanvas.gameObject.SetActive(target != null);
-   
+
+   if (target != null)
+   {
+     if (TargetDistance() >= 20) {
+       target = null;
+       ChangeState(new PatrolState(this));
+     }
+   }
    if (target != null){
      if(currentState != EnemyState.Chase)
         ChangeState(new ChaseState(this));
@@ -180,7 +186,7 @@ public class EnemyBehaviour : MonoBehaviour
    return distance.magnitude;
  }
  public void InstantiateText(float totalDamage, Color textColor) {
-   GameObject damageObj = Instantiate(damageCanvas, transform.position + new Vector3(-2, 2.8f,0) , transform.rotation, transform);
+   GameObject damageObj = Instantiate(damageCanvas, transform.position + new Vector3(0, 2.8f,0) , transform.rotation, transform);
    Text damageTxt = damageObj.transform.GetChild(0).GetComponent<Text>();
    damageTxt.text = Mathf.Round((totalDamage)).ToString();
    damageTxt.color = textColor;

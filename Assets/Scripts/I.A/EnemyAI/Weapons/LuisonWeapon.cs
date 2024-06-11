@@ -33,7 +33,7 @@ public class LuisonWeapon : MonoBehaviour
     IEnumerator None() {
         Vector3 offset = user.transform.position - user.target.transform.position;
         user.agent.SetDestination(user.target.transform.position + offset.normalized * 2);
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         user.ChangeState(new ChaseState(user));
     }
     IEnumerator Jump(string expression)

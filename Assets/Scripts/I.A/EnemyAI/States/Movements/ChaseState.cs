@@ -26,7 +26,7 @@ public class ChaseState : IState {
       time += Time.deltaTime;
       if (time <= interval) {
          time = 0;
-         interval = Random.Range(1, 3);
+         interval = Random.Range(1, 2);
       }else
          return;
       
@@ -39,7 +39,6 @@ public class ChaseState : IState {
                enemy.attacksAvailable.Add(atacks.attackCode);
          }
       }
-
       foreach (var str in enemy.attacksAvailable) {
          Debug.Log(str);
       }

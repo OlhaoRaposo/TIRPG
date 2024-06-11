@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(Interactable_Npc))]
@@ -22,10 +21,6 @@ public class NPC : MonoBehaviour
     public bool isTutorialNPC;
     [SerializeField] public TutorialNPC tutorialNPC;
     [SerializeField] public int tutorialIndex;
-    private void Awake() {
-        
-    }
-
     private void Start() {
         npcReference.talkBox.SetActive(true);
         npcReference.npcText.text = "";

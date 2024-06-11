@@ -168,8 +168,7 @@ public class EnemyBehaviourCore : MonoBehaviour
             if (detections.gameObject.CompareTag("Player"))
                 enemyTarget = detections.gameObject;
         }
-        if (isAttacking)
-            myNavMeshAgent.enemyAgent.SetDestination(enemyTarget.transform.position);
+        
         if (enemyTarget != null) {
             if (enemyTarget.CompareTag("Player")) {
                 if (!isAttacking) { Attack(); }
