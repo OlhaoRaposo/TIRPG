@@ -5,7 +5,6 @@ using Cinemachine;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEngine.SceneManagement;
 
 public class WorldController : MonoBehaviour
 {
@@ -17,7 +16,6 @@ public class WorldController : MonoBehaviour
     private new GameObject camera;
     private Transform cameraTransform;
     private GameObject player;
-    private CinemachineBrain brain;
     private GameObject essentialsCanvas;
     
     [Header("Timer Settings")]
@@ -35,6 +33,7 @@ public class WorldController : MonoBehaviour
     
     [Header("Save")]
     public bool tutorialCompleted;
+    public List<string> bossesDefeated;
 
     private void Start()
     {
@@ -150,17 +149,23 @@ public class WorldController : MonoBehaviour
     }
     public IEnumerator PlayAnimation() {
         CameraFollow.follow.Started();
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(2);
+        CameraFollow.follow.gameObject.transform.parent = PlayerCameraMovement.instance.transform;
+        CameraFollow.follow.gameObject.transform.localPosition = new Vector3(0, 0, 0);
+        yield return new WaitForSeconds(3);
         Debug.LogWarning("FINALIZADO COROUTINE");
         essentialsCanvas.SetActive(true);
         PlayerCameraMovement.instance.ToggleAimLock(true);
-
+        /*
         CameraFollow.follow.gameObject.transform.position = new Vector3(401, 153, -205);
         CameraFollow.follow.gameObject.transform.rotation = Quaternion.Euler(0, 21, 0);
+        */
         CameraFollow.follow.gameObject.SetActive(false);
         if (!tutorialCompleted) {
             PlayerMovement.instance.TeleportPlayer(GameObject.Find("TutorialTeleport").transform.position);
-            tutorialCompleted = true;
+            yield return new WaitForSeconds(1);
+            GameObject tonhao = GameObject.Find("Tonhao");
+            tonhao.GetComponent<NPC>().Interact();
         }
     }
 }

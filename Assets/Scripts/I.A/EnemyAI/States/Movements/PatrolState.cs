@@ -16,7 +16,7 @@ public class PatrolState : IState {
       if(enemy != null && enemy.currentState != EnemyBehaviour.EnemyState.Patrol){
          enemy.currentState = EnemyBehaviour.EnemyState.Patrol;
       }
-      enemy.agent.SetDestination(SelectRandomLocation(enemy.transform.position));
+      enemy.agent.SetDestination(SelectRandomLocation(enemy.startePoint.position));
    }
    private Vector3 SelectRandomLocation(Vector3 reference) {
       Vector3 randomLocation;

@@ -15,7 +15,7 @@ public class NPC : MonoBehaviour
     [SerializeField] private NPCReferenceData npcReference;
     
     
-    [SerializeField] private bool invoked;
+    [SerializeField] public bool invoked;
     [SerializeField] private UnityEvent OnEndDialogue = new UnityEvent();
     
     [Header("Tutorial NPC")]
@@ -49,6 +49,11 @@ public class NPC : MonoBehaviour
         //lock Player 
         PlayerCameraMovement.instance.ToggleAimLock(false);
         DefaultButtonConfiguration();
+    }
+    public void CompleteTutorial() {
+        if (isTutorialNPC) {
+            WorldController.worldController.tutorialCompleted = true;
+        }
     }
     public void DisableChatBox() {
         npcReference.npcText.text = "";
@@ -103,8 +108,6 @@ public class NPCReferenceData :  PropertyAttribute
     [Header("Referência do NPC em cena")]
     public TextMeshProUGUI npcText;
     public GameObject talkBox;
-    public GameObject questIcon;
-    public GameObject interactIcon;
     public Button nextButton;
     public Button acceptButton;
     public Button refuseButton;
@@ -114,7 +117,6 @@ public class NPCReferenceData :  PropertyAttribute
 public class TutorialNPC  {
    
     public List<Dialogue> dialogues = new List<Dialogue>();
-    public int tutorialIndex;
     public void Initiate(int index) {
         dialogues = new List<Dialogue>();
         dialogues.Add(new Dialogue());

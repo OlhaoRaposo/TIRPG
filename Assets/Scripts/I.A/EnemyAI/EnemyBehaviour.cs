@@ -13,6 +13,7 @@ public class EnemyBehaviour : MonoBehaviour
  [SerializeField] private float life;
  [SerializeField] public EnemyState currentState;
  public GameObject target;
+ public Transform startePoint;
  public NavMeshAgent agent ;
  public Animator enemyAnimator;
  public UnityEvent OnStart;
@@ -36,6 +37,7 @@ public class EnemyBehaviour : MonoBehaviour
  private Vector2 velocity;
  [HideInInspector]public bool isAtacking;
  public bool isDummy;
+ public bool isDefeted;
  [Header("Beastiary")]
  public Bestiary mySpawner;
  private void Awake() {
@@ -47,8 +49,10 @@ public class EnemyBehaviour : MonoBehaviour
    agent.updateRotation = true;
  }
  private void Start() {
+   if(isDefeted)
+     gameObject.SetActive(false);
    
-   
+   startePoint = transform;
    if(!TryGetComponent(out NavMeshAgent ag)){
      Debug.LogWarning("You Forgot to set the NavMeshAgent to the enemy THIS ENEMY NO LONGER WILL WORK."); }
    if (!TryGetComponent(out Animator an))
