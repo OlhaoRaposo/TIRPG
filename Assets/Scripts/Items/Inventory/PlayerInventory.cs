@@ -2,6 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public struct ItemObject
+{
+    public ItemData item;
+    public int amount;
+
+    public ItemObject(ItemData i, int a)
+        {
+            item = i;
+            amount = a;
+        } 
+
+}
 public class PlayerInventory : MonoBehaviour
 {
     public static PlayerInventory instance;
@@ -12,7 +25,9 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField] ConsumableSlot consumableSlot;
     [SerializeField] ConsumableSlot throwableSlot;
 
-    [SerializeField] List<ItemData> items = new List<ItemData>();
+    //[SerializeField] List<ItemData> items = new List<ItemData>();
+    [SerializeField] List<ItemObject> items = new List<ItemObject>();
+
 
     void Awake()
     {
@@ -37,25 +52,82 @@ public class PlayerInventory : MonoBehaviour
     }
     public bool AddItemToInventory(ItemData itemData)
     {
-        //Checar se existem slots disponiveis
-        if (items.Count == slots.Length)
+        //Checa se ja possui o item no inventario
+        if (LookForItem(itemData, ref items, true))
         {
-            Debug.Log("Cant add item to inventory: The inventory is full");
-            return false;
+            /*
+            //Checa se o item é stackavel
+            if (itemData.isStackable)
+            {
+                //Adiciona uma unidade ao slot
+                //FindItemSlot(itemData).AddToCount();
+            }
+            else //Caso nao seja stackavel
+            {
+                if (!TryToAddItemToList(itemData)) return false;
+            }
+            */
+
+            if (!itemData.isStackable)
+            {
+                if (!TryToAddItemToList(itemData)) return false;
+            }
+        }
+        else
+        {
+            if (!TryToAddItemToList(itemData)) return false;
+        }
+        return true;
+    }
+    public bool AddItemToInventoryInMenu(ItemData itemData)
+    {
+        //Checa se ja possui o item no inventario
+        if (LookForItem(itemData, ref items, true))
+        {
+            //Checa se o item é stackavel
+            if (itemData.isStackable)
+            {
+                //Adiciona uma unidade ao slot
+                FindItemSlot(itemData).AddToCount();
+            }
+            else //Caso nao seja stackavel
+            {
+                if (!TryToAddItemToList(itemData)) return false;
+            }
+        }
+        else
+        {
+            if (!TryToAddItemToList(itemData)) return false;
         }
 
-        items.Add(itemData);
+        SortInventory();
+
         return true;
+    }
+    bool TryToAddItemToList(ItemData data)
+    {
+        //Checa se existem slots disponiveis
+        if (items.Count == slots.Length)
+        {
+            Debug.LogWarning("Cant add item to inventory: The inventory is full");
+            return false;
+        }
+        else //Caso possua slots disponíveis
+        {
+            items.Add(new ItemObject(data, 1));
+            return true;
+        }
     }
     public bool RemoveItemFromInventory(ItemData itemData)
     {
-        if (!items.Contains(itemData))
+        ItemObject ob;
+        if (!LookForItem(itemData, out ob))
         {
-            Debug.Log("Item is not in the inventory list");
+            Debug.LogWarning("Item is not in the inventory list");
             return false;
         }
 
-        items.Remove(itemData);
+        items.Remove(ob);
         return true;
     }
     public GameObject DropItem(ItemData itemData)
@@ -69,20 +141,58 @@ public class PlayerInventory : MonoBehaviour
         }
         return null;
     }
-    public bool LookForItem(ItemData itemData)
+    public bool LookForItem(ItemData itemData, out ItemObject o)
     {
-        foreach (ItemData item in items)
+        foreach (ItemObject i in items)
         {
-            if (item == itemData)
+            if (i.item == itemData)
             {
+                o = i;
+                return true;
+            }
+        }
+        o = new ItemObject(null, -1);
+        return false;
+    }
+    public bool LookForItem(ItemData itemData, ref List<ItemObject> objList, bool canIncrementAmount)
+    {
+        for(int i = 0; i < objList.Count; i++)
+        {
+            if (objList[i].item == itemData)
+            {
+                if (canIncrementAmount)
+                {
+                    ItemObject o = new ItemObject(objList[i].item, objList[i].amount + 1);
+                    objList[i] = o;
+                }
                 return true;
             }
         }
         return false;
     }
+    public bool LookForItem(ItemData itemData)
+    {
+        foreach (ItemObject i in items)
+        {
+            if (i.item == itemData) return true;
+        }
+        return false;
+    }
+    InventorySlot FindItemSlot(ItemData data)
+    {
+        foreach(InventorySlot slot in slots)
+        {
+            if (slot.GetItem() == data)
+            {
+                return slot;
+            }
+        }
+
+        return null;
+    }
     public void DropMeleeWeapon(ItemData itemData)
     {
-        meleeWeaponSlot.SetItem(null);
+        meleeWeaponSlot.SetItem();
         GameObject droppedItem = Instantiate(itemData.prefab, PlayerInteractions.instance.transform.position + (Vector3.up + PlayerInteractions.instance.transform.forward), Quaternion.identity);
         PlayerMeleeCombat.instance.enabled = false;
         foreach (GameObject playerWeapon in PlayerMovement.instance.allWeapons)
@@ -97,7 +207,7 @@ public class PlayerInventory : MonoBehaviour
     }
     public void DropRangedWeapon(ItemData itemData)
     {
-        rangedWeaponSlot.SetItem(null);
+        rangedWeaponSlot.SetItem();
         GameObject droppedItem = Instantiate(itemData.prefab, PlayerInteractions.instance.transform.position + (Vector3.up + PlayerInteractions.instance.transform.forward), Quaternion.identity);
         PlayerGun.instance.enabled = false;
         PlayerMovement.instance.playerModel.transform.Find(PlayerGun.instance.GetGunName()).gameObject.SetActive(false);
@@ -131,14 +241,14 @@ public class PlayerInventory : MonoBehaviour
     {
         foreach (InventorySlot slot in slots)
         {
-            slot.SetItem(null);
+            slot.SetItem();
         }
     }
-    public void EquipMeleeWeapon(ItemData weaponData)
+    public void EquipMeleeWeapon(ItemObject weaponData)
     {
-        RemoveItemFromInventory(weaponData);
+        RemoveItemFromInventory(weaponData.item);
         meleeWeaponSlot.SetItem(weaponData);
-        PlayerMeleeCombat.instance?.SetNewMeleeWeapon(weaponData.meleeBase);
+        PlayerMeleeCombat.instance?.SetNewMeleeWeapon(weaponData.item.meleeBase);
 
         foreach (GameObject playerWeapon in PlayerMovement.instance.allWeapons)
         {
@@ -156,12 +266,15 @@ public class PlayerInventory : MonoBehaviour
             }
         }
     }
-    public void EquipRangedWeapon(ItemData weaponData)
+    public void EquipRangedWeapon(ItemObject weaponData)
     {
-        RemoveItemFromInventory(weaponData);
+        RemoveItemFromInventory(weaponData.item);
+
+        //if (rangedWeaponSlot.GetItem() != null)
+
         rangedWeaponSlot.SetItem(weaponData);
-        PlayerGun.instance?.SetNewGunWeapon(weaponData.gunBase);
-        
+        PlayerGun.instance?.SetNewGunWeapon(weaponData.item.gunBase);
+
         foreach (GameObject playerWeapon in PlayerMovement.instance.allWeapons)
         {
             if (playerWeapon.name == PlayerGun.instance.GetGunName() && PlayerMovement.instance.isRanged == true)
@@ -178,14 +291,14 @@ public class PlayerInventory : MonoBehaviour
             }
         }
     }
-    public void EquipConsumable(ItemData consumableData)
+    public void EquipConsumable(ItemObject consumableData)
     {
-        RemoveItemFromInventory(consumableData);
+        RemoveItemFromInventory(consumableData.item);
         consumableSlot.SetItem(consumableData);
     }
-    public void EquipThrowable(ItemData throwableData)
+    public void EquipThrowable(ItemObject throwableData)
     {
-        RemoveItemFromInventory(throwableData);
+        RemoveItemFromInventory(throwableData.item);
         throwableSlot.SetItem(throwableData);
     }
     public ItemData GetMelee()
@@ -204,15 +317,15 @@ public class PlayerInventory : MonoBehaviour
     {
         return consumableSlot.GetItem();
     }
-    public List<ItemData> GetInventory()
+    public List<ItemObject> GetInventory()
     {
-        List<ItemData> ret = new List<ItemData>();
+        List<ItemObject> ret = new List<ItemObject>();
         /*if (meleeWeaponSlot.GetItem() != null) ret.Add(meleeWeaponSlot.GetItem());
         if (rangedWeaponSlot.GetItem() != null) ret.Add(rangedWeaponSlot.GetItem());
         if (consumableSlot.GetItem() != null) ret.Add(consumableSlot.GetItem());
         if (throwableSlot.GetItem() != null) ret.Add(throwableSlot.GetItem());*/
 
-        ret.AddRange(items);
+            ret.AddRange(items);
 
         return ret;
     }

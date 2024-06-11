@@ -5,7 +5,8 @@ using UnityEngine;
 public class Interactable_Item : MonoBehaviour, IInteractable
 {
     [SerializeField] ItemData itemData;
-    [SerializeField] QuestType.TypesOfCollectibles typesOf;
+    
+    //[SerializeField] QuestType.TypesOfCollectibles typesOf;
 
     public void Interact(PlayerInteractions player)
     {

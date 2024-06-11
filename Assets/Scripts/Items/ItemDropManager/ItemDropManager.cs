@@ -31,6 +31,14 @@ public class ItemDropManager : MonoBehaviour
     {
         item.SetParent(droppedItemsParent);
     }
+
+    public void DestroyDroppedItems()
+    {
+        foreach(GameObject go in droppedItemsParent.GetComponentsInChildren<GameObject>())
+        {
+            Destroy(go);
+        }
+    }
 }
 
 [System.Serializable]

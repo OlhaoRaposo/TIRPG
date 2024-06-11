@@ -7,52 +7,95 @@ using UnityEngine.EventSystems;
 public class InventorySlot : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] protected Image itemImage;
-    protected ItemData itemData;
+
+    [SerializeField] protected Text itemAmountText;
+    int itemAmount = 0;
+
+    protected ItemObject itemData = new ItemObject();
 
     void OnEnable()
     {
         if (itemImage == null) itemImage = transform.GetChild(0).GetComponent<Image>();
-    }
-    public virtual void SetItem(ItemData item)
-    {
-        itemData = item;
 
+        if (itemAmountText == null) itemAmountText = transform.GetComponentInChildren<Text>();
+    }
+    public virtual void SetItem(ItemObject itemObj)
+    {
+        itemData = itemObj;
+
+        SetItemSprite(itemObj);
+
+        SetItemAmount(itemObj);
+    }
+    public void SetItem()
+    {
+        itemData.item = null;
+
+        Color color = itemImage.color;
+        color.a = 0f;
+        itemImage.color = color;
+        itemImage.sprite = null;
+
+        itemAmount = 0;
+        itemAmountText.text = "";
+    }
+    void SetItemSprite(ItemObject itemObj)
+    {
         if (itemImage == null) return;
 
-        if (item != null){
+        if (!itemObj.Equals(null))
+        {
             Color color = itemImage.color;
             color.a = 1f;
             itemImage.color = color;
 
-            if (itemData.sprite == null)
+            //Debug.Log(itemObj.item.name, itemObj.item);
+            if (itemObj.item.sprite == null)
             {
-                Debug.LogError($"ERRO: O item {itemData.name} está sem um icone atribuído");
+                Debug.LogError($"ERRO: O item {itemObj.item.name} está sem um icone atribuído");
             }
             else
             {
-                itemImage.sprite = item.sprite;
+                itemImage.sprite = itemObj.item.sprite;
             }
 
             itemImage.preserveAspect = true;
-        }else{
-            Color color = itemImage.color;
-            color.a = 0f;
-            itemImage.color = color;
-            itemImage.sprite = null;
+
         }
+    }
+    void SetItemAmount(ItemObject itemObj)
+    {
+        if (itemAmountText == null) return;
+
+        if (itemObj.amount > 1 && itemObj.item.isStackable)
+        {
+            itemAmount = itemObj.amount;
+            itemAmountText.text = itemAmount.ToString();
+        }
+
+    }
+    public void AddToCount()
+    {
+        itemAmount++;
+        itemAmountText.text = itemAmount.ToString();
+    }
+    public void DecreaseCount()
+    {
+        itemAmount = Mathf.Clamp(0, 9999, itemAmount);
+        itemAmountText.text = itemAmount.ToString();
     }
     public ItemData GetItem()
     {
-        return itemData;
+        return itemData.item;
     }
     public virtual void LeftClick()
     {
-        if (itemData == null) return;
+        if (itemData.Equals(null)) return;
         
-        switch (itemData.itemType)
+        switch (itemData.item.itemType)
         {
             case ItemType.WEAPON:
-                switch(itemData.weaponType)
+                switch(itemData.item.weaponType)
                 {   
                     case WeaponType.MELEE: PlayerInventory.instance.EquipMeleeWeapon(itemData); break;
                     case WeaponType.RANGED: PlayerInventory.instance.EquipRangedWeapon(itemData); break;
@@ -65,13 +108,12 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
                 PlayerInventory.instance.EquipThrowable(itemData);
                 break;
         }
-        SetItem(null);
     }
     public virtual void RightClick()
     {
-        if (itemData != null)
+        if (!itemData.Equals(null))
         {
-            PlayerInventory.instance.DropItem(itemData);
+            PlayerInventory.instance.DropItem(itemData.item);
         }
     }
 

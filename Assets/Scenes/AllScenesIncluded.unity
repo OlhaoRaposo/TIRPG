@@ -275,17 +275,17 @@ PrefabInstance:
         type: 3}
       propertyPath: fastTravelCity
       value: 
-      objectReference: {fileID: 477790536}
+      objectReference: {fileID: 0}
     - target: {fileID: 289073004397917387, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
         type: 3}
       propertyPath: fastTravelLobby
       value: 
-      objectReference: {fileID: 477790537}
+      objectReference: {fileID: 0}
     - target: {fileID: 289073004397917387, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
         type: 3}
       propertyPath: fastTravelForest
       value: 
-      objectReference: {fileID: 477790538}
+      objectReference: {fileID: 0}
     - target: {fileID: 2360312147422877375, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
         type: 3}
       propertyPath: gameplayScenes.Array.size
@@ -457,6 +457,26 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SelectAttribute
       objectReference: {fileID: 0}
+    - target: {fileID: 7805925549167241826, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7805925549167241826, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 477790535}
+    - target: {fileID: 7805925549167241826, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleFastTravelMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 7805925549167241826, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UIManager, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 8116238937941755324, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
         type: 3}
       propertyPath: m_IsActive
@@ -482,6 +502,7 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: 6956214870844219183, guid: 3004360c9fd7b2f41ad76ead7312e2e2, type: 3}
     - {fileID: 6524205845604770219, guid: 3004360c9fd7b2f41ad76ead7312e2e2, type: 3}
+    - {fileID: 3443691436718826649, guid: 3004360c9fd7b2f41ad76ead7312e2e2, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 225081769874203038, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
         type: 3}
@@ -501,24 +522,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 243dad71ed9073c4faf29df8084314e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &477790536 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7593245169528181685, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
-    type: 3}
-  m_PrefabInstance: {fileID: 477790534}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &477790537 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 9015847664129789181, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
-    type: 3}
-  m_PrefabInstance: {fileID: 477790534}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &477790538 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1730804989272438061, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
-    type: 3}
-  m_PrefabInstance: {fileID: 477790534}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &487334630
 GameObject:
   m_ObjectHideFlags: 0

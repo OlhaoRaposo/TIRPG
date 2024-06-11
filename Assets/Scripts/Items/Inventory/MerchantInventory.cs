@@ -12,6 +12,7 @@ public class MerchantInventory : MonoBehaviour
     List<ItemData> weapons = new List<ItemData>();
     List<ItemData> consumables = new List<ItemData>();
     List<ItemData> throwables = new List<ItemData>();
+    List<ItemData> misc = new List<ItemData>();
 
     void Start()
     {
@@ -64,7 +65,7 @@ public class MerchantInventory : MonoBehaviour
         }
         return true;
     }
-    public void SellItem(ItemData item)
+    public void SellItem(ItemObject item)
     {
         //Checar se tem espaço no inventario do mercador
         if (UIManager.instance.GetShopSlotsBuy().Length == GetAllItems().Count) return;
@@ -73,18 +74,18 @@ public class MerchantInventory : MonoBehaviour
         switch (inventoryData.influentialSide)
         {
             case LoyaltySystem.InfluentialSide.Nature:
-                LoyaltySystem.instance.AddPointsInfluenceNature(item.value);
+                LoyaltySystem.instance.AddPointsInfluenceNature(item.item.value * item.amount);
                 break;
             case LoyaltySystem.InfluentialSide.City:
-                LoyaltySystem.instance.AddPointsInfluenceCity(item.value);
+                LoyaltySystem.instance.AddPointsInfluenceCity(item.item.value * item.amount);
                 break;
         }
 
         //Remover item do inventario do player
-        PlayerInventory.instance.RemoveItemFromInventory(item);
+        PlayerInventory.instance.RemoveItemFromInventory(item.item);
 
         //Adicionar item no inventario do mercador
-        AddItem(item);
+        AddItem(item.item);
         SortInventory();
         UIManager.instance.UpdateShopInfluenceInfo();
     }
@@ -100,6 +101,9 @@ public class MerchantInventory : MonoBehaviour
                 break;
             case ItemType.THROWABLE:
                 throwables.Add(item);
+                break;
+            case ItemType.NONE:
+                misc.Add(item);
                 break;
         }
     }
@@ -131,6 +135,16 @@ public class MerchantInventory : MonoBehaviour
                 if (throwables.Contains(item))
                 {
                     throwables.Remove(item);
+                }
+                else
+                {
+                    Debug.LogError("O item não está no inventario de arremessaveis do npc");
+                }
+                break;
+            case ItemType.NONE:
+                if (misc.Contains(item))
+                {
+                    misc.Remove(item);
                 }
                 else
                 {
@@ -203,7 +217,7 @@ public class MerchantInventory : MonoBehaviour
             {
                 break;
             }
-            slot.SetItem(items[itemIndex]);
+            slot.SetItem(new ItemObject(items[itemIndex], 1));
             itemIndex++;
         }
     }
@@ -213,6 +227,7 @@ public class MerchantInventory : MonoBehaviour
         items.AddRange(weapons);
         items.AddRange(consumables);
         items.AddRange(throwables);
+        items.AddRange(misc);
 
         return items;
     }
@@ -220,11 +235,11 @@ public class MerchantInventory : MonoBehaviour
     {
         foreach (ShopSlot slot in UIManager.instance.GetShopSlotsBuy())
         {
-            slot.SetItem(null);
+            slot.SetItem();
         }
         foreach (ShopSlot slot in UIManager.instance.GetShopSlotsSell())
         {
-            slot.SetItem(null);
+            slot.SetItem();
         }
     }
     public void SetShopUI()
@@ -235,7 +250,7 @@ public class MerchantInventory : MonoBehaviour
         {
             foreach (ItemData data in weapons)
             {
-                UIManager.instance.GetShopSlotsBuy()[slotIndex].SetItem(data);
+                UIManager.instance.GetShopSlotsBuy()[slotIndex].SetItem(new ItemObject(data, 1));
                 slotIndex++;
             }
         }
@@ -244,7 +259,7 @@ public class MerchantInventory : MonoBehaviour
         {
             foreach (ItemData data in consumables)
             {
-                UIManager.instance.GetShopSlotsBuy()[slotIndex].SetItem(data);
+                UIManager.instance.GetShopSlotsBuy()[slotIndex].SetItem(new ItemObject(data, 1));
                 slotIndex++;
             }
         }
@@ -253,7 +268,7 @@ public class MerchantInventory : MonoBehaviour
         {
             foreach (ItemData data in throwables)
             {
-                UIManager.instance.GetShopSlotsBuy()[slotIndex].SetItem(data);
+                UIManager.instance.GetShopSlotsBuy()[slotIndex].SetItem(new ItemObject(data, 1));
                 slotIndex++;
             }
         }

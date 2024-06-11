@@ -12,6 +12,8 @@ public class CheatMenu : MonoBehaviour
     [SerializeField] Transform fastTravelLobby;
     [SerializeField] Transform fastTravelCity;
     [SerializeField] Transform fastTravelMountain;
+    [SerializeField] Transform fastTravelVillage;
+    [SerializeField] Transform fastTravelBeach;
 
     bool hasInfiniteHP = false;
     bool hasInfiniteStamina = false;
@@ -45,6 +47,12 @@ public class CheatMenu : MonoBehaviour
                 break;
             case "Mountain":
                 PlayerMovement.instance.TeleportPlayer(fastTravelMountain.position);
+                break;
+            case "Village":
+                PlayerMovement.instance.TeleportPlayer(fastTravelVillage.position);
+                break;
+            case "Beach":
+                PlayerMovement.instance.TeleportPlayer(fastTravelBeach.position);
                 break;
             default:
                 Debug.LogError("Invalid Location", this);

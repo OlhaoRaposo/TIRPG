@@ -15,14 +15,14 @@ public class ShopSlot : InventorySlot
         switch (slotType)
         {
             case SlotType.BUY:
-                if (itemData != null)
+                if (!itemData.Equals(null))
                 {
                     //Debug.Log("Comprar " + itemData.name);
-                    UIManager.instance.GetCurrentMerchant().BuyItem(itemData);
+                    UIManager.instance.GetCurrentMerchant().BuyItem(itemData.item);
                 }
                 break;
             case SlotType.SELL:
-                if (itemData != null)
+                if (!itemData.Equals(null))
                 {
                     //Debug.Log("Vender " + itemData.name);
                     UIManager.instance.GetCurrentMerchant().SellItem(itemData);

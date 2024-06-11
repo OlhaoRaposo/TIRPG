@@ -75,6 +75,7 @@ public class PlayerHPController : MonoBehaviour
     void Die()
     {
         PlayerCameraMovement.instance.ToggleAimLock(false);
+        ItemDropManager.instance.DestroyDroppedItems();
         SceneController.instance.GameOver();
     }
     public void SetStamina(float ammount)
