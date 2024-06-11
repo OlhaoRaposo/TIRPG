@@ -18,6 +18,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject skillTreePanel;
     RectTransform skillTreeTransform;
 
+    [SerializeField] GameObject fastTravelMenu;
+
     [SerializeField] GameObject cheatMenuPanel;
 
     [SerializeField] Text merchantInventoryLabel;
@@ -232,6 +234,11 @@ public class UIManager : MonoBehaviour
     {
         DisableAllPanels();
         optionsPanel.SetActive(!inventoryPanel.activeSelf);
+    }
+    public void ToggleFastTravelMenu()
+    {
+        fastTravelMenu.SetActive(!fastTravelMenu.activeSelf);
+        ToggleCursorLockMode();
     }
     public void ToggleCheatMenu()
     {

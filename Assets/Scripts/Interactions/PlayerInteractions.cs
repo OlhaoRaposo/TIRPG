@@ -48,14 +48,7 @@ public class PlayerInteractions : MonoBehaviour
         
         Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
 
-        if (Physics.SphereCast(ray, interactRadius, out RaycastHit hit, 10f, interactLayer))
-        {
-            canInteract = true;
-        }
-        else
-        {
-            canInteract = false;
-        }
+        canInteract = Physics.SphereCast(ray, interactRadius, out RaycastHit hit, 10f, interactLayer);
     }
     void SphereCheck()
     {
