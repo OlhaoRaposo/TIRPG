@@ -34,9 +34,9 @@ public class ItemDropManager : MonoBehaviour
 
     public void DestroyDroppedItems()
     {
-        foreach(GameObject go in droppedItemsParent.GetComponentsInChildren<GameObject>())
+        foreach(Transform go in droppedItemsParent.GetComponentsInChildren<Transform>())
         {
-            Destroy(go);
+            Destroy(go.gameObject);
         }
     }
 }

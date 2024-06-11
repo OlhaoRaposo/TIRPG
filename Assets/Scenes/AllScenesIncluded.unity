@@ -8,8 +8,9 @@ OcclusionCullingSettings:
     smallestOccluder: 5
     smallestHole: 0.25
     backfaceThreshold: 100
-  m_SceneGUID: 00000000000000000000000000000000
-  m_OcclusionCullingData: {fileID: 0}
+  m_SceneGUID: 6ce8cd563a2c04d419fd5a4929d67eeb
+  m_OcclusionCullingData: {fileID: 36300000, guid: d1fbd2e79889e9444ba6b0cd107af876,
+    type: 2}
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
@@ -289,7 +290,7 @@ PrefabInstance:
     - target: {fileID: 2360312147422877375, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
         type: 3}
       propertyPath: gameplayScenes.Array.size
-      value: 6
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2360312147422877375, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
         type: 3}
@@ -324,12 +325,12 @@ PrefabInstance:
     - target: {fileID: 2360312147422877375, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
         type: 3}
       propertyPath: gameplayScenes.Array.data[6]
-      value: LobbyScene
+      value: TutorialScene
       objectReference: {fileID: 0}
     - target: {fileID: 2360312147422877375, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
         type: 3}
       propertyPath: gameplayScenes.Array.data[7]
-      value: LobbyScene
+      value: MechaScene
       objectReference: {fileID: 0}
     - target: {fileID: 2830963833244830641, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
         type: 3}

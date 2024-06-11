@@ -2420,7 +2420,7 @@ GameObject:
   - component: {fileID: 3724338309312736009}
   m_Layer: 0
   m_Name: HumanoidRobot
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2503,6 +2503,7 @@ MonoBehaviour:
   life: 5000
   currentState: 0
   target: {fileID: 0}
+  startePoint: {fileID: 0}
   agent: {fileID: 5706223091083968130}
   enemyAnimator: {fileID: 5199741324312066978}
   OnStart:
@@ -2532,6 +2533,8 @@ MonoBehaviour:
   triggerCode: 
   weapon: {fileID: 8808023734136701910}
   isAtacking: 0
+  isDummy: 0
+  isDefeted: 0
   mySpawner:
     bestiaryCode: 
     spawner: {fileID: 0}

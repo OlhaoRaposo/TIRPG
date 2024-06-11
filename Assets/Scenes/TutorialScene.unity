@@ -8,8 +8,9 @@ OcclusionCullingSettings:
     smallestOccluder: 5
     smallestHole: 0.25
     backfaceThreshold: 100
-  m_SceneGUID: 00000000000000000000000000000000
-  m_OcclusionCullingData: {fileID: 0}
+  m_SceneGUID: 5ae0de3db333869448fc6e5089766d28
+  m_OcclusionCullingData: {fileID: 36300000, guid: d1fbd2e79889e9444ba6b0cd107af876,
+    type: 2}
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
@@ -4727,7 +4728,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7119823986659804889}
         m_TargetAssemblyTypeName: NPC, Assembly-CSharp
         m_MethodName: Interact
         m_Mode: 1
@@ -5661,7 +5662,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7119823986659804889}
         m_TargetAssemblyTypeName: NPC, Assembly-CSharp
         m_MethodName: DisableChatBox
         m_Mode: 1
@@ -9865,7 +9866,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7119823986659804889}
         m_TargetAssemblyTypeName: NPC, Assembly-CSharp
         m_MethodName: DisableChatBox
         m_Mode: 1
@@ -13848,6 +13849,7 @@ MonoBehaviour:
   life: 9999999
   currentState: 0
   target: {fileID: 0}
+  startePoint: {fileID: 0}
   agent: {fileID: 0}
   enemyAnimator: {fileID: 6265873857899656102}
   OnStart:
@@ -19748,7 +19750,7 @@ GameObject:
   - component: {fileID: 3274798392265351949}
   m_Layer: 0
   m_Name: HumanoidRobot
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

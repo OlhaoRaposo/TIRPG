@@ -164,7 +164,7 @@ public class EnemyBehaviour : MonoBehaviour
    if (target == null) {
      target = GameObject.FindGameObjectWithTag("Player");
    }
-   Image lifeBar = EnemyCanvas.transform.Find("LifeBar").transform.Find("LifeBarFill").GetComponent<Image>();
+   Image lifeBar = EnemyCanvas.transform.Find("LIFE").transform.Find("LifeBarFill").GetComponent<Image>();
    life -= Mathf.Round((actualDamage * damage));
    lifeBar.fillAmount = life / data.maxLife;
    DamageElementManager.instance.ApplyDamageEffect(this, damageElement, Mathf.Round((actualDamage * damage)));
@@ -189,7 +189,7 @@ public class EnemyBehaviour : MonoBehaviour
  public void InflictDirectDamage(float damage) {
    float actualDamage;
    actualDamage = 1;
-   Image lifeBar = EnemyCanvas.transform.Find("LifeBar").transform.Find("LifeBarFill").GetComponent<Image>();
+   Image lifeBar = EnemyCanvas.transform.Find("LIFE").transform.Find("LifeBarFill").GetComponent<Image>();
    life -= Mathf.Round((actualDamage * damage));
    lifeBar.fillAmount = life / data.maxLife;
    
