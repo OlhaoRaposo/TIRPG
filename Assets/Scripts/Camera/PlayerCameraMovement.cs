@@ -121,12 +121,28 @@ public class PlayerCameraMovement : MonoBehaviour
             AlignTargetWithCamera(playerObject);
             SetCurrentSense(aimSense);
             cameraBody.fieldOfView = aimFov;
+
+            if(PlayerGun.instance.enabled == true && PlayerGun.instance.isReloading == false)
+            {
+                playerAnimator.SetLayerWeight(1, 1);
+                if(PlayerGun.instance.isHolding == false)
+                {
+                    playerAnimator.Play($"{PlayerGun.instance.GetGunName()} Aim Tree");
+                }
+            }
+            isAiming = true;
         }
         else
         {
             SetCurrentSense(cameraSense);
             cameraBody.fieldOfView = regularFov;
         }
+
+        if(Input.GetMouseButtonUp(1) == true && PlayerGun.instance.enabled == true && PlayerGun.instance.isReloading == false)
+        {
+            playerAnimator.SetLayerWeight(1, 0);
+        }
+        isAiming = false;
     }
 
     public void AlignTargetWithCamera(GameObject target)

@@ -11,10 +11,10 @@ public class PlayerGun : MonoBehaviour
     [SerializeField] private string gunName;
     [SerializeField] private string gunMag;
     private float shootCD = 0;
-    private bool isReloading = false, canShoot = true;
+    public bool isReloading = false, canShoot = true;
     [SerializeField] private LayerMask aimCollisionLayer = new LayerMask();
     private float holdTime;
-    private bool isHolding = false;
+    [HideInInspector] public bool isHolding = false;
 
     [Header("References")]
     [SerializeField] private PlayerGunBase equipedWeapon;
@@ -137,20 +137,23 @@ public class PlayerGun : MonoBehaviour
                             break;
                         }
                 }
+                if (Input.GetMouseButtonUp(0) == true)
+                {
+                    CancelInvoke();
+                    Invoke("TurnWeaponDown", 1.75f);
+                }
             }
             else
             {
                 StartCoroutine(ReloadAction());
             }
         }
-        else if (PlayerCameraMovement.instance.isAiming == false)
-        {
-            if (isReloading == false && PlayerMovement.instance.canSwapWeapon == true)
-            {
-                PlayerCameraMovement.instance.playerAnimator.SetLayerWeight(1, 0);
-            }
-            PlayerCameraMovement.instance.playerAnimator.SetFloat("AimVertical", 0);
-        }
+    }
+
+    private void TurnWeaponDown()
+    {
+        PlayerCameraMovement.instance.playerAnimator.SetLayerWeight(1, 0);
+        PlayerCameraMovement.instance.playerAnimator.SetFloat("AimVertical", 0);
     }
 
     private void Reload()
@@ -256,7 +259,7 @@ public class PlayerGun : MonoBehaviour
                         UIManager.instance.UpdateAmmo($"{ammo}/{equipedWeapon.ammo}");
                     }
 
-                    if(ammo > equipedWeapon.ammo)
+                    if (ammo > equipedWeapon.ammo)
                     {
                         ammo = equipedWeapon.ammo;
                         UIManager.instance.UpdateAmmo($"{ammo}/{equipedWeapon.ammo}");
@@ -272,7 +275,10 @@ public class PlayerGun : MonoBehaviour
                     break;
                 }
         }
-        PlayerCameraMovement.instance.playerAnimator.SetLayerWeight(1, 0);
+        if (PlayerCameraMovement.instance.isAiming == false)
+        {
+            PlayerCameraMovement.instance.playerAnimator.SetLayerWeight(1, 0);
+        }
         isReloading = false;
     }
 

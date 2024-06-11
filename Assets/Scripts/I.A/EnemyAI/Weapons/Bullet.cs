@@ -11,7 +11,7 @@ public class Bullet : MonoBehaviour
     private float damage;
     [SerializeField]
     private float timeToDestroy;
-    [SerializeField] 
+    [SerializeField]
     private bool moveFoward;
 
     private void Start()
@@ -27,17 +27,21 @@ public class Bullet : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(moveFoward)
+        if (moveFoward)
             transform.Translate(Vector3.forward * speed * Time.deltaTime);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Player")) {
+        if (other.gameObject.CompareTag("Player"))
+        {
             PlayerHPController.instance.ChangeHP(damage, true);
-            other.gameObject.GetComponent<PlayerMovement>().TakeKnockback();
-        }else if(other.gameObject.CompareTag("Enemy")) {
-            if(other.gameObject.TryGetComponent(out EnemyBehaviour enemyBehaviour))
+            if (other.gameObject.TryGetComponent(out PlayerMovement playerMovement))
+                playerMovement.TakeKnockback();
+        }
+        else if (other.gameObject.CompareTag("Enemy"))
+        {
+            if (other.gameObject.TryGetComponent(out EnemyBehaviour enemyBehaviour))
                 enemyBehaviour.TakeDamage(damage, DamageElementManager.DamageElement.Physical);
         }
         Destroy(this.gameObject);
