@@ -773,6 +773,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1102378510}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   isTutorialNPC: 1
   tutorialNPC:
     dialogues: []
@@ -840,7 +852,7 @@ Transform:
   m_GameObject: {fileID: 137475573}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.86602443, z: -0, w: 0.5000017}
-  m_LocalPosition: {x: -25.5, y: 0, z: 3.45}
+  m_LocalPosition: {x: -27.59, y: 0, z: 0.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6258,6 +6270,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 536206689876618844, guid: d33f2841fc072ce499cfc1793315da59,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1465870166230103087, guid: d33f2841fc072ce499cfc1793315da59,
         type: 3}
       propertyPath: m_Name
@@ -6328,11 +6345,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5904723694257508925, guid: d33f2841fc072ce499cfc1793315da59,
+        type: 3}
+      propertyPath: isTutorial
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d33f2841fc072ce499cfc1793315da59, type: 3}
+--- !u!1 &1102378510 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 536206689876618844, guid: d33f2841fc072ce499cfc1793315da59,
+    type: 3}
+  m_PrefabInstance: {fileID: 1102378509}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1105840906
 GameObject:
   m_ObjectHideFlags: 0
@@ -18341,6 +18369,7 @@ GameObject:
   - component: {fileID: 7119823986659804888}
   - component: {fileID: 7119823986659804890}
   - component: {fileID: 7119823986659804889}
+  - component: {fileID: 7119823986659804891}
   m_Layer: 7
   m_Name: Tonhao
   m_TagString: Untagged
@@ -21214,7 +21243,7 @@ Animator:
   m_GameObject: {fileID: 4568143475092243992}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 5119d0fd60a48cc488340c5e536a4498, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: daae7db71de89e148a63ec1bdac898b3, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -21285,6 +21314,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af2e66858db1e824eb9f070e9d9e5978, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &7119823986659804891
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4568143475092243992}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 2.2962735, z: 1}
+  m_Center: {x: 0, y: 1.1286987, z: 0}
 --- !u!1 &7269241732336995282
 GameObject:
   m_ObjectHideFlags: 0

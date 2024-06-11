@@ -161,6 +161,8 @@ public class MerchantInventory : MonoBehaviour
     }
     void SetWeapons()
     {
+        if (inventoryData.weapons.Length <= 0) return;
+
         int amount = Random.Range(inventoryData.minWeaponAmount, inventoryData.maxWeaponAmount + 1);
 
         for (int i = 0; i < amount; i++)
@@ -170,6 +172,8 @@ public class MerchantInventory : MonoBehaviour
     }
     void SetConsumables()
     {
+        if (inventoryData.consumables.Length <= 0) return;
+
         int amount = Random.Range(inventoryData.minConsumableAmount, inventoryData.maxConsumableAmount + 1);
 
         for (int i = 0; i < amount; i++)
@@ -179,6 +183,8 @@ public class MerchantInventory : MonoBehaviour
     }
     void SetThrowables()
     {
+        if (inventoryData.throwables.Length <= 0) return;
+
         int amount = Random.Range(inventoryData.minThrowableAmount, inventoryData.maxThrowableAmount + 1);
 
         for (int i = 0; i < amount; i++)

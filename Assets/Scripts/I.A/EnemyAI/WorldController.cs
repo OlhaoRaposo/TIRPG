@@ -152,6 +152,12 @@ public class WorldController : MonoBehaviour
         yield return new WaitForSeconds(2);
         CameraFollow.follow.gameObject.transform.parent = PlayerCameraMovement.instance.transform;
         CameraFollow.follow.gameObject.transform.localPosition = new Vector3(0, 0, 0);
+        if (!tutorialCompleted) {
+            PlayerMovement.instance.TeleportPlayer(GameObject.Find("TutorialTeleport").transform.position);
+            yield return new WaitForSeconds(1);
+            GameObject tonhao = GameObject.Find("Tonhao");
+            tonhao.GetComponent<NPC>().Interact();
+        }
         yield return new WaitForSeconds(3);
         Debug.LogWarning("FINALIZADO COROUTINE");
         essentialsCanvas.SetActive(true);
@@ -161,12 +167,6 @@ public class WorldController : MonoBehaviour
         CameraFollow.follow.gameObject.transform.rotation = Quaternion.Euler(0, 21, 0);
         */
         CameraFollow.follow.gameObject.SetActive(false);
-        if (!tutorialCompleted) {
-            PlayerMovement.instance.TeleportPlayer(GameObject.Find("TutorialTeleport").transform.position);
-            yield return new WaitForSeconds(1);
-            GameObject tonhao = GameObject.Find("Tonhao");
-            tonhao.GetComponent<NPC>().Interact();
-        }
     }
 }
 [Serializable]

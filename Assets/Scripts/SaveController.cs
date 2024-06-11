@@ -10,12 +10,17 @@ public class SaveController : MonoBehaviour
     public string path = Application.dataPath + "/tekohaSave.json";
     public static SaveController instance;
     public void Awake() {
+        path = Application.dataPath + "/tekohaSave.json";
         if (instance == null) {
             instance = this;
             DontDestroyOnLoad(gameObject);
         } else {
             Destroy(gameObject);
         }
+    }
+
+    private void OnApplicationQuit() {
+        SaveGame();
     }
 
     private void Start() {
