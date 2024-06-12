@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(Interactable_Npc))]
@@ -16,7 +17,8 @@ public class NPC : MonoBehaviour
     
     [SerializeField] public bool invoked;
     [SerializeField] private UnityEvent OnEndDialogue = new UnityEvent();
-    
+    public bool hasDrop;
+    public ItemDropInfo[] dropInfo;
     [Header("Tutorial NPC")]
     public bool isTutorialNPC;
     [SerializeField] public TutorialNPC tutorialNPC;
@@ -72,6 +74,8 @@ public class NPC : MonoBehaviour
             if(!invoked)
             {
                 OnEndDialogue.Invoke();
+                if(hasDrop)
+                    ItemDropManager.instance.DropItem(dropInfo, transform.position);
                 invoked = true;
             }
             if (currentDialogueIndex < dialogues.Count -1) {
