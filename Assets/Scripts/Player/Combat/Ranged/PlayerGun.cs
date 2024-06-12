@@ -17,7 +17,7 @@ public class PlayerGun : MonoBehaviour
     [HideInInspector] public bool isHolding = false;
 
     [Header("References")]
-    [SerializeField] private PlayerGunBase equipedWeapon;
+    public PlayerGunBase equipedWeapon;
     [SerializeField] private Image reloadImage;
 
     private void Awake()
@@ -191,16 +191,8 @@ public class PlayerGun : MonoBehaviour
                 {
                     if (hitEnemy.transform.gameObject.tag == "Enemy")
                     {
-                        if (holdTime / shootCD < 1)
-                        {
-                            hitEnemy.transform.gameObject.GetComponent<EnemyBehaviour>().TakeDamage(equipedWeapon.damage * (holdTime / shootCD), equipedWeapon.bulletElement);
-                            Hitmark.instance.ToggleHitmark();
-                        }
-                        else
-                        {
-                            hitEnemy.transform.gameObject.GetComponent<EnemyBehaviour>().TakeDamage(equipedWeapon.damage, equipedWeapon.bulletElement);
-                            Hitmark.instance.ToggleHitmark();
-                        }
+                        hitEnemy.transform.gameObject.GetComponent<EnemyBehaviour>().TakeDamage(equipedWeapon.damage, equipedWeapon.bulletElement);
+                        Hitmark.instance.ToggleHitmark();
                     }
                 }
                 isHolding = false;

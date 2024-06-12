@@ -25,9 +25,8 @@ public class PlayerCameraMovement : MonoBehaviour
 
     [Header("References")]
     public GameObject playerObject;
-    [SerializeField] private GameObject playerAim;
-
-    private Vector3 startingPos, startingAimPos;
+    public GameObject playerModel;
+    private Vector3 startingPos;
     [HideInInspector] public Camera cameraBody;
     [HideInInspector] public Animator playerAnimator;
 
@@ -43,7 +42,6 @@ public class PlayerCameraMovement : MonoBehaviour
     {
         startingPos = transform.localPosition;
         previousCamPosition = startingPos;
-        startingAimPos = playerAim.transform.localPosition;
         transform.position = startingPos;
     }
 
@@ -80,11 +78,9 @@ public class PlayerCameraMovement : MonoBehaviour
 
         if (x != 0 || y != 0)
         {
-            transform.RotateAround(playerObject.transform.position, Vector3.up, x);
-            transform.RotateAround(playerObject.transform.position, -transform.right, y);
+            transform.RotateAround(playerModel.transform.position, Vector3.up, x);
+            transform.RotateAround(playerModel.transform.position, -transform.right, y);
         }
-
-        Debug.Log(x + " " + y);
 
         if (transform.localEulerAngles != previousCamRotation && transform.localPosition != previousCamPosition)
         {
@@ -130,7 +126,7 @@ public class PlayerCameraMovement : MonoBehaviour
             if (PlayerGun.instance.enabled == true && PlayerGun.instance.isReloading == false)
             {
                 playerAnimator.SetLayerWeight(1, 1);
-                if (PlayerGun.instance.isHolding == false)
+                if (PlayerGun.instance.equipedWeapon.triggerType != PlayerGunBase.TriggerType.Hold)
                 {
                     playerAnimator.Play($"{PlayerGun.instance.GetGunName()} Aim Tree");
                 }
