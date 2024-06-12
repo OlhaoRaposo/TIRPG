@@ -9,7 +9,7 @@ public class Interactable_FastTravel : MonoBehaviour, IInteractable
     public void Interact(PlayerInteractions player)
     {
         if (isTutorial) {
-            PlayerMovement.instance.TeleportPlayer(new Vector3(700,64,170));
+            PlayerMovement.instance.TeleportPlayer(new Vector3(648.67f,82.11f,235.04f));
             return;
         }
         if (isBossRoom) {
