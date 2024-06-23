@@ -113,7 +113,7 @@ public class PlayerMeleeCombat : MonoBehaviour
                 {
                     if(comboIndex >= 4)
                     {
-                        enemy.transform.gameObject.GetComponent<EnemyBehaviour>().TakeDamage(weapon.damage * 1.25f, weapon.damageElement);
+                        enemy.transform.gameObject.GetComponent<EnemyBehaviour>().TakeDamage(weapon.damage * 1.25f * PlayerStats.instance.GetMeleeDamageMultiplier(), weapon.damageElement);
                     }
                     else
                     {

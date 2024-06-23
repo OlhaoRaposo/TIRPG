@@ -9,7 +9,7 @@ public class SkillData : ScriptableObject
     [TextArea(1, 5)] public string description;
 
     //variavel que representa o que a skill afeta
-    public SkillType skillType;
+    public List<SkillEffect> skillType;
     
     public Sprite icon;
 
@@ -30,12 +30,13 @@ public struct SkillAttributeRequirement
     public Attribute attribute;
     public uint amount;
 }
-public enum SkillType 
+
+//FAZER UM STRUCT COM O ATRIBUTO, QUANTO ELE AFETA, ETC
+[System.Serializable]
+public struct SkillEffect
 {
-    Ranged,
-    Melee,
-    Grenades,
-    Passive,
-    Other
+    public enum SkillEffects { Xp, MeleeDamage, RangedDamage, Stamina, StaminaRegen, HealthPoints, AcidDamage, LightningDamage, FireDamage, PhysicalDamage }
+    public SkillEffects effects;
+    public float amount;
 }
 

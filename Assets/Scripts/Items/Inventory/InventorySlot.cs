@@ -30,6 +30,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
     public void SetItem()
     {
         itemData.item = null;
+        itemData.amount = 0;
 
         Color color = itemImage.color;
         color.a = 0f;
@@ -43,7 +44,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
     {
         if (itemImage == null) return;
 
-        if (!itemObj.Equals(null))
+        if (itemObj.item != null)
         {
             Color color = itemImage.color;
             color.a = 1f;
@@ -66,6 +67,8 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
     void SetItemAmount(ItemObject itemObj)
     {
         if (itemAmountText == null) return;
+        
+        Debug.Log("amount: " + itemObj.amount, this);
 
         if (itemObj.amount > 1 && itemObj.item.isStackable)
         {
@@ -81,16 +84,20 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
     }
     public void DecreaseCount()
     {
-        itemAmount = Mathf.Clamp(0, 9999, itemAmount);
+        itemAmount = Mathf.Clamp(itemAmount--, 0, 999);
         itemAmountText.text = itemAmount.ToString();
     }
     public ItemData GetItem()
     {
         return itemData.item;
     }
+    public ItemObject GetItemObject()
+    {
+        return itemData;
+    }
     public virtual void LeftClick()
     {
-        if (itemData.Equals(null)) return;
+        if (itemData.item == null) return;
         
         switch (itemData.item.itemType)
         {

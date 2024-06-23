@@ -191,7 +191,7 @@ public class PlayerGun : MonoBehaviour
                 {
                     if (hitEnemy.transform.gameObject.tag == "Enemy")
                     {
-                        hitEnemy.transform.gameObject.GetComponent<EnemyBehaviour>().TakeDamage(equipedWeapon.damage, equipedWeapon.bulletElement);
+                        hitEnemy.transform.gameObject.GetComponent<EnemyBehaviour>().TakeDamage(equipedWeapon.damage * PlayerStats.instance.GetRangedDamageMultiplier(), equipedWeapon.bulletElement);
                         Hitmark.instance.ToggleHitmark();
                     }
                 }

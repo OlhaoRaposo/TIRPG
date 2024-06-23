@@ -55,7 +55,7 @@ public class PlayerMovement : MonoBehaviour
         //SÓ REGENERA STAMINA SE NÃO ESTIVER SE MOVENDO & TIVER STAMINA MENOR QUE O MÁXIMO
         if (stamina < PlayerHPController.instance.GetMaxStamina() && isRunning == false && isDashing == false && isGrounded == true)
         {
-            PlayerHPController.instance.ChangeStamina(15f * Time.deltaTime, false);
+            PlayerHPController.instance.ChangeStamina(15f * PlayerStats.instance.GetStaminaRegenMultiplier() * Time.deltaTime, false);
             stamina += 15f * Time.deltaTime;
         }
 
@@ -79,12 +79,12 @@ public class PlayerMovement : MonoBehaviour
             stamina -= 0.125f;
 
             isRunning = true;
-            playerAnimator.speed = runSpeedMultiplier;
+            playerAnimator.speed = runSpeedMultiplier * PlayerStats.instance.GetMovementSpeedMultiplier();
         }
         else
         {
             isRunning = false;
-            playerAnimator.speed = walkSpeedMultiplier;
+            playerAnimator.speed = walkSpeedMultiplier * PlayerStats.instance.GetMovementSpeedMultiplier();
         }
 
         //SE ESTÁ INDO PRA FRENTE OLHAR PARA ONDE ESTÁ INDO, E O MESMO AO FAZER STRAFE

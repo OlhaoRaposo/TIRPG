@@ -93,7 +93,7 @@ public class DamageElementManager : MonoBehaviour
             enhanceInternalCooldown = Time.time + enhanceCooldown;
         }
 
-        enemy.InflictDirectDamage(currentAddedDamage);
+        enemy.InflictDirectDamage(currentAddedDamage * PlayerStats.instance.GetAcidDamageMultiplier());
         enemy.InstantiateText(damage + currentAddedDamage, Color.green);
     }
 
@@ -119,6 +119,9 @@ public class DamageElementManager : MonoBehaviour
         {
             StartCoroutine(StunEnemy(enemy));
             enemy.InstantiateText(damage, Color.blue);
+            float lightningDamage = damage * 0.1f * PlayerStats.instance.GetLightningDamageMultiplier();
+            enemy.InflictDirectDamage(lightningDamage);
+            enemy.InstantiateText(lightningDamage, Color.blue);
 
             stunInternalCooldown = stunCooldown + Time.time;
         }
@@ -134,7 +137,7 @@ public class DamageElementManager : MonoBehaviour
 
         if (aux == 0)
         {
-            enemy.InflictDirectDamage(damage * (criticalMultiplier / 2));
+            enemy.InflictDirectDamage(damage * (Mathf.Clamp(criticalMultiplier - 1, 0f, 10f) * PlayerStats.instance.GetPhysicalDamageMultiplier()));
             enemy.InstantiateText(criticalMultiplier * damage, Color.yellow);
         }
         else
@@ -168,7 +171,7 @@ public class DamageElementManager : MonoBehaviour
 
             lastDamageInstance = burnDamage;
 
-            enemy.InflictDirectDamage(burnDamage);
+            enemy.InflictDirectDamage(burnDamage * PlayerStats.instance.GetFireDamageMultiplier());
             enemy.InstantiateText(burnDamage, Color.red);
 
             remainingStacks--;

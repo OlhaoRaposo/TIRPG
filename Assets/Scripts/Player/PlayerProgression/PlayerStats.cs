@@ -28,7 +28,15 @@ public class PlayerStats : MonoBehaviour
     public int intelligence;
 
     float meleeDamageMultiplier = 1f;
-    float meleeAttackSpeedMultiplier = 1f;
+    float rangedDamageMultiplier = 1f;
+
+    float acidDamageMultiplier = 1f;
+    float fireDamageMultiplier = 1f;
+    float lightningDamageMultiplier = 1f;
+    float physicalDamageMultiplier = 1f;
+
+    float moveSpeedMultiplier = 1f;
+    float staminaRegenMultiplier = 1f;
 
     int pointsAddedWhenLevelUp = 5;
     int availablePoints = 0;
@@ -160,25 +168,87 @@ public class PlayerStats : MonoBehaviour
         DecreasePoints(skillData.skillPointsRequired);
     }
 
+    #region Attribute Buffs
+    public void BuffStrength(float multiplier, float duration)
+    {
+        float startStrengthMultiplier = meleeDamageMultiplier;
+
+        meleeDamageMultiplier *= multiplier;
+
+        StartCoroutine(ResetStrength(startStrengthMultiplier, duration));
+    }
+    IEnumerator ResetStrength(float startMultiplier, float duration)
+    {
+        yield return new WaitForSeconds(duration);
+
+        meleeDamageMultiplier = startMultiplier;
+    }
+    public void BuffAgility(float multiplier, float duration)
+    {
+        float startmoveSpeedMultiplier = moveSpeedMultiplier;
+
+        moveSpeedMultiplier *= multiplier;
+
+        StartCoroutine(ResetAgility(startmoveSpeedMultiplier, duration));
+    }
+    IEnumerator ResetAgility(float startMultiplier, float duration)
+    {
+        yield return new WaitForSeconds(duration);
+
+        moveSpeedMultiplier = startMultiplier;
+    }
+    public void BuffEndurance(float multiplier, float duration)
+    {
+        PlayerHPController.instance.BuffHp(multiplier, duration);
+        PlayerHPController.instance.BuffStamina(multiplier, duration);
+    }
+    public void BuffIntelligence(float multiplier, float duration)
+    {
+        float startXpMultiplier = xpMultiplier;
+
+        xpMultiplier *= multiplier;
+
+        StartCoroutine(ResetIntelligence(startXpMultiplier, duration));
+    }
+    IEnumerator ResetIntelligence(float startMultiplier, float duration)
+    {
+        yield return new WaitForSeconds(duration);
+
+        xpMultiplier = startMultiplier;
+    }
+    public void BuffStaminaRegen(float multiplier, float duration)
+    {
+        float startStaminaRegenMultiplier = staminaRegenMultiplier;
+
+        staminaRegenMultiplier *= multiplier;
+
+        StartCoroutine(ResetStaminaRegen(startStaminaRegenMultiplier, duration));
+    }
+    IEnumerator ResetStaminaRegen(float startMultiplier, float duration)
+    {
+        yield return new WaitForSeconds(duration);
+
+        staminaRegenMultiplier = startMultiplier;
+    }
+    #endregion
+
     public void IncreaseStrength()
     {
         if (!DecreasePoints()) return;
 
         //Aumenta o dano causado
-        IncreaseMeleeDamageMultipier();
+        IncreaseMeleeDamageMultipier(.1f);
 
         strength++;
         UIManager.instance.UpdateAvailablePoints(availablePoints);
         UIManager.instance.UpdateStrength(strength);
     }
-    public void IncreaseAgility() //NECESSARIO ATUALIZAR
+    public void IncreaseAgility()
     {
         if (!DecreasePoints()) return;
 
-        //Melhora a precisao dos tiros
-        DecreaseBulletSpread();
-        //Aumenta a velocidade de ataques melee
-        IncreaseMeleeAttackSpeedMultiplier();
+        //Aumenta a velocidade do player
+        IncreaseMoveSpeedMultiplier(.1f);
 
         agility++;
         UIManager.instance.UpdateAvailablePoints(availablePoints);
@@ -205,7 +275,7 @@ public class PlayerStats : MonoBehaviour
         if (!DecreasePoints()) return;
 
         //Aumenta o multiplicador de xp
-        IncreaseXpMultiplier();
+        IncreaseXpMultiplier(0.1f);
 
         intelligence++;
         UIManager.instance.UpdateAvailablePoints(availablePoints);
@@ -230,28 +300,84 @@ public class PlayerStats : MonoBehaviour
         return availablePoints;
     }
 
-    void IncreaseXpMultiplier()
+    public void IncreaseXpMultiplier(float amount)
     {
-        xpMultiplier += .1f;
+        xpMultiplier += amount;
     }
-    void IncreaseMeleeDamageMultipier()
+    public void IncreaseMoveSpeedMultiplier(float amount)
     {
-        meleeDamageMultiplier += .1f;
+        moveSpeedMultiplier += amount;
     }
-    void IncreaseMeleeAttackSpeedMultiplier() //NECESSARIO ATUALIZAR
+    public void IncreaseMeleeDamageMultipier(float amount)
     {
-        meleeAttackSpeedMultiplier += .1f;
+        meleeDamageMultiplier += amount;
     }
-    void DecreaseBulletSpread()
+    public void IncreaseRangedDamageMultipier(float amount)
     {
-        //Diminuir distancia de espalhamento
-        //Diminuir chance de espalhamento
+        rangedDamageMultiplier += amount;
+    }
+    public void IncreaseAcidDamageMultiplier(float amount)
+    {
+        acidDamageMultiplier += amount;
+    }
+    public void IncreaseFireDamageMultiplier(float amount)
+    {
+        fireDamageMultiplier += amount;
+    }
+    public void IncreaseLightningDamageMultiplier(float amount)
+    {
+        lightningDamageMultiplier += amount;
+    }
+    public void IncreasePhysicalDamageMultiplier(float amount)
+    {
+        physicalDamageMultiplier += amount;
+    }
+    public void IncreaseHealthPoints(float amount)
+    {
+        PlayerHPController.instance.IncreaseMaxHP(amount);
+    }
+    public void IncreaseStamina(float amount)
+    {
+        PlayerHPController.instance.IncreaseStamina(amount);
+    }
+    public void IncreaseStaminaRegen(float amount)
+    {
+        staminaRegenMultiplier += amount;
     }
 
     public float GetMeleeDamageMultiplier()
     {
         return meleeDamageMultiplier;
     }
+    public float GetRangedDamageMultiplier()
+    {
+        return rangedDamageMultiplier;
+    }
+    public float GetStaminaRegenMultiplier()
+    {
+        return staminaRegenMultiplier;
+    }
+    public float GetMovementSpeedMultiplier()
+    {
+        return moveSpeedMultiplier;
+    }
+    public float GetAcidDamageMultiplier()
+    {
+        return acidDamageMultiplier;
+    }
+    public float GetFireDamageMultiplier()
+    {
+        return fireDamageMultiplier;
+    }
+    public float GetLightningDamageMultiplier()
+    {
+        return lightningDamageMultiplier;
+    }
+    public float GetPhysicalDamageMultiplier()
+    {
+        return physicalDamageMultiplier;
+    }
+
     public int GetStrength()
     {
         return strength;

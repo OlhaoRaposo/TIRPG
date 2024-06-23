@@ -8,6 +8,7 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
 
+    [Header("Panels")]
     [SerializeField] GameObject inGameMenusParent;
     [SerializeField] GameObject inventoryPanel;
     [SerializeField] GameObject statsPanel;
@@ -15,50 +16,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject optionsPanel;
     [SerializeField] GameObject shopPanel;
 
+    [Header("Skill Tree")]
     [SerializeField] GameObject skillTreePanel;
     RectTransform skillTreeTransform;
-
-    [SerializeField] GameObject fastTravelMenu;
-
-    [SerializeField] GameObject cheatMenuPanel;
-
-    [SerializeField] Text merchantInventoryLabel;
-    [SerializeField] Text shopInfluenceInfo;
-    [SerializeField] ShopSlot[] shopSlots_buy;
-    [SerializeField] ShopSlot[] shopSlots_sell;
-    MerchantInventory currentMerchant;
-
-    [SerializeField] GameObject healthBar;
-    [SerializeField] GameObject staminaBar;
-    [SerializeField] Text lvlText_hud;
-
-    [SerializeField] GameObject equipedWeapons;
-
-    [SerializeField] GameObject crosshair;
-
-    [SerializeField] Text feedbackText;
-
-    [SerializeField] Text xpText;
-    [SerializeField] Text lvlText_menu;
-
-    [SerializeField] Text strengthText;
-    [SerializeField] Text agilityText;
-    [SerializeField] Text enduranceText;
-    [SerializeField] Text intelligenceText;
-
-    [SerializeField] Text healthPointsText;
-    [SerializeField] Text staminaPointsText;
-    [SerializeField] Text attributeDescription;
-
-    [SerializeField] string strengthDescription;
-    [SerializeField] string enduranceDescription;
-    [SerializeField] string agilityDescription;
-    [SerializeField] string intelligenceDescription;
-
-    [SerializeField] Text ammoText;
-
-    [SerializeField] Text availablePointsText;
-
     [SerializeField] GameObject skillPanel;
     [SerializeField] Image skillIcon;
     [SerializeField] Text skillName;
@@ -67,6 +27,46 @@ public class UIManager : MonoBehaviour
     [SerializeField] Text skillPointsRequirement;
     [SerializeField] Button getSkillButton;
     Skill selectedSkill;
+
+    [Header("Fast Travel & Cheats")]
+    [SerializeField] GameObject fastTravelMenu;
+    [SerializeField] GameObject cheatMenuPanel;
+
+    [Header("Shop")]
+    [SerializeField] Text merchantInventoryLabel;
+    [SerializeField] Text shopInfluenceInfo;
+    [SerializeField] ShopSlot[] shopSlots_buy;
+    [SerializeField] ShopSlot[] shopSlots_sell;
+    MerchantInventory currentMerchant;
+
+    [Header("Hud")]
+    [SerializeField] GameObject healthBar;
+    [SerializeField] GameObject staminaBar;
+    [SerializeField] Text lvlText_hud;
+    [SerializeField] GameObject equipedWeapons;
+    [SerializeField] GameObject crosshair;
+    [SerializeField] Text feedbackText;
+    [SerializeField] Text ammoText;
+
+    [Header("Player Attributes")]
+    [SerializeField] Text strengthText;
+    [SerializeField] Text agilityText;
+    [SerializeField] Text enduranceText;
+    [SerializeField] Text intelligenceText;
+    [SerializeField] Text attributeDescription;
+
+    [Header("Attribute description")]
+    [SerializeField] [TextArea(1, 4)] string strengthDescription;
+    [SerializeField] [TextArea(1, 4)] string enduranceDescription;
+    [SerializeField] [TextArea(1, 4)] string agilityDescription;
+    [SerializeField] [TextArea(1, 4)] string intelligenceDescription;
+
+    [Header("Player Status")]
+    [SerializeField] Text healthPointsText;
+    [SerializeField] Text staminaPointsText;
+    [SerializeField] Text xpText;
+    [SerializeField] Text lvlText_menu;
+    [SerializeField] Text availablePointsText;
 
     string selectedAttribute = "";
 
