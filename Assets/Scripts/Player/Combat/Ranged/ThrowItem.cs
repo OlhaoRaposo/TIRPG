@@ -23,7 +23,6 @@ public class ThrowItem : MonoBehaviour
             }
             else
             {
-                //Mostrar aviso na tela: "O item está em cooldown"
                 UIManager.instance.ShowTextFeedback("The item is on cooldown");
             }
         }
@@ -44,6 +43,8 @@ public class ThrowItem : MonoBehaviour
         throwable.layer = LayerMask.NameToLayer("ThrownItems");
         throwable.GetComponent<Rigidbody>().AddForce(/*Camera.main.*/(transform.forward + transform.up).normalized * throwStrength, ForceMode.Impulse);
         throwable.GetComponent<Rigidbody>().AddTorque(Vector3.right * throwStrength/100f, ForceMode.Impulse);
-        
+
+        //Tirar um arremessavel do inventario
+        PlayerInventory.instance.ThrowedItem();
     }
 }

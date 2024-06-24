@@ -15,7 +15,11 @@ public class ConsumeItem : MonoBehaviour
     }
     void UseConsumable(ItemData consumable)
     {
-        if (consumable == null) return;
+        if (consumable == null)
+        {
+            UIManager.instance.ShowTextFeedback("No consumable equipped");
+            return;
+        }
 
         if (Time.time > nextConsumable)
         {
@@ -49,6 +53,10 @@ public class ConsumeItem : MonoBehaviour
 
             //Remover consumivel do inventario
             PlayerInventory.instance.UsedConsumable();
+        }
+        else
+        {
+            UIManager.instance.ShowTextFeedback("The consumable is on cooldown");
         }
     }
 

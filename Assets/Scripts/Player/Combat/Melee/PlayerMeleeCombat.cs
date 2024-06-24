@@ -117,7 +117,7 @@ public class PlayerMeleeCombat : MonoBehaviour
                     }
                     else
                     {
-                        enemy.transform.gameObject.GetComponent<EnemyBehaviour>().TakeDamage(weapon.damage, weapon.damageElement);
+                        enemy.transform.gameObject.GetComponent<EnemyBehaviour>().TakeDamage(weapon.damage * PlayerStats.instance.GetMeleeDamageMultiplier(), weapon.damageElement);
                     }
                     Hitmark.instance.ToggleHitmark();
                 }

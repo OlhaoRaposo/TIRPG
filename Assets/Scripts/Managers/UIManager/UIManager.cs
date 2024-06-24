@@ -177,6 +177,7 @@ public class UIManager : MonoBehaviour
         feedbackText?.gameObject.SetActive(true);
         feedbackText.text = s;
 
+        CancelInvoke("HideTextFeedback");
         Invoke("HideTextFeedback", 3f);
     }
     public void HideTextFeedback()

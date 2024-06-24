@@ -31,7 +31,6 @@ public struct SkillAttributeRequirement
     public uint amount;
 }
 
-//FAZER UM STRUCT COM O ATRIBUTO, QUANTO ELE AFETA, ETC
 [System.Serializable]
 public struct SkillEffect
 {
