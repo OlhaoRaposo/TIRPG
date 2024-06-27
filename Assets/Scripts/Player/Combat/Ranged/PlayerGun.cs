@@ -191,7 +191,16 @@ public class PlayerGun : MonoBehaviour
                 {
                     if (hitEnemy.transform.gameObject.tag == "Enemy")
                     {
-                        hitEnemy.transform.gameObject.GetComponent<EnemyBehaviour>().TakeDamage(equipedWeapon.damage, equipedWeapon.bulletElement);
+                        if (hitEnemy.transform.gameObject.TryGetComponent(out EnemyBehaviour en))
+                        {
+                            en.TakeDamage(equipedWeapon.damage, equipedWeapon.bulletElement);
+                        }
+                        else if (hitEnemy.transform.gameObject.TryGetComponent(out BoitataDamageReceiver bt))
+                        {
+                            bt.TakeDamage(equipedWeapon.damage, equipedWeapon.bulletElement);
+                        }
+                        GameObject hitParticle = Instantiate(equipedWeapon.damageParticle, hitEnemy.transform.position, equipedWeapon.damageParticle.transform.rotation);
+                        Destroy(hitParticle, 3);
                         Hitmark.instance.ToggleHitmark();
                     }
                 }
@@ -211,6 +220,8 @@ public class PlayerGun : MonoBehaviour
                         {
                             bt.TakeDamage(equipedWeapon.damage, equipedWeapon.bulletElement);
                         }
+                        GameObject hitParticle = Instantiate(equipedWeapon.damageParticle, hitEnemy.transform.position, equipedWeapon.damageParticle.transform.rotation);
+                        Destroy(hitParticle, 3);
                         Hitmark.instance.ToggleHitmark();
                     }
                 }

@@ -16,4 +16,5 @@ public class PlayerGunBase : ScriptableObject
     public TriggerType triggerType;
     public float missfireRadius;
     public float recoil;
+    public GameObject damageParticle;
 }
