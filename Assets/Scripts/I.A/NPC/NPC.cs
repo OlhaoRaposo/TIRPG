@@ -13,7 +13,7 @@ public class NPC : MonoBehaviour
     [SerializeField] public int currentDialogueIndex;
     [SerializeField] private bool isTalking;
     [SerializeField] private NPCReferenceData npcReference;
-    
+    [SerializeField] private GameObject hasDialogue;
     
     [SerializeField] public bool invoked;
     [SerializeField] private UnityEvent OnEndDialogue = new UnityEvent();
@@ -71,8 +71,8 @@ public class NPC : MonoBehaviour
             dialogues[currentDialogueIndex].sentenceIndex++;
         }else {
             EnableLastBoxConfiguration();
-            if(!invoked)
-            {
+            if(!invoked) {
+                hasDialogue.SetActive(false);
                 OnEndDialogue.Invoke();
                 if(hasDrop)
                     ItemDropManager.instance.DropItem(dropInfo, transform.position);
@@ -86,14 +86,10 @@ public class NPC : MonoBehaviour
         }
     }
     private void DefaultButtonConfiguration() {
-        npcReference.acceptButton.gameObject.SetActive(false);
-        npcReference.refuseButton.gameObject.SetActive(false);
-        npcReference.finishButton.gameObject.SetActive(true);
+        npcReference.finishButton.gameObject.SetActive(false);
         npcReference.nextButton.gameObject.SetActive(true);
     }
     private void EnableLastBoxConfiguration() {
-        npcReference.acceptButton.gameObject.SetActive(false);
-        npcReference.refuseButton.gameObject.SetActive(false);
         npcReference.finishButton.gameObject.SetActive(true);
         npcReference.nextButton.gameObject.SetActive(false);
     }
@@ -108,8 +104,6 @@ public class NPCReferenceData :  PropertyAttribute
     public TextMeshProUGUI npcText;
     public GameObject talkBox;
     public Button nextButton;
-    public Button acceptButton;
-    public Button refuseButton;
     public Button finishButton;
 }
 [Serializable]

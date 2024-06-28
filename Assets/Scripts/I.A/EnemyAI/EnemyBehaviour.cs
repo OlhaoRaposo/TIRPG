@@ -17,9 +17,11 @@ public class EnemyBehaviour : MonoBehaviour
  public NavMeshAgent agent ;
  public Animator enemyAnimator;
  public UnityEvent OnStart;
+ public UnityAction OnTargeted;
  private Collider[] targetsDetected;
  [Header("Data")]
  public Data data;
+ public GameObject arena;
  [Header("Drops&Quests")]
  public ItemDropInfo[] dropInfo;
  public QuestType.EnemyTypes questType;
@@ -136,11 +138,14 @@ public class EnemyBehaviour : MonoBehaviour
      if (TargetDistance() >= 20) {
        target = null;
        ChangeState(new PatrolState(this));
+       arena.SetActive(false);     
      }
    }
    if (target != null){
-     if(currentState != EnemyState.Chase)
-        ChangeState(new ChaseState(this));
+     if (currentState != EnemyState.Chase) {
+       ChangeState(new ChaseState(this));
+       arena.SetActive(true);       
+     }
    }else {
      if(currentState != EnemyState.Patrol)
        ChangeState(new PatrolState(this));
