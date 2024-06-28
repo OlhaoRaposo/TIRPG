@@ -43,14 +43,10 @@ public class ChatNpc : MonoBehaviour
     private void Talk() {
     }
     private void DefaultButtonConfiguration() {
-        npcReference.acceptButton.gameObject.SetActive(false);
-        npcReference.refuseButton.gameObject.SetActive(false);
-        npcReference.finishButton.gameObject.SetActive(true);
+        npcReference.finishButton.gameObject.SetActive(false);
         npcReference.nextButton.gameObject.SetActive(true);
     }
     private void EnableLastBoxConfiguration() {
-        npcReference.acceptButton.gameObject.SetActive(false);
-        npcReference.refuseButton.gameObject.SetActive(false);
         npcReference.finishButton.gameObject.SetActive(true);
         npcReference.nextButton.gameObject.SetActive(false);
     }

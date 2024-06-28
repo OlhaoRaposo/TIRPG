@@ -9,6 +9,8 @@ public class BoitataWeapon : MonoBehaviour
     public float damage;
     public GameObject jail;
     private bool isOnAnimation;
+    public GameObject beathPrefab;
+    
     public void Attack(string expression){
         Debug.Log("Attacking with: " + expression);
         
@@ -42,10 +44,13 @@ public class BoitataWeapon : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
+    private void Update() {
         if(user.target!=null && !isOnAnimation)
             transform.LookAt(user.target.transform.position);
+
+        if (Input.GetKeyDown(KeyCode.M)) {
+            Attack("_meleeBreath");
+        }
     }
 
     IEnumerator Crawl(string expression) {
@@ -82,6 +87,12 @@ public class BoitataWeapon : MonoBehaviour
     IEnumerator MeleeBreath(string expression)
     {
         user.enemyAnimator.SetTrigger(expression);
+        yield return new WaitForSeconds(1);
+        for (int i = 0; i < 300; i++) {
+          Rigidbody rb = Instantiate(beathPrefab, transform.position + (transform.forward * 2), Quaternion.identity).GetComponent<Rigidbody>();
+          rb.AddForce(transform.forward * 500);
+          yield return new WaitForSeconds(.000001f);
+        }
         yield return new WaitForSeconds(6);
         user.ChangeState(new ChaseState(user));
     }
