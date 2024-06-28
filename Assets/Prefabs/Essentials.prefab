@@ -1071,7 +1071,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 5683719407581791226}
         m_TargetAssemblyTypeName: CheatMenu, Assembly-CSharp
         m_MethodName: FastTravel
         m_Mode: 5
@@ -3257,7 +3257,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 5683719407581791226}
         m_TargetAssemblyTypeName: CheatMenu, Assembly-CSharp
         m_MethodName: ToggleInfiniteStamina
         m_Mode: 1
@@ -3584,7 +3584,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4860295994119822108}
-  - component: {fileID: 2135399481206684922}
   m_Layer: 0
   m_Name: Essentials
   m_TagString: Untagged
@@ -3610,18 +3609,6 @@ Transform:
   - {fileID: 1327542248778476055}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2135399481206684922
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5120113030660007009}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 030f117f93c79e74f8ce0441459c2ae8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5144530578883714249
 GameObject:
   m_ObjectHideFlags: 0
@@ -4030,7 +4017,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 5683719407581791226}
         m_TargetAssemblyTypeName: CheatMenu, Assembly-CSharp
         m_MethodName: FastTravel
         m_Mode: 5
@@ -4163,7 +4150,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 5683719407581791226}
         m_TargetAssemblyTypeName: CheatMenu, Assembly-CSharp
         m_MethodName: LevelUp
         m_Mode: 1
@@ -4461,13 +4448,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameplayScenes:
+  - TerrainSave
   - CityScene
-  - EnemyScene
   - ForestScene
   - MountainScene
-  - NpcScene
   - RiverScene
-  - TerrainScene
+  - LobbyScene
+  - TutorialScene
+  - MechaScene
 --- !u!1 &6110588029079575261
 GameObject:
   m_ObjectHideFlags: 0
@@ -4723,7 +4711,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 5683719407581791226}
         m_TargetAssemblyTypeName: CheatMenu, Assembly-CSharp
         m_MethodName: GainInfluencePoints
         m_Mode: 5
@@ -4935,7 +4923,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 5683719407581791226}
         m_TargetAssemblyTypeName: CheatMenu, Assembly-CSharp
         m_MethodName: ToggleInfiniteHP
         m_Mode: 1
@@ -5298,7 +5286,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 5683719407581791226}
         m_TargetAssemblyTypeName: CheatMenu, Assembly-CSharp
         m_MethodName: GainInfluencePoints
         m_Mode: 5
@@ -5810,7 +5798,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 5683719407581791226}
         m_TargetAssemblyTypeName: CheatMenu, Assembly-CSharp
         m_MethodName: FastTravel
         m_Mode: 5
@@ -7501,6 +7489,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: ToggleSkillTreePanel
       objectReference: {fileID: 0}
+    - target: {fileID: 1822081559336501701, guid: 27cab77940d3fe34b8aba7dfba718ae8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1939965132770485403, guid: 27cab77940d3fe34b8aba7dfba718ae8,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -8983,6 +8976,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1008539222097627074, guid: 543e2cb85dbf5b04680840c3b22b09d7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1008539222097627074, guid: 543e2cb85dbf5b04680840c3b22b09d7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 6619199530294600485}
+    - target: {fileID: 1008539222097627074, guid: 543e2cb85dbf5b04680840c3b22b09d7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleFastTravelMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 1008539222097627074, guid: 543e2cb85dbf5b04680840c3b22b09d7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UIManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1947385257946486558, guid: 543e2cb85dbf5b04680840c3b22b09d7,
         type: 3}
