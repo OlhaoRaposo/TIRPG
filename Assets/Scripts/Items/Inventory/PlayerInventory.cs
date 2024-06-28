@@ -35,10 +35,7 @@ public class PlayerInventory : MonoBehaviour
     }
     private void Start()
     {
-        EquipRangedWeapon(items[0]);
-        EquipMeleeWeapon(items[0]);
-        EquipThrowable(items[0]);
-        EquipConsumable(items[0]);
+        EquipStartItems();
     }
     void Update()
     {
@@ -50,24 +47,40 @@ public class PlayerInventory : MonoBehaviour
             SortInventory();
         }
     }
+    public void EquipStartItems()
+    {
+        EquipRangedWeapon(items[0]);
+        EquipMeleeWeapon(items[0]);
+        EquipThrowable(items[0]);
+        EquipConsumable(items[0]);
+    }
+    public void UsedConsumable()
+    {
+        if (consumableSlot.GetItemObject().amount <= 1)
+        {
+            consumableSlot.SetItem();
+        }
+        else
+        {
+            consumableSlot.DecreaseCount();
+        }
+    }
+    public void ThrowedItem()
+    {
+        if (throwableSlot.GetItemObject().amount <= 1)
+        {
+            throwableSlot.SetItem();
+        }
+        else
+        {
+            throwableSlot.DecreaseCount();
+        }
+    }
     public bool AddItemToInventory(ItemData itemData)
     {
         //Checa se ja possui o item no inventario
         if (LookForItem(itemData, ref items, true))
         {
-            /*
-            //Checa se o item é stackavel
-            if (itemData.isStackable)
-            {
-                //Adiciona uma unidade ao slot
-                //FindItemSlot(itemData).AddToCount();
-            }
-            else //Caso nao seja stackavel
-            {
-                if (!TryToAddItemToList(itemData)) return false;
-            }
-            */
-
             if (!itemData.isStackable)
             {
                 if (!TryToAddItemToList(itemData)) return false;
@@ -104,6 +117,27 @@ public class PlayerInventory : MonoBehaviour
 
         return true;
     }
+    public bool AddItemToInventoryInMenu(ItemObject itemData)
+    {
+        //Checa se ja possui o item no inventario
+        if (LookForItem(itemData, ref items, true, itemData.amount))
+        {
+            //Checa se o item é stackavel
+            if (itemData.item.isStackable)
+            {
+                //Adiciona uma unidade ao slot
+                FindItemSlot(itemData.item).AddToCount(itemData.amount);
+            }
+        }
+        else
+        {
+            if (!TryToAddItemToList(itemData)) return false;
+        }
+
+        SortInventory();
+
+        return true;
+    }
     bool TryToAddItemToList(ItemData data)
     {
         //Checa se existem slots disponiveis
@@ -118,6 +152,20 @@ public class PlayerInventory : MonoBehaviour
             return true;
         }
     }
+    bool TryToAddItemToList(ItemObject data)
+    {
+        //Checa se existem slots disponiveis
+        if (items.Count == slots.Length)
+        {
+            Debug.LogWarning("Cant add item to inventory: The inventory is full");
+            return false;
+        }
+        else //Caso possua slots disponíveis
+        {
+            items.Add(new ItemObject(data.item, data.amount));
+            return true;
+        }
+    }
     public bool RemoveItemFromInventory(ItemData itemData)
     {
         ItemObject ob;
@@ -127,8 +175,25 @@ public class PlayerInventory : MonoBehaviour
             return false;
         }
 
-        items.Remove(ob);
+        if(ob.amount <= 1)
+        {
+            items.Remove(ob);
+        }
+        else
+        {
+            LookForAndRemoveItemAmount(ob.item, ref items);
+        }
         return true;
+    }
+    public void RemoveItemFromInventory(ItemObject itemData)
+    {
+        if (!items.Contains(itemData))
+        {
+            Debug.LogWarning("O item não está presente no inventário");
+            return;
+        }
+
+        items.Remove(itemData);
     }
     public GameObject DropItem(ItemData itemData)
     {
@@ -140,6 +205,14 @@ public class PlayerInventory : MonoBehaviour
             return droppedItem;
         }
         return null;
+    }
+    public bool LookForItem(ItemData itemData)
+    {
+        foreach (ItemObject i in items)
+        {
+            if (i.item == itemData) return true;
+        }
+        return false;
     }
     public bool LookForItem(ItemData itemData, out ItemObject o)
     {
@@ -170,13 +243,34 @@ public class PlayerInventory : MonoBehaviour
         }
         return false;
     }
-    public bool LookForItem(ItemData itemData)
+    public bool LookForItem(ItemObject itemData, ref List<ItemObject> objList, bool canIncrementAmount, int incrementAmount)
     {
-        foreach (ItemObject i in items)
+        for (int i = 0; i < objList.Count; i++)
         {
-            if (i.item == itemData) return true;
+            if (objList[i].item == itemData.item)
+            {
+                if (canIncrementAmount)
+                {
+                    ItemObject o = new ItemObject(objList[i].item, objList[i].amount + incrementAmount);
+                    objList[i] = o;
+                }
+                return true;
+            }
         }
         return false;
+    }
+    public void LookForAndRemoveItemAmount(ItemData itemData, ref List<ItemObject> objList)
+    {
+        for (int i = 0; i < objList.Count; i++)
+        {
+            if (objList[i].item == itemData)
+            {
+                ItemObject o = new ItemObject(objList[i].item, objList[i].amount - 1);
+                objList[i] = o;
+
+                FindItemSlot(o.item).DecreaseCount();
+            }
+        }
     }
     InventorySlot FindItemSlot(ItemData data)
     {
@@ -203,7 +297,7 @@ public class PlayerInventory : MonoBehaviour
                 break;
             }
         }
-        //ItemDropManager.instance.SetItemParent(droppedItem.transform);
+        ItemDropManager.instance.SetItemParent(droppedItem.transform);
     }
     public void DropRangedWeapon(ItemData itemData)
     {
@@ -219,7 +313,7 @@ public class PlayerInventory : MonoBehaviour
                 break;
             }
         }
-        //ItemDropManager.instance.SetItemParent(droppedItem.transform);
+        ItemDropManager.instance.SetItemParent(droppedItem.transform);
 
     }
     void SortInventory()
@@ -293,12 +387,12 @@ public class PlayerInventory : MonoBehaviour
     }
     public void EquipConsumable(ItemObject consumableData)
     {
-        RemoveItemFromInventory(consumableData.item);
+        RemoveItemFromInventory(consumableData);
         consumableSlot.SetItem(consumableData);
     }
     public void EquipThrowable(ItemObject throwableData)
     {
-        RemoveItemFromInventory(throwableData.item);
+        RemoveItemFromInventory(throwableData);
         throwableSlot.SetItem(throwableData);
     }
     public ItemData GetMelee()
@@ -320,12 +414,15 @@ public class PlayerInventory : MonoBehaviour
     public List<ItemObject> GetInventory()
     {
         List<ItemObject> ret = new List<ItemObject>();
-        /*if (meleeWeaponSlot.GetItem() != null) ret.Add(meleeWeaponSlot.GetItem());
+
+        /*
+        if (meleeWeaponSlot.GetItem() != null) ret.Add(meleeWeaponSlot.GetItem());
         if (rangedWeaponSlot.GetItem() != null) ret.Add(rangedWeaponSlot.GetItem());
         if (consumableSlot.GetItem() != null) ret.Add(consumableSlot.GetItem());
-        if (throwableSlot.GetItem() != null) ret.Add(throwableSlot.GetItem());*/
+        if (throwableSlot.GetItem() != null) ret.Add(throwableSlot.GetItem());
+        */
 
-            ret.AddRange(items);
+        ret.AddRange(items);
 
         return ret;
     }

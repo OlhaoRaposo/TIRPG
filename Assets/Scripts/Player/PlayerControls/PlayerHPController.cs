@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Rendering;
 using System.Net.Http;
+using System.Collections;
 
 public class PlayerHPController : MonoBehaviour
 {
@@ -33,13 +34,13 @@ public class PlayerHPController : MonoBehaviour
         Start();
     }
 
-    public void SetHP(float ammount)
+    public void SetHP(float amount)
     {
-        if(ammount > hpMax)
+        if(amount > hpMax)
         {
-            hpMax = ammount;
+            hpMax = amount;
         }
-        hpImage.fillAmount = ammount / hpMax;
+        hpImage.fillAmount = amount / hpMax;
     }
 
     public void ChangeHP(float changeAmmount, bool isDecrease)
@@ -116,11 +117,39 @@ public class PlayerHPController : MonoBehaviour
         hpMax += hp;
         currentHP = hpMax;
     }
+    public void BuffHp(float multiplier, float duration)
+    {
+        float startHp = hpMax;
+        hpMax *= multiplier;
+
+        StartCoroutine(ResetBuffHp(startHp, duration));
+    }
+    IEnumerator ResetBuffHp(float startHp, float duration)
+    {
+        yield return new WaitForSeconds(duration);
+
+        hpMax = startHp;
+    }
+
     public void IncreaseStamina(float stam)
     {
         staminaMax += stam;
         currentStamina = staminaMax;
     }
+    public void BuffStamina(float multiplier, float duration)
+    {
+        float startStamina = staminaMax;
+        staminaMax *= multiplier;
+
+        StartCoroutine(ResetBuffStamina(startStamina, duration));
+    }
+    IEnumerator ResetBuffStamina(float startStamina, float duration)
+    {
+        yield return new WaitForSeconds(duration);
+
+        staminaMax = startStamina;
+    }
+
     public float GetStamina()
     {
         return currentStamina;

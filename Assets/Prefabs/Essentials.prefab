@@ -1250,6 +1250,13 @@ MonoBehaviour:
   optionsPanel: {fileID: 2278032693134995875}
   shopPanel: {fileID: 4724925425346961428}
   skillTreePanel: {fileID: 5302119992460446254}
+  skillPanel: {fileID: 3482238821337775826}
+  skillIcon: {fileID: 4929272194656469623}
+  skillName: {fileID: 7135708180483485111}
+  skillDescription: {fileID: 8139519116402774508}
+  skillAttributeRequirements: {fileID: 1062392754819590278}
+  skillPointsRequirement: {fileID: 5281344423515231295}
+  getSkillButton: {fileID: 696343654939154517}
   fastTravelMenu: {fileID: 249986574386721069}
   cheatMenuPanel: {fileID: 1691413905214493845}
   merchantInventoryLabel: {fileID: 7776997735814487069}
@@ -1316,14 +1323,11 @@ MonoBehaviour:
   equipedWeapons: {fileID: 0}
   crosshair: {fileID: 41767855675786219}
   feedbackText: {fileID: 8295512966994305543}
-  xpText: {fileID: 2667580103693350023}
-  lvlText_menu: {fileID: 1845533270518769000}
+  ammoText: {fileID: 3692933756709050738}
   strengthText: {fileID: 7178283861277202558}
   agilityText: {fileID: 7666456005039423668}
   enduranceText: {fileID: 8037091698971053296}
   intelligenceText: {fileID: 6775951980945214598}
-  healthPointsText: {fileID: 37112450157408772}
-  staminaPointsText: {fileID: 2095377924349947300}
   attributeDescription: {fileID: 3548642429404596522}
   strengthDescription: Strength dictates how much damage is dealt with your melee
     attacks
@@ -1332,15 +1336,11 @@ MonoBehaviour:
     attack speed '
   intelligenceDescription: Intelligence influences your xp multiplier and the amount
     of points you receive when levelling up
-  ammoText: {fileID: 3692933756709050738}
+  healthPointsText: {fileID: 37112450157408772}
+  staminaPointsText: {fileID: 2095377924349947300}
+  xpText: {fileID: 2667580103693350023}
+  lvlText_menu: {fileID: 1845533270518769000}
   availablePointsText: {fileID: 3341437402818957508}
-  skillPanel: {fileID: 3482238821337775826}
-  skillIcon: {fileID: 4929272194656469623}
-  skillName: {fileID: 7135708180483485111}
-  skillDescription: {fileID: 8139519116402774508}
-  skillAttributeRequirements: {fileID: 1062392754819590278}
-  skillPointsRequirement: {fileID: 5281344423515231295}
-  getSkillButton: {fileID: 696343654939154517}
 --- !u!1 &2072034969503437398
 GameObject:
   m_ObjectHideFlags: 0
@@ -3832,6 +3832,7 @@ MonoBehaviour:
   fastTravelMountain: {fileID: 7049564949160906263}
   fastTravelVillage: {fileID: 4548160473928862040}
   fastTravelBeach: {fileID: 4671122880359768713}
+  fastTravelMecha: {fileID: 0}
 --- !u!1 &5408409734928232229
 GameObject:
   m_ObjectHideFlags: 0
@@ -4524,6 +4525,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: febdbb4fe310bdb4bbae05ac905fadcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxPos: {x: 700, y: 450}
 --- !u!1 &6204944185812668127
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,6 +7,8 @@ public class SkillTreeDragMove : MonoBehaviour
     bool isInSkillTree = false;
     Vector3 mousePos0 = Vector3.zero;
 
+    [SerializeField] Vector2 maxPos;
+
     void Update()
     {
         if (!isInSkillTree) return;
@@ -20,7 +22,7 @@ public class SkillTreeDragMove : MonoBehaviour
         if (Input.GetMouseButton(2))
         {
             Vector3 newSkillTreePos = (Input.mousePosition - mousePos0) * 0.01f;
-            UIManager.instance.SetSkillTreePosition(newSkillTreePos);
+            UIManager.instance.SetSkillTreePosition(newSkillTreePos, maxPos);
         }
     }
 
