@@ -17,6 +17,13 @@ public class SkillTree : MonoBehaviour
     {
         dragClass = GetComponent<SkillTreeDragMove>();
     }
+    public void ResetAllSkillVisuals()
+    {
+        foreach (Skill s in skills)
+        {
+            s.SetupSkillVisuals();
+        }
+    }
     public Skill GetSkillByData(SkillData data)
     {
         foreach (Skill s in skills)

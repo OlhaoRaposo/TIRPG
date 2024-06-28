@@ -375,9 +375,12 @@ public class UIManager : MonoBehaviour
     {
         skillTreeTransform.localPosition = Vector3.zero;
     }
-    public void SetSkillTreePosition(Vector3 newPos)
+    public void SetSkillTreePosition(Vector3 newPos, Vector2 limits)
     {
-        skillTreeTransform.position += newPos;
+        Vector3 posToAdd = newPos + skillTreeTransform.localPosition;
+        posToAdd = new Vector3(Mathf.Clamp(posToAdd.x, -limits.x, limits.x), Mathf.Clamp(posToAdd.y, -limits.y, limits.y), 0);
+        skillTreeTransform.localPosition = posToAdd;
+
     }
     public void DisableSelectedSkillPanel()
     {

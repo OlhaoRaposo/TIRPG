@@ -16,10 +16,13 @@ public class Skill: MonoBehaviour
     {
         SetupSkillVisuals();
     }
-    void SetupSkillVisuals()
+    public void SetupSkillVisuals()
     {
         //Atualizar icone da skill
         icon.sprite = skillData.icon;
+
+        //Checar se as skills necessarias estao desbloqueadas, caso não estejam, deixar icone cinza
+        icon.color = CanUnlockSkill() ? Color.white : Color.grey;
     }
     public void CallSelectSkill()
     {

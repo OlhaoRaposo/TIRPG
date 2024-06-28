@@ -42,11 +42,6 @@ public class PlayerStats : MonoBehaviour
     int availablePoints = 0;
 
     [SerializeField] List<SkillData> skills = new List<SkillData>();
-    /*List<Skill> rangedSkills = new List<Skill>();
-    List<Skill> meleeSkills = new List<Skill>();
-    List<Skill> passiveSkills = new List<Skill>();
-    List<Skill> grenadeSkills = new List<Skill>();
-    List<Skill> otherSkills = new List<Skill>();*/
 
     void Awake()
     {
@@ -80,6 +75,7 @@ public class PlayerStats : MonoBehaviour
             if (level < maxLevel)
             {
                 LevelUp();
+                UIManager.instance.ShowTextFeedback("You leveled up!");
             }
             else
             {
@@ -165,7 +161,56 @@ public class PlayerStats : MonoBehaviour
     public void AddSkill(SkillData skillData)
     {
         skills.Add(skillData);
-        DecreasePoints(skillData.skillPointsRequired);
+        if (DecreasePoints(skillData.skillPointsRequired))
+        {
+            foreach(SkillEffect effect in skillData.skillEffects)
+            {
+                switch (effect.effects)
+                {
+                    case SkillEffect.SkillEffects.Xp:
+                        IncreaseXpMultiplier(effect.amount);
+                        break;
+                    case SkillEffect.SkillEffects.MeleeDamage:
+                        IncreaseMeleeDamageMultipier(effect.amount);
+                        break;
+                    case SkillEffect.SkillEffects.RangedDamage:
+                        IncreaseRangedDamageMultipier(effect.amount);
+                        break;
+                    case SkillEffect.SkillEffects.MoveSpeed:
+                        IncreaseMoveSpeedMultiplier(effect.amount);
+                        break;
+                    case SkillEffect.SkillEffects.Stamina:
+                        IncreaseStamina(effect.amount);
+                        break;
+                    case SkillEffect.SkillEffects.StaminaRegen:
+                        IncreaseStaminaRegen(effect.amount);
+                        break;
+                    case SkillEffect.SkillEffects.HealthPoints:
+                        IncreaseHealthPoints(effect.amount);
+                        break;
+                    case SkillEffect.SkillEffects.AcidDamage:
+                        IncreaseAcidDamageMultiplier(effect.amount);
+                        break;
+                    case SkillEffect.SkillEffects.LightningDamage:
+                        IncreaseLightningDamageMultiplier(effect.amount);
+                        break;
+                    case SkillEffect.SkillEffects.FireDamage:
+                        IncreaseFireDamageMultiplier(effect.amount);
+                        break;
+                    case SkillEffect.SkillEffects.PhysicalDamage:
+                        IncreasePhysicalDamageMultiplier(effect.amount);
+                        break;
+                    default:
+                        Debug.LogError("SkillEffect was not defined");
+                        break;
+
+                }
+            }
+        }
+        else
+        {
+            Debug.Log("Player não possui pontos de habilidade suficientes");
+        }
     }
 
     #region Attribute Buffs
@@ -300,6 +345,7 @@ public class PlayerStats : MonoBehaviour
         return availablePoints;
     }
 
+    #region Attribute Multipliers
     public void IncreaseXpMultiplier(float amount)
     {
         xpMultiplier += amount;
@@ -332,19 +378,31 @@ public class PlayerStats : MonoBehaviour
     {
         physicalDamageMultiplier += amount;
     }
-    public void IncreaseHealthPoints(float amount)
-    {
-        PlayerHPController.instance.IncreaseMaxHP(amount);
-    }
-    public void IncreaseStamina(float amount)
-    {
-        PlayerHPController.instance.IncreaseStamina(amount);
-    }
     public void IncreaseStaminaRegen(float amount)
     {
         staminaRegenMultiplier += amount;
     }
+    public void IncreaseHealthPoints(float amount)
+    {
+        PlayerHPController.instance.IncreaseMaxHP(amount);
+        UIManager.instance.UpdateHealthStats((int)PlayerHPController.instance.GetHp(), (int)PlayerHPController.instance.GetMaxHp());
+    }
+    public void IncreaseStamina(float amount)
+    {
+        PlayerHPController.instance.IncreaseStamina(amount);
+        UIManager.instance.UpdateStaminaStats((int)PlayerHPController.instance.GetStamina(), (int)PlayerHPController.instance.GetMaxStamina());
+    }
+    #endregion
 
+    #region Get Attributes
+    public float GetXpMultiplier()
+    {
+        return xpMultiplier;
+    }
+    public float GetMovementSpeedMultiplier()
+    {
+        return moveSpeedMultiplier;
+    }
     public float GetMeleeDamageMultiplier()
     {
         return meleeDamageMultiplier;
@@ -352,14 +410,6 @@ public class PlayerStats : MonoBehaviour
     public float GetRangedDamageMultiplier()
     {
         return rangedDamageMultiplier;
-    }
-    public float GetStaminaRegenMultiplier()
-    {
-        return staminaRegenMultiplier;
-    }
-    public float GetMovementSpeedMultiplier()
-    {
-        return moveSpeedMultiplier;
     }
     public float GetAcidDamageMultiplier()
     {
@@ -376,6 +426,10 @@ public class PlayerStats : MonoBehaviour
     public float GetPhysicalDamageMultiplier()
     {
         return physicalDamageMultiplier;
+    }
+    public float GetStaminaRegenMultiplier()
+    {
+        return staminaRegenMultiplier;
     }
 
     public int GetStrength()
@@ -394,4 +448,5 @@ public class PlayerStats : MonoBehaviour
     {
         return intelligence;
     }
+    #endregion
 }
