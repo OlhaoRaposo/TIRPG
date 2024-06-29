@@ -12,10 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f546a49af79b924bb31efff73241a18, type: 3}
   m_Name: Skill 7
   m_EditorClassIdentifier: 
-  _name: 
-  description: 
-  skillEffects: []
-  icon: {fileID: 0}
-  skillPointsRequired: 0
-  requirements: []
-  skillsRequired: []
+  _name: "Resist\xEAncia e Intelig\xEAncia"
+  description: "Aumenta os pontos de estamina m\xE1xima em 25\nAumenta o multiplicador
+    de experi\xEAncia ganha em 50%"
+  skillEffects:
+  - effects: 0
+    amount: 0.5
+  - effects: 4
+    amount: 25
+  icon: {fileID: 21300000, guid: 30866936f4183e644aaa75139f65cc90, type: 3}
+  skillPointsRequired: 6
+  requirements:
+  - attribute: 3
+    amount: 7
+  - attribute: 2
+    amount: 8
+  skillsRequired:
+  - {fileID: 11400000, guid: 5de470a180c02514e836a96f76a951f2, type: 2}
+  - {fileID: 11400000, guid: 8b98b6e7b187d504eab4235aa185ba18, type: 2}

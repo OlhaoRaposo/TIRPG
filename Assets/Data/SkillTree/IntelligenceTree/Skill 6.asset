@@ -12,10 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f546a49af79b924bb31efff73241a18, type: 3}
   m_Name: Skill 6
   m_EditorClassIdentifier: 
-  _name: 
-  description: 
-  skillEffects: []
-  icon: {fileID: 0}
-  skillPointsRequired: 0
-  requirements: []
-  skillsRequired: []
+  _name: "Intelig\xEAncia e Agilidade II"
+  description: "Aumento do dano \xE0 dist\xE2ncia em 20%\nAumenta o multiplicador
+    de velocidade de movimento em 10%\nAumenta a taxa de regenera\xE7\xE3o de estamina
+    em 20%"
+  skillEffects:
+  - effects: 2
+    amount: 0.2
+  - effects: 3
+    amount: 0.1
+  - effects: 5
+    amount: 0.2
+  icon: {fileID: 21300000, guid: 4614579d8dae1804b83dc139490a8c9f, type: 3}
+  skillPointsRequired: 8
+  requirements:
+  - attribute: 2
+    amount: 9
+  - attribute: 1
+    amount: 7
+  skillsRequired:
+  - {fileID: 11400000, guid: 8b98b6e7b187d504eab4235aa185ba18, type: 2}
+  - {fileID: 11400000, guid: 3f6dc9f0329e4cc4dafd818e51407710, type: 2}

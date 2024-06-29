@@ -12,10 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f546a49af79b924bb31efff73241a18, type: 3}
   m_Name: Skill 3
   m_EditorClassIdentifier: 
-  _name: 
-  description: 
-  skillEffects: []
-  icon: {fileID: 0}
-  skillPointsRequired: 0
-  requirements: []
-  skillsRequired: []
+  _name: "Intelig\xEAncia e Resist\xEAncia"
+  description: "Aumenta o dano de \xE1cido em 25%\nAumenta os pontos de vida m\xE1xima
+    em 50\nAumenta os pontos de estamina m\xE1xima em 50"
+  skillEffects:
+  - effects: 7
+    amount: 0.25
+  - effects: 6
+    amount: 50
+  - effects: 4
+    amount: 50
+  icon: {fileID: 21300000, guid: 30866936f4183e644aaa75139f65cc90, type: 3}
+  skillPointsRequired: 5
+  requirements:
+  - attribute: 2
+    amount: 8
+  - attribute: 3
+    amount: 6
+  skillsRequired:
+  - {fileID: 11400000, guid: ea0f20149f938964ab95f867508d0907, type: 2}
+  - {fileID: 11400000, guid: 5de470a180c02514e836a96f76a951f2, type: 2}

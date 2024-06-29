@@ -12,10 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f546a49af79b924bb31efff73241a18, type: 3}
   m_Name: Skill 6
   m_EditorClassIdentifier: 
-  _name: 
-  description: 
-  skillEffects: []
-  icon: {fileID: 0}
-  skillPointsRequired: 0
-  requirements: []
-  skillsRequired: []
+  _name: "For\xE7a e Resist\xEAncia"
+  description: "Aumenta o dano corpo-a-corpo em 25%\nAumenta os pontos de vida m\xE1xima
+    em 100"
+  skillEffects:
+  - effects: 1
+    amount: 0.25
+  - effects: 6
+    amount: 100
+  icon: {fileID: 21300000, guid: 9da9677a8dcd3b640a6ded271fe18e08, type: 3}
+  skillPointsRequired: 8
+  requirements:
+  - attribute: 0
+    amount: 8
+  - attribute: 3
+    amount: 8
+  skillsRequired:
+  - {fileID: 11400000, guid: 3a1d5ca6d4d853e4dadd7ecb31f8ef83, type: 2}
+  - {fileID: 11400000, guid: f416032d9f2c4d64aa07f0c2ebdfa2dd, type: 2}

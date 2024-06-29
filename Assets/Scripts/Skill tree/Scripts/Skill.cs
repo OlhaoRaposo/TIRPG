@@ -22,7 +22,14 @@ public class Skill: MonoBehaviour
         icon.sprite = skillData.icon;
 
         //Checar se as skills necessarias estao desbloqueadas, caso não estejam, deixar icone cinza
-        icon.color = CanUnlockSkill() ? Color.white : Color.grey;
+        if (CanUnlockSkill())
+        {
+            icon.color = Color.white;
+        }
+        else
+        {
+            if (!isUnlocked) icon.color = Color.grey;
+        }
     }
     public void CallSelectSkill()
     {
@@ -30,8 +37,6 @@ public class Skill: MonoBehaviour
     }
     public void AcquireSkill() 
     {
-        //Debug.Log(CanUnlockSkill());
-
         if (!CanUnlockSkill()) return; //PODE SER RETIRADO POSTERIORMENTE (VERIFICACAO FEITA NO UIMANAGER P/ HABILITAR O BOTAO)
 
         //Adicionar skillData á lista de skills
@@ -41,7 +46,11 @@ public class Skill: MonoBehaviour
         //Desabilita o botao de adquirir a skill
         UIManager.instance?.DisableGetSkillButton();
 
+        GetComponent<Outline>().enabled = true;
+        
         UIManager.instance.UpdatePointsText();
+
+        SkillTree.instance.ResetAllSkillVisuals();
     }
     public bool CanUnlockSkill()
     {

@@ -12,10 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f546a49af79b924bb31efff73241a18, type: 3}
   m_Name: Skill 6
   m_EditorClassIdentifier: 
-  _name: 
-  description: 
-  skillEffects: []
-  icon: {fileID: 0}
-  skillPointsRequired: 0
-  requirements: []
-  skillsRequired: []
+  _name: Agilidade e Dano II
+  description: "Aumenta o dano el\xE9trico em 30%\nAumenta o multiplicador de velocidade
+    de movimento em 20%\nAumenta a taxa de regenera\xE7\xE3o de estamina em 50%"
+  skillEffects:
+  - effects: 8
+    amount: 0.3
+  - effects: 3
+    amount: 0.2
+  - effects: 5
+    amount: 0.5
+  icon: {fileID: 21300000, guid: 2d45226dc2ed1c942b5ba8760617f7aa, type: 3}
+  skillPointsRequired: 6
+  requirements:
+  - attribute: 1
+    amount: 8
+  skillsRequired:
+  - {fileID: 11400000, guid: 3f6dc9f0329e4cc4dafd818e51407710, type: 2}
+  - {fileID: 11400000, guid: ee58b9b3f13a6b24887bf2cfdcb81418, type: 2}
+  - {fileID: 11400000, guid: 9f2d764040e005b4fab41ca2f99e401d, type: 2}

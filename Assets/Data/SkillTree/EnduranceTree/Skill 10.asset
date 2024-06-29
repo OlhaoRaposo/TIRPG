@@ -12,10 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f546a49af79b924bb31efff73241a18, type: 3}
   m_Name: Skill 10
   m_EditorClassIdentifier: 
-  _name: 
-  description: 
-  skillEffects: []
-  icon: {fileID: 0}
-  skillPointsRequired: 0
-  requirements: []
-  skillsRequired: []
+  _name: "Resist\xEAncia V"
+  description: "Aumenta os pontos de vida m\xE1xima em 100\nAumenta os pontos de
+    estamina m\xE1xima em 100\nAumenta o dano de tipo f\xEDsico em 100%"
+  skillEffects:
+  - effects: 4
+    amount: 100
+  - effects: 6
+    amount: 100
+  - effects: 10
+    amount: 1
+  icon: {fileID: 21300000, guid: 432e2731db02cc540b09572854b96e9a, type: 3}
+  skillPointsRequired: 10
+  requirements:
+  - attribute: 3
+    amount: 10
+  skillsRequired:
+  - {fileID: 11400000, guid: f0373ebb9f1a74b4d8e2672729a4a0b4, type: 2}
+  - {fileID: 11400000, guid: 0c1ccb206cdc930448c7832ade8b7e50, type: 2}

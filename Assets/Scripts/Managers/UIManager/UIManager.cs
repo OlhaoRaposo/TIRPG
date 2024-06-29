@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static DamageElementManager;
 
 public class UIManager : MonoBehaviour
 {
@@ -64,9 +65,22 @@ public class UIManager : MonoBehaviour
     [Header("Player Status")]
     [SerializeField] Text healthPointsText;
     [SerializeField] Text staminaPointsText;
+    [SerializeField] Text xpMultiplierText;
+    [SerializeField] Text meleeMultiplierText;
+    [SerializeField] Text rangedMultiplierText;
+    [SerializeField] Text movementSpeedMultiplierText;
+    [SerializeField] Text staminaRegenMultiplierText;
+    [SerializeField] Text fireMultiplierText;
+    [SerializeField] Text lightningMultiplierText;
+    [SerializeField] Text physicalMultiplierText;
+    [SerializeField] Text acidMultiplierText;
     [SerializeField] Text xpText;
     [SerializeField] Text lvlText_menu;
     [SerializeField] Text availablePointsText;
+
+    [Header("Inventory")]
+    [SerializeField] Text meleeWeaponDesc;
+    [SerializeField] Text rangedWeaponDesc;
 
     string selectedAttribute = "";
 
@@ -115,21 +129,99 @@ public class UIManager : MonoBehaviour
     {
         ammoText.text = s;
     }
+    public void UpdateMeleeWeaponDescription(string damage, DamageElementManager.DamageElement type)
+    {
+        string typeString = "";
+        switch (type)
+        {
+            case DamageElementManager.DamageElement.Acid: 
+                typeString = "Ácido";
+                break;
+            case DamageElementManager.DamageElement.Fire:
+                typeString = "Fogo";
+                break;
+            case DamageElementManager.DamageElement.Lightning:
+                typeString = "Elétrico";
+                break;
+            case DamageElementManager.DamageElement.Physical:
+                typeString = "Físico";
+                break;
+        }
+
+        meleeWeaponDesc.text = $"Dano: {damage}\nTipo de dano: {typeString}";
+    }
+    public void UpdateRangedWeaponDescription(string damage, DamageElementManager.DamageElement type)
+    {
+        string typeString = "";
+        switch (type)
+        {
+            case DamageElementManager.DamageElement.Acid:
+                typeString = "Ácido";
+                break;
+            case DamageElementManager.DamageElement.Fire:
+                typeString = "Fogo";
+                break;
+            case DamageElementManager.DamageElement.Lightning:
+                typeString = "Elétrico";
+                break;
+            case DamageElementManager.DamageElement.Physical:
+                typeString = "Físico";
+                break;
+        }
+
+        rangedWeaponDesc.text = $"Dano: {damage}\nTipo de dano: {typeString}";
+    }
     public void UpdateMenuLevel(int lvl)
     {
         lvlText_menu.text = "Level " + lvl.ToString();
     }
     public void UpdateXpStats(int xp, int maxXp)
     {
-        xpText.text = $"XP: {xp}/{maxXp}";
+        xpText.text = $"Xp: {xp}/{maxXp}";
     }
     public void UpdateHealthStats(int hp, int maHXp)
     {
-        healthPointsText.text = $"Health {hp}/{maHXp}";
+        healthPointsText.text = $"Vida {hp}/{maHXp}";
     }
     public void UpdateStaminaStats(int stamina, int maxStamina)
     {
-        staminaPointsText.text = $"Stamina {stamina}/{maxStamina}";
+        staminaPointsText.text = $"Estamina {stamina}/{maxStamina}";
+    }
+    public void UpdateXpMultiplier(string mult)
+    {
+        xpMultiplierText.text = "Multiplicador xp: " + mult + "x";
+    }
+    public void UpdateMeleeMultiplier(string mult)
+    {
+        meleeMultiplierText.text = "Multiplicador corpo-a-corpo: " + mult + "x";
+    }
+    public void UpdateRangedMultiplier(string mult)
+    {
+        rangedMultiplierText.text = "Multiplicador a distância: " + mult + "x";
+    }
+    public void UpdateMovementSpeedMultiplier(string mult)
+    {
+        movementSpeedMultiplierText.text = "Multiplicador de movimento: " + mult + "x";
+    }
+    public void UpdateStaminaRegenMultiplier(string mult)
+    {
+        staminaRegenMultiplierText.text = "Multiplicador regeneração stamina: " + mult + "x";
+    }
+    public void UpdateFireMultiplier(string mult)
+    {
+        fireMultiplierText.text = "Multiplicador fogo: " + mult + "x";
+    }
+    public void UpdateLightningMultiplier(string mult)
+    {
+        lightningMultiplierText.text = "Multiplicador elétrico: " + mult + "x";
+    }
+    public void UpdatePhysicalMultiplier(string mult)
+    {
+        physicalMultiplierText.text = "Multiplicador físico: " + mult + "x";
+    }
+    public void UpdateAcidMultiplier(string mult)
+    {
+        acidMultiplierText.text = "Multiplicador ácido: " + mult + "x";
     }
     public void UpdateStrength(int strength)
     {
@@ -419,26 +511,26 @@ public class UIManager : MonoBehaviour
             switch (req.attribute)
             {
                 case SkillAttributeRequirement.Attribute.Strength:
-                    skillAttributeRequirements.text += $"Strength: {PlayerStats.instance?.GetStrength()}/{req.amount}\n";
+                    skillAttributeRequirements.text += $"Força: {PlayerStats.instance?.GetStrength()}/{req.amount}\n";
                     break;
 
                 case SkillAttributeRequirement.Attribute.Agility:
-                    skillAttributeRequirements.text += $"Agility: {PlayerStats.instance?.GetAgility()}/{req.amount}\n";
+                    skillAttributeRequirements.text += $"Agilidade: {PlayerStats.instance?.GetAgility()}/{req.amount}\n";
                     break;
 
                 case SkillAttributeRequirement.Attribute.Intelligence:
-                    skillAttributeRequirements.text += $"Intelligence: {PlayerStats.instance?.GetIntelligence()}/{req.amount}\n";
+                    skillAttributeRequirements.text += $"Inteligencia: {PlayerStats.instance?.GetIntelligence()}/{req.amount}\n";
                     break;
 
                 case SkillAttributeRequirement.Attribute.Endurance:
-                    skillAttributeRequirements.text += $"Endurance: {PlayerStats.instance?.GetEndurance()}/{req.amount}\n";
+                    skillAttributeRequirements.text += $"Resistencia: {PlayerStats.instance?.GetEndurance()}/{req.amount}\n";
                     break;
             }
         }
     }
     public void UpdatePointsText()
     {
-        skillPointsRequirement.text = $"Points required:\n{PlayerStats.instance?.GetAvailablePoints()}/{selectedSkill.GetData().skillPointsRequired}";
+        skillPointsRequirement.text = $"Pontos necessários:\n{PlayerStats.instance?.GetAvailablePoints()}/{selectedSkill.GetData().skillPointsRequired}";
     }
     public void CallGetSkill()
     {

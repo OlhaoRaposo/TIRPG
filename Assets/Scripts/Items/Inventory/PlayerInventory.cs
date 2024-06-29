@@ -342,6 +342,9 @@ public class PlayerInventory : MonoBehaviour
     {
         RemoveItemFromInventory(weaponData.item);
         meleeWeaponSlot.SetItem(weaponData);
+
+        UIManager.instance.UpdateMeleeWeaponDescription(weaponData.item.meleeBase.damage.ToString(), weaponData.item.meleeBase.damageElement);
+
         PlayerMeleeCombat.instance?.SetNewMeleeWeapon(weaponData.item.meleeBase);
 
         foreach (GameObject playerWeapon in PlayerMovement.instance.allWeapons)
@@ -363,10 +366,10 @@ public class PlayerInventory : MonoBehaviour
     public void EquipRangedWeapon(ItemObject weaponData)
     {
         RemoveItemFromInventory(weaponData.item);
-
-        //if (rangedWeaponSlot.GetItem() != null)
-
         rangedWeaponSlot.SetItem(weaponData);
+
+        UIManager.instance.UpdateRangedWeaponDescription(weaponData.item.gunBase.damage.ToString(), weaponData.item.gunBase.bulletElement);
+
         PlayerGun.instance?.SetNewGunWeapon(weaponData.item.gunBase);
 
         foreach (GameObject playerWeapon in PlayerMovement.instance.allWeapons)

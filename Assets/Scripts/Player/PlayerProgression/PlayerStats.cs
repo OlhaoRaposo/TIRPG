@@ -331,6 +331,7 @@ public class PlayerStats : MonoBehaviour
         if (availablePoints <= 0) return false;
 
         availablePoints--;
+        UIManager.instance.UpdateAvailablePoints(availablePoints);
         return true;
     }
     bool DecreasePoints(uint points)
@@ -338,6 +339,7 @@ public class PlayerStats : MonoBehaviour
         if (availablePoints < points) return false;
 
         availablePoints -= (int)points;
+        UIManager.instance.UpdateAvailablePoints(availablePoints);
         return true;
     }
     public int GetAvailablePoints()
@@ -349,38 +351,47 @@ public class PlayerStats : MonoBehaviour
     public void IncreaseXpMultiplier(float amount)
     {
         xpMultiplier += amount;
+        UIManager.instance.UpdateXpMultiplier(xpMultiplier.ToString());
     }
     public void IncreaseMoveSpeedMultiplier(float amount)
     {
         moveSpeedMultiplier += amount;
+        UIManager.instance.UpdateMovementSpeedMultiplier(moveSpeedMultiplier.ToString());
     }
     public void IncreaseMeleeDamageMultipier(float amount)
     {
         meleeDamageMultiplier += amount;
+        UIManager.instance.UpdateMeleeMultiplier(meleeDamageMultiplier.ToString());
     }
     public void IncreaseRangedDamageMultipier(float amount)
     {
         rangedDamageMultiplier += amount;
+        UIManager.instance.UpdateRangedMultiplier(rangedDamageMultiplier.ToString());
     }
     public void IncreaseAcidDamageMultiplier(float amount)
     {
         acidDamageMultiplier += amount;
+        UIManager.instance.UpdateAcidMultiplier(acidDamageMultiplier.ToString());
     }
     public void IncreaseFireDamageMultiplier(float amount)
     {
         fireDamageMultiplier += amount;
+        UIManager.instance.UpdateFireMultiplier(fireDamageMultiplier.ToString());
     }
     public void IncreaseLightningDamageMultiplier(float amount)
     {
         lightningDamageMultiplier += amount;
+        UIManager.instance.UpdateLightningMultiplier(lightningDamageMultiplier.ToString());
     }
     public void IncreasePhysicalDamageMultiplier(float amount)
     {
         physicalDamageMultiplier += amount;
+        UIManager.instance.UpdatePhysicalMultiplier(physicalDamageMultiplier.ToString());
     }
     public void IncreaseStaminaRegen(float amount)
     {
         staminaRegenMultiplier += amount;
+        UIManager.instance.UpdateStaminaRegenMultiplier(staminaRegenMultiplier.ToString());
     }
     public void IncreaseHealthPoints(float amount)
     {
