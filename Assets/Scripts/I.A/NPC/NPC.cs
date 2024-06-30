@@ -10,6 +10,9 @@ using UnityEngine.Events;
 public class NPC : MonoBehaviour
 {
     public List<Dialogue> dialogues;
+    public bool hasQuest;
+    public List<Dialogue> questDialogue;
+    public UnityEvent OnEndQuestDialogue;
     [SerializeField] public int currentDialogueIndex;
     [SerializeField] private bool isTalking;
     [SerializeField] private NPCReferenceData npcReference;
@@ -62,26 +65,40 @@ public class NPC : MonoBehaviour
         PlayerCameraMovement.instance.ToggleAimLock(true);
     }
     private void Talk() {
-        TypeWritter.instance.Write(npcReference.npcText,
-            dialogues[currentDialogueIndex].sentences[dialogues[currentDialogueIndex].sentenceIndex]);
+        if (hasQuest) {
+            TypeWritter.instance.Write(npcReference.npcText, dialogues[currentDialogueIndex].sentences[dialogues[currentDialogueIndex].sentenceIndex]);
+            TypeWritter.instance.AttCurrentNPC(this);
+        }
+        TypeWritter.instance.Write(npcReference.npcText, dialogues[currentDialogueIndex].sentences[dialogues[currentDialogueIndex].sentenceIndex]);
         TypeWritter.instance.AttCurrentNPC(this);
     }
     public void EndedWriting() {
-        if (dialogues[currentDialogueIndex].sentenceIndex < dialogues[currentDialogueIndex].sentences.Count -1) {
-            dialogues[currentDialogueIndex].sentenceIndex++;
-        }else {
-            EnableLastBoxConfiguration();
-            if(!invoked) {
-                hasDialogue.SetActive(false);
-                OnEndDialogue.Invoke();
-                if(hasDrop)
-                    ItemDropManager.instance.DropItem(dropInfo, transform.position);
-                invoked = true;
-            }
-            if (currentDialogueIndex < dialogues.Count -1) {
-                currentDialogueIndex++;
+        if (hasQuest)
+        {
+            if (questDialogue[currentDialogueIndex].sentenceIndex < questDialogue[currentDialogueIndex].sentences.Count -1) {
+                questDialogue[currentDialogueIndex].sentenceIndex++;
             }else {
-                dialogues[currentDialogueIndex].sentenceIndex = 0;
+                EnableLastBoxConfiguration();
+                hasQuest = false;
+                OnEndQuestDialogue.Invoke();
+            }
+        }else {
+            if (dialogues[currentDialogueIndex].sentenceIndex < dialogues[currentDialogueIndex].sentences.Count -1) {
+                dialogues[currentDialogueIndex].sentenceIndex++;
+            }else {
+                EnableLastBoxConfiguration();
+                if(!invoked) {
+                    hasDialogue.SetActive(false);
+                    OnEndDialogue.Invoke();
+                    if(hasDrop)
+                        ItemDropManager.instance.DropItem(dropInfo, transform.position);
+                    invoked = true;
+                }
+                if (currentDialogueIndex < dialogues.Count -1) {
+                    currentDialogueIndex++;
+                }else {
+                    dialogues[currentDialogueIndex].sentenceIndex = 0;
+                }
             }
         }
     }
@@ -92,6 +109,10 @@ public class NPC : MonoBehaviour
     private void EnableLastBoxConfiguration() {
         npcReference.finishButton.gameObject.SetActive(true);
         npcReference.nextButton.gameObject.SetActive(false);
+    }
+
+    public void AddQuest(string questCode) {
+        QuestManager.instance.AddQuest(questCode);
     }
 }
 [Serializable]

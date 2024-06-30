@@ -14,8 +14,6 @@ public class Quest
   public string questRewardCode;
   [Header("Accessibility")] 
   public Reward questReward;
-  public List<Dialogue> dialogue;
-  public List<Dialogue> questAlreadyGiven;
   public List<Step> steps = new List<Step>();
   public string Name {set => code = value; get => code;}
 }

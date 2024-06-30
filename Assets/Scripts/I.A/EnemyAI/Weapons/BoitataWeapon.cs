@@ -10,6 +10,7 @@ public class BoitataWeapon : MonoBehaviour
     public GameObject jail;
     private bool isOnAnimation;
     public GameObject beathPrefab;
+    public GameObject breathFire,meleeFire;
     
     public void Attack(string expression){
         Debug.Log("Attacking with: " + expression);
@@ -48,9 +49,6 @@ public class BoitataWeapon : MonoBehaviour
         if(user.target!=null && !isOnAnimation)
             transform.LookAt(user.target.transform.position);
 
-        if (Input.GetKeyDown(KeyCode.M)) {
-            Attack("_meleeBreath");
-        }
     }
 
     IEnumerator Crawl(string expression) {
@@ -80,19 +78,29 @@ public class BoitataWeapon : MonoBehaviour
     IEnumerator MeleeHit(string expression) {
         user.enemyAnimator.SetTrigger(expression);
         jail.SetActive(true);
-        yield return new WaitForSeconds(6);
+        yield return new WaitForSeconds(4);
+        breathFire.gameObject.SetActive(true);
+        for (int i = 0; i < 500; i++) {
+            Instantiate(beathPrefab, transform.position + new Vector3(0,0,0.5f), Quaternion.identity).GetComponent<Rigidbody>();
+            yield return new WaitForSeconds(.000001f);
+        }
+        breathFire.gameObject.SetActive(false);
+        yield return new WaitForSeconds(1);
+        jail.GetComponent<JailLocker>().Unlock();
         jail.SetActive(false);
         user.ChangeState(new ChaseState(user));
     }
     IEnumerator MeleeBreath(string expression)
     {
         user.enemyAnimator.SetTrigger(expression);
-        yield return new WaitForSeconds(1);
-        for (int i = 0; i < 300; i++) {
-          Rigidbody rb = Instantiate(beathPrefab, transform.position + (transform.forward * 2), Quaternion.identity).GetComponent<Rigidbody>();
+        yield return new WaitForSeconds(2f);
+        breathFire.gameObject.SetActive(true);
+        for (int i = 0; i < 500; i++) {
+          Rigidbody rb = Instantiate(meleeFire, transform.position + (transform.forward * 2), Quaternion.identity).GetComponent<Rigidbody>();
           rb.AddForce(transform.forward * 500);
           yield return new WaitForSeconds(.000001f);
         }
+        breathFire.gameObject.SetActive(false);
         yield return new WaitForSeconds(6);
         user.ChangeState(new ChaseState(user));
     }

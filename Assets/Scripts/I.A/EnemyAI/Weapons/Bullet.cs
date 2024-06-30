@@ -38,13 +38,14 @@ public class Bullet : MonoBehaviour
             PlayerHPController.instance.ChangeHP(damage, true);
             if (other.gameObject.TryGetComponent(out PlayerMovement playerMovement))
                 playerMovement.TakeKnockback();
+            Destroy(this.gameObject);
         }
         else if (other.gameObject.CompareTag("Enemy"))
         {
             if (other.gameObject.TryGetComponent(out EnemyBehaviour enemyBehaviour))
                 enemyBehaviour.TakeDamage(damage, DamageElementManager.DamageElement.Physical);
+            Destroy(this.gameObject);
         }
-        Destroy(this.gameObject);
     }
     private void OnCollisionEnter(Collision other)
     {

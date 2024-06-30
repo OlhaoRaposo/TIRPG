@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -9,6 +10,8 @@ public class MechaWeapon : MonoBehaviour
     public GameObject round;
     public Transform gun1,gun2;
     public Transform roundTransform;
+    public GameObject stompPrefab;
+    
 
     public void Attack(string expression){
         Debug.Log("Attacking with: " + expression);
@@ -27,9 +30,11 @@ public class MechaWeapon : MonoBehaviour
                 break;
         }
     }
-    
+
     private IEnumerator Stomp() {
         user.enemyAnimator.SetTrigger("_stomp");
+        yield return new WaitForSeconds(1.5f);
+        Instantiate(stompPrefab, user.transform.position + new Vector3(0,-1,0), user.transform.rotation);
         yield return new WaitForSeconds(3.5f);
         user.ChangeState(new ChaseState(user));
     }

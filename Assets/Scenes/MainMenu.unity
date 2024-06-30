@@ -3060,6 +3060,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6088a3cca7fbccb4ca2b1d0b999e661e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameplayScenes: []
 --- !u!4 &1038340906
 Transform:
   m_ObjectHideFlags: 0
@@ -3596,7 +3597,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasGO: {fileID: 852252287}
   optionsPanel: {fileID: 2026902117}
-  creditsPanel: {fileID: 1702457383}
+  creditsPanel: {fileID: 0}
   charactersPanel: {fileID: 1628205447}
 --- !u!4 &1142704237
 Transform:
@@ -5327,12 +5328,6 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!1 &1702457383 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4975951945498595846, guid: b0d042045e666f849b3e1aa5f74d8378,
-    type: 3}
-  m_PrefabInstance: {fileID: 5401793966929887511}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1722701004
 GameObject:
   m_ObjectHideFlags: 0
@@ -14422,9 +14417,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d8c4973124fa8f468dc2d00d9edaadc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  user: {fileID: 0}
+  gunRoots: []
+  normalBullet: {fileID: 0}
+  especialBullet: {fileID: 0}
+  target: {fileID: 0}
   damage: 10
-  cadence: 3
+  user: {fileID: 0}
+  trail: {fileID: 0}
 --- !u!1 &4536751663918607396
 GameObject:
   m_ObjectHideFlags: 0
@@ -16248,7 +16247,7 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: b0d042045e666f849b3e1aa5f74d8378, type: 3}
 --- !u!224 &5401793966929887512 stripped
 RectTransform:
-  m_CorrespondingSourceObject: {fileID: 1057572041341211664, guid: b0d042045e666f849b3e1aa5f74d8378,
+  m_CorrespondingSourceObject: {fileID: 529670536532033715, guid: b0d042045e666f849b3e1aa5f74d8378,
     type: 3}
   m_PrefabInstance: {fileID: 5401793966929887511}
   m_PrefabAsset: {fileID: 0}
