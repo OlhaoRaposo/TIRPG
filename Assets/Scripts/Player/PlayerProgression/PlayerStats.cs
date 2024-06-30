@@ -9,7 +9,7 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] CharacterAttributeData startAttributeData;
 
     [SerializeField] int maxLevel = 10;
-    int level = 0;
+    public int level = 0;
 
     [SerializeField] LevelUpData levelupData;
 
@@ -39,7 +39,7 @@ public class PlayerStats : MonoBehaviour
     float staminaRegenMultiplier = 1f;
 
     int pointsAddedWhenLevelUp = 5;
-    int availablePoints = 0;
+    public int availablePoints = 0;
 
     [SerializeField] List<SkillData> skills = new List<SkillData>();
 
@@ -209,7 +209,7 @@ public class PlayerStats : MonoBehaviour
         }
         else
         {
-            Debug.Log("Player n„o possui pontos de habilidade suficientes");
+            Debug.Log("Player n√£o possui pontos de habilidade suficientes");
         }
     }
 

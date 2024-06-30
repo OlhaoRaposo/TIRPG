@@ -33,6 +33,9 @@ namespace Tekoha.Database
         
         //Time of the day
         public string currentHour;
+        
+        //Level
+        public int currentLevel;
     }
     
     [Serializable]
