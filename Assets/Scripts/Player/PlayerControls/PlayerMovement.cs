@@ -16,12 +16,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private CapsuleCollider playerCollider;
     public GameObject playerModel;
     [SerializeField] private float walkSpeedMultiplier, runSpeedMultiplier, jumpHeight, stamina = 100f;
-    [SerializeField] private bool canMove = true, isRunning = false, isDashing = false, isJumping = false, isGrounded = true;
+    [SerializeField] private bool canMove = true, isRunning = false, isJumping = false, isGrounded = true;
 
     [Header("Combat")]
     public GameObject[] allWeapons;
     public bool canSwapWeapon = true;
     public bool isRanged = true;
+    public bool isDashing = false;
     private bool isStaggered = false;
 
     private float speedModifier;
