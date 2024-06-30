@@ -35,6 +35,19 @@ public class Skill: MonoBehaviour
     {
         UIManager.instance?.SelectSkill(this);
     }
+    public void ForceAcquireSkill()
+    {
+        //Adicionar skillData á lista de skills
+        isUnlocked = true;
+        PlayerStats.instance?.AddSkill(skillData);
+
+        //Desabilita o botao de adquirir a skill
+        UIManager.instance?.DisableGetSkillButton();
+
+        GetComponent<Outline>().enabled = true;
+
+        SkillTree.instance.ResetAllSkillVisuals();
+    }
     public void AcquireSkill() 
     {
         if (!CanUnlockSkill()) return; //PODE SER RETIRADO POSTERIORMENTE (VERIFICACAO FEITA NO UIMANAGER P/ HABILITAR O BOTAO)

@@ -43,7 +43,7 @@ public class SaveController : MonoBehaviour
      save.cameraPosition = PlayerMovement.instance.gameObject.transform.position;
      save.cameraRotation = PlayerMovement.instance.gameObject.transform.rotation;
      save.bossesDefeated = WorldController.worldController.bossesDefeated;
-     save.currentLevel = PlayerStats.instance.level;
+     save.currentLevel = PlayerStats.instance.GetLevel();
      save.playerLife = PlayerHPController.instance.GetHp();
      save.cityLoyalty = LoyaltySystem.instance.GetInfluencePointsCity();
      save.natureLoyalty = LoyaltySystem.instance.GetInfluencePointsNature();

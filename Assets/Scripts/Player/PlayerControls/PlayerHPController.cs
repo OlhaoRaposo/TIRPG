@@ -112,10 +112,14 @@ public class PlayerHPController : MonoBehaviour
             }
         }
     }
+    public void SetMaxHp(float hp)
+    {
+        hpMax = hp;
+    }
     public void IncreaseMaxHP(float hp)
     {
         hpMax += hp;
-        currentHP = hpMax;
+        //currentHP = hpMax;
     }
     public void BuffHp(float multiplier, float duration)
     {
@@ -131,10 +135,14 @@ public class PlayerHPController : MonoBehaviour
         hpMax = startHp;
     }
 
+    public void SetMaxStamina(float stamina)
+    {
+        staminaMax = stamina;
+    }
     public void IncreaseStamina(float stam)
     {
         staminaMax += stam;
-        currentStamina = staminaMax;
+        //currentStamina = staminaMax;
     }
     public void BuffStamina(float multiplier, float duration)
     {

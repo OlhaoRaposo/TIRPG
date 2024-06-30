@@ -5,6 +5,7 @@ using UnityEngine;
 public class SkillTree : MonoBehaviour
 {
     public static SkillTree instance;
+
     SkillTreeDragMove dragClass;
 
     [SerializeField] List<Skill> skills;
@@ -50,6 +51,10 @@ public class SkillTree : MonoBehaviour
         }
 
         return skills;
+    }
+    public void ForceAcquireSkill(SkillData data)
+    {
+        GetSkillByData(data).ForceAcquireSkill();
     }
     public SkillTreeDragMove GetDragClass()
     {
