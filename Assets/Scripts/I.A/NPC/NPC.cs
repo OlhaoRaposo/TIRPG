@@ -88,7 +88,8 @@ public class NPC : MonoBehaviour
             }else {
                 EnableLastBoxConfiguration();
                 if(!invoked) {
-                    hasDialogue.SetActive(false);
+                    if(hasDialogue != null)
+                        hasDialogue.SetActive(false);
                     OnEndDialogue.Invoke();
                     if(hasDrop)
                         ItemDropManager.instance.DropItem(dropInfo, transform.position);

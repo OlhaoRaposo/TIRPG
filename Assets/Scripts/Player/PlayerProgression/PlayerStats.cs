@@ -9,7 +9,7 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] CharacterAttributeData startAttributeData;
 
     [SerializeField] int maxLevel = 18;
-    int level = 0;
+    public int level = 0;
 
     [SerializeField] LevelUpData levelupData;
 
@@ -41,7 +41,7 @@ public class PlayerStats : MonoBehaviour
     int pointsAddedWhenLevelUp = 5;
     public int availablePoints = 0;
 
-    [SerializeField] List<SkillData> skills = new List<SkillData>();
+    [SerializeField] public List<SkillData> skills = new List<SkillData>();
 
     void Awake()
     {

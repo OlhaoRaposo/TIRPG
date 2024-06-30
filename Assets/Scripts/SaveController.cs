@@ -44,6 +44,10 @@ public class SaveController : MonoBehaviour
      save.cameraRotation = PlayerMovement.instance.gameObject.transform.rotation;
      save.bossesDefeated = WorldController.worldController.bossesDefeated;
      save.currentLevel = PlayerStats.instance.level;
+     save.skillsLearned = PlayerStats.instance.skills;
+     save.strengthPoint = PlayerStats.instance.strength;
+     save.agilityPoint = PlayerStats.instance.agility;
+     save.endurancePoint = PlayerStats.instance.endurance;
      save.playerLife = PlayerHPController.instance.GetHp();
      save.cityLoyalty = LoyaltySystem.instance.GetInfluencePointsCity();
      save.natureLoyalty = LoyaltySystem.instance.GetInfluencePointsNature();
@@ -70,9 +74,11 @@ public class SaveController : MonoBehaviour
             PlayerMovement.instance.TeleportPlayer(save.playerPosition);
             PlayerMovement.instance.gameObject.transform.rotation = save.playerRotation;
             PlayerHPController.instance.SetHP(save.playerLife);
-            for (int i = 0; i < save.currentLevel; i++) {
-                PlayerStats.instance.LevelUp();
-            }
+            
+            //TODO
+            //SET STATS POINTS
+            //PlayerStats.instance.skills = save.skillsLearned;
+            
             //Camera
             PlayerCameraMovement.instance.gameObject.transform.rotation = save.cameraRotation;
             //Bosses

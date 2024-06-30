@@ -13,7 +13,7 @@ public class VFXTriggerScript : MonoBehaviour
 
         effectsParent = new GameObject[childCount];
 
-        for (int i = 0; i<=childCount; i++)
+        for (int i = 0; i < childCount; i++)
         {
             effectsParent[i] = parentObject.transform.GetChild(i).gameObject;
         }

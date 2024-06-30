@@ -36,6 +36,9 @@ namespace Tekoha.Database
         
         //Level
         public int currentLevel;
+        public int avaliablePoints;
+        public int strengthPoint, agilityPoint, intelligencePoint,endurancePoint;
+        public List<SkillData> skillsLearned;
     }
     
     [Serializable]
