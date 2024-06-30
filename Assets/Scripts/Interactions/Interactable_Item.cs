@@ -45,7 +45,7 @@ public class Interactable_Item : MonoBehaviour, IInteractable
     }
     public void SetItemData(ItemData data)
     {
-        ItemData[] tempArray = new ItemData[] { data };
+        ItemData[] tempArray = new ItemData[1] { data };
         itemData = tempArray;
     }
 }
