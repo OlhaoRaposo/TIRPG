@@ -15,9 +15,9 @@ public class Interactable_Rocks : MonoBehaviour, IInteractable
         //item.localPosition = Vector3.zero;
         if (PlayerInventory.instance.LookForItem(requiredItem))
         {
-            item = PlayerInventory.instance.DropItem(requiredItem);
-            item.transform.SetParent(galonPosition);
-            item.transform.localPosition = Vector3.zero;
+            //item = PlayerInventory.instance.DropItem(requiredItem);
+            //item.transform.SetParent(galonPosition);
+            //item.transform.localPosition = Vector3.zero;
         }
 
         Invoke("DestroyRocks", 5f);

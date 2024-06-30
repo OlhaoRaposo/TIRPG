@@ -12,10 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f546a49af79b924bb31efff73241a18, type: 3}
   m_Name: Skill 2
   m_EditorClassIdentifier: 
-  _name: 
-  description: 
-  skillEffects: []
-  icon: {fileID: 0}
-  skillPointsRequired: 0
-  requirements: []
-  skillsRequired: []
+  _name: "For\xE7a II"
+  description: 'Aumenta o dano corpo-a-corpo em 25%
+
+    Aumenta o multiplicador
+    de dano de fogo em 25%'
+  skillEffects:
+  - effects: 1
+    amount: 0.25
+  - effects: 9
+    amount: 0.25
+  icon: {fileID: 21300000, guid: 32c74d2c8a5e16447998d7f7ee07e6a8, type: 3}
+  skillPointsRequired: 2
+  requirements:
+  - attribute: 0
+    amount: 6
+  skillsRequired:
+  - {fileID: 11400000, guid: 02a1a4937a837ae449a3e2bde62cda9b, type: 2}

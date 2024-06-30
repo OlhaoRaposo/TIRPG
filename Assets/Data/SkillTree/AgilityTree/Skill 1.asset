@@ -13,9 +13,13 @@ MonoBehaviour:
   m_Name: Skill 1
   m_EditorClassIdentifier: 
   _name: Agilidade I
-  description: 
-  skillEffects: []
-  icon: {fileID: 0}
-  skillPointsRequired: 0
-  requirements: []
+  description: Aumenta o multiplicador de velocidade de movimento em 10%
+  skillEffects:
+  - effects: 3
+    amount: 0.1
+  icon: {fileID: 21300000, guid: 2d45226dc2ed1c942b5ba8760617f7aa, type: 3}
+  skillPointsRequired: 1
+  requirements:
+  - attribute: 1
+    amount: 5
   skillsRequired: []

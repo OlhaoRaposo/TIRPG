@@ -24,6 +24,7 @@ public class EnemyBehaviour : MonoBehaviour
  public Data data;
  public GameObject arena;
  [Header("Drops&Quests")]
+ public int xpPoints = 1000;
  public ItemDropInfo[] dropInfo;
  public QuestType.EnemyTypes questType;
  [Header("Canvas")]
@@ -167,7 +168,7 @@ public class EnemyBehaviour : MonoBehaviour
    Debug.Log("KilledEn" + gameObject.name);
    Destroy(this.gameObject);
    ItemDropManager.instance.DropItem(dropInfo, transform.position);
-   PlayerStats.instance.GainXp(Random.Range(30,100));
+   PlayerStats.instance.GainXp(xpPoints);
  }
  public void TakeDamage(float damage, DamageElementManager.DamageElement damageElement)
  {

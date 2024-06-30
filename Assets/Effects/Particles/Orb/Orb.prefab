@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3072079942369938048}
   - component: {fileID: 2093580069252302117}
   - component: {fileID: 4244946882713874927}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SimpleSphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 5866809177130123763}
   - component: {fileID: 2611601718801929291}
   - component: {fileID: 3360022459622401761}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4921,7 +4921,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2335408100445536530}
-  m_Layer: 0
+  - component: {fileID: 4146994215120929796}
+  - component: {fileID: 4501330232277809482}
+  m_Layer: 7
   m_Name: Orb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4946,6 +4948,40 @@ Transform:
   - {fileID: 5866809177130123763}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &4146994215120929796
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5191422009431382436}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4501330232277809482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5191422009431382436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e314bcc900977f4a92b0ee8c427f280, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemData: []
 --- !u!1001 &4676454352791305131
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5018,6 +5054,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6538314276706595715, guid: 23497b796523acb4f9fadaed56b5599a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6623300891721321473, guid: 23497b796523acb4f9fadaed56b5599a,
         type: 3}
@@ -5158,6 +5199,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Breath
+      objectReference: {fileID: 0}
+    - target: {fileID: 7645206672752055222, guid: 23497b796523acb4f9fadaed56b5599a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

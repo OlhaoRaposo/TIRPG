@@ -49,10 +49,10 @@ public class PlayerInventory : MonoBehaviour
     }
     public void EquipStartItems()
     {
-        EquipRangedWeapon(items[0]);
-        EquipMeleeWeapon(items[0]);
-        EquipThrowable(items[0]);
-        EquipConsumable(items[0]);
+        InitialEquipRangedWeapon(items[0]);
+        InitialEquipMeleeWeapon(items[0]);
+        InitialEquipThrowable(items[0]);
+        InitialEquipConsumable(items[0]);
     }
     public void UsedConsumable()
     {
@@ -195,17 +195,6 @@ public class PlayerInventory : MonoBehaviour
 
         items.Remove(itemData);
     }
-    public GameObject DropItem(ItemData itemData)
-    {
-        if (RemoveItemFromInventory(itemData))
-        {
-            SortInventory();
-            GameObject droppedItem = Instantiate(itemData.prefab, PlayerInteractions.instance.transform.position + (Vector3.up + PlayerInteractions.instance.transform.forward), Quaternion.identity);
-            ItemDropManager.instance.SetItemParent(droppedItem.transform);
-            return droppedItem;
-        }
-        return null;
-    }
     public bool LookForItem(ItemData itemData)
     {
         foreach (ItemObject i in items)
@@ -287,7 +276,8 @@ public class PlayerInventory : MonoBehaviour
     public void DropMeleeWeapon(ItemData itemData)
     {
         meleeWeaponSlot.SetItem();
-        GameObject droppedItem = Instantiate(itemData.prefab, PlayerInteractions.instance.transform.position + (Vector3.up + PlayerInteractions.instance.transform.forward), Quaternion.identity);
+        ItemDropManager.instance.DropItem(itemData, PlayerInteractions.instance.transform.position + PlayerInteractions.instance.transform.forward);
+
         PlayerMeleeCombat.instance.enabled = false;
         foreach (GameObject playerWeapon in PlayerMovement.instance.allWeapons)
         {
@@ -297,12 +287,12 @@ public class PlayerInventory : MonoBehaviour
                 break;
             }
         }
-        ItemDropManager.instance.SetItemParent(droppedItem.transform);
     }
     public void DropRangedWeapon(ItemData itemData)
     {
         rangedWeaponSlot.SetItem();
-        GameObject droppedItem = Instantiate(itemData.prefab, PlayerInteractions.instance.transform.position + (Vector3.up + PlayerInteractions.instance.transform.forward), Quaternion.identity);
+        ItemDropManager.instance.DropItem(itemData, PlayerInteractions.instance.transform.position + PlayerInteractions.instance.transform.forward);
+        
         PlayerGun.instance.enabled = false;
         PlayerMovement.instance.playerModel.transform.Find(PlayerGun.instance.GetGunName()).gameObject.SetActive(false);
         foreach (GameObject playerWeapon in PlayerMovement.instance.allWeapons)
@@ -313,8 +303,14 @@ public class PlayerInventory : MonoBehaviour
                 break;
             }
         }
-        ItemDropManager.instance.SetItemParent(droppedItem.transform);
-
+    }
+    public void DropItem(ItemData itemData)
+    {
+        if (RemoveItemFromInventory(itemData))
+        {
+            SortInventory();
+            ItemDropManager.instance.DropItem(itemData, PlayerInteractions.instance.transform.position + PlayerInteractions.instance.transform.forward);
+        }
     }
     void SortInventory()
     {
@@ -342,6 +338,11 @@ public class PlayerInventory : MonoBehaviour
     {
         RemoveItemFromInventory(weaponData.item);
         meleeWeaponSlot.SetItem(weaponData);
+
+        SortInventory();
+
+        UIManager.instance.UpdateMeleeWeaponDescription(weaponData.item.meleeBase.damage.ToString(), weaponData.item.meleeBase.damageElement);
+
         PlayerMeleeCombat.instance?.SetNewMeleeWeapon(weaponData.item.meleeBase);
 
         foreach (GameObject playerWeapon in PlayerMovement.instance.allWeapons)
@@ -363,10 +364,12 @@ public class PlayerInventory : MonoBehaviour
     public void EquipRangedWeapon(ItemObject weaponData)
     {
         RemoveItemFromInventory(weaponData.item);
-
-        //if (rangedWeaponSlot.GetItem() != null)
-
         rangedWeaponSlot.SetItem(weaponData);
+
+        SortInventory();
+
+        UIManager.instance.UpdateRangedWeaponDescription(weaponData.item.gunBase.damage.ToString(), weaponData.item.gunBase.bulletElement);
+
         PlayerGun.instance?.SetNewGunWeapon(weaponData.item.gunBase);
 
         foreach (GameObject playerWeapon in PlayerMovement.instance.allWeapons)
@@ -389,8 +392,72 @@ public class PlayerInventory : MonoBehaviour
     {
         RemoveItemFromInventory(consumableData);
         consumableSlot.SetItem(consumableData);
+
+        SortInventory();
     }
     public void EquipThrowable(ItemObject throwableData)
+    {
+        RemoveItemFromInventory(throwableData);
+        throwableSlot.SetItem(throwableData);
+
+        SortInventory();
+    }
+    public void InitialEquipMeleeWeapon(ItemObject weaponData)
+    {
+        RemoveItemFromInventory(weaponData.item);
+        meleeWeaponSlot.SetItem(weaponData);
+
+        UIManager.instance.UpdateMeleeWeaponDescription(weaponData.item.meleeBase.damage.ToString(), weaponData.item.meleeBase.damageElement);
+
+        PlayerMeleeCombat.instance?.SetNewMeleeWeapon(weaponData.item.meleeBase);
+
+        foreach (GameObject playerWeapon in PlayerMovement.instance.allWeapons)
+        {
+            if (playerWeapon.name == PlayerMeleeCombat.instance.GetMeleeName() && PlayerMovement.instance.isRanged == false)
+            {
+                playerWeapon.SetActive(true);
+                PlayerMeleeCombat.instance.enabled = true;
+            }
+            else
+            {
+                if (playerWeapon.name != PlayerGun.instance.GetGunName())
+                {
+                    playerWeapon.SetActive(false);
+                }
+            }
+        }
+    }
+    public void InitialEquipRangedWeapon(ItemObject weaponData)
+    {
+        RemoveItemFromInventory(weaponData.item);
+        rangedWeaponSlot.SetItem(weaponData);
+
+        UIManager.instance.UpdateRangedWeaponDescription(weaponData.item.gunBase.damage.ToString(), weaponData.item.gunBase.bulletElement);
+
+        PlayerGun.instance?.SetNewGunWeapon(weaponData.item.gunBase);
+
+        foreach (GameObject playerWeapon in PlayerMovement.instance.allWeapons)
+        {
+            if (playerWeapon.name == PlayerGun.instance.GetGunName() && PlayerMovement.instance.isRanged == true)
+            {
+                playerWeapon.SetActive(true);
+                PlayerGun.instance.enabled = true;
+            }
+            else
+            {
+                if (playerWeapon.name != PlayerMeleeCombat.instance.GetMeleeName())
+                {
+                    playerWeapon.SetActive(false);
+                }
+            }
+        }
+    }
+    public void InitialEquipConsumable(ItemObject consumableData)
+    {
+        RemoveItemFromInventory(consumableData);
+        consumableSlot.SetItem(consumableData);
+    }
+    public void InitialEquipThrowable(ItemObject throwableData)
     {
         RemoveItemFromInventory(throwableData);
         throwableSlot.SetItem(throwableData);

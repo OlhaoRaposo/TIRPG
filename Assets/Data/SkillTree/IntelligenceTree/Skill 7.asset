@@ -12,10 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f546a49af79b924bb31efff73241a18, type: 3}
   m_Name: Skill 7
   m_EditorClassIdentifier: 
-  _name: 
-  description: 
-  skillEffects: []
-  icon: {fileID: 0}
-  skillPointsRequired: 0
-  requirements: []
-  skillsRequired: []
+  _name: "Intelig\xEAncia IV"
+  description: "Aumento do multiplicador de experi\xEAncia em 100%\nAumento do dano
+    \xE0 dist\xE2ncia em 100%\nAumenta o dano de \xE1cido em 100%"
+  skillEffects:
+  - effects: 0
+    amount: 1
+  - effects: 2
+    amount: 1
+  - effects: 7
+    amount: 1
+  icon: {fileID: 21300000, guid: 1f1fc9ccbcac8be499083fdb64ef9ab2, type: 3}
+  skillPointsRequired: 12
+  requirements:
+  - attribute: 2
+    amount: 12
+  skillsRequired:
+  - {fileID: 11400000, guid: 8b98b6e7b187d504eab4235aa185ba18, type: 2}
