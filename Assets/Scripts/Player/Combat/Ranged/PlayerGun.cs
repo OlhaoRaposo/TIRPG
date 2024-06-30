@@ -55,7 +55,7 @@ public class PlayerGun : MonoBehaviour
 
     private void Shoot()
     {
-        if (isReloading == false /*CHAMAR FUNÇÃO PARA PLAYER EM DIÁLOGO*/ && canShoot == true)
+        if (isReloading == false && canShoot == true && UIManager.instance.GetIsInMenus() == false)
         {
             if (ammo > 0)
             {

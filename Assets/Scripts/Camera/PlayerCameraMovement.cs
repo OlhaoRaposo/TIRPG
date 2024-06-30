@@ -117,7 +117,7 @@ public class PlayerCameraMovement : MonoBehaviour
 
     private void PlayerAim()
     {
-        if (Input.GetMouseButton(1) == true)
+        if (Input.GetMouseButton(1) == true && UIManager.instance.GetIsInMenus() == false)
         {
             AlignTargetWithCamera(playerObject);
             SetCurrentSense(aimSense);

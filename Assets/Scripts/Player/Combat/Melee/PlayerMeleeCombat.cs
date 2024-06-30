@@ -63,7 +63,7 @@ public class PlayerMeleeCombat : MonoBehaviour
 
     private void MeleeAttack()
     {
-        if (Input.GetMouseButtonDown(0) && canAttack && PlayerMovement.instance.GetIsGrounded())
+        if (Input.GetMouseButtonDown(0) && canAttack && PlayerMovement.instance.GetIsGrounded() && UIManager.instance.GetIsInMenus() == false)
         {
             if (Time.time >= nextAttackCooldown)
             {

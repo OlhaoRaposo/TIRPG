@@ -7,8 +7,8 @@ public class PlayerMovement : MonoBehaviour
 {
     public static PlayerMovement instance;
 
-    //[Header("CAMERA DO PLAYER")]
-    //[SerializeField] public GameObject CAMERADOPLAYER;
+    [Header("Audio")]
+    public AudioBoard localBoard;
 
     [Header("Movement")]
     [SerializeField] private Animator playerAnimator;
@@ -134,6 +134,21 @@ public class PlayerMovement : MonoBehaviour
             playerAnimator.SetFloat("WalkHorizontal", x);
             playerAnimator.SetFloat("WalkVertical", y);
         }
+
+        //TOCAR SOM AO ANDAR NO CHAO DE ANDAR
+        if(isGrounded == true && (x != 0 || y != 0))
+        {
+            float variance = Random.Range(-0.10f, 0.11f);
+            if(isRunning)
+            {
+                localBoard.ChangePitch("Player Walk", 1.50f + variance);
+            }
+            else
+            {
+                localBoard.ChangePitch("Player Walk", 1.00f + variance);
+            }
+            localBoard.PlayAudio("Player Walk");
+        }
     }
 
     private void GroundCheck()
@@ -172,6 +187,8 @@ public class PlayerMovement : MonoBehaviour
             startRelativePoint = transform.position;
             isJumping = true;
             playerAnimator.SetBool("IsJumping", true);
+
+            localBoard.PlayAudio("Player Jump");
             //COMEÇOU O PULO
         }
 
