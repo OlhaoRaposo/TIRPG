@@ -9,9 +9,10 @@ public class ArmadeiraWeapon : MonoBehaviour
      public GameObject normalBullet;
      public GameObject especialBullet;
      public GameObject target;
-        [SerializeField] private float damage;
+     [SerializeField] private float damage;
      public EnemyBehaviour user;
      private bool isShooting;
+     public GameObject trail;
 
      public void Attack(string expression){
          Debug.Log("Attacking with: " + expression);
@@ -52,6 +53,8 @@ public class ArmadeiraWeapon : MonoBehaviour
              Vector3 pos = new Vector3(user.target.transform.position.x, user.transform.position.y, user.target.transform.position.z);
              user.transform.LookAt(pos);
          }
+
+       
      }
      private void OnTriggerEnter(Collider col) {
          if (col.gameObject.CompareTag("Player")) {
@@ -61,7 +64,14 @@ public class ArmadeiraWeapon : MonoBehaviour
      }
      IEnumerator MeleeHit(string expression) {
          user.enemyAnimator.SetTrigger(expression);
-         yield return new WaitForSeconds(1);
+         yield return new WaitForSeconds(.45f);
+         trail.gameObject.SetActive(true);
+         yield return new WaitForSeconds(.02f);
+         trail.gameObject.SetActive(false);
+         yield return new WaitForSeconds(.05f);
+         trail.gameObject.SetActive(true);
+         yield return new WaitForSeconds(2.2f);
+         trail.gameObject.SetActive(false);
          user.ChangeState(new ChaseState(user));
      }
      IEnumerator NormalShoot(int shoots,string expression) {

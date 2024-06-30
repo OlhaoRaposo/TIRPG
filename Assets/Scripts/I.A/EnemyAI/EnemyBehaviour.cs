@@ -17,6 +17,7 @@ public class EnemyBehaviour : MonoBehaviour
  public NavMeshAgent agent ;
  public Animator enemyAnimator;
  public UnityEvent OnStart;
+ public UnityEvent OnDie;
  public UnityAction OnTargeted;
  private Collider[] targetsDetected;
  [Header("Data")]
@@ -161,7 +162,8 @@ public class EnemyBehaviour : MonoBehaviour
      }
    
    }*/
-    WorldController.worldController.bossesDefeated.Add(gameObject.name);
+   OnDie.Invoke();
+   WorldController.worldController.bossesDefeated.Add(gameObject.name);
    Debug.Log("KilledEn" + gameObject.name);
    Destroy(this.gameObject);
    ItemDropManager.instance.DropItem(dropInfo, transform.position);

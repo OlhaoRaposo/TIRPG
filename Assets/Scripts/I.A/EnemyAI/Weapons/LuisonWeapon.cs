@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using UnityEngine;
 public class LuisonWeapon : MonoBehaviour
 {
     public EnemyBehaviour user;
     [SerializeField] private float damage;
+    public GameObject leftTrail, rightTrail;
 
     public void Attack(string expression){
         Debug.Log("Attacking with: " + expression);
@@ -25,9 +27,22 @@ public class LuisonWeapon : MonoBehaviour
                 break;
         }
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.O)) {
+            Attack("_meleeR");
+        }
+    }
+
     IEnumerator Melee(string expression) {
         user.enemyAnimator.SetTrigger(expression);
-        yield return new WaitForSeconds(1.5f);
+        leftTrail.SetActive(true);
+        rightTrail.SetActive(true);
+        yield return new WaitForSeconds(2f);
+        leftTrail.SetActive(false);
+        rightTrail.SetActive(false);
+        yield return new WaitForSeconds(1.2f);
         user.ChangeState(new ChaseState(user));
     }
     IEnumerator None() {
