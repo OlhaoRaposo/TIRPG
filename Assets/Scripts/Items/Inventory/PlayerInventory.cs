@@ -195,17 +195,6 @@ public class PlayerInventory : MonoBehaviour
 
         items.Remove(itemData);
     }
-    public GameObject DropItem(ItemData itemData)
-    {
-        if (RemoveItemFromInventory(itemData))
-        {
-            SortInventory();
-            GameObject droppedItem = Instantiate(itemData.prefab, PlayerInteractions.instance.transform.position + (Vector3.up + PlayerInteractions.instance.transform.forward), Quaternion.identity);
-            ItemDropManager.instance.SetItemParent(droppedItem.transform);
-            return droppedItem;
-        }
-        return null;
-    }
     public bool LookForItem(ItemData itemData)
     {
         foreach (ItemObject i in items)
@@ -287,7 +276,8 @@ public class PlayerInventory : MonoBehaviour
     public void DropMeleeWeapon(ItemData itemData)
     {
         meleeWeaponSlot.SetItem();
-        GameObject droppedItem = Instantiate(itemData.prefab, PlayerInteractions.instance.transform.position + (Vector3.up + PlayerInteractions.instance.transform.forward), Quaternion.identity);
+        ItemDropManager.instance.DropItem(itemData, PlayerInteractions.instance.transform.position + (Vector3.up + PlayerInteractions.instance.transform.forward));
+
         PlayerMeleeCombat.instance.enabled = false;
         foreach (GameObject playerWeapon in PlayerMovement.instance.allWeapons)
         {
@@ -297,12 +287,12 @@ public class PlayerInventory : MonoBehaviour
                 break;
             }
         }
-        ItemDropManager.instance.SetItemParent(droppedItem.transform);
     }
     public void DropRangedWeapon(ItemData itemData)
     {
         rangedWeaponSlot.SetItem();
-        GameObject droppedItem = Instantiate(itemData.prefab, PlayerInteractions.instance.transform.position + (Vector3.up + PlayerInteractions.instance.transform.forward), Quaternion.identity);
+        ItemDropManager.instance.DropItem(itemData, PlayerInteractions.instance.transform.position + (Vector3.up + PlayerInteractions.instance.transform.forward));
+        
         PlayerGun.instance.enabled = false;
         PlayerMovement.instance.playerModel.transform.Find(PlayerGun.instance.GetGunName()).gameObject.SetActive(false);
         foreach (GameObject playerWeapon in PlayerMovement.instance.allWeapons)
@@ -313,8 +303,17 @@ public class PlayerInventory : MonoBehaviour
                 break;
             }
         }
-        ItemDropManager.instance.SetItemParent(droppedItem.transform);
-
+    }
+    public GameObject DropItem(ItemData itemData)
+    {
+        if (RemoveItemFromInventory(itemData))
+        {
+            SortInventory();
+            GameObject droppedItem = Instantiate(itemData.prefab, PlayerInteractions.instance.transform.position + (Vector3.up + PlayerInteractions.instance.transform.forward), Quaternion.identity);
+            ItemDropManager.instance.SetItemParent(droppedItem.transform);
+            return droppedItem;
+        }
+        return null;
     }
     void SortInventory()
     {

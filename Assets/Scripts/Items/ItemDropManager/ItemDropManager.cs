@@ -6,6 +6,8 @@ public class ItemDropManager : MonoBehaviour
 {
     public static ItemDropManager instance;
 
+    [SerializeField] GameObject orbPrefab;
+
     [SerializeField] Transform droppedItemsParent;
     void Awake()
     {
@@ -15,20 +17,43 @@ public class ItemDropManager : MonoBehaviour
     {
         if (droppedItemsParent == null) droppedItemsParent = transform;
     }
+    public void DropItem(ItemData data, Vector3 instantiatePosition)
+    {
+        if (data == null) return;
+
+        GameObject orb = Instantiate(orbPrefab, instantiatePosition + Vector3.up, Quaternion.identity, droppedItemsParent);
+        orb.GetComponent<Interactable_Item>().SetItemData(data);
+
+        SetItemParent(droppedItemsParent);
+    }
     public void DropItem(ItemDropInfo[] dropInfo, Vector3 instantiatePosition)
     {
         if (dropInfo == null) return;
+
+        List<ItemData> droppedItemsData = new List<ItemData>();
 
         foreach(ItemDropInfo item in dropInfo)
         {
             if (Random.Range(0f, 1f) < item.dropRate)
             {
-                Instantiate(item.data.prefab, instantiatePosition + Vector3.up, Quaternion.identity, droppedItemsParent);
+                //Instantiate(item.data.prefab, instantiatePosition + Vector3.up, Quaternion.identity, droppedItemsParent);
+
+                droppedItemsData.Add(item.data);
             }
         }
+        GameObject orb = Instantiate(orbPrefab, instantiatePosition + Vector3.up, Quaternion.identity, droppedItemsParent);
+        orb.GetComponent<Interactable_Item>().SetItemData(droppedItemsData.ToArray());
+
+        SetItemParent(droppedItemsParent);
     }
     public void SetItemParent(Transform item)
     {
+        if (item == null)
+        {
+            item.SetParent(transform);
+            return;
+        }
+
         item.SetParent(droppedItemsParent);
     }
 

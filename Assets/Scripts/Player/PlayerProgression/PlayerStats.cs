@@ -8,7 +8,7 @@ public class PlayerStats : MonoBehaviour
 
     [SerializeField] CharacterAttributeData startAttributeData;
 
-    [SerializeField] int maxLevel = 10;
+    [SerializeField] int maxLevel = 18;
     int level = 0;
 
     [SerializeField] LevelUpData levelupData;
