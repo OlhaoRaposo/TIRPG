@@ -5,6 +5,8 @@ using UnityEngine;
 public class Interactable_Item : MonoBehaviour, IInteractable
 {
     [SerializeField] ItemData[] itemData;
+
+    [SerializeField] bool givesXp = false;
     
     //[SerializeField] QuestType.TypesOfCollectibles typesOf;
 
@@ -14,6 +16,11 @@ public class Interactable_Item : MonoBehaviour, IInteractable
         {
             Debug.LogError("No ItemData assigned to the object");
             return;
+        }
+
+        if (givesXp)
+        {
+            PlayerStats.instance.GainXp(20);
         }
 
         string itemsPicked = "";

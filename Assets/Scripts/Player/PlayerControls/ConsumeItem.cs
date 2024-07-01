@@ -52,7 +52,7 @@ public class ConsumeItem : MonoBehaviour
             }
 
             //Remover consumivel do inventario
-            PlayerInventory.instance.UsedConsumable();
+            if (consumable.name != "Cabaça") PlayerInventory.instance.UsedConsumable();
         }
         else
         {
