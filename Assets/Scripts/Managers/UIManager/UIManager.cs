@@ -78,6 +78,11 @@ public class UIManager : MonoBehaviour
     [SerializeField] Text availablePointsText;
 
     [Header("Inventory")]
+    [SerializeField] Text meleeWeaponName;
+    [SerializeField] Text rangedWeaponName;
+    [SerializeField] Text consumableName;
+    [SerializeField] Text throwableName;
+
     [SerializeField] Text meleeWeaponDesc;
     [SerializeField] Text rangedWeaponDesc;
 
@@ -127,6 +132,38 @@ public class UIManager : MonoBehaviour
     public void UpdateAmmo(string s)
     {
         ammoText.text = s;
+    }
+    public void UpdateMeleeName(string n)
+    {
+        meleeWeaponName.text = n;
+    }
+    public void UpdateRangedName(string n)
+    {
+        rangedWeaponName.text = n;
+    }
+    public void UpdateConsumableName(string n)
+    {
+        consumableName.text = n;
+    }
+    public void UpdateThrowableName(string n)
+    {
+        throwableName.text = n;
+    }
+    public void UpdateMeleeName()
+    {
+        meleeWeaponName.text = "Corpo a corpo";
+    }
+    public void UpdateRangedName()
+    {
+        rangedWeaponName.text = "Arma à distância";
+    }
+    public void UpdateConsumableName()
+    {
+        consumableName.text = "Consumível";
+    }
+    public void UpdateThrowableName()
+    {
+        throwableName.text = "Arremessável";
     }
     public void UpdateMeleeWeaponDescription(string damage, DamageElementManager.DamageElement type)
     {
@@ -364,7 +401,7 @@ public class UIManager : MonoBehaviour
     }
     void UpdateMerchantNameText()
     {
-        merchantInventoryLabel.text = currentMerchant.GetInventoryData().merchantName + "'s Inventory";
+        merchantInventoryLabel.text = "Inventário do mercador";
     }
     public void UpdateShopInfluenceInfo()
     {

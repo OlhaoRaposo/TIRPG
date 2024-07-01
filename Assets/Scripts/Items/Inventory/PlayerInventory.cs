@@ -23,7 +23,7 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField] WeaponSlot meleeWeaponSlot;
     [SerializeField] WeaponSlot rangedWeaponSlot;
     [SerializeField] ConsumableSlot consumableSlot;
-    [SerializeField] ConsumableSlot throwableSlot;
+    [SerializeField] ThrowableSlot throwableSlot;
 
     //[SerializeField] List<ItemData> items = new List<ItemData>();
     [SerializeField] List<ItemObject> items = new List<ItemObject>();
@@ -276,6 +276,8 @@ public class PlayerInventory : MonoBehaviour
     public void DropMeleeWeapon(ItemData itemData)
     {
         meleeWeaponSlot.SetItem();
+        UIManager.instance.UpdateMeleeName();
+
         ItemDropManager.instance.DropItem(itemData, PlayerInteractions.instance.transform.position + PlayerInteractions.instance.transform.forward);
 
         PlayerMeleeCombat.instance.enabled = false;
@@ -291,6 +293,8 @@ public class PlayerInventory : MonoBehaviour
     public void DropRangedWeapon(ItemData itemData)
     {
         rangedWeaponSlot.SetItem();
+        UIManager.instance.UpdateRangedName();
+
         ItemDropManager.instance.DropItem(itemData, PlayerInteractions.instance.transform.position + PlayerInteractions.instance.transform.forward);
         
         PlayerGun.instance.enabled = false;
@@ -303,6 +307,20 @@ public class PlayerInventory : MonoBehaviour
                 break;
             }
         }
+    }
+    public void DropConsumable(ItemData itemData)
+    {
+        consumableSlot.SetItem();
+        UIManager.instance.UpdateConsumableName();
+
+        ItemDropManager.instance.DropItem(itemData, PlayerInteractions.instance.transform.position + PlayerInteractions.instance.transform.forward);
+    }
+    public void DropThrowable(ItemData itemData)
+    {
+        throwableSlot.SetItem();
+        UIManager.instance.UpdateThrowableName();
+
+        ItemDropManager.instance.DropItem(itemData, PlayerInteractions.instance.transform.position + PlayerInteractions.instance.transform.forward);
     }
     public void DropItem(ItemData itemData)
     {
@@ -342,6 +360,7 @@ public class PlayerInventory : MonoBehaviour
         SortInventory();
 
         UIManager.instance.UpdateMeleeWeaponDescription(weaponData.item.meleeBase.damage.ToString(), weaponData.item.meleeBase.damageElement);
+        UIManager.instance.UpdateMeleeName(weaponData.item.name);
 
         PlayerMeleeCombat.instance?.SetNewMeleeWeapon(weaponData.item.meleeBase);
 
@@ -369,6 +388,7 @@ public class PlayerInventory : MonoBehaviour
         SortInventory();
 
         UIManager.instance.UpdateRangedWeaponDescription(weaponData.item.gunBase.damage.ToString(), weaponData.item.gunBase.bulletElement);
+        UIManager.instance.UpdateRangedName(weaponData.item.name);
 
         PlayerGun.instance?.SetNewGunWeapon(weaponData.item.gunBase);
 
@@ -393,12 +413,16 @@ public class PlayerInventory : MonoBehaviour
         RemoveItemFromInventory(consumableData);
         consumableSlot.SetItem(consumableData);
 
+        UIManager.instance.UpdateConsumableName(consumableData.item.name);
+
         SortInventory();
     }
     public void EquipThrowable(ItemObject throwableData)
     {
         RemoveItemFromInventory(throwableData);
         throwableSlot.SetItem(throwableData);
+
+        UIManager.instance.UpdateThrowableName(throwableData.item.name);
 
         SortInventory();
     }
@@ -407,6 +431,7 @@ public class PlayerInventory : MonoBehaviour
         RemoveItemFromInventory(weaponData.item);
         meleeWeaponSlot.SetItem(weaponData);
 
+        UIManager.instance.UpdateMeleeName(weaponData.item.name);
         UIManager.instance.UpdateMeleeWeaponDescription(weaponData.item.meleeBase.damage.ToString(), weaponData.item.meleeBase.damageElement);
 
         PlayerMeleeCombat.instance?.SetNewMeleeWeapon(weaponData.item.meleeBase);
@@ -432,6 +457,7 @@ public class PlayerInventory : MonoBehaviour
         RemoveItemFromInventory(weaponData.item);
         rangedWeaponSlot.SetItem(weaponData);
 
+        UIManager.instance.UpdateRangedName(weaponData.item.name);
         UIManager.instance.UpdateRangedWeaponDescription(weaponData.item.gunBase.damage.ToString(), weaponData.item.gunBase.bulletElement);
 
         PlayerGun.instance?.SetNewGunWeapon(weaponData.item.gunBase);
@@ -456,11 +482,15 @@ public class PlayerInventory : MonoBehaviour
     {
         RemoveItemFromInventory(consumableData);
         consumableSlot.SetItem(consumableData);
+
+        UIManager.instance.UpdateConsumableName(consumableData.item.name);
     }
     public void InitialEquipThrowable(ItemObject throwableData)
     {
         RemoveItemFromInventory(throwableData);
         throwableSlot.SetItem(throwableData);
+
+        UIManager.instance.UpdateThrowableName(throwableData.item.name);
     }
     public ItemData GetMelee()
     {
