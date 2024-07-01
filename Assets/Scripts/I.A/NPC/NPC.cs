@@ -157,14 +157,18 @@ public class TutorialNPC  {
         dialogues[1].sentences = new List<string>();
         switch (index) {
             case  0:
-                dialogues[0].sentences.Add("Bem vindo ao tutorial de movimentação");
-                dialogues[0].sentences.Add("Utilize as teclas W, A, S, D para se movimentar");
-                dialogues[0].sentences.Add($"Utilize a tecla: '{InputController.instance.jump}' para pular");
-                dialogues[0].sentences.Add($"Com a tecla: '{InputController.instance.dash}' você irar dar um impulso para o lado em que estiver andando");
-                dialogues[0].sentences.Add($"Para correr use: '{InputController.instance.run}'");
-                dialogues[0].sentences.Add($"Ah e para interagir com o proximo tutor aperte a tecla: '{InputController.instance.interaction}'");
-                dialogues[0].sentences.Add("Agora siga em frente");
-                dialogues[1].sentences.Add("Mais a frente o proximo robô ira te ensinar mais alguns truques");
+                dialogues[2].sentences = new List<string>();
+                dialogues[0].sentences.Add("Bem vindo ao tutorial.");
+                dialogues[0].sentences.Add("Derrote os chefões espalhados pelo mundo interagindo com os NPCs que fornecem suas localizações.");
+                dialogues[0].sentences.Add("As informações aparecerão no menu 'Quests' e um feixe de luz indicará onde encontrar os chefões");
+                dialogues[0].sentences.Add("Explore, encontre NPCs,acompanhe suas quests e prepare-se bem antes de cada batalha");
+                dialogues[1].sentences.Add("Utilize as teclas W, A, S, D para se movimentar");
+                dialogues[1].sentences.Add($"Utilize a tecla: '{InputController.instance.jump}' para pular");
+                dialogues[1].sentences.Add($"Com a tecla: '{InputController.instance.dash}' você irar dar um impulso para o lado em que estiver andando");
+                dialogues[1].sentences.Add($"Para correr use: '{InputController.instance.run}'");
+                dialogues[1].sentences.Add($"Ah e para interagir com o proximo tutor aperte a tecla: '{InputController.instance.interaction}'");
+                dialogues[1].sentences.Add("Agora siga em frente");
+                dialogues[2].sentences.Add("Mais a frente o proximo robô ira te ensinar mais alguns truques");
                 break;
             case 1:
                 dialogues[0].sentences.Add("Agora para a parte de Interação");
@@ -183,6 +187,10 @@ public class TutorialNPC  {
                 dialogues[1].sentences.Add("E para sair daqui use o Teleporte no canto da sala");
                 dialogues[1].sentences.Add("Boa sorte na sua jornada, e lembre-se de sempre se manter forte");
                 break;
+            case 3:
+                dialogues[0].sentences.Add("As armas testadas são iniciais; novas armas mais poderosas serão liberadas ao derrotar chefoes.");
+                break;
+                
         }
     }
 }
