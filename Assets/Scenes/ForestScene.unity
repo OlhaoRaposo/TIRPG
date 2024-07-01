@@ -1020,6 +1020,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 117572572}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &117572575 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2281547823785319634, guid: 8bdbc00cbe5fafe4f83b1e0927487ae3,
+    type: 3}
+  m_PrefabInstance: {fileID: 117572572}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 117572573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d0fcc4fde033914c9fa0cb5996bd92e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &137650013
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2242,7 +2254,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 117572575}
         m_TargetAssemblyTypeName: NPC, Assembly-CSharp
         m_MethodName: Interact
         m_Mode: 1
@@ -11270,7 +11282,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 117572575}
         m_TargetAssemblyTypeName: NPC, Assembly-CSharp
         m_MethodName: DisableChatBox
         m_Mode: 1
