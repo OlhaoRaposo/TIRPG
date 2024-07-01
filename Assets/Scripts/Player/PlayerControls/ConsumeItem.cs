@@ -17,7 +17,7 @@ public class ConsumeItem : MonoBehaviour
     {
         if (consumable == null)
         {
-            UIManager.instance.ShowTextFeedback("No consumable equipped");
+            UIManager.instance.ShowTextFeedback("Nenhum consumível equipado!");
             return;
         }
 
@@ -56,7 +56,7 @@ public class ConsumeItem : MonoBehaviour
         }
         else
         {
-            UIManager.instance.ShowTextFeedback("The consumable is on cooldown");
+            UIManager.instance.ShowTextFeedback("O consumível está em tempo de recarga");
         }
     }
 
