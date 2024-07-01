@@ -52,4 +52,46 @@ public class AudioController : MonoBehaviour
             PlayerPrefs.SetFloat("sfxVol", -80);
         }
     }
+
+    public void RemoteMasterVolumeChange(float value)
+    {
+        if(value != -20)
+        {
+            mixer.SetFloat("masterVol", value);
+            PlayerPrefs.SetFloat("masterVol", value);
+        }
+        else
+        {
+            mixer.SetFloat("masterVol", -80);
+            PlayerPrefs.SetFloat("masterVol", -80);
+        }
+    }
+
+    public void RemoteBGMVolumeChange(float value)
+    {
+        if(value != -20)
+        {
+            mixer.SetFloat("bgmVol", value);
+            PlayerPrefs.SetFloat("bgmVol", value);
+        }
+        else
+        {
+            mixer.SetFloat("bgmVol", -80);
+            PlayerPrefs.SetFloat("bgmVol", -80);
+        }
+    }
+
+    public void RemoteSFXVolumeChange(float value)
+    {
+        if(value != -20)
+        {
+            mixer.SetFloat("sfxVol", value);
+            PlayerPrefs.SetFloat("sfxVol", value);
+        }
+        else
+        {
+            mixer.SetFloat("sfxVol", -80);
+            PlayerPrefs.SetFloat("sfxVol", -80);
+        }
+    }
 }

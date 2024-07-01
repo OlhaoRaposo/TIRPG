@@ -13,6 +13,7 @@ public class ArmadeiraWeapon : MonoBehaviour
      public EnemyBehaviour user;
      private bool isShooting;
      public GameObject trail;
+     public AudioBoard localBoard;
 
      public void Attack(string expression){
          Debug.Log("Attacking with: " + expression);
@@ -65,6 +66,7 @@ public class ArmadeiraWeapon : MonoBehaviour
      IEnumerator MeleeHit(string expression) {
          user.enemyAnimator.SetTrigger(expression);
          yield return new WaitForSeconds(.45f);
+         localBoard.PlayAudio("Swing");
          trail.gameObject.SetActive(true);
          yield return new WaitForSeconds(.02f);
          trail.gameObject.SetActive(false);
