@@ -66,7 +66,7 @@ public class ArmadeiraWeapon : MonoBehaviour
      IEnumerator MeleeHit(string expression) {
          user.enemyAnimator.SetTrigger(expression);
          yield return new WaitForSeconds(.45f);
-         localBoard.PlayAudio("Swing");
+         localBoard.PlayAudio("Melee_Swing");
          trail.gameObject.SetActive(true);
          yield return new WaitForSeconds(.02f);
          trail.gameObject.SetActive(false);
@@ -122,6 +122,7 @@ public class ArmadeiraWeapon : MonoBehaviour
          Vector3 dir = user.target.transform.position - user.transform.position;
          user.agent.SetDestination(user.target.transform.position + dir.normalized);
          user.enemyAnimator.SetTrigger(expression);
+         localBoard.PlayAudio("Spider_Notice");
          yield return new WaitForSeconds(3);
          user.ChangeState(new ChaseState(user));
      }
