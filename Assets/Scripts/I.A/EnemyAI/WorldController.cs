@@ -166,10 +166,6 @@ public class WorldController : MonoBehaviour
             PlayerCameraMovement.instance.ToggleAimLock(false);
         else
             PlayerCameraMovement.instance.ToggleAimLock(true);
-        /*
-        CameraFollow.follow.gameObject.transform.position = new Vector3(401, 153, -205);
-        CameraFollow.follow.gameObject.transform.rotation = Quaternion.Euler(0, 21, 0);
-        */
         CameraFollow.follow.gameObject.SetActive(false);
     }
 }

@@ -21,7 +21,7 @@ public class PatrolState : IState {
    private Vector3 SelectRandomLocation(Vector3 reference) {
       Vector3 randomLocation;
       NavMeshHit hit;
-      randomLocation = reference + Random.insideUnitSphere * 5 + new Vector3(0, 300, 0);
+      randomLocation = reference + Random.insideUnitSphere * 1 + new Vector3(0, 300, 0);
       if (Physics.Raycast(randomLocation, Vector3.down, out RaycastHit hitInfo)) {
          if (NavMesh.SamplePosition(hitInfo.point, out hit, .5f, NavMesh.AllAreas)) {
             randomLocation = hit.position + new Vector3( 0,0.5f,0);

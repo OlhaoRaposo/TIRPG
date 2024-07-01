@@ -15,8 +15,7 @@ public class PlayerHPController : MonoBehaviour
     [Header("References")]
     [SerializeField] private Image hpImage, staminaImage;
 
-    private void Awake()
-    {
+    private void Awake() {
         instance = this;
     }
 
@@ -73,8 +72,7 @@ public class PlayerHPController : MonoBehaviour
         }
     }
     [ContextMenu("Die")]
-    void Die()
-    {
+    void Die() {
         PlayerCameraMovement.instance.ToggleAimLock(false);
         ItemDropManager.instance.DestroyDroppedItems();
         SceneController.instance.GameOver();

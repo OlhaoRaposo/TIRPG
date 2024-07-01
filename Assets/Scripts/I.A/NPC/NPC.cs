@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(Interactable_Npc))]
@@ -11,6 +10,7 @@ public class NPC : MonoBehaviour
 {
     public List<Dialogue> dialogues;
     public bool hasQuest;
+    public string quest;
     public List<Dialogue> questDialogue;
     public UnityEvent OnEndQuestDialogue;
     [SerializeField] public int currentDialogueIndex;
@@ -37,6 +37,8 @@ public class NPC : MonoBehaviour
         }
     }
     public void Interact() {
+        if(this.TryGetComponent(out InteractDetection ID))
+            ID.OnInteract();
         EnableChatBox();
         Talk();
         Debug.Log("Npc is Talking " + gameObject.name);
@@ -66,11 +68,12 @@ public class NPC : MonoBehaviour
     }
     private void Talk() {
         if (hasQuest) {
+            TypeWritter.instance.Write(npcReference.npcText, questDialogue[currentDialogueIndex].sentences[questDialogue[currentDialogueIndex].sentenceIndex]);
+            TypeWritter.instance.AttCurrentNPC(this);
+        }else {
             TypeWritter.instance.Write(npcReference.npcText, dialogues[currentDialogueIndex].sentences[dialogues[currentDialogueIndex].sentenceIndex]);
             TypeWritter.instance.AttCurrentNPC(this);
         }
-        TypeWritter.instance.Write(npcReference.npcText, dialogues[currentDialogueIndex].sentences[dialogues[currentDialogueIndex].sentenceIndex]);
-        TypeWritter.instance.AttCurrentNPC(this);
     }
     public void EndedWriting() {
         if (hasQuest)
@@ -80,6 +83,7 @@ public class NPC : MonoBehaviour
             }else {
                 EnableLastBoxConfiguration();
                 hasQuest = false;
+                AddQuest();
                 OnEndQuestDialogue.Invoke();
             }
         }else {
@@ -112,8 +116,8 @@ public class NPC : MonoBehaviour
         npcReference.nextButton.gameObject.SetActive(false);
     }
 
-    public void AddQuest(string questCode) {
-        QuestManager.instance.AddQuest(questCode);
+    public void AddQuest() {
+       MissionManager.instance.AddMission(quest);
     }
 }
 [Serializable]

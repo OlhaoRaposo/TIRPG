@@ -8,13 +8,11 @@ public class InteractDetection : MonoBehaviour
     private UnityEvent onInteracted = new UnityEvent();
     [SerializeField]
     public bool destroyOnTrigger = false;
-    public void OnInteract()
-    {
+    public void OnInteract() {
         onInteracted.Invoke();
         if (destroyOnTrigger) Destroy(this);
     }
-    public void SetNpc(UnityAction actionEnter)
-    {
+    public void SetNpc(UnityAction actionEnter) {
         onInteracted.AddListener(actionEnter);
     }
 }

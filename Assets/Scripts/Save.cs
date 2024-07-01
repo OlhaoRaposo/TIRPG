@@ -44,6 +44,7 @@ namespace Tekoha.Database
     [Serializable]
     public class SaveNPC {
         public string npcName;
+        public bool hasQuest;
         public int currentDialogueIndex;
     }
 }

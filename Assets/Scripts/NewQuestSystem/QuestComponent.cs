@@ -1,6 +1,6 @@
-using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class QuestComponent : MonoBehaviour {
-    public TextMeshProUGUI questTitle, questDescription;
+    public Text questTitle, questDescription;
 }

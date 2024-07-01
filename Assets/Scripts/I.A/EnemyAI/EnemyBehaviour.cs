@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
 public class EnemyBehaviour : MonoBehaviour
 { IState state;
@@ -155,14 +154,10 @@ public class EnemyBehaviour : MonoBehaviour
  }
  public void Die()
  {
-  /* if(TryGetComponent(out KillDetection kd)) {
+  if(TryGetComponent(out KillDetection kd)) {
      kd.onKill.Invoke();
-     if(mySpawner.spawner.TryGetComponent(out Spawner sp)) {
-       sp.hasQuestOnCourse = true;
-       sp.onKill = this.GetComponent<KillDetection>().onKill;
-     }
-   
-   }*/
+  }
+  
    OnDie.Invoke();
    WorldController.worldController.bossesDefeated.Add(gameObject.name);
    Debug.Log("KilledEn" + gameObject.name);
@@ -212,6 +207,9 @@ public class EnemyBehaviour : MonoBehaviour
          enemyAnimator.SetTrigger("Die");
        }
    }
+ }
+ public void RemoveQuest(string quest) {
+   MissionManager.instance.RemoveMission(quest);
  }
  public void  ChangeState(IState state) {
     this.state = state;

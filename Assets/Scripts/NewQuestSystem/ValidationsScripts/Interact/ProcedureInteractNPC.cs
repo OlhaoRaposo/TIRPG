@@ -30,8 +30,6 @@ public class ProcedureInteractNPC : StepModule
         onTriggerExit.RemoveListener(Exit);
     }
     
-   
-   
     public void Enter()
     {
         if (invoked) return;

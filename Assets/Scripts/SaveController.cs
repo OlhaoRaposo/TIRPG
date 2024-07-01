@@ -24,8 +24,12 @@ public class SaveController : MonoBehaviour
             SaveGame();
     }
 
-    private void Start() {
-        LoadGame();
+    public void MenuStart() {
+        if (File.Exists(path))
+            MenuAux.instance.continueBttn.SetActive(true);
+        else {
+            MenuAux.instance.continueBttn.SetActive(false);
+        }
     }
 
     private void Update()
@@ -59,6 +63,7 @@ public class SaveController : MonoBehaviour
          if (npc.invoked) {
              save.npcsInteracted.Add(new SaveNPC() {
                  npcName = npc.gameObject.name,
+                 hasQuest = npc.hasQuest,
                  currentDialogueIndex = npc.currentDialogueIndex
              });
          }
@@ -102,17 +107,19 @@ public class SaveController : MonoBehaviour
                 foreach (var saveNpc in save.npcsInteracted) {
                     if (npc.gameObject.name == saveNpc.npcName) {
                         npc.invoked = true;
+                        npc.hasQuest = saveNpc.hasQuest;
                         npc.currentDialogueIndex = saveNpc.currentDialogueIndex;
                     }
                 }
             }
             //Time
             WorldController.worldController.currentHour = Convert.ToDateTime(save.currentHour);
-        }else
-            SaveGame();
+        }
     }
-    void DeleteSave()
-    {
+    public void DeleteSave() {
         File.Delete(path);
+    }
+    public bool FileExists() {
+        return File.Exists(path);
     }
 }
