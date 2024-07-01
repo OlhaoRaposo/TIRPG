@@ -135,14 +135,6 @@ public class EnemyBehaviour : MonoBehaviour
    }
    EnemyCanvas.gameObject.SetActive(target != null);
 
-   if (target != null)
-   {
-     if (TargetDistance() >= 20) {
-       target = null;
-       ChangeState(new PatrolState(this));
-       arena.SetActive(false);     
-     }
-   }
    if (target != null){
      if (currentState != EnemyState.Chase) {
        ChangeState(new ChaseState(this));

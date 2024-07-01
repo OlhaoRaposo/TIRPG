@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Rendering;
 using System.Net.Http;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerHPController : MonoBehaviour
 {
@@ -74,6 +75,12 @@ public class PlayerHPController : MonoBehaviour
     }
     [ContextMenu("Die")]
     void Die() {
+        List<EnemyBehaviour> allEnemys = new List<EnemyBehaviour>(FindObjectsOfType<EnemyBehaviour>());
+        foreach (var enemy in allEnemys) {
+            enemy.target = null;
+            enemy.arena.SetActive(false);     
+        }
+        
         PlayerCameraMovement.instance.ToggleAimLock(false);
         PlayerMovement.instance.TeleportPlayer(new Vector3(648.67f,82.11f,235.04f));
         ItemDropManager.instance.DestroyDroppedItems();

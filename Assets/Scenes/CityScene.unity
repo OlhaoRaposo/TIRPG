@@ -1880,6 +1880,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: ;
       objectReference: {fileID: 0}
+    - target: {fileID: 6473632717520229371, guid: 8b9bf6fbb7cfae14985dae2ce1a7a38e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6619497767347986380, guid: 8b9bf6fbb7cfae14985dae2ce1a7a38e,
+        type: 3}
+      propertyPath: hasQuest
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6619497767347986380, guid: 8b9bf6fbb7cfae14985dae2ce1a7a38e,
         type: 3}
       propertyPath: quest.Array.size
@@ -1920,6 +1930,43 @@ PrefabInstance:
       propertyPath: npcReference.npcNameReference
       value: 
       objectReference: {fileID: 262155049}
+    - target: {fileID: 6619497767347986380, guid: 8b9bf6fbb7cfae14985dae2ce1a7a38e,
+        type: 3}
+      propertyPath: dialogues.Array.data[0].sentences.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6619497767347986380, guid: 8b9bf6fbb7cfae14985dae2ce1a7a38e,
+        type: 3}
+      propertyPath: dialogues.Array.data[0].sentences.Array.data[0]
+      value: "Voc\xEA ja viu nossa nova inven\xE7\xE3o? Um mecha de combate ahahhaah"
+      objectReference: {fileID: 0}
+    - target: {fileID: 6619497767347986380, guid: 8b9bf6fbb7cfae14985dae2ce1a7a38e,
+        type: 3}
+      propertyPath: dialogues.Array.data[0].sentences.Array.data[1]
+      value: Eu quero ver agora como esses monstros vao lidar com isso
+      objectReference: {fileID: 0}
+    - target: {fileID: 6619497767347986380, guid: 8b9bf6fbb7cfae14985dae2ce1a7a38e,
+        type: 3}
+      propertyPath: dialogues.Array.data[0].sentences.Array.data[2]
+      value: "Se voc\xEA quiser ver essa maravilha eu te dou o passe, so pegar o
+        teleporte ali do lado"
+      objectReference: {fileID: 0}
+    - target: {fileID: 6619497767347986380, guid: 8b9bf6fbb7cfae14985dae2ce1a7a38e,
+        type: 3}
+      propertyPath: questDialogue.Array.data[0].sentences.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6619497767347986380, guid: 8b9bf6fbb7cfae14985dae2ce1a7a38e,
+        type: 3}
+      propertyPath: questDialogue.Array.data[0].sentences.Array.data[0]
+      value: "Aquela cobra de fogo enorme ta acabando com nossos planos o mecha e
+        forte mas ferro e fogo voc\xEA sabe"
+      objectReference: {fileID: 0}
+    - target: {fileID: 6619497767347986380, guid: 8b9bf6fbb7cfae14985dae2ce1a7a38e,
+        type: 3}
+      propertyPath: questDialogue.Array.data[0].sentences.Array.data[1]
+      value: Se voce puder acabar com aquela cois seria bem interessante
+      objectReference: {fileID: 0}
     - target: {fileID: 7332302885056246599, guid: 8b9bf6fbb7cfae14985dae2ce1a7a38e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1970,6 +2017,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7859456318125387639, guid: 8b9bf6fbb7cfae14985dae2ce1a7a38e,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -10.324
+      objectReference: {fileID: 0}
+    - target: {fileID: 7859456318125387639, guid: 8b9bf6fbb7cfae14985dae2ce1a7a38e,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.46
+      objectReference: {fileID: 0}
+    - target: {fileID: 7859456318125387639, guid: 8b9bf6fbb7cfae14985dae2ce1a7a38e,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 22.245
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 4043057852429598166, guid: 8b9bf6fbb7cfae14985dae2ce1a7a38e, type: 3}
@@ -1978,7 +2040,11 @@ PrefabInstance:
         type: 3}
       insertIndex: 0
       addedObject: {fileID: 728315833}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6473632717520229371, guid: 8b9bf6fbb7cfae14985dae2ce1a7a38e,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 295727446}
   m_SourcePrefab: {fileID: 100100000, guid: 8b9bf6fbb7cfae14985dae2ce1a7a38e, type: 3}
 --- !u!4 &295727443 stripped
 Transform:
@@ -1998,6 +2064,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d0fcc4fde033914c9fa0cb5996bd92e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &295727445 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6473632717520229371, guid: 8b9bf6fbb7cfae14985dae2ce1a7a38e,
+    type: 3}
+  m_PrefabInstance: {fileID: 295727442}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &295727446
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 295727445}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.1, y: 0.1, z: 0.1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &307451228
 PrefabInstance:
   m_ObjectHideFlags: 0

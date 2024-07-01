@@ -67,8 +67,7 @@ public class MechaWeapon : MonoBehaviour
         user.ChangeState(new ChaseState(user));
     }
     IEnumerator None() {
-        Vector3 offset = user.transform.position - user.target.transform.position;
-        user.agent.SetDestination(user.target.transform.position + offset.normalized * 4);
+        user.agent.SetDestination(user.target.transform.position);
         yield return new WaitForSeconds(2);
         user.ChangeState(new ChaseState(user));
     }
