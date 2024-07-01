@@ -65,7 +65,8 @@ public class SaveController : MonoBehaviour
      }
      
      //Quests
-     save.quests = MissionManager.instance.missions.Select(mission => mission.missionTitle).ToList();
+     save.quests = MissionManager.instance.activeMissions.Select(mission => mission.missionTitle).ToList();
+     //Player
      
      save.playerPosition = PlayerMovement.instance.gameObject.transform.position;
      save.playerRotation = PlayerMovement.instance.gameObject.transform.rotation;

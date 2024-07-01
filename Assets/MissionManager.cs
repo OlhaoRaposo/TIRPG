@@ -6,7 +6,7 @@ using UnityEngine;
 public class MissionManager : MonoBehaviour {
     public static MissionManager instance;
     public List<Mission> missions;
-    public List<GameObject> activeMissions;
+    public List<Mission> activeMissions;
     [SerializeField]private GameObject questPrefab;
     [SerializeField]private Transform missionGroup;
     void Awake() {
@@ -22,18 +22,20 @@ public class MissionManager : MonoBehaviour {
         GameObject missionObject = Instantiate(questPrefab, transform.position, Quaternion.identity, missionGroup);
         missionObject.GetComponent<QuestComponent>().questTitle.text = missionToAdd.missionTitle;
         missionObject.GetComponent<QuestComponent>().questDescription.text = missionToAdd.missionDescription;
-        activeMissions.Add(missionObject);
+        activeMissions.Add(missionToAdd);
     }
     private Mission GetMission(string missionTitle) {
         return missions.Find(mission => mission.missionTitle == missionTitle);
     }
+    private Mission GetActiveMission(string missionTitle) {
+        return activeMissions.Find(mission => mission.missionTitle == missionTitle);
+    }
     
     public void RemoveMission(string missionTitle) {
-        if(GetMission(missionTitle) == null) return;
+        if(GetActiveMission(missionTitle) == null) return;
         
-        GameObject missionToRemove = activeMissions.Find(mission => mission.GetComponent<QuestComponent>().questTitle.text == missionTitle);
+        Mission missionToRemove = GetMission(missionTitle);
         activeMissions.Remove(missionToRemove);
-        Destroy(missionToRemove);
     }
 }
 [Serializable]
