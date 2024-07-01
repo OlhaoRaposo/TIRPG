@@ -246,6 +246,8 @@ public class PlayerMovement : MonoBehaviour
             playerAnimator.speed = runSpeedMultiplier;
             playerAnimator.SetBool("IsDashing", true);
             playerAnimator.Play("Dash Tree");
+
+            localBoard.PlayAudio("Player Dash");
         } //EXECUTA APENAS DURANTE O DASH PARA CONFERIR SE ELE JA TERMINOU DE DAR O DASH
         else if (isDashing == true && playerAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
         {

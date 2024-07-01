@@ -21,6 +21,7 @@ public class PlayerMeleeCombat : MonoBehaviour
     [Header("References")]
     [SerializeField] PlayerMeleeBase weapon;
     [SerializeField] GameObject target;
+    [SerializeField] AudioBoard localBoard;
     [SerializeField] Animator animator;
 
     private void Awake()
@@ -63,10 +64,12 @@ public class PlayerMeleeCombat : MonoBehaviour
 
     private void MeleeAttack()
     {
+
         if (Input.GetMouseButtonDown(0) && canAttack && PlayerMovement.instance.GetIsGrounded() && UIManager.instance.GetIsInMenus() == false)
         {
             if (Time.time >= nextAttackCooldown)
             {
+                localBoard.PlayAudio("Melee_Swing");
                 PlayerCameraMovement.instance.playerAnimator.SetLayerWeight(1, 0);
                 if (comboIndex == 1)
                 {
