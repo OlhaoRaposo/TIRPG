@@ -17,7 +17,7 @@ public class PlayerStats : MonoBehaviour
     int actualMaxXpRequirement;
 
     bool canGetXp = true;
-    int currentXp = 0;
+    public int currentXp = 0;
     int levelupXp = 0;
 
     float xpMultiplier = 1f;

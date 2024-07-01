@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MissionManager : MonoBehaviour {
@@ -28,6 +29,8 @@ public class MissionManager : MonoBehaviour {
     }
     
     public void RemoveMission(string missionTitle) {
+        if(GetMission(missionTitle) == null) return;
+        
         GameObject missionToRemove = activeMissions.Find(mission => mission.GetComponent<QuestComponent>().questTitle.text == missionTitle);
         activeMissions.Remove(missionToRemove);
         Destroy(missionToRemove);

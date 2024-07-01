@@ -8,9 +8,11 @@ using UnityEngine.Events;
 [RequireComponent(typeof(Interactable_Npc))]
 public class NPC : MonoBehaviour
 {
+    private bool firstInteract;
+    [SerializeField] private UnityEvent OnFistInteract = new UnityEvent();
     public List<Dialogue> dialogues;
     public bool hasQuest;
-    public string quest;
+    public List<string> quest;
     public List<Dialogue> questDialogue;
     public UnityEvent OnEndQuestDialogue;
     [SerializeField] public int currentDialogueIndex;
@@ -37,8 +39,14 @@ public class NPC : MonoBehaviour
         }
     }
     public void Interact() {
+        if (!firstInteract) {
+           OnFistInteract.Invoke();
+           firstInteract = true;
+        }
+        
         if(this.TryGetComponent(out InteractDetection ID))
             ID.OnInteract();
+        
         EnableChatBox();
         Talk();
         Debug.Log("Npc is Talking " + gameObject.name);
@@ -117,7 +125,12 @@ public class NPC : MonoBehaviour
     }
 
     public void AddQuest() {
-       MissionManager.instance.AddMission(quest);
+        foreach (var q in quest) {
+            MissionManager.instance.AddMission(q);
+        }
+    }
+    public void RemoveQuest(string quest) {
+        MissionManager.instance.RemoveMission(quest);
     }
 }
 [Serializable]

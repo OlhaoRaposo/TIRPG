@@ -38,6 +38,7 @@ namespace Tekoha.Database
         public int currentLevel;
         public int avaliablePoints;
         public int strengthPoint, agilityPoint, intelligencePoint,endurancePoint;
+        public int xp;
         public List<SkillData> skillsLearned;
     }
     

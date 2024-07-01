@@ -47,11 +47,15 @@ public class SaveController : MonoBehaviour
      save.cameraPosition = PlayerMovement.instance.gameObject.transform.position;
      save.cameraRotation = PlayerMovement.instance.gameObject.transform.rotation;
      save.bossesDefeated = WorldController.worldController.bossesDefeated;
-     save.currentLevel = PlayerStats.instance.level;
+     
+     save.xp = PlayerStats.instance.currentXp;
+     save.currentLevel = PlayerStats.instance.GetLevel();
      save.skillsLearned = PlayerStats.instance.skills;
-     save.strengthPoint = PlayerStats.instance.strength;
-     save.agilityPoint = PlayerStats.instance.agility;
-     save.endurancePoint = PlayerStats.instance.endurance;
+     save.strengthPoint = PlayerStats.instance.GetStrength();
+     save.agilityPoint = PlayerStats.instance.GetAgility();
+     save.endurancePoint = PlayerStats.instance.GetEndurance();
+     save.intelligencePoint = PlayerStats.instance.GetIntelligence();
+
      save.playerLife = PlayerHPController.instance.GetHp();
      save.cityLoyalty = LoyaltySystem.instance.GetInfluencePointsCity();
      save.natureLoyalty = LoyaltySystem.instance.GetInfluencePointsNature();
@@ -82,7 +86,16 @@ public class SaveController : MonoBehaviour
             
             //TODO
             //SET STATS POINTS
-            //PlayerStats.instance.skills = save.skillsLearned;
+            foreach (var skills in save.skillsLearned) {
+                SkillTree.instance.ForceAcquireSkill(skills);
+            }
+            PlayerStats.instance.SetStrength(save.strengthPoint);
+            PlayerStats.instance.SetAgility(save.agilityPoint);
+            PlayerStats.instance.SetEndurance(save.endurancePoint);
+            PlayerStats.instance.SetIntelligence(save.intelligencePoint);
+            PlayerStats.instance.SetXp(save.xp);
+            PlayerStats.instance.SetLevel(save.currentLevel);
+            
             
             //Camera
             PlayerCameraMovement.instance.gameObject.transform.rotation = save.cameraRotation;
