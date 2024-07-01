@@ -59,11 +59,13 @@ public class SaveController : MonoBehaviour
      }
      foreach (var en in enemys) {
          Vector3 distance = en.gameObject.transform.position - PlayerMovement.instance.gameObject.transform.position;
-         if(distance.magnitude < 100) {
+         if(distance.magnitude < 50) {
            PlayerMovement.instance.TeleportPlayer(closestFastTravel.gameObject.transform.position);
          }
      }
      
+     //Quests
+     save.quests = MissionManager.instance.missions.Select(mission => mission.missionTitle).ToList();
      
      save.playerPosition = PlayerMovement.instance.gameObject.transform.position;
      save.playerRotation = PlayerMovement.instance.gameObject.transform.rotation;
@@ -71,6 +73,7 @@ public class SaveController : MonoBehaviour
      save.cameraRotation = PlayerMovement.instance.gameObject.transform.rotation;
      save.bossesDefeated = WorldController.worldController.bossesDefeated;
      
+     save.avaliablePoints = PlayerStats.instance.availablePoints;
      save.xp = PlayerStats.instance.currentXp;
      save.currentLevel = PlayerStats.instance.GetLevel();
      save.skillsLearned = PlayerStats.instance.skills;
@@ -112,13 +115,19 @@ public class SaveController : MonoBehaviour
             foreach (var skills in save.skillsLearned) {
                 SkillTree.instance.ForceAcquireSkill(skills);
             }
+            
             PlayerStats.instance.SetStrength(save.strengthPoint);
             PlayerStats.instance.SetAgility(save.agilityPoint);
             PlayerStats.instance.SetEndurance(save.endurancePoint);
             PlayerStats.instance.SetIntelligence(save.intelligencePoint);
             PlayerStats.instance.SetXp(save.xp);
             PlayerStats.instance.SetLevel(save.currentLevel);
+            PlayerStats.instance.SetAvailablePoints(save.avaliablePoints);
             
+            //Quests
+            foreach (var quest in save.quests) {
+                MissionManager.instance.AddMission(quest);
+            }
             
             //Camera
             PlayerCameraMovement.instance.gameObject.transform.rotation = save.cameraRotation;

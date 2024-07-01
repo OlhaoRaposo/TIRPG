@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -385,6 +385,149 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 36030448}
   m_CullTransparentMesh: 1
+--- !u!1 &43188409
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 43188410}
+  - component: {fileID: 43188412}
+  - component: {fileID: 43188411}
+  m_Layer: 5
+  m_Name: DescriptionText (5)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &43188410
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43188409}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2007961759}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 829.4865, y: -3090.1892}
+  m_SizeDelta: {x: 1824.973, y: 636.5464}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &43188411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43188409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: "[Joao Pedro Santosl]\nItens de buff adicionados\r\nMultiplicadores de
+    status do player adicionados\r\nMultiplicadores de dano elemental do player\r\nAdicionada
+    l\xF3gica de stacking de itens\r\nAdicionadas todas as habilidades da \xE1rvore
+    de habilidades\r\nAdicionados icones para a \xE1rvore de habilidades, itens e
+    armas\r\nAdicionados imagens de input no invent\xE1rio e na \xE1rvore de habilidade\r\nDescri\xE7\xE3o
+    de atributos do player atualizada\r\nDescri\xE7\xE3o de quantidade de dano e
+    tipo de dano de armas adicionado no inventario\r\nAdaptado o drop de itens para
+    funcionar com orbes\r\nAdicionado ganho de pontos de xp ao pegar itens\r\nAdicionados
+    itens espalhados pelo mapa\r\nConsertados os colliders dos itens arremessaveis\r\nArvore
+    de habilidades adaptada para o sistema de save"
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 36
+  m_fontSizeBase: 36
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 256
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &43188412
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43188409}
+  m_CullTransparentMesh: 1
 --- !u!1 &55000321
 GameObject:
   m_ObjectHideFlags: 0
@@ -658,7 +801,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &73608147
 RectTransform:
   m_ObjectHideFlags: 0
@@ -675,7 +818,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 829.4865, y: -296.154}
+  m_AnchoredPosition: {x: 829.4865, y: -2107.7026}
   m_SizeDelta: {x: 1824.973, y: 592.308}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &73608148
@@ -2303,7 +2446,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &391384538
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4737,7 +4880,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 829.4865, y: -177.7298}
+  m_AnchoredPosition: {x: 829.4865, y: -2587.8862}
   m_SizeDelta: {x: 1824.973, y: 355.4595}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &951104201
@@ -4760,10 +4903,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "[Joao Pedro]\n- Adi\xE7\xE3o de IFrames no dash\n- Adi\xE7\xF5es de sfx
-    no player\n- Adi\xE7\xF5es de sfx para armas ranged & ataques melees.\n- Adi\xE7\xF5es
-    de sfx para rob\xF4 aranha\n- corre\xE7\xE3o do funcionamento do zoom durante
-    menus\n- corre\xE7\xE3o do sistema de ataque durante menus.\n- corre\xE7\xE3o
+  m_text: "[Antonio Wall]\n- Adi\xE7\xE3o de IFrames no dash\n- Adi\xE7\xF5es de
+    sfx no player\n- Adi\xE7\xF5es de sfx para armas ranged & ataques melees.\n-
+    Adi\xE7\xF5es de sfx para rob\xF4 aranha\n- corre\xE7\xE3o do funcionamento do
+    zoom durante menus\n- corre\xE7\xE3o do sistema de ataque durante menus.\n- corre\xE7\xE3o
     do menu de\_audio\_in\_game."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -5318,7 +5461,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "VERS\xC3O 2.0.6\n\n\n"
+  m_text: "VERS\xC3O 2.0.7\n\n\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -6874,6 +7017,146 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1400247776}
   m_CullTransparentMesh: 1
+--- !u!1 &1416087544
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1416087545}
+  - component: {fileID: 1416087547}
+  - component: {fileID: 1416087546}
+  m_Layer: 5
+  m_Name: DescriptionText (6)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1416087545
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1416087544}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2007961759}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 829.4865, y: -700.9757}
+  m_SizeDelta: {x: 1824.973, y: 1114.7277}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1416087546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1416087544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: "[Gabriel Vianna]\nLobby: \n- Modelagem e texturiza\xE7\xE3o do painel
+    Exit\n- Aumento das luzes dos refletores\n- Adicionado audios dos ambientes\n\nUsina:
+    \n- Corrigido erro de objetos que estavam\_flutuando\n- Adicionado audios dos
+    ambientes\n- Efeito de Beacon\n\nFloresta:\n- Efeitos de beacons\n- VFX de natureza\n-
+    Audios de ambiente\n- Anima\xE7\xE3o ind\xEDgena\n\nTutorial: \n- Montagem cena
+    tutorial\n- Update conversas tutorial\n\nGeral: \n- Implementa\xE7\xE3o de nova
+    trilha sonora\n- Tutorial na UI\n- Modelagem e texturiza\xE7\xE3o Icons\_inventario"
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 36
+  m_fontSizeBase: 36
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 256
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &1416087547
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1416087544}
+  m_CullTransparentMesh: 1
 --- !u!1 &1469328649
 GameObject:
   m_ObjectHideFlags: 0
@@ -6891,7 +7174,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1469328650
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6908,7 +7191,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 829.4865, y: -109.2446}
+  m_AnchoredPosition: {x: 829.4865, y: -1373.884}
   m_SizeDelta: {x: 1824.973, y: 218.4891}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1469328651
@@ -7335,7 +7618,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1621264326
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7352,7 +7635,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 829.4865, y: -157.91}
+  m_AnchoredPosition: {x: 829.4865, y: -1647.3386}
   m_SizeDelta: {x: 1824.973, y: 315.82}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1621264327
@@ -8247,7 +8530,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1779407799
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8264,8 +8547,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 829.4865, y: -557.3639}
-  m_SizeDelta: {x: 1824.973, y: 1114.7277}
+  m_AnchoredPosition: {x: 829.4865, y: -68.656}
+  m_SizeDelta: {x: 1824.973, y: 137.3119}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1779407800
 MonoBehaviour:
@@ -8287,13 +8570,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "[Gabriel Vianna]\nLobby: \n- Modelagem e texturiza\xE7\xE3o do painel
-    Exit\n- Aumento das luzes dos refletores\n- Adicionado audios dos ambientes\n\nUsina:
-    \n- Corrigido erro de objetos que estavam\_flutuando\n- Adicionado audios dos
-    ambientes\n- Efeito de Beacon\n\nFloresta:\n- Efeitos de beacons\n- VFX de natureza\n-
-    Audios de ambiente\n- Anima\xE7\xE3o ind\xEDgena\n\nTutorial: \n- Montagem cena
-    tutorial\n- Update conversas tutorial\n\nGeral: \n- Implementa\xE7\xE3o de nova
-    trilha sonora\n- Tutorial na UI\n- Modelagem e texturiza\xE7\xE3o Icons\_inventario"
+  m_text: "[Andre]\n- Anima\xE7\xF5es do Mecha\n- Audios de ambiente e trilha\_sonora"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -9912,16 +10189,18 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1779407799}
+  - {fileID: 1416087545}
   - {fileID: 1469328650}
   - {fileID: 1621264326}
   - {fileID: 73608147}
   - {fileID: 951104200}
+  - {fileID: 43188410}
   m_Father: {fileID: 55000322}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 22, y: 0.00035798948}
-  m_SizeDelta: {x: 1741.973, y: 355.4595}
+  m_SizeDelta: {x: 1741.973, y: 3408.4624}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2007961760
 MonoBehaviour:
