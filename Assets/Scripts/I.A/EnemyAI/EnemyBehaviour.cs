@@ -12,6 +12,7 @@ public class EnemyBehaviour : MonoBehaviour
  [SerializeField] private float life;
  [SerializeField] public EnemyState currentState;
  public GameObject target;
+ public GameObject signal;
  public Transform startePoint;
  public NavMeshAgent agent ;
  public Animator enemyAnimator;
@@ -180,7 +181,6 @@ public class EnemyBehaviour : MonoBehaviour
      if (enemyAnimator.GetBool("isAlive")) {
        enemyAnimator.SetBool("isAlive",false);
        enemyAnimator.SetTrigger("Die");
-      
      }
    }
  }
@@ -197,6 +197,10 @@ public class EnemyBehaviour : MonoBehaviour
  public void InflictDirectDamage(float damage) {
    float actualDamage;
    actualDamage = 1;
+   
+   if(EnemyCanvas.transform.Find("LIFE").transform.Find("LifeBarFill").GetComponent<Image>() == null)
+     return;  
+   
    Image lifeBar = EnemyCanvas.transform.Find("LIFE").transform.Find("LifeBarFill").GetComponent<Image>();
    life -= Mathf.Round((actualDamage * damage));
    lifeBar.fillAmount = life / data.maxLife;

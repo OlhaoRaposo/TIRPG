@@ -75,6 +75,7 @@ public class PlayerHPController : MonoBehaviour
     [ContextMenu("Die")]
     void Die() {
         PlayerCameraMovement.instance.ToggleAimLock(false);
+        PlayerMovement.instance.TeleportPlayer(new Vector3(648.67f,82.11f,235.04f));
         ItemDropManager.instance.DestroyDroppedItems();
         SceneController.instance.GameOver();
     }

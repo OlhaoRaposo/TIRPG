@@ -10,6 +10,7 @@ public class NPC : MonoBehaviour
 {
     private bool firstInteract;
     [SerializeField] private UnityEvent OnFistInteract = new UnityEvent();
+    [SerializeField] private UnityEvent Execute = new UnityEvent();
     public List<Dialogue> dialogues;
     public bool hasQuest;
     public List<string> quest;
@@ -64,6 +65,10 @@ public class NPC : MonoBehaviour
         if (isTutorialNPC) {
             WorldController.worldController.tutorialCompleted = true;
         }
+    }
+
+    public void ExecuteExe() {
+        
     }
     public void DisableChatBox() {
         npcReference.npcText.text = "";
@@ -130,6 +135,9 @@ public class NPC : MonoBehaviour
         }
     }
     public void RemoveQuest(string quest) {
+        if(quest == "Derrote o Arachnidroid")
+            Execute.Invoke();
+        
         MissionManager.instance.RemoveMission(quest);
     }
 }
@@ -157,7 +165,6 @@ public class TutorialNPC  {
         dialogues[1].sentences = new List<string>();
         switch (index) {
             case  0:
-                dialogues[2].sentences = new List<string>();
                 dialogues[0].sentences.Add("Bem vindo ao tutorial.");
                 dialogues[0].sentences.Add("Derrote os chefões espalhados pelo mundo interagindo com os NPCs que fornecem suas localizações.");
                 dialogues[0].sentences.Add("As informações aparecerão no menu 'Quests' e um feixe de luz indicará onde encontrar os chefões");
@@ -168,7 +175,6 @@ public class TutorialNPC  {
                 dialogues[1].sentences.Add($"Para correr use: '{InputController.instance.run}'");
                 dialogues[1].sentences.Add($"Ah e para interagir com o proximo tutor aperte a tecla: '{InputController.instance.interaction}'");
                 dialogues[1].sentences.Add("Agora siga em frente");
-                dialogues[2].sentences.Add("Mais a frente o proximo robô ira te ensinar mais alguns truques");
                 break;
             case 1:
                 dialogues[0].sentences.Add("Agora para a parte de Interação");
@@ -189,7 +195,7 @@ public class TutorialNPC  {
                 break;
             case 3:
                 dialogues[0].sentences.Add("As armas testadas são iniciais; novas armas mais poderosas serão liberadas ao derrotar chefoes.");
-                dialogues[1].sentences.Add("lembre-se de sempre se manter forte");
+                dialogues[1].sentences.Add("Lembre-se de sempre se manter forte");
                 break;
                 
         }

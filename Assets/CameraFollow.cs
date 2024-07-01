@@ -12,7 +12,6 @@ public class CameraFollow : MonoBehaviour {
     }
 
     public void Started() {
-       if(this.TryGetComponent(out Animator anim))
-            anim.SetTrigger("_started");
+      
     }
 }

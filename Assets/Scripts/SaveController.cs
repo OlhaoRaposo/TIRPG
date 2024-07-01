@@ -42,6 +42,29 @@ public class SaveController : MonoBehaviour
 
     public void SaveGame() {
      Save save = new Save();
+     List<EnemyBehaviour> enemys = FindObjectsOfType<EnemyBehaviour>().ToList();
+     List<Interactable_FastTravel> fastTravels = FindObjectsOfType<Interactable_FastTravel>().ToList();
+     //GetClosest fast travel
+     
+     Interactable_FastTravel closestFastTravel = null;
+     foreach (var ft in fastTravels) {
+            if (closestFastTravel == null) {
+                closestFastTravel = ft;
+            } else {
+                if (Vector3.Distance(PlayerMovement.instance.gameObject.transform.position, ft.gameObject.transform.position) <
+                    Vector3.Distance(PlayerMovement.instance.gameObject.transform.position, closestFastTravel.gameObject.transform.position)) {
+                    closestFastTravel = ft;
+                }
+            }
+     }
+     foreach (var en in enemys) {
+         Vector3 distance = en.gameObject.transform.position - PlayerMovement.instance.gameObject.transform.position;
+         if(distance.magnitude < 100) {
+           PlayerMovement.instance.TeleportPlayer(closestFastTravel.gameObject.transform.position);
+         }
+     }
+     
+     
      save.playerPosition = PlayerMovement.instance.gameObject.transform.position;
      save.playerRotation = PlayerMovement.instance.gameObject.transform.rotation;
      save.cameraPosition = PlayerMovement.instance.gameObject.transform.position;
@@ -105,6 +128,8 @@ public class SaveController : MonoBehaviour
                 foreach (var defeatedBoss in save.bossesDefeated) {
                     if (boss.gameObject.name == defeatedBoss) {
                         boss.isDefeted = true;
+                        if(boss.signal != null)
+                            boss.signal.SetActive(false);
                         boss.gameObject.SetActive(false);
                     }
                 }
