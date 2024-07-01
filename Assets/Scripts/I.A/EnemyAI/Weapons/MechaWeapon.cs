@@ -11,7 +11,6 @@ public class MechaWeapon : MonoBehaviour
     public Transform gun1,gun2;
     public Transform roundTransform;
     public GameObject stompPrefab;
-    
 
     public void Attack(string expression){
         Debug.Log("Attacking with: " + expression);
