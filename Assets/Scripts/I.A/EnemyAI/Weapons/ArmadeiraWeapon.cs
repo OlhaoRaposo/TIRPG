@@ -122,7 +122,7 @@ public class ArmadeiraWeapon : MonoBehaviour
          Vector3 dir = user.target.transform.position - user.transform.position;
          user.agent.SetDestination(user.target.transform.position + dir.normalized);
          user.enemyAnimator.SetTrigger(expression);
-         localBoard.PlayAudio("Spider_Notice");
+         //localBoard.PlayAudio("Spider_Notice");
          yield return new WaitForSeconds(3);
          user.ChangeState(new ChaseState(user));
      }

@@ -663,6 +663,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0.7687988
       objectReference: {fileID: 0}
+    - target: {fileID: 3041619247831779856, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4720708506624962316, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
         type: 3}
       propertyPath: m_IsActive
@@ -722,6 +727,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4979316586602860895, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4979316586602860895, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 960980467}
+    - target: {fileID: 4979316586602860895, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 4979316586602860895, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 5044659776440094776, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
         type: 3}
@@ -1861,6 +1886,12 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!1 &960980467 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3041619247831779856, guid: 3004360c9fd7b2f41ad76ead7312e2e2,
+    type: 3}
+  m_PrefabInstance: {fileID: 477790534}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1030903077
 GameObject:
   m_ObjectHideFlags: 0
