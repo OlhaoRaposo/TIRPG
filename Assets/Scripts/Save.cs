@@ -34,6 +34,9 @@ namespace Tekoha.Database
         //Time of the day
         public string currentHour;
         
+        //Quests
+        public List<string> quests;
+        
         //Level
         public int currentLevel;
         public int avaliablePoints;
