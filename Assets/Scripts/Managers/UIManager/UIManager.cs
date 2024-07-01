@@ -107,10 +107,10 @@ public class UIManager : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKey(KeyCode.Escape))
+        /*if (Input.GetKey(KeyCode.Escape))
         {
             ToggleShopPanel();
-        }
+        }*/
 
         //Debug.Log(EventSystem.current.currentSelectedGameObject.name);
     }
@@ -341,6 +341,7 @@ public class UIManager : MonoBehaviour
         else
         {
             DisableAllPanels();
+            ToggleCrosshair();
         }
     }
     public void ToggleInventoryPanel()
