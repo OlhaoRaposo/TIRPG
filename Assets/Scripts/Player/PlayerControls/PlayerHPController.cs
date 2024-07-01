@@ -23,7 +23,7 @@ public class PlayerHPController : MonoBehaviour
     {
         currentHP = hpMax;
         currentStamina = staminaMax;
-        
+
         SetHP(hpMax);
         SetStamina(staminaMax);
     }
@@ -35,7 +35,7 @@ public class PlayerHPController : MonoBehaviour
 
     public void SetHP(float amount)
     {
-        if(amount > hpMax)
+        if (amount > hpMax)
         {
             hpMax = amount;
         }
@@ -45,31 +45,32 @@ public class PlayerHPController : MonoBehaviour
     public void ChangeHP(float changeAmmount, bool isDecrease)
     {
         if (CheatMenu.instance.GetHasInfiniteHP()) return;
+        if (PlayerMovement.instance.isDashing) return;
 
-        if(isDecrease == true)
-        {
-            currentHP -= changeAmmount;
-            hpImage.fillAmount = currentHP / hpMax;
-
-            if(currentHP <= 0)
+            if (isDecrease == true)
             {
-                Die();
-            } 
-        }
-        else
-        {
-            currentHP += changeAmmount;
+                currentHP -= changeAmmount;
+                hpImage.fillAmount = currentHP / hpMax;
 
-            if(currentHP < hpMax)
-            {
-                hpImage.fillAmount = hpMax / hpMax;
+                if (currentHP <= 0)
+                {
+                    Die();
+                }
             }
             else
             {
-                hpImage.fillAmount = 1;
-                currentHP = hpMax;
+                currentHP += changeAmmount;
+
+                if (currentHP < hpMax)
+                {
+                    hpImage.fillAmount = hpMax / hpMax;
+                }
+                else
+                {
+                    hpImage.fillAmount = 1;
+                    currentHP = hpMax;
+                }
             }
-        }
     }
     [ContextMenu("Die")]
     void Die() {
@@ -79,7 +80,7 @@ public class PlayerHPController : MonoBehaviour
     }
     public void SetStamina(float ammount)
     {
-        if(ammount > staminaMax)
+        if (ammount > staminaMax)
         {
             staminaMax = ammount;
         }
@@ -99,7 +100,7 @@ public class PlayerHPController : MonoBehaviour
         {
             currentStamina += changeAmmount;
 
-            if(currentStamina < staminaMax)
+            if (currentStamina < staminaMax)
             {
                 staminaImage.fillAmount = currentStamina / staminaMax;
             }

@@ -7,8 +7,8 @@ public class PlayerMovement : MonoBehaviour
 {
     public static PlayerMovement instance;
 
-    //[Header("CAMERA DO PLAYER")]
-    //[SerializeField] public GameObject CAMERADOPLAYER;
+    [Header("Audio")]
+    public AudioBoard localBoard;
 
     [Header("Movement")]
     [SerializeField] private Animator playerAnimator;
@@ -16,12 +16,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private CapsuleCollider playerCollider;
     public GameObject playerModel;
     [SerializeField] private float walkSpeedMultiplier, runSpeedMultiplier, jumpHeight, stamina = 100f;
-    [SerializeField] private bool canMove = true, isRunning = false, isDashing = false, isJumping = false, isGrounded = true;
+    [SerializeField] private bool canMove = true, isRunning = false, isJumping = false, isGrounded = true;
 
     [Header("Combat")]
     public GameObject[] allWeapons;
     public bool canSwapWeapon = true;
     public bool isRanged = true;
+    public bool isDashing = false;
     private bool isStaggered = false;
 
     private float speedModifier;
@@ -133,6 +134,21 @@ public class PlayerMovement : MonoBehaviour
             playerAnimator.SetFloat("WalkHorizontal", x);
             playerAnimator.SetFloat("WalkVertical", y);
         }
+
+        //TOCAR SOM AO ANDAR NO CHAO DE ANDAR
+        if(isGrounded == true && (x != 0 || y != 0))
+        {
+            float variance = Random.Range(-0.10f, 0.11f);
+            if(isRunning)
+            {
+                localBoard.ChangePitch("Player Walk", 1.50f + variance);
+            }
+            else
+            {
+                localBoard.ChangePitch("Player Walk", 1.00f + variance);
+            }
+            localBoard.PlayAudio("Player Walk");
+        }
     }
 
     private void GroundCheck()
@@ -171,6 +187,8 @@ public class PlayerMovement : MonoBehaviour
             startRelativePoint = transform.position;
             isJumping = true;
             playerAnimator.SetBool("IsJumping", true);
+
+            localBoard.PlayAudio("Player Jump");
             //COMEÇOU O PULO
         }
 
@@ -228,6 +246,8 @@ public class PlayerMovement : MonoBehaviour
             playerAnimator.speed = runSpeedMultiplier;
             playerAnimator.SetBool("IsDashing", true);
             playerAnimator.Play("Dash Tree");
+
+            localBoard.PlayAudio("Player Dash");
         } //EXECUTA APENAS DURANTE O DASH PARA CONFERIR SE ELE JA TERMINOU DE DAR O DASH
         else if (isDashing == true && playerAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
         {

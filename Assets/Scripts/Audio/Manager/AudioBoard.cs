@@ -6,9 +6,12 @@ public class AudioBoard : MonoBehaviour
 {
     [SerializeField]public AudioSource[] audios;
     public static AudioBoard instance;
+    public bool isLocalBoard = false;
 
     private void Awake()
     {
+        if(isLocalBoard) return;
+
         audios = GameObject.FindObjectsOfType<AudioSource>();
         if (instance == null)
         {
@@ -23,6 +26,8 @@ public class AudioBoard : MonoBehaviour
         {
             if(audioName == audio.clip.name)
             {
+                if(audio.isPlaying) return;
+                
                 audio.Play();
                 return;
             }
@@ -60,6 +65,18 @@ public class AudioBoard : MonoBehaviour
             if(audioName == audio.clip.name)
             {
                 audio.Pause();
+                return;
+            }
+        }
+    }
+
+    public void ChangePitch(string audioName, float pitch)
+    {
+        foreach (AudioSource audio in audios)
+        {
+            if(audioName == audio.clip.name)
+            {
+                audio.pitch = pitch;
                 return;
             }
         }

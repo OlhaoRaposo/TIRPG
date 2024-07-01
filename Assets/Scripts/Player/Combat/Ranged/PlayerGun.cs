@@ -18,6 +18,7 @@ public class PlayerGun : MonoBehaviour
 
     [Header("References")]
     public PlayerGunBase equipedWeapon;
+    public AudioBoard localBoard;
     [SerializeField] private Image reloadImage;
 
     private void Awake()
@@ -55,7 +56,7 @@ public class PlayerGun : MonoBehaviour
 
     private void Shoot()
     {
-        if (isReloading == false /*CHAMAR FUNÇÃO PARA PLAYER EM DIÁLOGO*/ && canShoot == true)
+        if (isReloading == false && canShoot == true && UIManager.instance.GetIsInMenus() == false)
         {
             if (ammo > 0)
             {
@@ -226,7 +227,7 @@ public class PlayerGun : MonoBehaviour
                     }
                 }
             }
-            AudioBoard.instance?.PlayAudio("Shot");
+            localBoard.PlayAudio($"{gunName}_Shot");
             PlayerCameraMovement.instance.ShakeCamera(equipedWeapon.recoil);
             ammo--;
         }
