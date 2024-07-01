@@ -189,6 +189,7 @@ public class TutorialNPC  {
                 break;
             case 3:
                 dialogues[0].sentences.Add("As armas testadas são iniciais; novas armas mais poderosas serão liberadas ao derrotar chefoes.");
+                dialogues[1].sentences.Add("lembre-se de sempre se manter forte");
                 break;
                 
         }

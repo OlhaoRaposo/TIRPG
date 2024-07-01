@@ -435,6 +435,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2281547823785319634, guid: 8bdbc00cbe5fafe4f83b1e0927487ae3,
         type: 3}
+      propertyPath: hasQuest
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2281547823785319634, guid: 8bdbc00cbe5fafe4f83b1e0927487ae3,
+        type: 3}
+      propertyPath: quest.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2281547823785319634, guid: 8bdbc00cbe5fafe4f83b1e0927487ae3,
+        type: 3}
+      propertyPath: dialogues.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2281547823785319634, guid: 8bdbc00cbe5fafe4f83b1e0927487ae3,
+        type: 3}
       propertyPath: npcReference.npcText
       value: 
       objectReference: {fileID: 1144408696}
@@ -450,6 +465,11 @@ PrefabInstance:
       objectReference: {fileID: 322403862}
     - target: {fileID: 2281547823785319634, guid: 8bdbc00cbe5fafe4f83b1e0927487ae3,
         type: 3}
+      propertyPath: questDialogue.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2281547823785319634, guid: 8bdbc00cbe5fafe4f83b1e0927487ae3,
+        type: 3}
       propertyPath: npcReference.finishButton
       value: 
       objectReference: {fileID: 2067773934}
@@ -460,8 +480,78 @@ PrefabInstance:
       objectReference: {fileID: 264203730}
     - target: {fileID: 2281547823785319634, guid: 8bdbc00cbe5fafe4f83b1e0927487ae3,
         type: 3}
+      propertyPath: dialogues.Array.data[0].sentences.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2281547823785319634, guid: 8bdbc00cbe5fafe4f83b1e0927487ae3,
+        type: 3}
+      propertyPath: dialogues.Array.data[1].sentences.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2281547823785319634, guid: 8bdbc00cbe5fafe4f83b1e0927487ae3,
+        type: 3}
+      propertyPath: dialogues.Array.data[0].sentences.Array.data[0]
+      value: 'Entao a Krek te mandou? '
+      objectReference: {fileID: 0}
+    - target: {fileID: 2281547823785319634, guid: 8bdbc00cbe5fafe4f83b1e0927487ae3,
+        type: 3}
+      propertyPath: dialogues.Array.data[0].sentences.Array.data[1]
+      value: Aquele mecha ta acabando com nossa floresta
+      objectReference: {fileID: 0}
+    - target: {fileID: 2281547823785319634, guid: 8bdbc00cbe5fafe4f83b1e0927487ae3,
+        type: 3}
+      propertyPath: dialogues.Array.data[1].sentences.Array.data[0]
+      value: "A montanha sagrada fica no lado oposto da entrada da vila, \xE0 esquerda
+        da oca principal. Voc\xEA ter\xE1 que seguir o caminho at\xE9 o topo da montanha."
+      objectReference: {fileID: 0}
+    - target: {fileID: 2281547823785319634, guid: 8bdbc00cbe5fafe4f83b1e0927487ae3,
+        type: 3}
+      propertyPath: dialogues.Array.data[1].sentences.Array.data[1]
+      value: "Boa sorte e que voc\xEA tenha for\xE7as para enfrentar essa miss\xE3o.
+        Estamos contando com voc\xEA."
+      objectReference: {fileID: 0}
+    - target: {fileID: 2281547823785319634, guid: 8bdbc00cbe5fafe4f83b1e0927487ae3,
+        type: 3}
+      propertyPath: dialogues.Array.data[1].sentences.Array.data[2]
+      value: "Mas devo avisar, a Mecha \xE9 extremamente poderoso, ent\xE3o n\xE3o
+        ser\xE1 uma tarefa f\xE1cil."
+      objectReference: {fileID: 0}
+    - target: {fileID: 2281547823785319634, guid: 8bdbc00cbe5fafe4f83b1e0927487ae3,
+        type: 3}
+      propertyPath: questDialogue.Array.data[0].sentences.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2281547823785319634, guid: 8bdbc00cbe5fafe4f83b1e0927487ae3,
+        type: 3}
+      propertyPath: questDialogue.Array.data[1].sentences.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2281547823785319634, guid: 8bdbc00cbe5fafe4f83b1e0927487ae3,
+        type: 3}
       propertyPath: OnEndDialogue.m_PersistentCalls.m_Calls.Array.size
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2281547823785319634, guid: 8bdbc00cbe5fafe4f83b1e0927487ae3,
+        type: 3}
+      propertyPath: questDialogue.Array.data[0].sentences.Array.data[0]
+      value: "Ei, voc\xEA! Preciso de sua ajuda urgente."
+      objectReference: {fileID: 0}
+    - target: {fileID: 2281547823785319634, guid: 8bdbc00cbe5fafe4f83b1e0927487ae3,
+        type: 3}
+      propertyPath: questDialogue.Array.data[0].sentences.Array.data[1]
+      value: Aquele mecha ta acabando com nossa floresta
+      objectReference: {fileID: 0}
+    - target: {fileID: 2281547823785319634, guid: 8bdbc00cbe5fafe4f83b1e0927487ae3,
+        type: 3}
+      propertyPath: questDialogue.Array.data[1].sentences.Array.data[0]
+      value: "A montanha sagrada fica no lado oposto da entrada da vila, \xE0 esquerda
+        da oca principal. Voc\xEA ter\xE1 que seguir o caminho at\xE9 o topo da montanha."
+      objectReference: {fileID: 0}
+    - target: {fileID: 2281547823785319634, guid: 8bdbc00cbe5fafe4f83b1e0927487ae3,
+        type: 3}
+      propertyPath: questDialogue.Array.data[1].sentences.Array.data[1]
+      value: "Boa sorte e que voc\xEA tenha for\xE7as para enfrentar essa miss\xE3o.
+        Estamos contando com voc\xEA."
       objectReference: {fileID: 0}
     - target: {fileID: 3341929123892551422, guid: 8bdbc00cbe5fafe4f83b1e0927487ae3,
         type: 3}
