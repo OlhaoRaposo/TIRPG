@@ -691,6 +691,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -5967946480477231560, guid: 219657f9044d7e54c8d748a846d30dc5,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8483bf7315371e14cb67eea61b139b2b, type: 2}
     - target: {fileID: 919132149155446097, guid: 219657f9044d7e54c8d748a846d30dc5,
         type: 3}
       propertyPath: m_Name
@@ -785,14 +790,20 @@ MonoBehaviour:
   life: 40000
   currentState: 0
   target: {fileID: 0}
+  signal: {fileID: 0}
   startePoint: {fileID: 0}
   agent: {fileID: 2205143493056213325}
   enemyAnimator: {fileID: 4677796211573221995}
   OnStart:
     m_PersistentCalls:
       m_Calls: []
+  OnDie:
+    m_PersistentCalls:
+      m_Calls: []
   data:
     maxLife: 30000
+  arena: {fileID: 0}
+  xpPoints: 1000
   dropInfo:
   - data: {fileID: 11400000, guid: 5b407b4cf5ff79f4687f54c8a658ba24, type: 2}
     dropRate: 1
@@ -895,3 +906,4 @@ MonoBehaviour:
   gun1: {fileID: 1465943915154257511}
   gun2: {fileID: 4127615700146940014}
   roundTransform: {fileID: 9135548519507561314}
+  stompPrefab: {fileID: 0}
