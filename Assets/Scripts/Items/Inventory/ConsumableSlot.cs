@@ -10,6 +10,12 @@ public class ConsumableSlot : InventorySlot
 
         base.SetItem(item);
     }
-    public override void RightClick() { }
+    public override void RightClick()
+    {
+        if (itemData.item != null)
+        {
+            //PlayerInventory.instance.DropConsumable(itemData.item);
+        }
+    }
     public override void LeftClick() { }
 }

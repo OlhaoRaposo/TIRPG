@@ -45,4 +45,8 @@ public class Throwable : MonoBehaviour
 
         Destroy(gameObject);
     }
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, explosionRadius);
+    }
 }

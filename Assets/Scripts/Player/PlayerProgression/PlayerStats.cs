@@ -22,10 +22,10 @@ public class PlayerStats : MonoBehaviour
 
     float xpMultiplier = 1f;
 
-    public int strength;
-    public int agility;
-    public int endurance;
-    public int intelligence;
+    int strength;
+    int agility;
+    int endurance;
+    int intelligence;
 
     float meleeDamageMultiplier = 1f;
     float rangedDamageMultiplier = 1f;
@@ -151,15 +151,11 @@ public class PlayerStats : MonoBehaviour
         //Update UI
         UIManager.instance?.UpdateXpStats(currentXp, levelupXp);
     }
-    public int GetLevelUpXp()
-    {
-        if (levelupData.xpPerLevel.Count == 0) SetLevelUpValues();
-
-        return levelupData.xpPerLevel[level - 1];
-    }
 
     public void AddSkill(SkillData skillData)
     {
+        if (skills.Contains(skillData)) return;
+
         skills.Add(skillData);
         if (DecreasePoints(skillData.skillPointsRequired))
         {
@@ -342,10 +338,6 @@ public class PlayerStats : MonoBehaviour
         UIManager.instance.UpdateAvailablePoints(availablePoints);
         return true;
     }
-    public int GetAvailablePoints()
-    {
-        return availablePoints;
-    }
 
     #region Attribute Multipliers
     public void IncreaseXpMultiplier(float amount)
@@ -405,10 +397,80 @@ public class PlayerStats : MonoBehaviour
     }
     #endregion
 
+    #region Set Attributes
+
+    public void SetLevel(int lvl)
+    {
+        level = lvl;
+        levelupXp = GetLevelUpXp();
+
+        UIManager.instance.UpdateHUDLevel(level);
+        UIManager.instance?.UpdateXpStats(currentXp, levelupXp);
+    }
+    public void SetXp(int xp)
+    {
+        currentXp = xp;
+
+        UIManager.instance?.UpdateXpStats(currentXp, levelupXp);
+    }
+    public void SetAvailablePoints(int pts)
+    {
+        availablePoints = pts;
+
+        UIManager.instance.UpdateAvailablePoints(availablePoints);
+    }
+    public void SetStrength(int s)
+    {
+        strength = s;
+        meleeDamageMultiplier = 1 + strength * .1f;
+
+        UIManager.instance.UpdateStrength(strength);
+        UIManager.instance.UpdateMeleeMultiplier(meleeDamageMultiplier.ToString());
+    }
+    public void SetAgility(int a)
+    {
+        agility = a;
+        moveSpeedMultiplier = 1 + agility * .1f;
+
+        UIManager.instance.UpdateAgility(agility);
+        UIManager.instance.UpdateMovementSpeedMultiplier(moveSpeedMultiplier.ToString());
+    }
+    public void SetEndurance(int e)
+    {
+        endurance = e;
+        PlayerHPController.instance.SetMaxHp(100f + (e * 20f));
+        PlayerHPController.instance.SetMaxStamina(100f + (e * 20f));
+
+        UIManager.instance.UpdateEndurance(endurance);
+
+        UIManager.instance.UpdateHealthStats((int)PlayerHPController.instance.GetHp(), (int)PlayerHPController.instance.GetMaxHp());
+        UIManager.instance.UpdateStaminaStats((int)PlayerHPController.instance.GetStamina(), (int)PlayerHPController.instance.GetMaxStamina());
+    }
+    public void SetIntelligence(int i)
+    {
+        intelligence = i;
+        xpMultiplier = 1 + intelligence * 0.1f;
+
+        UIManager.instance.UpdateIntelligence(intelligence);
+        UIManager.instance.UpdateXpMultiplier(xpMultiplier.ToString());
+    }
+
+    #endregion
+
     #region Get Attributes
+    public int GetAvailablePoints()
+    {
+        return availablePoints;
+    }
     public float GetXpMultiplier()
     {
         return xpMultiplier;
+    }
+    public int GetLevelUpXp()
+    {
+        if (levelupData.xpPerLevel.Count == 0) SetLevelUpValues();
+
+        return levelupData.xpPerLevel[level - 1];
     }
     public float GetMovementSpeedMultiplier()
     {
@@ -442,7 +504,10 @@ public class PlayerStats : MonoBehaviour
     {
         return staminaRegenMultiplier;
     }
-
+    public int GetLevel()
+    {
+        return level;
+    }
     public int GetStrength()
     {
         return strength;

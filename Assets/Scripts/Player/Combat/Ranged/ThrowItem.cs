@@ -23,7 +23,7 @@ public class ThrowItem : MonoBehaviour
             }
             else
             {
-                UIManager.instance.ShowTextFeedback("The item is on cooldown");
+                UIManager.instance.ShowTextFeedback("O item está em tempo de recarga!");
             }
         }
     }
@@ -31,7 +31,7 @@ public class ThrowItem : MonoBehaviour
     {
         if (PlayerInventory.instance.GetThrowable() == null)
         {
-            UIManager.instance.ShowTextFeedback("No throwable item equipped");
+            UIManager.instance.ShowTextFeedback("Nenhum arremessável está equipado!");
             return;
         }
 

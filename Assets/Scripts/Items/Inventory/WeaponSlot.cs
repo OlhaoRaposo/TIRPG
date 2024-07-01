@@ -12,7 +12,7 @@ public class WeaponSlot : InventorySlot
     }
     public override void RightClick()
     {
-        if (!itemData.Equals(null))
+        if (itemData.item != null)
         {
             switch (itemData.item.weaponType)
             {
