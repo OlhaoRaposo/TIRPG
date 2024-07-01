@@ -3050,8 +3050,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startAttributeData: {fileID: 11400000, guid: c93be221785411c4ba2403a853c374bc, type: 2}
   maxLevel: 18
+  level: 0
   levelupData: {fileID: 11400000, guid: 32a530b8d3abdea4e93f825ad6c46605, type: 2}
   maxXpRequirement: 10000
+  currentXp: 0
   availablePoints: 0
   skills: []
 --- !u!114 &355467531696004669
@@ -3112,18 +3114,10 @@ MonoBehaviour:
     amount: 1
   - item: {fileID: 11400000, guid: ce4ede9b9ab3a4f438da888dff0bff1b, type: 2}
     amount: 1
-  - item: {fileID: 11400000, guid: b7bf9e93af550c148808c7f2e8462f5c, type: 2}
-    amount: 1
-  - item: {fileID: 11400000, guid: a654893ca9fcc9541837d47e4d176ddf, type: 2}
-    amount: 1
-  - item: {fileID: 11400000, guid: ada2234fb567eb44389bd144430318c2, type: 2}
-    amount: 1
-  - item: {fileID: 11400000, guid: 5b407b4cf5ff79f4687f54c8a658ba24, type: 2}
-    amount: 1
-  - item: {fileID: 11400000, guid: 5bf546cb44705244196ef3cdf005d90e, type: 2}
-    amount: 1
-  - item: {fileID: 11400000, guid: 5c1cbd38013147e448fef62e6b55c92f, type: 2}
-    amount: 1
+  - item: {fileID: 11400000, guid: afe7884871123c2498e3665aaaa3e0b4, type: 2}
+    amount: 5
+  - item: {fileID: 11400000, guid: 1bbffe77c0f584646a6193434c0a32de, type: 2}
+    amount: 2
 --- !u!1 &4385603509228590703
 GameObject:
   m_ObjectHideFlags: 0
@@ -3488,6 +3482,8 @@ RectTransform:
   - {fileID: 128325504317317705}
   - {fileID: 8594838313655060007}
   - {fileID: 6347056998489176128}
+  - {fileID: 6551937590688345378}
+  - {fileID: 8282861058929721550}
   m_Father: {fileID: 7095734194049400133}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -5168,8 +5164,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 755098569585865790}
+  m_Children: []
   m_Father: {fileID: 225081769874203038}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
@@ -10602,10 +10597,6 @@ PrefabInstance:
         type: 3}
       insertIndex: 4
       addedObject: {fileID: 4972368717305304939}
-    - targetCorrespondingSourceObject: {fileID: 546338999552150250, guid: 543e2cb85dbf5b04680840c3b22b09d7,
-        type: 3}
-      insertIndex: 5
-      addedObject: {fileID: 8527968128104454696}
     - targetCorrespondingSourceObject: {fileID: 546338999552150250, guid: 543e2cb85dbf5b04680840c3b22b09d7,
         type: 3}
       insertIndex: 6

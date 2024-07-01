@@ -97,7 +97,7 @@ public class PlayerInventory : MonoBehaviour
         //Checa se ja possui o item no inventario
         if (LookForItem(itemData, ref items, true))
         {
-            //Checa se o item é stackavel
+            //Checa se o item ï¿½ stackavel
             if (itemData.isStackable)
             {
                 //Adiciona uma unidade ao slot
@@ -122,7 +122,7 @@ public class PlayerInventory : MonoBehaviour
         //Checa se ja possui o item no inventario
         if (LookForItem(itemData, ref items, true, itemData.amount))
         {
-            //Checa se o item é stackavel
+            //Checa se o item ï¿½ stackavel
             if (itemData.item.isStackable)
             {
                 //Adiciona uma unidade ao slot
@@ -146,7 +146,7 @@ public class PlayerInventory : MonoBehaviour
             Debug.LogWarning("Cant add item to inventory: The inventory is full");
             return false;
         }
-        else //Caso possua slots disponíveis
+        else //Caso possua slots disponï¿½veis
         {
             items.Add(new ItemObject(data, 1));
             return true;
@@ -160,7 +160,7 @@ public class PlayerInventory : MonoBehaviour
             Debug.LogWarning("Cant add item to inventory: The inventory is full");
             return false;
         }
-        else //Caso possua slots disponíveis
+        else //Caso possua slots disponï¿½veis
         {
             items.Add(new ItemObject(data.item, data.amount));
             return true;
@@ -189,7 +189,7 @@ public class PlayerInventory : MonoBehaviour
     {
         if (!items.Contains(itemData))
         {
-            Debug.LogWarning("O item não está presente no inventário");
+            Debug.LogWarning("O item nï¿½o estï¿½ presente no inventï¿½rio");
             return;
         }
 
